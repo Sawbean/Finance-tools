@@ -1,7 +1,7 @@
-// pages/tools/loan.js
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import AdPlaceholder from "../../components/AdPlaceholder";
 
 export default function LoanCalculator() {
   const [principal, setPrincipal] = useState("");
@@ -9,7 +9,6 @@ export default function LoanCalculator() {
   const [years, setYears] = useState("");
   const [result, setResult] = useState(null);
 
-  // Format number in Nepali/Indian style (Rs.)
   const nepaliCurrency = (num) => {
     num = Math.round(num);
     let str = num.toString();
@@ -58,16 +57,12 @@ export default function LoanCalculator() {
   const jsonLD = {
     "@context": "https://schema.org",
     "@type": "FinancialProduct",
-    "name": "Loan Calculator",
-    "description":
+    name: "Loan Calculator",
+    description:
       "Calculate your loan EMI, total payment, and interest using our simple Loan calculator for Nepal loans.",
-    "url": "https://yourdomain.com/tools/loan",
-    "applicationCategory": "FinanceApplication",
-    "provider": {
-      "@type": "Organization",
-      "name": "ToolFinance",
-      "url": "https://yourdomain.com"
-    }
+    url: "https://finance-tools-mu.vercel.app/tools/loan",
+    applicationCategory: "FinanceApplication",
+    provider: { "@type": "Organization", name: "ToolFinance", url: "https://finance-tools-mu.vercel.app" },
   };
 
   return (
@@ -81,6 +76,10 @@ export default function LoanCalculator() {
         <meta
           name="keywords"
           content="Loan calculator, EMI calculator, monthly installment, interest calculation, Nepal loans, ToolFinance"
+        />
+        <link
+          rel="canonical"
+          href="https://finance-tools-mu.vercel.app/tools/loan"
         />
         <script
           type="application/ld+json"
@@ -117,11 +116,8 @@ export default function LoanCalculator() {
             onChange={(e) => setYears(e.target.value)}
             required
           />
-
           <div style={{ display: "flex", gap: "10px" }}>
-            <button type="submit" style={{ flex: 1 }}>
-              Calculate
-            </button>
+            <button type="submit" style={{ flex: 1 }}>Calculate</button>
             <button
               type="button"
               onClick={resetForm}
@@ -132,22 +128,18 @@ export default function LoanCalculator() {
           </div>
         </form>
 
+        {/* ✅ Ad Placeholder */}
+        <AdPlaceholder />
+
         {result && (
           <div className="result-box">
             <h2>📊 Loan Summary</h2>
-            <p>
-              <strong>Monthly EMI:</strong> Rs. {nepaliCurrency(result.emi)}
-            </p>
-            <p>
-              <strong>Total Payment:</strong> Rs. {nepaliCurrency(result.totalPayment)}
-            </p>
-            <p>
-              <strong>Total Interest:</strong> Rs. {nepaliCurrency(result.totalInterest)}
-            </p>
+            <p><strong>Monthly EMI:</strong> Rs. {nepaliCurrency(result.emi)}</p>
+            <p><strong>Total Payment:</strong> Rs. {nepaliCurrency(result.totalPayment)}</p>
+            <p><strong>Total Interest:</strong> Rs. {nepaliCurrency(result.totalInterest)}</p>
           </div>
         )}
 
-        {/* Read Full Guide Link (Always Visible) */}
         <div>
           <Link
             href="/blog/loan-calculator-guide"

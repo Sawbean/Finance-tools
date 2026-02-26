@@ -8,11 +8,9 @@ export default function BlogPost() {
   const router = useRouter();
   const { slug } = router.query;
 
-  // Prevent rendering before router query is ready
   if (!slug) return <p>Loading...</p>;
 
   const post = blogContent[slug];
-
   if (!post) return <p>Post not found.</p>;
 
   // JSON-LD structured data
@@ -21,22 +19,19 @@ export default function BlogPost() {
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.description,
-    "author": {
-      "@type": "Organization",
-      "name": "ToolFinance"
-    },
+    "author": { "@type": "Organization", "name": "ToolFinance" },
     "publisher": {
       "@type": "Organization",
       "name": "ToolFinance",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://yourwebsite.com/logo.png" // Replace with your logo URL
+        "url": "https://finance-tools-mu.vercel.app/logo.png" // Your real logo URL
       }
     },
     "datePublished": post.publishDate,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://yourwebsite.com/blog/${slug}`
+      "@id": `https://finance-tools-mu.vercel.app/blog/${slug}`
     }
   };
 
@@ -46,6 +41,10 @@ export default function BlogPost() {
         <title>{post.title} | ToolFinance</title>
         <meta name="description" content={post.description} />
         <meta name="keywords" content={post.keywords.join(", ")} />
+        <link
+          rel="canonical"
+          href={`https://finance-tools-mu.vercel.app/blog/${slug}`}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -54,11 +53,40 @@ export default function BlogPost() {
 
       <h1>{post.title}</h1>
 
+      {/* AdSense placeholder */}
+      <div
+        className="adsense-placeholder"
+        style={{
+          margin: "20px 0",
+          textAlign: "center",
+          background: "#f0f0f0",
+          padding: "10px",
+          border: "1px dashed #ccc"
+        }}
+      >
+        Advertisement
+      </div>
+
       {/* Blog content rendered as HTML */}
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
 
+      <div style={{ marginTop: "30px" }}>
+        <h3>Explore Our Tools:</h3>
+        <ul>
+          <li>
+            <Link href="/tools/emi">EMI Calculator</Link>
+          </li>
+          <li>
+            <Link href="/tools/loan">Loan Calculator</Link>
+          </li>
+          <li>
+            <Link href="/tools/fuel">Fuel Calculator</Link>
+          </li>
+        </ul>
+      </div>
+
       {/* Back link */}
-      <Link href="/blog" className="back-link">
+      <Link href="/blog" className="back-link" style={{ display: "block", marginTop: "20px" }}>
         ← Back to Blog
       </Link>
     </div>

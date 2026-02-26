@@ -1,7 +1,7 @@
-// pages/tools/fuel.js
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import AdPlaceholder from "../../components/AdPlaceholder";
 
 export default function FuelCalculator() {
   const [distance, setDistance] = useState("");
@@ -22,7 +22,6 @@ export default function FuelCalculator() {
 
     const fuelUsed = D / E;
     const totalCost = fuelUsed * P;
-
     setResult({ fuelUsed, totalCost });
   };
 
@@ -36,15 +35,11 @@ export default function FuelCalculator() {
   const jsonLD = {
     "@context": "https://schema.org",
     "@type": "FinancialProduct",
-    "name": "Fuel Cost Calculator",
-    "description": "Calculate fuel cost for your trip using distance, mileage, and fuel price in Nepal.",
-    "url": "https://yourdomain.com/tools/fuel",
-    "applicationCategory": "FinanceApplication",
-    "provider": {
-      "@type": "Organization",
-      "name": "ToolFinance",
-      "url": "https://yourdomain.com"
-    }
+    name: "Fuel Cost Calculator",
+    description: "Calculate fuel cost for your trip using distance, mileage, and fuel price in Nepal.",
+    url: "https://finance-tools-mu.vercel.app/tools/fuel",
+    applicationCategory: "FinanceApplication",
+    provider: { "@type": "Organization", name: "ToolFinance", url: "https://finance-tools-mu.vercel.app" },
   };
 
   return (
@@ -58,6 +53,10 @@ export default function FuelCalculator() {
         <meta
           name="keywords"
           content="Fuel calculator, fuel cost calculator, mileage calculator, trip cost, Nepal, ToolFinance"
+        />
+        <link
+          rel="canonical"
+          href="https://finance-tools-mu.vercel.app/tools/fuel"
         />
         <script
           type="application/ld+json"
@@ -95,11 +94,8 @@ export default function FuelCalculator() {
             onChange={(e) => setFuelPrice(e.target.value)}
             required
           />
-
           <div style={{ display: "flex", gap: "10px" }}>
-            <button type="submit" style={{ flex: 1 }}>
-              Calculate
-            </button>
+            <button type="submit" style={{ flex: 1 }}>Calculate</button>
             <button
               type="button"
               onClick={resetForm}
@@ -110,19 +106,17 @@ export default function FuelCalculator() {
           </div>
         </form>
 
+        {/* ✅ Ad Placeholder */}
+        <AdPlaceholder />
+
         {result && (
           <div className="result-box">
             <h2>📊 Fuel Summary</h2>
-            <p>
-              <strong>Fuel Used:</strong> {result.fuelUsed.toFixed(2)} L
-            </p>
-            <p>
-              <strong>Total Cost:</strong> Rs. {result.totalCost.toFixed(2)}
-            </p>
+            <p><strong>Fuel Used:</strong> {result.fuelUsed.toFixed(2)} L</p>
+            <p><strong>Total Cost:</strong> Rs. {result.totalCost.toFixed(2)}</p>
           </div>
         )}
 
-        {/* Read Full Guide Link (Always Visible) */}
         <div>
           <Link
             href="/blog/fuel-calculator-guide"
