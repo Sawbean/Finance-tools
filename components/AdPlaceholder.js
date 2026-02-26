@@ -1,44 +1,29 @@
 import { useEffect } from "react";
-import Script from "next/script";
 
 export default function AdPlaceholder() {
   useEffect(() => {
-    if (typeof window !== "undefined" && window.adsbygoogle) {
+    if (typeof window !== "undefined") {
       try {
-        window.adsbygoogle.push({});
-      } catch (e) {
-        console.error("Adsense error", e);
-      }
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {}
     }
   }, []);
 
   return (
-    <div style={{ margin: "30px 0", textAlign: "center" }}>
-      {/* Google AdSense Script */}
-      <Script
-        strategy="afterInteractive"
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-        crossOrigin="anonymous"
-      />
-
-      {/* Ad Placeholder */}
+    <div style={{ margin: "25px 0", textAlign: "center" }}>
       <ins
         className="adsbygoogle"
         style={{
           display: "block",
+          width: "100%",
           minHeight: "90px",
-          background: "#f4f4f4",
+          background: "#f0f0f0",
         }}
         data-ad-client="ca-pub-XXXXXXXXXXXX"
         data-ad-slot="1234567890"
         data-ad-format="auto"
         data-full-width-responsive="true"
       />
-
-      {/* Fallback text (safe & useful before approval) */}
-      <small style={{ display: "block", color: "#777", marginTop: "8px" }}>
-        Advertisement
-      </small>
     </div>
   );
 }

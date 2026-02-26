@@ -1,18 +1,11 @@
-// components/CalculatorForm.js
-export default function CalculatorForm({ fields, onSubmit, onReset }) {
+export default function CalculatorForm({
+  onSubmit,
+  onReset,
+  children,
+}) {
   return (
     <form onSubmit={onSubmit} className="form-box">
-      {fields.map(({ type, placeholder, value, onChange, step, required }, idx) => (
-        <input
-          key={idx}
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          step={step}
-          required={required}
-        />
-      ))}
+      {children}
 
       <div style={{ display: "flex", gap: "10px" }}>
         <button type="submit" style={{ flex: 1 }}>

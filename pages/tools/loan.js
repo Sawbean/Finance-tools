@@ -1,13 +1,14 @@
 import { useState } from "react";
 import Head from "next/head";
-import Link from "next/link";
+
 import CalculatorForm from "../../components/CalculatorForm";
+import CalculatorInput from "../../components/CalculatorInput";
 import ResultBox from "../../components/ResultBox";
 import AdPlaceholder from "../../components/AdPlaceholder";
 
 export default function LoanCalculator() {
   const [amount, setAmount] = useState("");
-  const [rate, setRate] = useState("");
+  const [interest, setInterest] = useState("");
   const [years, setYears] = useState("");
   const [result, setResult] = useState(null);
 
@@ -28,8 +29,9 @@ export default function LoanCalculator() {
 
   const calculateLoan = (e) => {
     e.preventDefault();
+
     const P = parseFloat(amount);
-    const R = parseFloat(rate);
+    const R = parseFloat(interest);
     const Y = parseFloat(years);
 
     if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
@@ -37,61 +39,68 @@ export default function LoanCalculator() {
       return;
     }
 
-    const totalInterest = Math.round((P * R * Y) / 100);
-    const totalPayment = Math.round(P + totalInterest);
-    const monthlyPayment = Math.round(totalPayment / (Y * 12));
+    const totalInterest = (P * R * Y) / 100;
+    const totalPayment = P + totalInterest;
 
-    setResult({ monthlyPayment, totalInterest, totalPayment });
+    setResult({
+      loanAmount: P,
+      totalInterest,
+      totalPayment,
+    });
   };
 
   const resetForm = () => {
     setAmount("");
-    setRate("");
+    setInterest("");
     setYears("");
     setResult(null);
-  };
-
-  const fields = [
-    { type: "number", placeholder: "Loan Amount (Rs)", value: amount, onChange: (e) => setAmount(e.target.value), required: true },
-    { type: "number", step: "0.01", placeholder: "Interest Rate (%)", value: rate, onChange: (e) => setRate(e.target.value), required: true },
-    { type: "number", placeholder: "Loan Duration (Years)", value: years, onChange: (e) => setYears(e.target.value), required: true },
-  ];
-
-  const jsonLD = {
-    "@context": "https://schema.org",
-    "@type": "FinancialProduct",
-    name: "Loan Calculator",
-    description: "Calculate monthly loan payment, total interest, and total payment for loans in Nepal.",
-    url: "https://finance-tools-mu.vercel.app/tools/loan",
-    applicationCategory: "FinanceApplication",
-    areaServed: { "@type": "Country", name: "Nepal" },
-    provider: { "@type": "Organization", name: "ToolFinance" },
   };
 
   return (
     <>
       <Head>
         <title>Loan Calculator | ToolFinance</title>
-        <meta name="description" content="Calculate monthly loan payment, total interest, and total payment using our Loan Calculator for Nepal." />
-        <link rel="canonical" href="https://finance-tools-mu.vercel.app/tools/loan" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }} />
+        <meta
+          name="description"
+          content="Calculate total loan repayment and interest amount easily."
+        />
+        <link
+          rel="canonical"
+          href="https://finance-tools-mu.vercel.app/tools/loan"
+        />
       </Head>
 
       <div className="container">
         <h1>🏦 Loan Calculator</h1>
-        <p style={{ textAlign: "center", marginBottom: "25px" }}>
-          Calculate your monthly loan payment, total interest, and total payable amount.
-        </p>
 
-        <CalculatorForm fields={fields} onSubmit={calculateLoan} onReset={resetForm} />
-
-        {result && <ResultBox title="📊 Loan Summary" results={result} formatCurrency={nepaliCurrency} />}
+        <CalculatorForm onSubmit={calculateLoan} onReset={resetForm}>
+          <CalculatorInput
+            placeholder="Loan Amount (Rs)"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
+          <CalculatorInput
+            step="0.01"
+            placeholder="Interest Rate (% per year)"
+            value={interest}
+            onChange={(e) => setInterest(e.target.value)}
+          />
+          <CalculatorInput
+            placeholder="Duration (Years)"
+            value={years}
+            onChange={(e) => setYears(e.target.value)}
+          />
+        </CalculatorForm>
 
         <AdPlaceholder />
 
-        <Link href="/blog/loan-calculator-guide" className="read-guide-card">
-          📖 Read Loan Calculator Guide
-        </Link>
+        {result && (
+          <ResultBox
+            title="📊 Loan Summary"
+            results={result}
+            formatCurrency={nepaliCurrency}
+          />
+        )}
       </div>
     </>
   );
