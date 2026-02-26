@@ -1,132 +1,83 @@
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import CalculatorForm from "../../components/CalculatorForm";
+import ResultBox from "../../components/ResultBox";
 import AdPlaceholder from "../../components/AdPlaceholder";
 
 export default function FuelCalculator() {
   const [distance, setDistance] = useState("");
-  const [efficiency, setEfficiency] = useState("");
-  const [fuelPrice, setFuelPrice] = useState("");
+  const [mileage, setMileage] = useState("");
+  const [price, setPrice] = useState("");
   const [result, setResult] = useState(null);
 
   const calculateFuel = (e) => {
     e.preventDefault();
-    const D = parseFloat(distance);
-    const E = parseFloat(efficiency);
-    const P = parseFloat(fuelPrice);
 
-    if (D <= 0 || E <= 0 || P <= 0) {
+    const D = parseFloat(distance);
+    const M = parseFloat(mileage);
+    const P = parseFloat(price);
+
+    if (D <= 0 || M <= 0 || P <= 0) {
       alert("⚠️ Please enter valid values");
       return;
     }
 
-    const fuelUsed = D / E;
-    const totalCost = fuelUsed * P;
-    setResult({ fuelUsed, totalCost });
+    const fuelNeeded = (D * M) / 100;
+    const totalCost = Math.round(fuelNeeded * P);
+
+    setResult({
+      fuelNeeded: fuelNeeded.toFixed(2) + " L",
+      totalCost: "Rs. " + totalCost.toLocaleString(),
+    });
   };
 
   const resetForm = () => {
     setDistance("");
-    setEfficiency("");
-    setFuelPrice("");
+    setMileage("");
+    setPrice("");
     setResult(null);
   };
 
+  const fields = [
+    { type: "number", placeholder: "Distance (KM)", value: distance, onChange: (e) => setDistance(e.target.value), required: true },
+    { type: "number", placeholder: "Mileage (L / 100km)", value: mileage, onChange: (e) => setMileage(e.target.value), required: true },
+    { type: "number", placeholder: "Fuel Price (Rs/L)", value: price, onChange: (e) => setPrice(e.target.value), required: true },
+  ];
+
   const jsonLD = {
     "@context": "https://schema.org",
-    "@type": "FinancialProduct",
+    "@type": "SoftwareApplication",
     name: "Fuel Cost Calculator",
-    description: "Calculate fuel cost for your trip using distance, mileage, and fuel price in Nepal.",
+    description: "Estimate fuel consumption and total fuel cost for your trip in Nepal.",
     url: "https://finance-tools-mu.vercel.app/tools/fuel",
     applicationCategory: "FinanceApplication",
-    provider: { "@type": "Organization", name: "ToolFinance", url: "https://finance-tools-mu.vercel.app" },
   };
 
   return (
     <>
       <Head>
         <title>Fuel Cost Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Use our Fuel Calculator to estimate fuel consumption and total cost for your trip. Perfect for vehicle owners in Nepal."
-        />
-        <meta
-          name="keywords"
-          content="Fuel calculator, fuel cost calculator, mileage calculator, trip cost, Nepal, ToolFinance"
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/fuel"
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
-        />
+        <meta name="description" content="Estimate fuel consumption and fuel cost using our Fuel Cost Calculator." />
+        <link rel="canonical" href="https://finance-tools-mu.vercel.app/tools/fuel" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }} />
       </Head>
 
       <div className="container">
         <h1>⛽ Fuel Cost Calculator</h1>
         <p style={{ textAlign: "center", marginBottom: "25px" }}>
-          Enter your travel distance, vehicle mileage, and fuel price to calculate your fuel consumption and total cost.
+          Calculate fuel consumption and total cost for your trip.
         </p>
 
-        <form onSubmit={calculateFuel} className="form-box">
-          <input
-            type="number"
-            placeholder="Distance (km)"
-            value={distance}
-            onChange={(e) => setDistance(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            step="0.01"
-            placeholder="Vehicle Mileage (km/l)"
-            value={efficiency}
-            onChange={(e) => setEfficiency(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            step="0.01"
-            placeholder="Fuel Price (Rs/l)"
-            value={fuelPrice}
-            onChange={(e) => setFuelPrice(e.target.value)}
-            required
-          />
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button type="submit" style={{ flex: 1 }}>Calculate</button>
-            <button
-              type="button"
-              onClick={resetForm}
-              style={{ flex: 1, background: "#f0e68c", color: "#0a2a66" }}
-            >
-              Reset
-            </button>
-          </div>
-        </form>
+        <CalculatorForm fields={fields} onSubmit={calculateFuel} onReset={resetForm} />
 
-        {/* ✅ Ad Placeholder */}
+        {result && <ResultBox title="📊 Fuel Summary" results={result} />}
+
         <AdPlaceholder />
 
-        {result && (
-          <div className="result-box">
-            <h2>📊 Fuel Summary</h2>
-            <p><strong>Fuel Used:</strong> {result.fuelUsed.toFixed(2)} L</p>
-            <p><strong>Total Cost:</strong> Rs. {result.totalCost.toFixed(2)}</p>
-          </div>
-        )}
-
-        <div>
-          <Link
-            href="/blog/fuel-calculator-guide"
-            title="Read full Fuel Calculator Guide"
-            aria-label="Read full Fuel Calculator Guide"
-            className="read-guide-card"
-          >
-            📖 Read Full Fuel Calculator Guide
-          </Link>
-        </div>
+        <Link href="/blog/fuel-calculator-guide" className="read-guide-card">
+          📖 Read Fuel Cost Guide
+        </Link>
       </div>
     </>
   );

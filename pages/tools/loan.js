@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import CalculatorForm from "../../components/CalculatorForm";
+import ResultBox from "../../components/ResultBox";
 import AdPlaceholder from "../../components/AdPlaceholder";
 
 export default function LoanCalculator() {
-  const [principal, setPrincipal] = useState("");
+  const [amount, setAmount] = useState("");
   const [rate, setRate] = useState("");
   const [years, setYears] = useState("");
   const [result, setResult] = useState(null);
@@ -26,7 +28,7 @@ export default function LoanCalculator() {
 
   const calculateLoan = (e) => {
     e.preventDefault();
-    const P = parseFloat(principal);
+    const P = parseFloat(amount);
     const R = parseFloat(rate);
     const Y = parseFloat(years);
 
@@ -35,121 +37,61 @@ export default function LoanCalculator() {
       return;
     }
 
-    const N = Y * 12;
-    const monthlyRate = R / (12 * 100);
-    const emi = Math.round(
-      (P * monthlyRate * Math.pow(1 + monthlyRate, N)) /
-        (Math.pow(1 + monthlyRate, N) - 1)
-    );
-    const totalPayment = Math.round(emi * N);
-    const totalInterest = Math.round(totalPayment - P);
+    const totalInterest = Math.round((P * R * Y) / 100);
+    const totalPayment = Math.round(P + totalInterest);
+    const monthlyPayment = Math.round(totalPayment / (Y * 12));
 
-    setResult({ emi, totalPayment, totalInterest });
+    setResult({ monthlyPayment, totalInterest, totalPayment });
   };
 
   const resetForm = () => {
-    setPrincipal("");
+    setAmount("");
     setRate("");
     setYears("");
     setResult(null);
   };
 
+  const fields = [
+    { type: "number", placeholder: "Loan Amount (Rs)", value: amount, onChange: (e) => setAmount(e.target.value), required: true },
+    { type: "number", step: "0.01", placeholder: "Interest Rate (%)", value: rate, onChange: (e) => setRate(e.target.value), required: true },
+    { type: "number", placeholder: "Loan Duration (Years)", value: years, onChange: (e) => setYears(e.target.value), required: true },
+  ];
+
   const jsonLD = {
     "@context": "https://schema.org",
     "@type": "FinancialProduct",
     name: "Loan Calculator",
-    description:
-      "Calculate your loan EMI, total payment, and interest using our simple Loan calculator for Nepal loans.",
+    description: "Calculate monthly loan payment, total interest, and total payment for loans in Nepal.",
     url: "https://finance-tools-mu.vercel.app/tools/loan",
     applicationCategory: "FinanceApplication",
-    provider: { "@type": "Organization", name: "ToolFinance", url: "https://finance-tools-mu.vercel.app" },
+    areaServed: { "@type": "Country", name: "Nepal" },
+    provider: { "@type": "Organization", name: "ToolFinance" },
   };
 
   return (
     <>
       <Head>
         <title>Loan Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Use our Loan Calculator to calculate monthly EMI, total payment, and interest. Ideal for planning loans in Nepal."
-        />
-        <meta
-          name="keywords"
-          content="Loan calculator, EMI calculator, monthly installment, interest calculation, Nepal loans, ToolFinance"
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/loan"
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
-        />
+        <meta name="description" content="Calculate monthly loan payment, total interest, and total payment using our Loan Calculator for Nepal." />
+        <link rel="canonical" href="https://finance-tools-mu.vercel.app/tools/loan" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }} />
       </Head>
 
       <div className="container">
         <h1>🏦 Loan Calculator</h1>
         <p style={{ textAlign: "center", marginBottom: "25px" }}>
-          Enter your loan amount, interest rate, and duration to calculate your monthly payment, total payment, and total interest.
+          Calculate your monthly loan payment, total interest, and total payable amount.
         </p>
 
-        <form onSubmit={calculateLoan} className="form-box">
-          <input
-            type="number"
-            placeholder="Loan Amount (Rs)"
-            value={principal}
-            onChange={(e) => setPrincipal(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            step="0.01"
-            placeholder="Interest Rate (%)"
-            value={rate}
-            onChange={(e) => setRate(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Duration (Years)"
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            required
-          />
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button type="submit" style={{ flex: 1 }}>Calculate</button>
-            <button
-              type="button"
-              onClick={resetForm}
-              style={{ flex: 1, background: "#f0e68c", color: "#0a2a66" }}
-            >
-              Reset
-            </button>
-          </div>
-        </form>
+        <CalculatorForm fields={fields} onSubmit={calculateLoan} onReset={resetForm} />
 
-        {/* ✅ Ad Placeholder */}
+        {result && <ResultBox title="📊 Loan Summary" results={result} formatCurrency={nepaliCurrency} />}
+
         <AdPlaceholder />
 
-        {result && (
-          <div className="result-box">
-            <h2>📊 Loan Summary</h2>
-            <p><strong>Monthly EMI:</strong> Rs. {nepaliCurrency(result.emi)}</p>
-            <p><strong>Total Payment:</strong> Rs. {nepaliCurrency(result.totalPayment)}</p>
-            <p><strong>Total Interest:</strong> Rs. {nepaliCurrency(result.totalInterest)}</p>
-          </div>
-        )}
-
-        <div>
-          <Link
-            href="/blog/loan-calculator-guide"
-            title="Read full Loan Calculator Guide"
-            aria-label="Read full Loan Calculator Guide"
-            className="read-guide-card"
-          >
-            📖 Read Full Loan Calculator Guide
-          </Link>
-        </div>
+        <Link href="/blog/loan-calculator-guide" className="read-guide-card">
+          📖 Read Loan Calculator Guide
+        </Link>
       </div>
     </>
   );

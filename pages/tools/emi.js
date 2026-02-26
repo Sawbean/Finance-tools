@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import CalculatorForm from "../../components/CalculatorForm";
+import ResultBox from "../../components/ResultBox";
 import AdPlaceholder from "../../components/AdPlaceholder";
 
 export default function EMICalculator() {
@@ -9,6 +11,7 @@ export default function EMICalculator() {
   const [years, setYears] = useState("");
   const [result, setResult] = useState(null);
 
+  // Nepali currency formatting
   const nepaliCurrency = (num) => {
     num = Math.round(num);
     let str = num.toString();
@@ -24,6 +27,7 @@ export default function EMICalculator() {
     return parts.join(",") + "," + lastThree;
   };
 
+  // EMI calculation
   const calculateEMI = (e) => {
     e.preventDefault();
     const P = parseFloat(principal);
@@ -37,10 +41,7 @@ export default function EMICalculator() {
 
     const N = Y * 12;
     const monthlyRate = R / (12 * 100);
-    const emi = Math.round(
-      (P * monthlyRate * Math.pow(1 + monthlyRate, N)) /
-        (Math.pow(1 + monthlyRate, N) - 1)
-    );
+    const emi = Math.round((P * monthlyRate * Math.pow(1 + monthlyRate, N)) / (Math.pow(1 + monthlyRate, N) - 1));
     const totalPayment = Math.round(emi * N);
     const totalInterest = Math.round(totalPayment - P);
 
@@ -54,13 +55,19 @@ export default function EMICalculator() {
     setResult(null);
   };
 
-  // JSON-LD structured data for Google Rich Results
+  // Form fields for modular CalculatorForm
+  const fields = [
+    { type: "number", placeholder: "Loan Amount (Rs)", value: principal, onChange: (e) => setPrincipal(e.target.value), required: true },
+    { type: "number", step: "0.01", placeholder: "Interest Rate (%)", value: rate, onChange: (e) => setRate(e.target.value), required: true },
+    { type: "number", placeholder: "Duration (Years)", value: years, onChange: (e) => setYears(e.target.value), required: true },
+  ];
+
+  // JSON-LD structured data for SEO
   const jsonLD = {
     "@context": "https://schema.org",
     "@type": "FinancialProduct",
     name: "EMI Calculator",
-    description:
-      "Calculate your monthly EMI, total payment, and interest using our EMI calculator for loans in Nepal.",
+    description: "Calculate your monthly EMI, total payment, and interest using our EMI calculator for loans in Nepal.",
     url: "https://finance-tools-mu.vercel.app/tools/emi",
     applicationCategory: "FinanceApplication",
     areaServed: { "@type": "Country", name: "Nepal" },
@@ -73,22 +80,10 @@ export default function EMICalculator() {
     <>
       <Head>
         <title>EMI Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Calculate your monthly EMI, total payment, and interest using our EMI calculator. Perfect for loans in Nepal."
-        />
-        <meta
-          name="keywords"
-          content="EMI calculator, loan EMI, monthly installment, finance calculator, Nepal loans, ToolFinance"
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/emi"
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
-        />
+        <meta name="description" content="Calculate your monthly EMI, total payment, and interest using our EMI calculator. Perfect for loans in Nepal." />
+        <meta name="keywords" content="EMI calculator, loan EMI, monthly installment, finance calculator, Nepal loans, ToolFinance" />
+        <link rel="canonical" href="https://finance-tools-mu.vercel.app/tools/emi" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }} />
       </Head>
 
       <div className="container">
@@ -97,61 +92,18 @@ export default function EMICalculator() {
           Enter your loan details below to calculate your monthly EMI, total payment, and total interest.
         </p>
 
-        <form onSubmit={calculateEMI} className="form-box">
-          <input
-            type="number"
-            placeholder="Loan Amount (Rs)"
-            value={principal}
-            onChange={(e) => setPrincipal(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            step="0.01"
-            placeholder="Interest Rate (%)"
-            value={rate}
-            onChange={(e) => setRate(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Duration (Years)"
-            value={years}
-            onChange={(e) => setYears(e.target.value)}
-            required
-          />
-          <div style={{ display: "flex", gap: "10px" }}>
-            <button type="submit" style={{ flex: 1 }}>Calculate</button>
-            <button
-              type="button"
-              onClick={resetForm}
-              style={{ flex: 1, background: "#f0e68c", color: "#0a2a66" }}
-            >
-              Reset
-            </button>
-          </div>
-        </form>
+        {/* Modular Calculator Form */}
+        <CalculatorForm fields={fields} onSubmit={calculateEMI} onReset={resetForm} />
 
-        {/* ✅ Ad Placeholder */}
+        {/* Modular Result Box */}
+        {result && <ResultBox title="📊 EMI Summary" results={result} formatCurrency={nepaliCurrency} />}
+
+        {/* Ad placeholder */}
         <AdPlaceholder />
 
-        {result && (
-          <div className="result-box">
-            <h2>📊 EMI Summary</h2>
-            <p><strong>Monthly EMI:</strong> Rs. {nepaliCurrency(result.emi)}</p>
-            <p><strong>Total Payment:</strong> Rs. {nepaliCurrency(result.totalPayment)}</p>
-            <p><strong>Total Interest:</strong> Rs. {nepaliCurrency(result.totalInterest)}</p>
-          </div>
-        )}
-
-        {/* Read Full Guide Link */}
+        {/* Internal link to blog */}
         <div>
-          <Link
-            href="/blog/emi-calculator-guide"
-            title="Read full EMI Calculator Guide"
-            aria-label="Read full EMI Calculator Guide"
-            className="read-guide-card"
-          >
+          <Link href="/blog/emi-calculator-guide" className="read-guide-card" title="Read full EMI Calculator Guide">
             📖 Read Full EMI Calculator Guide
           </Link>
         </div>
