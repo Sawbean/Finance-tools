@@ -95,6 +95,46 @@ h3 {
 }
 
 /* ------------------------------
+   Header (Mobile)
+------------------------------ */
+
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0a2a66;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    display: none;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .header-container {
+    position: relative;
+  }
+}
+
+/* ------------------------------
    Forms
 ------------------------------ */
 .form-box {
