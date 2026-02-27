@@ -15,6 +15,7 @@ export default function Footer() {
         {/* Quick Links */}
         <div className="footer-column">
           <h4>Quick Links</h4>
+          
           <Link href="/tools/emi">EMI Calculator</Link>
           <Link href="/tools/loan">Loan Calculator</Link>
           <Link href="/tools/fuel">Fuel Calculator</Link>
@@ -24,6 +25,7 @@ export default function Footer() {
         {/* Legal */}
         <div className="footer-column">
           <h4>Legal</h4>
+          <Link href="/about">About Us</Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
           <Link href="/terms">Terms & Conditions</Link>
           <Link href="/disclaimer">Disclaimer</Link>
