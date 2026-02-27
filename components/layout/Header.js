@@ -1,34 +1,44 @@
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleTools = () => setToolsOpen(!toolsOpen);
 
   return (
     <header className="site-header">
       <div className="header-container">
+        {/* Logo */}
         <div className="logo">
           <Link href="/">ToolFinance</Link>
         </div>
 
-        {/* Hamburger (mobile only) */}
-        <button
-          className="menu-toggle"
-          aria-label="Toggle navigation"
-          onClick={() => setOpen(!open)}
-        >
+        {/* Mobile Menu Toggle */}
+        <button className="menu-toggle" onClick={toggleMenu}>
           ☰
         </button>
 
-        <nav className={`nav-links ${open ? "open" : ""}`}>
-          <Link href="/" onClick={() => setOpen(false)}>Home</Link>
-          <Link href="/tools/emi" onClick={() => setOpen(false)}>EMI</Link>
-          <Link href="/tools/loan" onClick={() => setOpen(false)}>Loan</Link>
-          <Link href="/tools/fuel" onClick={() => setOpen(false)}>Fuel</Link>
-          <Link href="/blog" onClick={() => setOpen(false)}>Blog</Link>
-          <Link href="/about" onClick={() => setOpen(false)}>About</Link>
-          <Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
-          <Link href="/contact" onClick={() => setOpen(false)}>Disclaimer</Link>
+        {/* Navigation */}
+        <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
+          <Link href="/">Home</Link>
+
+          {/* Tools Dropdown */}
+          <div className="tools-dropdown">
+            <button className="tools-btn" onClick={toggleTools}>
+              Tools ▼
+            </button>
+            <div className={`tools-menu ${toolsOpen ? "open" : ""}`}>
+              <Link href="/tools/emi">EMI Calculator</Link>
+              <Link href="/tools/loan">Loan Calculator</Link>
+              <Link href="/tools/fuel">Fuel Calculator</Link>
+              {/* Future calculators */}
+            </div>
+          </div>
+
+          <Link href="/blog">Blog</Link>
         </nav>
       </div>
     </header>

@@ -58,7 +58,7 @@ h3 {
 }
 
 /* ===============================
-   HEADER (DESKTOP)
+   HEADER (DESKTOP + MOBILE)
 ================================ */
 .site-header {
   width: 100%;
@@ -88,6 +88,7 @@ h3 {
 .nav-links {
   display: flex;
   gap: 18px;
+  align-items: center;
 }
 
 .nav-links a {
@@ -99,9 +100,59 @@ h3 {
   color: #0a2a66;
 }
 
-/* ===============================
-   HEADER (MOBILE)
-================================ */
+/* Tools dropdown for desktop */
+.tools-dropdown {
+  position: relative;
+}
+
+.tools-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+
+  color: #333;
+  padding: 0;
+}
+
+.tools-btn:hover {
+  color: #0a2a66;
+}
+
+.tools-menu {
+  display: none;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 6px;
+  flex-direction: column;
+  padding: 10px 0;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.tools-menu a {
+  padding: 8px 15px;
+  display: block;
+  color: #333;
+}
+
+.tools-menu a:hover {
+  background: #f0f0f0;
+  color: #0a2a66;
+}
+
+.tools-menu.open {
+  display: flex;
+}
+
+/* Mobile menu toggle */
 .menu-toggle {
   display: none;
   font-size: 26px;
@@ -132,6 +183,17 @@ h3 {
   .nav-links.open {
     display: flex;
   }
+
+  .tools-menu {
+    position: relative;
+    top: 0;
+    border: none;
+    padding: 0;
+  }
+
+  .tools-menu a {
+    padding-left: 0;
+  }
 }
 
 /* ===============================
@@ -152,7 +214,7 @@ h3 {
 .form-box input {
   width: 100%;
   padding: 12px;
-  font-size: 16px; /* prevents iOS zoom */
+  font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
@@ -301,22 +363,45 @@ h3 {
   overflow: hidden;
 }
 
+@media (max-width: 480px) {
+  .ad-container {
+    margin: 16px 0;
+  }
+}
+
 /* ===============================
-   FOOTER
+   FOOTER (CLEAN + MOBILE-FRIENDLY)
 ================================ */
 .site-footer {
   background: #0a2a66;
   color: #ffffff;
   margin-top: 60px;
+  padding: 40px 20px 20px;
 }
 
 .footer-container {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 40px 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 30px;
+}
+
+.footer-column h3,
+.footer-column h4 {
+  margin-bottom: 15px;
+}
+
+.footer-column p {
+  font-size: 14px;
+  color: #d9d9d9;
+}
+
+.footer-column a {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #ffffff;
 }
 
 .footer-column a:hover {
@@ -328,6 +413,30 @@ h3 {
   padding: 15px;
   background: #071a40;
   font-size: 13px;
+  margin-top: 30px;
+}
+
+/* Footer brand & description */
+.footer-brand {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.footer-description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #d9e2ff;
+  margin-bottom: 20px;
+}
+
+/* Mobile footer */
+@media (max-width: 480px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 /* ===============================
@@ -341,11 +450,10 @@ body.dark {
 body.dark .container,
 body.dark .tool-card,
 body.dark .blog-card,
-body.dark .result-box {
+body.dark .result-box,
+body.dark .read-guide-card,
+body.dark header,
+body.dark footer {
   background: #2a2a2a;
-}
-
-body.dark .read-guide-card {
-  background: #333;
   color: #f0e68c;
 }
