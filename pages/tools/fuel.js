@@ -1,58 +1,45 @@
 import { useState } from "react";
 import Head from "next/head";
+import Link from "next/link";
 
-import CalculatorForm from "../../components/CalculatorForm";
-import CalculatorInput from "../../components/CalculatorInput";
-import ResultBox from "../../components/ResultBox";
-import AdPlaceholder from "../../components/AdPlaceholder";
+import CalculatorForm from "../../components/calculator/CalculatorForm";
+import CalculatorInput from "../../components/calculator/CalculatorInput";
+import ResultBox from "../../components/calculator/ResultBox";
+import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function FuelCalculator() {
   const [distance, setDistance] = useState("");
   const [mileage, setMileage] = useState("");
-  const [fuelPrice, setFuelPrice] = useState("");
+  const [price, setPrice] = useState("");
   const [result, setResult] = useState(null);
 
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
-  };
+  const formatCurrency = (num) => Math.round(num).toLocaleString("en-IN");
 
-  const calculateFuelCost = (e) => {
+  const calculateFuel = (e) => {
     e.preventDefault();
 
-    const D = parseFloat(distance);
-    const M = parseFloat(mileage);
-    const P = parseFloat(fuelPrice);
+    const D = +distance;
+    const M = +mileage;
+    const P = +price;
 
     if (D <= 0 || M <= 0 || P <= 0) {
-      alert("⚠️ Please enter valid values");
+      alert("Enter valid values");
       return;
     }
 
-    const fuelRequired = D / M;
-    const totalCost = fuelRequired * P;
+    const fuelNeeded = D / M;
+    const totalCost = fuelNeeded * P;
 
     setResult({
-      distance: `${D} km`,
-      fuelRequired: `${fuelRequired.toFixed(2)} liters`,
-      totalCost,
+      fuelRequired: `${fuelNeeded.toFixed(2)} liters`,
+      totalCost: Math.round(totalCost),
     });
   };
 
   const resetForm = () => {
     setDistance("");
     setMileage("");
-    setFuelPrice("");
+    setPrice("");
     setResult(null);
   };
 
@@ -62,7 +49,7 @@ export default function FuelCalculator() {
         <title>Fuel Cost Calculator | ToolFinance</title>
         <meta
           name="description"
-          content="Calculate fuel cost for your trip based on distance, mileage, and fuel price."
+          content="Calculate fuel consumption and travel cost in Nepal."
         />
         <link
           rel="canonical"
@@ -73,21 +60,21 @@ export default function FuelCalculator() {
       <div className="container">
         <h1>⛽ Fuel Cost Calculator</h1>
 
-        <CalculatorForm onSubmit={calculateFuelCost} onReset={resetForm}>
+        <CalculatorForm onSubmit={calculateFuel} onReset={resetForm}>
           <CalculatorInput
-            placeholder="Distance (km)"
+            label="Distance (KM)"
             value={distance}
-            onChange={(e) => setDistance(e.target.value)}
+            onChange={setDistance}
           />
           <CalculatorInput
-            placeholder="Mileage (km per liter)"
+            label="Mileage (KM/L)"
             value={mileage}
-            onChange={(e) => setMileage(e.target.value)}
+            onChange={setMileage}
           />
           <CalculatorInput
-            placeholder="Fuel Price (Rs per liter)"
-            value={fuelPrice}
-            onChange={(e) => setFuelPrice(e.target.value)}
+            label="Fuel Price (Rs/L)"
+            value={price}
+            onChange={setPrice}
           />
         </CalculatorForm>
 
@@ -95,11 +82,15 @@ export default function FuelCalculator() {
 
         {result && (
           <ResultBox
-            title="📊 Fuel Cost Summary"
+            title="Fuel Cost Summary"
             results={result}
-            formatCurrency={nepaliCurrency}
+            formatCurrency={formatCurrency}
           />
         )}
+
+        <Link href="/blog/fuel-calculator-guide" className="read-guide-card">
+          📖 Read Fuel Calculator Guide
+        </Link>
       </div>
     </>
   );

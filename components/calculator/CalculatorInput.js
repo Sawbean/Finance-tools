@@ -1,4 +1,5 @@
 export default function CalculatorInput({
+  label,
   type = "number",
   step,
   placeholder,
@@ -10,9 +11,9 @@ export default function CalculatorInput({
     <input
       type={type}
       step={step}
-      placeholder={placeholder}
+      placeholder={placeholder || label}
       value={value}
-      onChange={onChange}
+      onChange={(e) => onChange(e.target.value)}
       required={required}
     />
   );

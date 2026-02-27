@@ -3,11 +3,9 @@ export default function ResultBox({ title, results, formatCurrency }) {
     <div className="result-box">
       <h2>{title}</h2>
 
-      {Object.entries(results).map(([label, value]) => (
-        <p key={label}>
-          <strong>
-            {label.replace(/([A-Z])/g, " $1")}:
-          </strong>{" "}
+      {Object.entries(results).map(([key, value]) => (
+        <p key={key}>
+          <strong>{key.replace(/([A-Z])/g, " $1")}:</strong>{" "}
           {typeof value === "number" && formatCurrency
             ? `Rs. ${formatCurrency(value)}`
             : value}

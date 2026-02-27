@@ -1,18 +1,19 @@
 import { useState } from "react";
 import Head from "next/head";
+import Link from "next/link";
 
-import CalculatorForm from "../../components/CalculatorForm";
-import CalculatorInput from "../../components/CalculatorInput";
-import ResultBox from "../../components/ResultBox";
-import AdPlaceholder from "../../components/AdPlaceholder";
+import CalculatorForm from "../../components/calculator/CalculatorForm";
+import CalculatorInput from "../../components/calculator/CalculatorInput";
+import ResultBox from "../../components/calculator/ResultBox";
+import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function LoanCalculator() {
   const [amount, setAmount] = useState("");
-  const [interest, setInterest] = useState("");
+  const [rate, setRate] = useState("");
   const [years, setYears] = useState("");
   const [result, setResult] = useState(null);
 
-  const nepaliCurrency = (num) => {
+  const formatCurrency = (num) => {
     num = Math.round(num);
     let str = num.toString();
     if (str.length <= 3) return str;
@@ -30,28 +31,28 @@ export default function LoanCalculator() {
   const calculateLoan = (e) => {
     e.preventDefault();
 
-    const P = parseFloat(amount);
-    const R = parseFloat(interest);
-    const Y = parseFloat(years);
+    const P = +amount;
+    const R = +rate;
+    const Y = +years;
 
     if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
-      alert("⚠️ Please enter valid values");
+      alert("Enter valid values");
       return;
     }
 
-    const totalInterest = (P * R * Y) / 100;
-    const totalPayment = P + totalInterest;
+    const interest = (P * R * Y) / 100;
+    const totalPayable = P + interest;
 
     setResult({
-      loanAmount: P,
-      totalInterest,
-      totalPayment,
+      principal: Math.round(P),
+      totalInterest: Math.round(interest),
+      totalPayable: Math.round(totalPayable),
     });
   };
 
   const resetForm = () => {
     setAmount("");
-    setInterest("");
+    setRate("");
     setYears("");
     setResult(null);
   };
@@ -62,7 +63,7 @@ export default function LoanCalculator() {
         <title>Loan Calculator | ToolFinance</title>
         <meta
           name="description"
-          content="Calculate total loan repayment and interest amount easily."
+          content="Calculate total interest and total payable loan amount in Nepal."
         />
         <link
           rel="canonical"
@@ -75,20 +76,20 @@ export default function LoanCalculator() {
 
         <CalculatorForm onSubmit={calculateLoan} onReset={resetForm}>
           <CalculatorInput
-            placeholder="Loan Amount (Rs)"
+            label="Loan Amount"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={setAmount}
           />
           <CalculatorInput
+            label="Interest Rate (%)"
             step="0.01"
-            placeholder="Interest Rate (% per year)"
-            value={interest}
-            onChange={(e) => setInterest(e.target.value)}
+            value={rate}
+            onChange={setRate}
           />
           <CalculatorInput
-            placeholder="Duration (Years)"
+            label="Loan Duration (Years)"
             value={years}
-            onChange={(e) => setYears(e.target.value)}
+            onChange={setYears}
           />
         </CalculatorForm>
 
@@ -96,11 +97,15 @@ export default function LoanCalculator() {
 
         {result && (
           <ResultBox
-            title="📊 Loan Summary"
+            title="Loan Summary"
             results={result}
-            formatCurrency={nepaliCurrency}
+            formatCurrency={formatCurrency}
           />
         )}
+
+        <Link href="/blog/loan-calculator-guide" className="read-guide-card">
+          📖 Read Loan Calculator Guide
+        </Link>
       </div>
     </>
   );

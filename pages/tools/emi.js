@@ -2,10 +2,10 @@ import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
-import CalculatorForm from "../../components/CalculatorForm";
-import CalculatorInput from "../../components/CalculatorInput";
-import ResultBox from "../../components/ResultBox";
-import AdPlaceholder from "../../components/AdPlaceholder";
+import CalculatorForm from "../../components/calculator/CalculatorForm";
+import CalculatorInput from "../../components/calculator/CalculatorInput";
+import ResultBox from "../../components/calculator/ResultBox";
+import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function EMICalculator() {
   const [principal, setPrincipal] = useState("");
