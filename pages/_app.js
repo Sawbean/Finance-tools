@@ -3,6 +3,7 @@ import '../styles/globals.css';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
+import Head from 'next/head';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 
@@ -10,7 +11,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   // Google Analytics ID
-  const GA_MEASUREMENT_ID = "G-XXXXXXXXXX"; // Replace with your real GA4 ID
+  const GA_MEASUREMENT_ID = "G-0GC10LBXEC";
 
   // Track page views on route change
   useEffect(() => {
@@ -30,11 +31,22 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      {/* ✅ Google Analytics Script */}
+      {/* Global SEO Meta */}
+      <Head>
+        <title>ToolFinance – Free Financial Calculators</title>
+        <meta
+          name="description"
+          content="ToolFinance provides free online financial calculators including EMI calculator, loan calculator, and fuel cost calculator to help you plan your finances easily."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+
+      {/* Google Analytics */}
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
       />
+
       <Script
         id="ga-init"
         strategy="afterInteractive"
@@ -50,11 +62,13 @@ function MyApp({ Component, pageProps }) {
         }}
       />
 
-      {/* Your App Layout */}
+      {/* Layout */}
       <Header />
+
       <main>
         <Component {...pageProps} />
       </main>
+
       <Footer />
     </>
   );
