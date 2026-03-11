@@ -1,21 +1,39 @@
-export default function CalculatorForm({ onSubmit, onReset, children }) {
+// components/calculator/CalculatorForm.js
+
+export default function CalculatorForm({
+  onSubmit,
+  onReset,
+  children,
+  adComponent = null, // optional ad
+}) {
   return (
-    <form onSubmit={onSubmit} className="form-box">
-      {children}
+    <>
+      <form onSubmit={onSubmit} className="form-box">
 
-      <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-        <button type="submit" style={{ flex: 1 }}>
-          Calculate
-        </button>
+        {children}
 
-        <button
-          type="button"
-          onClick={onReset}
-          style={{ flex: 1, background: "#f0e68c", color: "#0a2a66" }}
-        >
-          Reset
-        </button>
-      </div>
-    </form>
+        <div className="calculator-buttons">
+          <button type="submit" className="calc-btn">
+            Calculate
+          </button>
+
+          <button
+            type="button"
+            onClick={onReset}
+            className="reset-btn"
+          >
+            Reset
+          </button>
+        </div>
+
+      </form>
+
+      {/* Optional AdSense placement below buttons */}
+      {adComponent && (
+        <div className="calculator-ad">
+          {adComponent}
+        </div>
+      )}
+    </>
   );
 }

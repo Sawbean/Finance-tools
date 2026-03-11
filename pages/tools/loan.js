@@ -31,9 +31,9 @@ export default function LoanCalculator() {
   const calculateLoan = (e) => {
     e.preventDefault();
 
-    const P = +amount;
-    const R = +rate;
-    const Y = +years;
+    const P = parseFloat(amount) || 0;
+    const R = parseFloat(rate) || 0;
+    const Y = parseFloat(years) || 0;
 
     if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
       alert("Enter valid values");
@@ -76,20 +76,20 @@ export default function LoanCalculator() {
 
         <CalculatorForm onSubmit={calculateLoan} onReset={resetForm}>
           <CalculatorInput
-            label="Loan Amount"
+            placeholder="Loan Amount (Rs)"
             value={amount}
-            onChange={setAmount}
+            onChange={(val) => setAmount(val)}
           />
           <CalculatorInput
-            label="Interest Rate (%)"
             step="0.01"
+            placeholder="Interest Rate (%)"
             value={rate}
-            onChange={setRate}
+            onChange={(val) => setRate(val)}
           />
           <CalculatorInput
-            label="Loan Duration (Years)"
+            placeholder="Loan Duration (Years)"
             value={years}
-            onChange={setYears}
+            onChange={(val) => setYears(val)}
           />
         </CalculatorForm>
 

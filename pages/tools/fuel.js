@@ -18,9 +18,9 @@ export default function FuelCalculator() {
   const calculateFuel = (e) => {
     e.preventDefault();
 
-    const D = +distance;
-    const M = +mileage;
-    const P = +price;
+    const D = parseFloat(distance) || 0;
+    const M = parseFloat(mileage) || 0;
+    const P = parseFloat(price) || 0;
 
     if (D <= 0 || M <= 0 || P <= 0) {
       alert("Enter valid values");
@@ -62,19 +62,19 @@ export default function FuelCalculator() {
 
         <CalculatorForm onSubmit={calculateFuel} onReset={resetForm}>
           <CalculatorInput
-            label="Distance (KM)"
+            placeholder="Distance (KM)"
             value={distance}
-            onChange={setDistance}
+            onChange={(val) => setDistance(val)}
           />
           <CalculatorInput
-            label="Mileage (KM/L)"
+            placeholder="Mileage (KM/L)"
             value={mileage}
-            onChange={setMileage}
+            onChange={(val) => setMileage(val)}
           />
           <CalculatorInput
-            label="Fuel Price (Rs/L)"
+            placeholder="Fuel Price (Rs/L)"
             value={price}
-            onChange={setPrice}
+            onChange={(val) => setPrice(val)}
           />
         </CalculatorForm>
 

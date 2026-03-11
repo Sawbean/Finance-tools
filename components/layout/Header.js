@@ -1,27 +1,20 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
-  const router = useRouter();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleTools = () => setToolsOpen(!toolsOpen);
 
-  // Close menu when user navigates
-  useEffect(() => {
-    const handleRouteChange = () => {
-      setMenuOpen(false);
-      setToolsOpen(false);
-    };
-    router.events.on("routeChangeComplete", handleRouteChange);
-    return () => router.events.off("routeChangeComplete", handleRouteChange);
-  }, [router.events]);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setToolsOpen(false);
+  };
 
   return (
-    <header className={`site-header ${menuOpen ? "menu-active" : ""}`}>
+    <header className="site-header">
       <div className="header-container">
         {/* Logo */}
         <div className="logo">
@@ -29,33 +22,32 @@ export default function Header() {
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+        <button className="menu-toggle" onClick={toggleMenu}>
           ☰
         </button>
 
         {/* Navigation */}
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
-          <Link href="/">Home</Link>
+          <Link href="/" onClick={closeMenu}>Home</Link>
 
           {/* Tools Dropdown */}
           <div className="tools-dropdown">
-            <button className="tools-btn" onClick={toggleTools}>
-              Tools ▼
+            <button className={`tools-btn ${toolsOpen ? "open" : ""}`} onClick={toggleTools}>
+              Tools
+              <svg viewBox="0 0 10 10" fill="currentColor">
+                <polygon points="0,0 10,0 5,6" />
+              </svg>
             </button>
             <div className={`tools-menu ${toolsOpen ? "open" : ""}`}>
-              <Link href="/tools/emi">EMI Calculator</Link>
-              <Link href="/tools/loan">Loan Calculator</Link>
-              <Link href="/tools/fuel">Fuel Calculator</Link>
+              <Link href="/tools/emi" onClick={closeMenu}>EMI Calculator</Link>
+              <Link href="/tools/loan" onClick={closeMenu}>Loan Calculator</Link>
+              <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
             </div>
           </div>
 
-          <Link href="/blog">Blog</Link>
-          <Link href="/about">About Us</Link>
+          <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
       </div>
-
-      {/* Overlay when menu is open */}
-      {menuOpen && <div className="menu-overlay" onClick={() => setMenuOpen(false)} />}
     </header>
   );
 }

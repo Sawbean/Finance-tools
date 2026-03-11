@@ -1,24 +1,23 @@
+// components/ads/AdPlaceholder.js
+
 import { useEffect } from "react";
 
-export default function AdPlaceholder() {
+export default function AdPlaceholder({ className = "" }) {
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      try {
+    try {
+      if (typeof window !== "undefined") {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {}
+      }
+    } catch (err) {
+      console.log("AdSense error:", err);
     }
   }, []);
 
   return (
-    <div style={{ margin: "25px 0", textAlign: "center" }}>
+    <div className={`ad-placeholder ${className}`}>
       <ins
         className="adsbygoogle"
-        style={{
-          display: "block",
-          width: "100%",
-          minHeight: "90px",
-          background: "#f0f0f0",
-        }}
+        style={{ display: "block" }}
         data-ad-client="ca-pub-XXXXXXXXXXXX"
         data-ad-slot="1234567890"
         data-ad-format="auto"

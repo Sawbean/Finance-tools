@@ -77,20 +77,23 @@ export default function EMICalculator() {
 
         <CalculatorForm onSubmit={calculateEMI} onReset={resetForm}>
           <CalculatorInput
+            label="Loan Amount"
             placeholder="Loan Amount (Rs)"
             value={principal}
-            onChange={(e) => setPrincipal(e.target.value)}
+            onChange={setPrincipal}
           />
           <CalculatorInput
+            label="Interest Rate (%)"
             step="0.01"
             placeholder="Interest Rate (%)"
             value={rate}
-            onChange={(e) => setRate(e.target.value)}
+            onChange={setRate}
           />
           <CalculatorInput
+            label="Duration (Years)"
             placeholder="Duration (Years)"
             value={years}
-            onChange={(e) => setYears(e.target.value)}
+            onChange={setYears}
           />
         </CalculatorForm>
 
