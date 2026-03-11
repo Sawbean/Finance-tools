@@ -30,12 +30,12 @@ a {
 }
 
 /* ===============================
-   LAYOUT CONTAINER
+   LAYOUT CONTAINER (IMPROVED SPACING)
 ================================ */
 .container {
   max-width: 1000px;
-  margin: 40px auto;
-  padding: 30px;
+  margin: 60px auto;
+  padding: 40px;
   background: var(--card-bg);
   border-radius: 14px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
@@ -55,12 +55,12 @@ h3 { font-size: 1.2rem; }
 p { margin-bottom: 16px; }
 
 /* ===============================
-   HEADER (DESKTOP + MOBILE)
+   HEADER (PROFESSIONAL DESIGN)
 ================================ */
 .site-header {
   width: 100%;
-  background: var(--card-bg);
-  border-bottom: 1px solid var(--border-soft);
+  background: #0b1f4a;
+  border-bottom: 1px solid #081633;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -79,7 +79,7 @@ p { margin-bottom: 16px; }
 .logo a {
   font-size: 1.4rem;
   font-weight: bold;
-  color: var(--primary);
+  color: #ffffff;
 }
 
 .nav-links {
@@ -90,16 +90,23 @@ p { margin-bottom: 16px; }
 
 .nav-links a {
   font-weight: 500;
-  color: #333;
+  color: #ffffff;
   font-size: 16px;
-  transition: all 0.25s ease;
 }
 
 .nav-links a:hover {
-  color: var(--primary);
+  color: #f0e68c;
 }
 
-/* Tools dropdown */
+/* active page highlight */
+.nav-links a.active {
+  color: #f0e68c;
+}
+
+/* ===============================
+   TOOLS DROPDOWN (IMPROVED)
+================================ */
+
 .tools-dropdown {
   position: relative;
 }
@@ -111,16 +118,14 @@ p { margin-bottom: 16px; }
   font-family: inherit;
   font-size: 1rem;
   font-weight: 500;
-  line-height: 1.5;
-  color: #333;
-  padding: 0 6px;
+  color: #ffffff;
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
 .tools-btn:hover {
-  color: var(--primary);
+  color: #f0e68c;
 }
 
 .tools-btn svg {
@@ -138,58 +143,66 @@ p { margin-bottom: 16px; }
   position: absolute;
   top: 36px;
   left: 0;
-  background: var(--hover-bg);
-  border: 1px solid var(--border-soft);
+  background: #0b1f4a;
+  border: 1px solid #081633;
   border-radius: 8px;
   flex-direction: column;
   padding: 6px 0;
   min-width: 190px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.10);
-  z-index: 1000;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 
 .tools-menu a {
   padding: 10px 16px;
   font-size: 14px;
   display: block;
-  color: #333;
-  transition: all 0.25s ease;
+  color: #ffffff;
 }
 
 .tools-menu a:hover {
-  background: var(--card-bg);
-  color: var(--primary);
+  background: #142d66;
+  color: #f0e68c;
 }
 
-.tools-menu.open { display: flex; }
+.tools-menu.open {
+  display: flex;
+}
 
-/* Mobile menu toggle */
+/* ===============================
+   MOBILE MENU
+================================ */
+
 .menu-toggle {
   display: none;
   font-size: 26px;
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--primary);
+  color: #ffffff;
 }
 
 @media (max-width: 768px) {
-  .menu-toggle { display: block; }
+
+  .menu-toggle {
+    display: block;
+  }
 
   .nav-links {
     position: absolute;
     top: 70px;
     left: 0;
     right: 0;
-    background: var(--soft-bg);
+    background: #0b1f4a;
     flex-direction: column;
     align-items: flex-start;
     gap: 18px;
-    padding: 28px 26px;
-    border-bottom: 1px solid var(--border-soft);
+    padding: 30px;
+    border-bottom: 1px solid #081633;
+
     transform: translateY(-10px);
     opacity: 0;
     pointer-events: none;
+
     transition: all 0.25s ease;
   }
 
@@ -199,21 +212,43 @@ p { margin-bottom: 16px; }
     pointer-events: all;
   }
 
+  .nav-links a {
+    font-size: 18px;
+  }
+
   .tools-menu {
     position: relative;
     top: 0;
     border: none;
-    padding: 0;
+    background: #142d66;
   }
+}
 
-  .tools-menu a {
-    padding-left: 0;
-  }
+/* ===============================
+   HOMEPAGE SEO SECTIONS
+================================ */
+
+.home-section-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.home-section-desc {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 30px auto;
+  color: #555;
+}
+
+.popular-tools {
+  margin-top: 20px;
 }
 
 /* ===============================
    TOOL CARD
 ================================ */
+
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -238,13 +273,14 @@ p { margin-bottom: 16px; }
 }
 
 .tool-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
 }
 
 /* ===============================
    BLOG CARD
 ================================ */
+
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -268,6 +304,7 @@ p { margin-bottom: 16px; }
 /* ===============================
    READ GUIDE CARD
 ================================ */
+
 .read-guide-card {
   margin: 20px auto 0;
   padding: 18px 25px;
@@ -287,9 +324,11 @@ p { margin-bottom: 16px; }
   transform: translateY(-4px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
 }
+
 /* ===============================
    FOOTER
 ================================ */
+
 .site-footer {
   background: var(--primary);
   color: #ffffff;
@@ -319,7 +358,6 @@ p { margin-bottom: 16px; }
   margin-bottom: 8px;
   font-size: 14px;
   opacity: 0.9;
-  transition: all 0.25s ease;
   color: #ffffff;
 }
 
@@ -344,27 +382,21 @@ p { margin-bottom: 16px; }
   border-radius: 0 0 14px 14px;
 }
 
-@media (max-width: 480px) {
-  .footer-container { grid-template-columns: 1fr; gap: 20px; }
-  .footer-brand { font-size: 18px; }
-  .footer-description { font-size: 13px; }
-}
-
 /* ===============================
    CALCULATOR FORM
 ================================ */
+
 .form-box {
   background: #ffffff;
   padding: 30px 28px;
   border-radius: 12px;
   border: 1px solid var(--border-soft);
   margin-top: 20px;
-  max-width: 520px;  /* consistent width for all tools */
+  max-width: 520px;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* hide labels (placeholder-only layout) */
 .form-box label {
   display: none;
 }
@@ -381,7 +413,6 @@ p { margin-bottom: 16px; }
   border: 1px solid var(--border-soft);
   font-size: 16px;
   background: #fff;
-  transition: 0.2s ease;
 }
 
 .calculator-input input:focus {
@@ -405,10 +436,7 @@ p { margin-bottom: 16px; }
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s ease;
 }
-
-.calc-btn:hover { opacity: 0.9; }
 
 .reset-btn {
   flex: 1;
@@ -421,11 +449,10 @@ p { margin-bottom: 16px; }
   cursor: pointer;
 }
 
-.reset-btn:hover { opacity: 0.9; }
-
 /* ===============================
    RESULT BOX
 ================================ */
+
 .result-box {
   margin-top: 25px;
   padding: 22px;
@@ -453,14 +480,13 @@ p { margin-bottom: 16px; }
 
 .result-label {
   font-weight: 600;
-  text-transform: capitalize; /* ensures Monthly EMI, Total Payment */
+  text-transform: capitalize;
 }
 
 .result-value {
   color: var(--primary);
   font-weight: 600;
 }
-
 
 /* ===============================
    AD PLACEHOLDER
