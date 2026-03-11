@@ -89,7 +89,7 @@ export default function FuelCalculator() {
         )}
 
         <Link href="/blog/fuel-calculator-guide" className="read-guide-card">
-          📖 Read Fuel Calculator Guide
+          📖 More About Fuel Costs
         </Link>
       </div>
     </>

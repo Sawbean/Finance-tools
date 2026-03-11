@@ -30,9 +30,9 @@ export default function EMICalculator() {
 
   const calculateEMI = (e) => {
     e.preventDefault();
-    const P = parseFloat(principal);
-    const R = parseFloat(rate);
-    const Y = parseFloat(years);
+    const P = parseFloat(principal) || 0;
+    const R = parseFloat(rate) || 0;
+    const Y = parseFloat(years) || 0;
 
     if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
       alert("⚠️ Please enter valid values");
@@ -77,23 +77,20 @@ export default function EMICalculator() {
 
         <CalculatorForm onSubmit={calculateEMI} onReset={resetForm}>
           <CalculatorInput
-            label="Loan Amount"
             placeholder="Loan Amount (Rs)"
             value={principal}
-            onChange={setPrincipal}
+            onChange={(val) => setPrincipal(val)}
           />
           <CalculatorInput
-            label="Interest Rate (%)"
             step="0.01"
             placeholder="Interest Rate (%)"
             value={rate}
-            onChange={setRate}
+            onChange={(val) => setRate(val)}
           />
           <CalculatorInput
-            label="Duration (Years)"
             placeholder="Duration (Years)"
             value={years}
-            onChange={setYears}
+            onChange={(val) => setYears(val)}
           />
         </CalculatorForm>
 
@@ -108,7 +105,7 @@ export default function EMICalculator() {
         )}
 
         <Link href="/blog/emi-calculator-guide" className="read-guide-card">
-          📖 Read Full EMI Calculator Guide
+          📖 More About EMI
         </Link>
       </div>
     </>

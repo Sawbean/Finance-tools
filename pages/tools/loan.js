@@ -104,7 +104,7 @@ export default function LoanCalculator() {
         )}
 
         <Link href="/blog/loan-calculator-guide" className="read-guide-card">
-          📖 Read Loan Calculator Guide
+          📖 More About Loan
         </Link>
       </div>
     </>
