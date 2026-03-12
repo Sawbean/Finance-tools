@@ -1,5 +1,23 @@
-/
- /tools/emi
- /tools/loan
- /tools/fuel
- /blog
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+<url>
+<loc>https://finance-tools-mu.vercel.app/</loc>
+</url>
+
+<url>
+<loc>https://finance-tools-mu.vercel.app/tools/emi</loc>
+</url>
+
+<url>
+<loc>https://finance-tools-mu.vercel.app/tools/loan</loc>
+</url>
+
+<url>
+<loc>https://finance-tools-mu.vercel.app/tools/fuel</loc>
+</url>
+
+<url>
+<loc>https://finance-tools-mu.vercel.app/blog</loc>
+</url>
+
+</urlset>

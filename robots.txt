@@ -1,5 +1,4 @@
-/
- /tools/emi
- /tools/loan
- /tools/fuel
- /blog
+User-agent: *
+Allow: /
+
+Sitemap: https://finance-tools-mu.vercel.app/sitemap.xml
