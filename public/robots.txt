@@ -1,4 +1,6 @@
+# robots.txt for ToolFinance
 User-agent: *
 Allow: /
 
+# Sitemap location
 Sitemap: https://finance-tools-mu.vercel.app/sitemap.xml
