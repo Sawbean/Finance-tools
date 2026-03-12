@@ -54,7 +54,7 @@ h2 { font-size: 1.6rem; }
 h3 { font-size: 1.2rem; }
 p { margin-bottom: 16px; }
 
-/* ===============================
+/* =============================== 
    HEADER (PROFESSIONAL DESIGN)
 ================================ */
 .site-header {
@@ -64,28 +64,42 @@ p { margin-bottom: 16px; }
   position: sticky;
   top: 0;
   z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  
+  /* 1. Set a fixed height for the blue bar */
+  height: 70px; 
 }
 
 .header-container {
   max-width: 1100px;
+  width: 100%;
   margin: 0 auto;
-  padding: 18px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  height: 100%; /* Keeps nav links centered in the 70px bar */
 }
 
 .logo a {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #ffffff;
+  display: flex;
+  align-items: flex-start;        /* ensures logo top aligns */
+  text-decoration: none;
+}
+
+.logo img {
+  height: 45px;                  /* increased logo height */
+  width: auto;                     /* maintain aspect ratio */
+  display: block;
 }
 
 .nav-links {
   display: flex;
   gap: 18px;
   align-items: center;
+  margin-top: 0px; /* vertically aligns links with larger logo */
 }
 
 .nav-links a {
@@ -98,11 +112,120 @@ p { margin-bottom: 16px; }
   color: #f0e68c;
 }
 
-/* active page highlight */
 .nav-links a.active {
   color: #f0e68c;
 }
 
+/* Tools dropdown */
+.tools-dropdown {
+  position: relative;
+}
+
+.tools-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tools-btn svg {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.3s ease;
+}
+
+.tools-btn.open svg {
+  transform: rotate(180deg);
+}
+
+.tools-menu {
+  display: none;
+  position: absolute;
+  top: 36px;
+  left: 0;
+  background: #0b1f4a;
+  border: 1px solid #081633;
+  border-radius: 8px;
+  flex-direction: column;
+  padding: 6px 0;
+  min-width: 190px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  z-index: 10;
+}
+
+.tools-menu a {
+  padding: 10px 16px;
+  font-size: 14px;
+  display: block;
+  color: #ffffff;
+}
+
+.tools-menu a:hover {
+  background: #142d66;
+  color: #f0e68c;
+}
+
+.tools-menu.open {
+  display: flex;
+}
+
+/* Mobile Menu */
+.menu-toggle {
+  display: none;
+  font-size: 26px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .logo img {
+    height: 100px; /* smaller logo for mobile */
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100px; /* adjusted for bigger logo */
+    right: 0;
+    left: 0;
+    background: #0b1f4a;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 30px;
+    border-bottom: 1px solid #081633;
+
+    transform: translateY(-10px);
+    opacity: 0;
+    pointer-events: none;
+
+    transition: all 0.25s ease;
+  }
+
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .tools-menu {
+    position: relative;
+    top: 0;
+    border: none;
+    background: #142d66;
+  }
+}
 /* ===============================
    TOOLS DROPDOWN (IMPROVED)
 ================================ */

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Header() {
@@ -16,23 +17,28 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="header-container">
-        {/* Logo */}
+        {/* Logo LEFT */}
         <div className="logo">
-          <Link href="/">ToolFinance</Link>
+          <Link href="/">
+            <Image
+              src="/images/finlogo.png"
+              alt="ToolFinance Logo"
+              height={110}   // Match your CSS height
+              width={165}    // Adjust width to keep your logo's shape
+              priority
+            />
+          </Link>
         </div>
 
-        {/* Mobile Menu Toggle */}
-        <button className="menu-toggle" onClick={toggleMenu}>
-          ☰
-        </button>
-
-        {/* Navigation */}
+        {/* Navigation RIGHT */}
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
-          {/* Tools Dropdown */}
           <div className="tools-dropdown">
-            <button className={`tools-btn ${toolsOpen ? "open" : ""}`} onClick={toggleTools}>
+            <button
+              className={`tools-btn ${toolsOpen ? "open" : ""}`}
+              onClick={toggleTools}
+            >
               Tools
               <svg viewBox="0 0 10 10" fill="currentColor">
                 <polygon points="0,0 10,0 5,6" />
@@ -47,6 +53,11 @@ export default function Header() {
 
           <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
+
+        {/* Mobile Menu Toggle */}
+        <button className="menu-toggle" onClick={toggleMenu}>
+          ☰
+        </button>
       </div>
     </header>
   );
