@@ -73,8 +73,8 @@ p {
 .container li {
   margin-bottom: 8px;
 }
-/* =============================== 
-   HEADER (PROFESSIONAL DESIGN)
+/* ===============================
+   HEADER
 ================================ */
 .site-header {
   width: 100%;
@@ -83,59 +83,46 @@ p {
   position: sticky;
   top: 0;
   z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  
-  /* 1. Set a fixed height for the blue bar */
-  height: 70px; 
 }
 
 .header-container {
-  max-width: 1100px;
-  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100%; /* Keeps nav links centered in the 70px bar */
-}
-
-.logo a {
-  display: flex;
-  align-items: flex-start;        /* ensures logo top aligns */
-  text-decoration: none;
+  height: 70px;
+  padding: 0 20px;
 }
 
 .logo img {
-  height: 45px;                  /* increased logo height */
-  width: auto;                     /* maintain aspect ratio */
-  display: block;
+  height: 50px;
+  width: auto;
 }
 
+/* ===============================
+   NAV LINKS
+================================ */
 .nav-links {
   display: flex;
-  gap: 18px;
   align-items: center;
-  margin-top: 0px; /* vertically aligns links with larger logo */
+  gap: 20px;
 }
 
 .nav-links a {
-  font-weight: 500;
   color: #ffffff;
+  font-weight: 500;
   font-size: 16px;
+  text-decoration: none;
 }
 
 .nav-links a:hover {
   color: #f0e68c;
 }
 
-.nav-links a.active {
-  color: #f0e68c;
-}
-
-/* Tools dropdown */
+/* ===============================
+   TOOLS DROPDOWN (MEGA)
+================================ */
 .tools-dropdown {
   position: relative;
 }
@@ -143,14 +130,14 @@ p {
 .tools-btn {
   background: none;
   border: none;
-  cursor: pointer;
   font-family: inherit;
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .tools-btn svg {
@@ -159,42 +146,69 @@ p {
   transition: transform 0.3s ease;
 }
 
-.tools-btn.open svg {
+/* Rotate arrow when open or hover on desktop */
+.tools-btn.open svg,
+.tools-dropdown:hover .tools-btn svg {
   transform: rotate(180deg);
 }
 
+/* Mega dropdown container */
 .tools-menu {
-  display: none;
+  display: none; /* hidden by default */
   position: absolute;
-  top: 36px;
-  left: 0;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
   background: #0b1f4a;
   border: 1px solid #081633;
   border-radius: 8px;
-  flex-direction: column;
-  padding: 6px 0;
-  min-width: 190px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-  z-index: 10;
+  padding: 20px;
+  width: 800px;
+  max-width: 95vw; /* responsive */
+  gap: 40px;
+  z-index: 100;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
-.tools-menu a {
-  padding: 10px 16px;
-  font-size: 14px;
-  display: block;
-  color: #ffffff;
+/* Show dropdown on hover for desktop */
+@media (min-width: 993px) {
+  .tools-dropdown:hover .tools-menu {
+    display: flex;
+  }
 }
 
-.tools-menu a:hover {
-  background: #142d66;
-  color: #f0e68c;
-}
-
+/* Show dropdown on click when 'open' class is added (for mobile) */
 .tools-menu.open {
   display: flex;
 }
 
-/* Mobile Menu */
+/* Column within mega dropdown */
+.tools-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.tools-category {
+  font-weight: 600;
+  color: #f0e68c;
+  margin-bottom: 8px;
+}
+
+/* Dropdown links */
+.tools-menu a {
+  padding: 6px 0;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.tools-menu a:hover {
+  color: #f0e68c;
+}
+
+/* ===============================
+   MOBILE
+================================ */
 .menu-toggle {
   display: none;
   font-size: 26px;
@@ -204,131 +218,7 @@ p {
   color: #ffffff;
 }
 
-@media (max-width: 768px) {
-  .logo img {
-    height: 100px; /* smaller logo for mobile */
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  .nav-links {
-    position: absolute;
-    top: 100px; /* adjusted for bigger logo */
-    right: 0;
-    left: 0;
-    background: #0b1f4a;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 18px;
-    padding: 30px;
-    border-bottom: 1px solid #081633;
-
-    transform: translateY(-10px);
-    opacity: 0;
-    pointer-events: none;
-
-    transition: all 0.25s ease;
-  }
-
-  .nav-links.open {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .tools-menu {
-    position: relative;
-    top: 0;
-    border: none;
-    background: #142d66;
-  }
-}
-/* ===============================
-   TOOLS DROPDOWN (IMPROVED)
-================================ */
-
-.tools-dropdown {
-  position: relative;
-}
-
-.tools-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.tools-btn:hover {
-  color: #f0e68c;
-}
-
-.tools-btn svg {
-  width: 10px;
-  height: 10px;
-  transition: transform 0.3s ease;
-}
-
-.tools-btn.open svg {
-  transform: rotate(180deg);
-}
-
-.tools-menu {
-  display: none;
-  position: absolute;
-  top: 36px;
-  left: 0;
-  background: #0b1f4a;
-  border: 1px solid #081633;
-  border-radius: 8px;
-  flex-direction: column;
-  padding: 6px 0;
-  min-width: 190px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-}
-
-.tools-menu a {
-  padding: 10px 16px;
-  font-size: 14px;
-  display: block;
-  color: #ffffff;
-}
-
-.tools-menu a:hover {
-  background: #142d66;
-  color: #f0e68c;
-}
-
-.tools-menu.open {
-  display: flex;
-}
-
-/* ===============================
-   MOBILE MENU
-================================ */
-
-.menu-toggle {
-  display: none;
-  font-size: 26px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #ffffff;
-}
-
-@media (max-width: 768px) {
-
-  .menu-toggle {
-    display: block;
-  }
-
+@media (max-width: 992px) {
   .nav-links {
     position: absolute;
     top: 70px;
@@ -337,14 +227,12 @@ p {
     background: #0b1f4a;
     flex-direction: column;
     align-items: flex-start;
-    gap: 18px;
-    padding: 30px;
+    padding: 20px 30px;
+    gap: 15px;
     border-bottom: 1px solid #081633;
-
     transform: translateY(-10px);
     opacity: 0;
     pointer-events: none;
-
     transition: all 0.25s ease;
   }
 
@@ -354,18 +242,28 @@ p {
     pointer-events: all;
   }
 
-  .nav-links a {
-    font-size: 18px;
-  }
-
   .tools-menu {
     position: relative;
     top: 0;
+    left: 0;
+    transform: none;
+    flex-direction: column;
+    gap: 0;
+    max-height: none;
     border: none;
-    background: #142d66;
+    box-shadow: none;
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .tools-column {
+    margin-bottom: 15px;
+  }
+
+  .menu-toggle {
+    display: block;
   }
 }
-
 /* ===============================
    HOMEPAGE SEO SECTIONS
 ================================ */
