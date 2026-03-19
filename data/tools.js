@@ -16,6 +16,10 @@ export const tools = [
   { title: "PPF / NPS Calculator", link: "/tools/ppf-nps-calculator" },
   { title: "Home Loan vs Rent Calculator", link: "/tools/home-loan-vs-rent" },
   { title: "Net Worth Calculator", link: "/tools/net-worth" },
+  { title: "Inflation Impact Calculator", link: "/tools/inflation" },
+  { title: "Currency Converter", link: "/tools/currency" },
+  { title: "Simple Interest Calculator", link: "/tools/simple-interest" },
+  { title: "GST / VAT / Tax Calculator", link: "/tools/gst-vat-tax" },
   // future tools: just add here manually
   { title: "Financial Blog", link: "/blog" }, // keep blog as a "tool" card
 ];
