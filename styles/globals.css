@@ -44,7 +44,7 @@ a {
 /* ===============================
    TYPOGRAPHY
 ================================ */
-h1,h2,h3 {
+h1, h2, h3 {
   color: var(--primary);
   margin-bottom: 20px;
 }
@@ -52,8 +52,27 @@ h1,h2,h3 {
 h1 { font-size: 2rem; text-align: center; }
 h2 { font-size: 1.6rem; }
 h3 { font-size: 1.2rem; }
-p { margin-bottom: 16px; }
 
+p {
+  margin-bottom: 16px;
+}
+
+/* ===============================
+   PROFESSIONAL CONTENT SPACING
+================================ */
+.container h2 {
+  margin-top: 35px;
+  margin-bottom: 12px;
+}
+
+.container ul {
+  margin-left: 20px;
+  margin-bottom: 25px;
+}
+
+.container li {
+  margin-bottom: 8px;
+}
 /* =============================== 
    HEADER (PROFESSIONAL DESIGN)
 ================================ */
@@ -503,6 +522,14 @@ p { margin-bottom: 16px; }
   font-size: 13px;
   margin-top: 30px;
   border-radius: 0 0 14px 14px;
+}
+
+.contact-box {
+  background: #f7f9ff;
+  border: 1px solid #dbe3f2;
+  padding: 16px;
+  border-radius: 10px;
+  margin: 15px 0;
 }
 
 /* ===============================
