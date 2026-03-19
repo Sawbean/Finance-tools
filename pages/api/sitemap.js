@@ -2,17 +2,21 @@
 
 import fs from "fs";
 import path from "path";
-import { blogContent } from "../../data/blogPosts";
+import { blogContent } from "../../data/blogPosts"; // make sure this exists
 
 const SITE_URL = "https://finance-tools-mu.vercel.app";
 
 export default function handler(req, res) {
   const currentDate = new Date().toISOString();
 
-  // Static pages
+  // ================================
+  // STATIC PAGES
+  // ================================
   const staticPages = ["", "/blog"];
 
-  // Tools
+  // ================================
+  // TOOLS PAGES
+  // ================================
   const toolsDir = path.join(process.cwd(), "pages/tools");
 
   const toolPages = fs
@@ -20,26 +24,46 @@ export default function handler(req, res) {
     .filter((file) => file.endsWith(".js"))
     .map((file) => `/tools/${file.replace(".js", "")}`);
 
-  // Blogs
-  const blogPages = Object.keys(blogContent).map(
-    (slug) => `/blog/${slug}`
-  );
+  // ================================
+  // BLOG PAGES
+  // ================================
+  const blogPages = Object.keys(blogContent).map((slug) => {
+    const blog = blogContent[slug];
+    const lastmod = blog.lastModified || currentDate; // use blog's lastModified if exists
+    return {
+      url: `/blog/${slug}`,
+      lastmod,
+    };
+  });
 
-  const allPages = [...staticPages, ...toolPages, ...blogPages];
+  // ================================
+  // BUILD ALL PAGES
+  // ================================
+  const allPages = [
+    ...staticPages.map((url) => ({ url, lastmod: currentDate })),
+    ...toolPages.map((url) => ({ url, lastmod: currentDate })),
+    ...blogPages,
+  ];
 
+  // ================================
+  // GENERATE SITEMAP XML
+  // ================================
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allPages
   .map(
-    (url) => `
+    (page) => `
   <url>
-    <loc>${SITE_URL}${url}</loc>
-    <lastmod>${currentDate}</lastmod>
+    <loc>${SITE_URL}${page.url}</loc>
+    <lastmod>${page.lastmod}</lastmod>
   </url>`
   )
   .join("")}
 </urlset>`;
 
+  // ================================
+  // SEND RESPONSE
+  // ================================
   res.setHeader("Content-Type", "text/xml");
   res.status(200).send(sitemap);
 }
