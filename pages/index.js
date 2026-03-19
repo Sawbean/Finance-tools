@@ -1,4 +1,6 @@
+// pages/index.js
 import ToolCard from "../components/ui/ToolCard";
+import { tools } from "../data/tools";
 
 export default function Home() {
   return (
@@ -15,10 +17,9 @@ export default function Home() {
       <h2 className="home-section-title">Popular Financial Tools</h2>
 
       <div className="tools-grid">
-        <ToolCard title="EMI Calculator" link="/tools/emi" />
-        <ToolCard title="Loan Calculator" link="/tools/loan" />
-        <ToolCard title="Fuel Calculator" link="/tools/fuel" />
-        <ToolCard title="Financial Blog" link="/blog" />
+        {tools.map((tool) => (
+          <ToolCard key={tool.link} title={tool.title} link={tool.link} />
+        ))}
       </div>
 
     </div>

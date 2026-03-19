@@ -5,6 +5,7 @@ export default function CalculatorForm({
   onReset,
   children,
   adComponent = null, // optional ad
+  hideDefaultButton = false, // NEW: hide the default Calculate button
 }) {
   return (
     <>
@@ -13,9 +14,11 @@ export default function CalculatorForm({
         {children}
 
         <div className="calculator-buttons">
-          <button type="submit" className="calc-btn">
-            Calculate
-          </button>
+          {!hideDefaultButton && (
+            <button type="submit" className="calc-btn">
+              Calculate
+            </button>
+          )}
 
           <button
             type="button"
@@ -28,11 +31,8 @@ export default function CalculatorForm({
 
       </form>
 
-      {/* Optional AdSense placement below buttons */}
       {adComponent && (
-        <div className="calculator-ad">
-          {adComponent}
-        </div>
+        <div className="calculator-ad">{adComponent}</div>
       )}
     </>
   );
