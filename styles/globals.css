@@ -417,6 +417,7 @@ p {
    MOBILE RESPONSIVE
 ================================= */
 @media (max-width: 768px) {
+  /* Mobile menu toggle button stays visible */
   .menu-toggle {
     display: block;
     font-size: 2rem;
@@ -424,27 +425,40 @@ p {
     border: none;
     cursor: pointer;
     color: #ffffff;
+    z-index: 1100; /* above menu */
   }
 
+  /* Mobile nav-links slide from right now */
   .nav-links {
     position: fixed;
     top: 0;
-    left: -100%;
+    right: -100%; /* hidden to the right initially */
     width: 80%;
     max-width: 320px;
     height: 100vh;
-    background: var(--primary); /* mobile menu background */
+    background: var(--primary); /* premium blue */
     padding: 4rem 1rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    box-shadow: 5px 0 20px rgba(0,0,0,0.1);
-    transition: left 0.4s ease;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.1); /* shadow from left */
+    transition: right 0.4s ease; /* animate right instead of left */
     z-index: 1000;
   }
 
+  /* Slide in menu */
   .nav-links.open {
-    left: 0;
+    right: 0; /* menu fully visible */
+  }
+
+  /* Make sure logo is always visible above the menu */
+  .header-container {
+    position: relative;
+    z-index: 1100;
+  }
+
+  .logo {
+    z-index: 1101; /* above menu */
   }
 
   .tools-dropdown {
