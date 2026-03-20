@@ -8,28 +8,32 @@ export default function Header() {
   const [openCategory, setOpenCategory] = useState(null);
   const dropdownRef = useRef(null);
 
-  // ✅ FIXED toggleMenu
+  // Toggle mobile menu
   const toggleMenu = () => {
     const newState = !menuOpen;
     setMenuOpen(newState);
 
     if (newState) {
       document.body.classList.add("menu-open");
+      setToolsOpen(false); // reset dropdown when menu opens
+      setOpenCategory(null);
     } else {
       document.body.classList.remove("menu-open");
     }
   };
 
+  // Toggle Tools dropdown
   const toggleTools = (e) => {
     e.stopPropagation();
     setToolsOpen(!toolsOpen);
   };
 
+  // Toggle subcategory in Tools
   const toggleCategory = (category) => {
     setOpenCategory(openCategory === category ? null : category);
   };
 
-  // ✅ UPDATED closeMenu
+  // Close menu & reset
   const closeMenu = () => {
     setMenuOpen(false);
     setToolsOpen(false);
@@ -37,23 +41,7 @@ export default function Header() {
     document.body.classList.remove("menu-open");
   };
 
-  // ✅ RESET when menu closes
-  useEffect(() => {
-    if (!menuOpen) {
-      setToolsOpen(false);
-      setOpenCategory(null);
-    }
-  }, [menuOpen]);
-
-  // ✅ EXTRA FIX: reset dropdown when menu opens (prevents glitch)
-  useEffect(() => {
-    if (menuOpen) {
-      setToolsOpen(false);
-      setOpenCategory(null);
-    }
-  }, [menuOpen]);
-
-  // ✅ FIXED: disable outside click on mobile
+  // Desktop only: close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (window.innerWidth > 768) {
@@ -62,7 +50,6 @@ export default function Header() {
         }
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
@@ -88,7 +75,7 @@ export default function Header() {
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
-          {/* TOOLS DROPDOWN */}
+          {/* Tools Dropdown */}
           <div className="tools-dropdown" ref={dropdownRef}>
             <button
               className={`tools-btn ${toolsOpen ? "open" : ""}`}
