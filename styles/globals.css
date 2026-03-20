@@ -73,30 +73,31 @@ p {
 .container li {
   margin-bottom: 8px;
 }
-/* ===============================
-   HEADER
+/* =============================== 
+   HEADER (PREMIUM FINTECH STYLE)
 ================================ */
 .site-header {
   width: 100%;
-  background: #0b1f4a;
-  border-bottom: 1px solid #081633;
+  background: rgba(11, 31, 74, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 .header-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
-  padding: 0 20px;
+  height: 72px;
+  padding: 0 24px;
 }
 
 .logo img {
-  height: 50px;
+  height: 52px;
   width: auto;
 }
 
@@ -106,14 +107,14 @@ p {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
 }
 
 .nav-links a {
   color: #ffffff;
   font-weight: 500;
-  font-size: 16px;
-  text-decoration: none;
+  font-size: 15px;
+  transition: all 0.25s ease;
 }
 
 .nav-links a:hover {
@@ -121,93 +122,137 @@ p {
 }
 
 /* ===============================
-   TOOLS DROPDOWN (MEGA)
+   TOOLS DROPDOWN (MEGA PREMIUM)
 ================================ */
 .tools-dropdown {
   position: relative;
 }
 
+/* Button */
 .tools-btn {
   background: none;
   border: none;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   color: #ffffff;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
+  transition: color 0.25s ease;
+}
+
+.tools-btn:hover {
+  color: #f0e68c;
 }
 
 .tools-btn svg {
   width: 10px;
   height: 10px;
-  transition: transform 0.3s ease;
+  transition: transform 0.25s ease;
 }
 
-/* Rotate arrow when open or hover on desktop */
-.tools-btn.open svg,
-.tools-dropdown:hover .tools-btn svg {
+.tools-btn.open svg {
   transform: rotate(180deg);
 }
 
-/* Mega dropdown container */
+/* ===============================
+   DROPDOWN PANEL (SHIFTED RIGHT)
+================================ */
 .tools-menu {
-  display: none; /* hidden by default */
   position: absolute;
-  top: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #0b1f4a;
-  border: 1px solid #081633;
-  border-radius: 8px;
-  padding: 20px;
-  width: 800px;
-  max-width: 95vw; /* responsive */
-  gap: 40px;
-  z-index: 100;
-  max-height: 500px;
-  overflow-y: auto;
+  top: 60px;
+
+  /* shift slightly right from center */
+  left: 52%;                /* was 50% */
+  transform: translateX(-30%) translateY(10px); /* match left shift */
+
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  padding: 20px 24px;
+
+  width: auto;
+  max-width: 95vw;
+
+  background: rgba(11, 31, 74, 0.98);
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  z-index: 999;
 }
 
-/* Show dropdown on hover for desktop */
+/* SHOW ON HOVER (DESKTOP) */
 @media (min-width: 993px) {
   .tools-dropdown:hover .tools-menu {
-    display: flex;
+    opacity: 1;
+    transform: translateX(-60%) translateY(0); /* match left shift */
+    pointer-events: all;
   }
 }
 
-/* Show dropdown on click when 'open' class is added (for mobile) */
+/* SHOW ON CLICK */
 .tools-menu.open {
-  display: flex;
+  opacity: 1;
+  transform: translateX(-52%) translateY(0);
+  pointer-events: all;
 }
 
-/* Column within mega dropdown */
+/* ===============================
+   COLUMNS (HORIZONTAL ON DESKTOP)
+================================ */
 .tools-column {
   display: flex;
   flex-direction: column;
+  flex: 1;            /* all columns evenly distributed */
+  min-width: 150px;   /* prevents text cut */
 }
 
+/* CATEGORY TITLE */
 .tools-category {
+  white-space: normal;  /* allow wrapping if needed */
   font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   color: #f0e68c;
   margin-bottom: 8px;
 }
 
-/* Dropdown links */
+/* LINKS */
 .tools-menu a {
-  padding: 6px 0;
+  padding: 6px 8px;
   font-size: 14px;
   color: #ffffff;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
 
 .tools-menu a:hover {
+  background: rgba(255,255,255,0.08);
   color: #f0e68c;
+  transform: translateX(2px);
+}
+
+/* COLUMN SEPARATORS (PREMIUM FEEL) */
+.tools-column:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,0.08);
+  padding-right: 16px;
 }
 
 /* ===============================
-   MOBILE
+   MOBILE MENU
 ================================ */
 .menu-toggle {
   display: none;
@@ -218,21 +263,28 @@ p {
   color: #ffffff;
 }
 
+/* MOBILE */
 @media (max-width: 992px) {
+  .menu-toggle {
+    display: block;
+  }
+
   .nav-links {
     position: absolute;
-    top: 70px;
+    top: 72px;
     left: 0;
     right: 0;
     background: #0b1f4a;
     flex-direction: column;
     align-items: flex-start;
-    padding: 20px 30px;
-    gap: 15px;
+    padding: 25px 30px;
+    gap: 14px;
     border-bottom: 1px solid #081633;
+
     transform: translateY(-10px);
     opacity: 0;
     pointer-events: none;
+
     transition: all 0.25s ease;
   }
 
@@ -242,26 +294,41 @@ p {
     pointer-events: all;
   }
 
+  /* MOBILE DROPDOWN */
   .tools-menu {
     position: relative;
     top: 0;
     left: 0;
     transform: none;
+
     flex-direction: column;
-    gap: 0;
-    max-height: none;
+    gap: 10px;
+
+    width: 100%;
+    padding: 10px 0;
+
+    background: transparent;
     border: none;
     box-shadow: none;
-    padding: 10px 0;
-    width: 100%;
+
+    opacity: 1;
+    pointer-events: all;
   }
 
   .tools-column {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    border-right: none;
+    padding-right: 0;
   }
 
-  .menu-toggle {
-    display: block;
+  .tools-menu a {
+    padding: 10px 0;
+    font-size: 15px;
+  }
+
+  .tools-menu a:hover {
+    background: none;
+    transform: none;
   }
 }
 /* ===============================

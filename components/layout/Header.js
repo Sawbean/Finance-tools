@@ -1,22 +1,47 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
 
+  const dropdownRef = useRef(null);
+
   const toggleMenu = () => setMenuOpen(!menuOpen);
-  const toggleTools = () => setToolsOpen(!toolsOpen);
+
+  const toggleTools = (e) => {
+    e.stopPropagation(); // prevent immediate close
+    setToolsOpen(!toolsOpen);
+  };
 
   const closeMenu = () => {
     setMenuOpen(false);
     setToolsOpen(false);
   };
 
+  // ✅ CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setToolsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <header className="site-header">
       <div className="header-container">
+        
         {/* Logo */}
         <div className="logo">
           <Link href="/" onClick={closeMenu}>
@@ -34,8 +59,13 @@ export default function Header() {
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
-          <div className="tools-dropdown">
-            <button className={`tools-btn ${toolsOpen ? "open" : ""}`} onClick={toggleTools}>
+          {/* ✅ DROPDOWN WRAPPED WITH REF */}
+          <div className="tools-dropdown" ref={dropdownRef}>
+            
+            <button
+              className={`tools-btn ${toolsOpen ? "open" : ""}`}
+              onClick={toggleTools}
+            >
               Tools
               <svg viewBox="0 0 10 10" fill="currentColor">
                 <polygon points="0,0 10,0 5,6" />
@@ -43,6 +73,8 @@ export default function Header() {
             </button>
 
             <div className={`tools-menu ${toolsOpen ? "open" : ""}`}>
+              
+              {/* Column 1 */}
               <div className="tools-column">
                 <div className="tools-category">Loans & EMI</div>
                 <Link href="/tools/emi" onClick={closeMenu}>EMI Calculator</Link>
@@ -52,6 +84,7 @@ export default function Header() {
                 <Link href="/tools/loan-eligibility" onClick={closeMenu}>Loan Eligibility</Link>
               </div>
 
+              {/* Column 2 */}
               <div className="tools-column">
                 <div className="tools-category">Investments & Savings</div>
                 <Link href="/tools/sip" onClick={closeMenu}>SIP Calculator</Link>
@@ -62,25 +95,30 @@ export default function Header() {
                 <Link href="/tools/savings-goal" onClick={closeMenu}>Savings Goal</Link>
               </div>
 
+              {/* Column 3 */}
               <div className="tools-column">
                 <div className="tools-category">Taxes & Financial Planning</div>
                 <Link href="/tools/income-tax" onClick={closeMenu}>Income Tax Calculator</Link>
                 <Link href="/tools/gst-vat-tax" onClick={closeMenu}>GST / VAT / Tax</Link>
                 <Link href="/tools/net-worth" onClick={closeMenu}>Net Worth Calculator</Link>
                 <Link href="/tools/credit-card-payoff" onClick={closeMenu}>Credit Card Payoff</Link>
-                <div className="tools-category" style={{marginTop: '10px'}}>Quick Tools / Misc</div>
+
+                <div className="tools-category" style={{ marginTop: "12px" }}>
+                  Quick Tools / Misc
+                </div>
                 <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
                 <Link href="/tools/currency" onClick={closeMenu}>Currency Converter</Link>
                 <Link href="/tools/simple-interest" onClick={closeMenu}>Simple Interest</Link>
                 <Link href="/tools/inflation" onClick={closeMenu}>Inflation Impact</Link>
               </div>
+
             </div>
           </div>
 
           <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
 
-        {/* Mobile menu toggle */}
+        {/* Mobile Menu Toggle */}
         <button className="menu-toggle" onClick={toggleMenu}>
           ☰
         </button>
