@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import styles from "./Header.module.css"; // Import CSS module
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,16 +11,13 @@ export default function Header() {
   const dropdownRef = useRef(null);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-
   const toggleTools = (e) => {
     e.stopPropagation();
     setToolsOpen(!toolsOpen);
   };
-
   const toggleCategory = (category) => {
     setOpenCategory(openCategory === category ? null : category);
   };
-
   const closeMenu = () => {
     setMenuOpen(false);
     setToolsOpen(false);
@@ -37,11 +35,10 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="site-header">
-      <div className="header-container">
-
+    <header className={styles.siteHeader}>
+      <div className={styles.headerContainer}>
         {/* Logo */}
-        <div className="logo">
+        <div className={styles.logo}>
           <Link href="/" onClick={closeMenu}>
             <Image
               src="/images/finlogo.png"
@@ -53,25 +50,23 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Mobile Navigation */}
-        <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
+        {/* Navigation */}
+        <nav className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
           {/* Tools Dropdown */}
-          <div className="tools-dropdown" ref={dropdownRef}>
-            <button className={`tools-btn ${toolsOpen ? "open" : ""}`} onClick={toggleTools}>
+          <div className={styles.toolsDropdown} ref={dropdownRef}>
+            <button className={`${styles.toolsBtn} ${toolsOpen ? styles.open : ""}`} onClick={toggleTools}>
               Tools
               <svg viewBox="0 0 10 10" fill="currentColor">
                 <polygon points="0,0 10,0 5,6" />
               </svg>
             </button>
 
-            <div className={`tools-menu ${toolsOpen ? "open" : ""}`}>
-              {/** Column 1 */}
-              <div className={`tools-column ${openCategory === "loans" ? "open" : ""}`}>
-                <div className="tools-category" onClick={() => toggleCategory("loans")}>
-                  Loans & EMI
-                </div>
+            <div className={`${styles.toolsMenu} ${toolsOpen ? styles.open : ""}`}>
+              {/* Column 1 */}
+              <div className={`${styles.toolsColumn} ${openCategory === "loans" ? styles.open : ""}`}>
+                <div className={styles.toolsCategory} onClick={() => toggleCategory("loans")}>Loans & EMI</div>
                 <Link href="/tools/emi" onClick={closeMenu}>EMI Calculator</Link>
                 <Link href="/tools/mortgage" onClick={closeMenu}>Mortgage Calculator</Link>
                 <Link href="/tools/loan" onClick={closeMenu}>Loan Calculator</Link>
@@ -79,11 +74,9 @@ export default function Header() {
                 <Link href="/tools/loan-eligibility" onClick={closeMenu}>Loan Eligibility</Link>
               </div>
 
-              {/** Column 2 */}
-              <div className={`tools-column ${openCategory === "investments" ? "open" : ""}`}>
-                <div className="tools-category" onClick={() => toggleCategory("investments")}>
-                  Investments & Savings
-                </div>
+              {/* Column 2 */}
+              <div className={`${styles.toolsColumn} ${openCategory === "investments" ? styles.open : ""}`}>
+                <div className={styles.toolsCategory} onClick={() => toggleCategory("investments")}>Investments & Savings</div>
                 <Link href="/tools/sip" onClick={closeMenu}>SIP Calculator</Link>
                 <Link href="/tools/compound-interest" onClick={closeMenu}>Compound Interest</Link>
                 <Link href="/tools/fd-rd-calculator" onClick={closeMenu}>FD & RD Calculator</Link>
@@ -92,22 +85,18 @@ export default function Header() {
                 <Link href="/tools/savings-goal" onClick={closeMenu}>Savings Goal</Link>
               </div>
 
-              {/** Column 3 */}
-              <div className={`tools-column ${openCategory === "taxes" ? "open" : ""}`}>
-                <div className="tools-category" onClick={() => toggleCategory("taxes")}>
-                  Taxes & Financial Planning
-                </div>
+              {/* Column 3 */}
+              <div className={`${styles.toolsColumn} ${openCategory === "taxes" ? styles.open : ""}`}>
+                <div className={styles.toolsCategory} onClick={() => toggleCategory("taxes")}>Taxes & Financial Planning</div>
                 <Link href="/tools/income-tax" onClick={closeMenu}>Income Tax Calculator</Link>
                 <Link href="/tools/gst-vat-tax" onClick={closeMenu}>GST / VAT / Tax</Link>
                 <Link href="/tools/net-worth" onClick={closeMenu}>Net Worth Calculator</Link>
                 <Link href="/tools/credit-card-payoff" onClick={closeMenu}>Credit Card Payoff</Link>
               </div>
 
-              {/** Column 4 */}
-              <div className={`tools-column ${openCategory === "quick" ? "open" : ""}`}>
-                <div className="tools-category" onClick={() => toggleCategory("quick")}>
-                  Quick Tools / Misc
-                </div>
+              {/* Column 4 */}
+              <div className={`${styles.toolsColumn} ${openCategory === "quick" ? styles.open : ""}`}>
+                <div className={styles.toolsCategory} onClick={() => toggleCategory("quick")}>Quick Tools / Misc</div>
                 <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
                 <Link href="/tools/currency" onClick={closeMenu}>Currency Converter</Link>
                 <Link href="/tools/simple-interest" onClick={closeMenu}>Simple Interest</Link>
@@ -118,11 +107,6 @@ export default function Header() {
 
           <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
-
-        {/* Mobile Menu Toggle */}
-        <button className="menu-toggle" onClick={toggleMenu}>
-          ☰
-        </button>
       </div>
     </header>
   );

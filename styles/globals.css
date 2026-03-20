@@ -73,6 +73,7 @@ p {
 .container li {
   margin-bottom: 8px;
 }
+
 /* =============================== 
    PREMIUM FINTECH HEADER
 ================================ */
@@ -80,7 +81,7 @@ p {
   --primary: rgba(11, 31, 74, 0.95);
 }
 
-.site-header {
+.siteHeader {
   width: 100%;
   background: var(--primary);
   backdrop-filter: blur(12px);
@@ -91,34 +92,31 @@ p {
   font-family: 'Inter', sans-serif;
 }
 
-.header-container {
+.headerContainer {
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   height: 72px;
   padding: 0 24px;
 }
 
-/* LOGO */
 .logo img {
+  display: block;
   height: 52px;
   width: auto;
-  display: block;
 }
 
-/* ===============================
-   NAV LINKS (RIGHT SIDE)
-================================ */
-.nav-links {
+/* Nav Links Right Side */
+.navLinks {
   display: flex;
   align-items: center;
   gap: 24px;
-  margin-left: auto; /* push links to right */
+  margin-left: auto;
 }
 
-.nav-links a {
+.navLinks a {
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
@@ -128,19 +126,17 @@ p {
   transition: all 0.25s ease;
 }
 
-.nav-links a:hover {
+.navLinks a:hover {
   color: #f0e68c;
   background-color: rgba(255,255,255,0.08);
 }
 
-/* ===============================
-   TOOLS DROPDOWN (DESKTOP MEGA MENU)
-================================ */
-.tools-dropdown {
+/* Tools Dropdown */
+.toolsDropdown {
   position: relative;
 }
 
-.tools-btn {
+.toolsBtn {
   background: none;
   border: none;
   font-family: inherit;
@@ -154,60 +150,56 @@ p {
   transition: color 0.25s ease;
 }
 
-.tools-btn:hover {
+.toolsBtn:hover {
   color: #f0e68c;
 }
 
-.tools-btn svg {
+.toolsBtn svg {
   width: 10px;
   height: 10px;
   transition: transform 0.25s ease;
 }
 
-.tools-btn.open svg {
+.toolsBtn.open svg {
   transform: rotate(180deg);
 }
 
-/* ===============================
-   DROPDOWN PANEL (DESKTOP) - Smart Position
-================================ */
-.tools-menu {
+/* Desktop Mega Menu */
+.toolsMenu {
   position: absolute;
   top: calc(100% + 10px);
-  left: 0; /* will be adjusted with transform via JS if needed */
+  right: 0;
+  transform: translateY(0);
+  display: flex;
+  gap: 24px;
+  padding: 22px 26px;
+  min-width: 280px;
+  max-width: 90vw;
   background: rgba(11,31,74,0.96);
   backdrop-filter: blur(14px);
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 25px 60px rgba(0,0,0,0.35);
-  padding: 22px 26px;
-  display: flex;
-  gap: 24px;
   opacity: 0;
   pointer-events: none;
   transition: all 0.28s ease;
   z-index: 1000;
   flex-direction: row;
-  min-width: 280px;
-  max-width: 90vw;
 }
 
-/* Open state */
-.tools-menu.open {
+.toolsMenu.open {
   opacity: 1;
   pointer-events: all;
 }
 
-/* Columns */
-.tools-column {
+.toolsColumn {
   display: flex;
   flex-direction: column;
   min-width: 160px;
   gap: 6px;
 }
 
-/* Category Titles */
-.tools-category {
+.toolsCategory {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.6px;
@@ -218,13 +210,12 @@ p {
   transition: background 0.2s ease;
 }
 
-.tools-category:hover {
+.toolsCategory:hover {
   background-color: rgba(255,255,255,0.08);
   border-radius: 6px;
 }
 
-/* Links inside dropdown */
-.tools-menu a {
+.toolsMenu a {
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 14px;
@@ -232,35 +223,20 @@ p {
   transition: all 0.2s ease;
 }
 
-.tools-menu a:hover {
+.toolsMenu a:hover {
   background: rgba(255,255,255,0.08);
   transform: translateX(3px);
   color: #f0e68c;
 }
 
-/* Column divider */
-.tools-column:not(:last-child) {
+.toolsColumn:not(:last-child) {
   border-right: 1px solid rgba(255,255,255,0.08);
   padding-right: 16px;
 }
 
-/* ===============================
-   MOBILE RESPONSIVE
-================================= */
+/* =============================== Mobile Responsive =============================== */
 @media (max-width: 768px) {
-  /* Menu toggle button */
-  .menu-toggle {
-    display: block;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ffffff;
-    z-index: 1100;
-  }
-
-  /* Mobile nav sliding from right */
-  .nav-links {
+  .navLinks {
     position: fixed;
     top: 0;
     right: -100%;
@@ -269,82 +245,58 @@ p {
     height: 100vh;
     background: var(--primary);
     padding: 4rem 1rem 1rem;
-    display: flex;
     flex-direction: column;
     gap: 1rem;
     box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-    transition: right 0.4s ease;
-    z-index: 1000;
     overflow-y: auto;
     overflow-x: hidden;
-    margin-left: 0; /* reset */
+    margin-left: 0;
+    z-index: 1000;
+    transition: right 0.4s ease;
   }
 
-  .nav-links.open {
+  .navLinks.open {
     right: 0;
   }
 
-  .header-container {
-    position: relative;
-    z-index: 1101;
-  }
-
-  /* Tools button full width */
-  .tools-btn {
-    width: 100%;
-    justify-content: space-between;
-    background: rgba(255,255,255,0.1);
-    color: #ffffff;
-  }
-
-  /* Mobile accordion dropdown */
-  .tools-menu {
+  .toolsMenu {
     position: static;
-    display: block;
     width: 100%;
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
     background: transparent;
     box-shadow: none;
     border-radius: 0;
-    padding: 0;
-    margin: 0;
-    max-height: 0;
-    overflow: hidden;
     transition: max-height 0.35s ease;
     z-index: 1050;
   }
 
-  .tools-menu.open {
+  .toolsMenu.open {
     max-height: 1000px;
     margin-top: 0.3rem;
   }
 
-  .tools-column {
+  .toolsColumn {
     display: block;
     width: 100%;
     gap: 0.3rem;
     border: none;
   }
 
-  .tools-column a {
+  .toolsColumn a {
     display: none;
     padding: 0.4rem 0 0.4rem 1.5rem;
-    color: #ffffff;
-    font-weight: 400;
   }
 
-  .tools-column.open a {
+  .toolsColumn.open a {
     display: block;
   }
 
-  .tools-category {
-    font-weight: 600;
+  .toolsCategory {
     padding: 0.5rem 0;
-    cursor: pointer;
-    color: #ffffff;
-  }
-
-  .tools-category:hover {
-    background-color: rgba(255,255,255,0.2);
   }
 }
 /* ===============================
