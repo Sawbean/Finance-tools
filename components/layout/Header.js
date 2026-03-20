@@ -1,16 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import styles from "./Header.module.css";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [openCategory, setOpenCategory] = useState(null);
-  const [dropdownStyle, setDropdownStyle] = useState({});
-
   const dropdownRef = useRef(null);
-  const toolsBtnRef = useRef(null);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleTools = (e) => {
@@ -26,25 +22,7 @@ export default function Header() {
     setOpenCategory(null);
   };
 
-  // Desktop dropdown positioning
-  useEffect(() => {
-    if (toolsOpen && toolsBtnRef.current && dropdownRef.current) {
-      const btnRect = toolsBtnRef.current.getBoundingClientRect();
-      const menu = dropdownRef.current;
-      const viewportWidth = window.innerWidth;
-      const menuWidth = menu.offsetWidth;
-
-      let left = btnRect.left; // align with button
-      if (left + menuWidth > viewportWidth - 16) { // 16px padding
-        left = viewportWidth - menuWidth - 16;
-      }
-      if (left < 16) left = 16;
-
-      setDropdownStyle({ left: `${left}px` });
-    }
-  }, [toolsOpen]);
-
-  // Close on outside click
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -56,10 +34,11 @@ export default function Header() {
   }, []);
 
   return (
-    <header className={styles.siteHeader}>
-      <div className={styles.headerContainer}>
+    <header className="site-header">
+      <div className="header-container">
+
         {/* Logo */}
-        <div className={styles.logo}>
+        <div className="logo">
           <Link href="/" onClick={closeMenu}>
             <Image
               src="/images/finlogo.png"
@@ -71,15 +50,14 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Nav Links */}
-        <nav className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
+        {/* Desktop Navigation */}
+        <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
-          {/* Tools Dropdown */}
-          <div className={styles.toolsDropdown} ref={dropdownRef}>
+          {/* TOOLS DROPDOWN */}
+          <div className="tools-dropdown" ref={dropdownRef}>
             <button
-              ref={toolsBtnRef}
-              className={`${styles.toolsBtn} ${toolsOpen ? styles.open : ""}`}
+              className={`tools-btn ${toolsOpen ? "open" : ""}`}
               onClick={toggleTools}
             >
               Tools
@@ -88,23 +66,19 @@ export default function Header() {
               </svg>
             </button>
 
-            <div
-              className={`${styles.toolsMenu} ${toolsOpen ? styles.open : ""}`}
-              style={dropdownStyle}
-            >
+            <div className={`tools-menu ${toolsOpen ? "open" : ""}`}>
               {/* Column 1 */}
-              <div className={`${styles.toolsColumn} ${openCategory === "loans" ? styles.open : ""}`}>
-                <div className={styles.toolsCategory} onClick={() => toggleCategory("loans")}>Loans & EMI</div>
+              <div className={`tools-column ${openCategory === "loans" ? "open" : ""}`}>
+                <div className="tools-category" onClick={() => toggleCategory("loans")}>Loans & EMI</div>
                 <Link href="/tools/emi" onClick={closeMenu}>EMI Calculator</Link>
                 <Link href="/tools/mortgage" onClick={closeMenu}>Mortgage Calculator</Link>
                 <Link href="/tools/loan" onClick={closeMenu}>Loan Calculator</Link>
                 <Link href="/tools/home-loan-vs-rent" onClick={closeMenu}>Home Loan vs Rent</Link>
                 <Link href="/tools/loan-eligibility" onClick={closeMenu}>Loan Eligibility</Link>
               </div>
-
               {/* Column 2 */}
-              <div className={`${styles.toolsColumn} ${openCategory === "investments" ? styles.open : ""}`}>
-                <div className={styles.toolsCategory} onClick={() => toggleCategory("investments")}>Investments & Savings</div>
+              <div className={`tools-column ${openCategory === "investments" ? "open" : ""}`}>
+                <div className="tools-category" onClick={() => toggleCategory("investments")}>Investments & Savings</div>
                 <Link href="/tools/sip" onClick={closeMenu}>SIP Calculator</Link>
                 <Link href="/tools/compound-interest" onClick={closeMenu}>Compound Interest</Link>
                 <Link href="/tools/fd-rd-calculator" onClick={closeMenu}>FD & RD Calculator</Link>
@@ -112,19 +86,17 @@ export default function Header() {
                 <Link href="/tools/retirement" onClick={closeMenu}>Retirement Calculator</Link>
                 <Link href="/tools/savings-goal" onClick={closeMenu}>Savings Goal</Link>
               </div>
-
               {/* Column 3 */}
-              <div className={`${styles.toolsColumn} ${openCategory === "taxes" ? styles.open : ""}`}>
-                <div className={styles.toolsCategory} onClick={() => toggleCategory("taxes")}>Taxes & Financial Planning</div>
+              <div className={`tools-column ${openCategory === "taxes" ? "open" : ""}`}>
+                <div className="tools-category" onClick={() => toggleCategory("taxes")}>Taxes & Financial Planning</div>
                 <Link href="/tools/income-tax" onClick={closeMenu}>Income Tax Calculator</Link>
                 <Link href="/tools/gst-vat-tax" onClick={closeMenu}>GST / VAT / Tax</Link>
                 <Link href="/tools/net-worth" onClick={closeMenu}>Net Worth Calculator</Link>
                 <Link href="/tools/credit-card-payoff" onClick={closeMenu}>Credit Card Payoff</Link>
               </div>
-
               {/* Column 4 */}
-              <div className={`${styles.toolsColumn} ${openCategory === "quick" ? styles.open : ""}`}>
-                <div className={styles.toolsCategory} onClick={() => toggleCategory("quick")}>Quick Tools / Misc</div>
+              <div className={`tools-column ${openCategory === "quick" ? "open" : ""}`}>
+                <div className="tools-category" onClick={() => toggleCategory("quick")}>Quick Tools / Misc</div>
                 <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
                 <Link href="/tools/currency" onClick={closeMenu}>Currency Converter</Link>
                 <Link href="/tools/simple-interest" onClick={closeMenu}>Simple Interest</Link>
@@ -136,10 +108,15 @@ export default function Header() {
           <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
 
-        {/* Mobile Menu Toggle */}
-        <button className={styles.menuToggle} onClick={toggleMenu}>
+        {/* Mobile Hamburger */}
+        <button
+          className="menu-toggle mobile-only"
+          onClick={toggleMenu}
+          aria-label="Toggle Menu"
+        >
           ☰
         </button>
+
       </div>
     </header>
   );

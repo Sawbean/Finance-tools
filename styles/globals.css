@@ -74,14 +74,14 @@ p {
   margin-bottom: 8px;
 }
 
-/* =============================== 
+/* ===============================  
    PREMIUM FINTECH HEADER
 ================================ */
 :root {
   --primary: rgba(11, 31, 74, 0.95);
 }
 
-.siteHeader {
+.site-header {
   width: 100%;
   background: var(--primary);
   backdrop-filter: blur(12px);
@@ -92,7 +92,7 @@ p {
   font-family: 'Inter', sans-serif;
 }
 
-.headerContainer {
+.header-container {
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
@@ -109,14 +109,14 @@ p {
 }
 
 /* Desktop nav */
-.navLinks {
+.nav-links {
   display: flex;
   align-items: center;
   gap: 24px;
   margin-left: auto;
 }
 
-.navLinks a {
+.nav-links a {
   text-decoration: none;
   color: #ffffff;
   font-weight: 500;
@@ -126,17 +126,17 @@ p {
   transition: all 0.25s ease;
 }
 
-.navLinks a:hover {
+.nav-links a:hover {
   color: #f0e68c;
   background-color: rgba(255,255,255,0.08);
 }
 
 /* Tools dropdown */
-.toolsDropdown {
+.tools-dropdown {
   position: relative;
 }
 
-.toolsBtn {
+.tools-btn {
   background: none;
   border: none;
   font-family: inherit;
@@ -150,55 +150,76 @@ p {
   transition: color 0.25s ease;
 }
 
-.toolsBtn:hover {
+.tools-btn:hover {
   color: #f0e68c;
 }
 
-.toolsBtn svg {
+.tools-btn svg {
   width: 10px;
   height: 10px;
   transition: transform 0.25s ease;
 }
 
-.toolsBtn.open svg {
+.tools-btn.open svg {
   transform: rotate(180deg);
 }
 
 /* Mega menu */
-.toolsMenu {
+.tools-menu {
   position: absolute;
-  top: calc(100% + 10px);
-  right: 0;
+  top: calc(100% + 12px);
+
+  /* ❗ KEY CHANGE */
+  left: 50%;
+  transform: translateX(-40%); /* shift LEFT for premium feel */
+
   display: flex;
   gap: 24px;
   padding: 22px 26px;
   min-width: 280px;
-  max-width: 90vw;
+
+  /* 👇 IMPORTANT: never overflow screen */
+  max-width: min(1100px, calc(100vw - 40px));
+
   background: rgba(11,31,74,0.96);
   backdrop-filter: blur(14px);
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+
   opacity: 0;
   pointer-events: none;
   transition: all 0.28s ease;
   z-index: 1000;
+
   flex-direction: row;
 }
 
-.toolsMenu.open {
+.tools-menu.open {
   opacity: 1;
   pointer-events: all;
 }
 
-.toolsColumn {
+.tools-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Columns */
+.tools-column {
   display: flex;
   flex-direction: column;
   min-width: 160px;
   gap: 6px;
 }
 
-.toolsCategory {
+.tools-column:not(:last-child) {
+  border-right: 1px solid rgba(255,255,255,0.08);
+  padding-right: 16px;
+}
+
+/* Category Titles */
+.tools-category {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.6px;
@@ -209,12 +230,13 @@ p {
   transition: background 0.2s ease;
 }
 
-.toolsCategory:hover {
+.tools-category:hover {
   background-color: rgba(255,255,255,0.08);
   border-radius: 6px;
 }
 
-.toolsMenu a {
+/* Links inside dropdown */
+.tools-menu a {
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 14px;
@@ -222,25 +244,21 @@ p {
   transition: all 0.2s ease;
 }
 
-.toolsMenu a:hover {
+.tools-menu a:hover {
   background: rgba(255,255,255,0.08);
   transform: translateX(3px);
   color: #f0e68c;
 }
 
-.toolsColumn:not(:last-child) {
-  border-right: 1px solid rgba(255,255,255,0.08);
-  padding-right: 16px;
-}
-
 /* Hide mobile menu toggle on desktop */
-.menuToggle {
+.menu-toggle {
   display: none;
 }
 
 /* ======================== Mobile ======================== */
 @media (max-width: 768px) {
-  .menuToggle {
+
+  .menu-toggle {
     display: block;
     font-size: 2rem;
     background: none;
@@ -250,7 +268,7 @@ p {
     z-index: 1100;
   }
 
-  .navLinks {
+  .nav-links {
     position: fixed;
     top: 0;
     right: -100%;
@@ -269,11 +287,11 @@ p {
     transition: right 0.4s ease;
   }
 
-  .navLinks.open {
+  .nav-links.open {
     right: 0;
   }
 
-  .toolsMenu {
+  .tools-menu {
     position: static;
     width: 100%;
     display: block;
@@ -288,28 +306,28 @@ p {
     z-index: 1050;
   }
 
-  .toolsMenu.open {
+  .tools-menu.open {
     max-height: 1000px;
     margin-top: 0.3rem;
   }
 
-  .toolsColumn {
+  .tools-column {
     display: block;
     width: 100%;
     gap: 0.3rem;
     border: none;
   }
 
-  .toolsColumn a {
+  .tools-column a {
     display: none;
     padding: 0.4rem 0 0.4rem 1.5rem;
   }
 
-  .toolsColumn.open a {
+  .tools-column.open a {
     display: block;
   }
 
-  .toolsCategory {
+  .tools-category {
     padding: 0.5rem 0;
   }
 }
