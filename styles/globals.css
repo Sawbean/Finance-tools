@@ -417,7 +417,8 @@ p {
    MOBILE RESPONSIVE
 ================================= */
 @media (max-width: 768px) {
-  /* Mobile menu toggle button stays visible */
+
+  /* Mobile menu toggle button */
   .menu-toggle {
     display: block;
     font-size: 2rem;
@@ -425,48 +426,50 @@ p {
     border: none;
     cursor: pointer;
     color: #ffffff;
-    z-index: 1100; /* above menu */
+    z-index: 1100;
   }
 
-  /* Mobile nav-links slide from right now */
+  /* Mobile nav (slide from right) */
   .nav-links {
     position: fixed;
     top: 0;
-    right: -100%; /* hidden to the right initially */
+    right: -100%;
     width: 80%;
     max-width: 320px;
     height: 100vh;
-    background: var(--primary); /* premium blue */
+    background: var(--primary);
     padding: 4rem 1rem 1rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    box-shadow: -5px 0 20px rgba(0,0,0,0.1); /* shadow from left */
-    transition: right 0.4s ease; /* animate right instead of left */
+    box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+    transition: right 0.4s ease;
     z-index: 1000;
-    overflow-y: auto;   /* ✅ allow scrolling inside menu */
-    overflow-x: hidden; /* ✅ prevent sideways overflow */
+
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-  /* Slide in menu */
   .nav-links.open {
-    right: 0; /* menu fully visible */
+    right: 0;
   }
 
-  /* Make sure logo is always visible above the menu */
+  /* Keep header/logo above */
   .header-container {
     position: relative;
     z-index: 1100;
   }
 
   .logo {
-    z-index: 1101; /* above menu */
+    z-index: 1101;
   }
 
+  /* Tools dropdown container */
   .tools-dropdown {
     width: 100%;
   }
 
+  /* Tools button */
   .tools-btn {
     width: 100%;
     justify-content: space-between;
@@ -474,51 +477,57 @@ p {
     color: #ffffff;
   }
 
+  /* ===============================
+     ✅ FIXED DROPDOWN (MAIN PART)
+  ================================= */
   .tools-menu {
-    position: relative;
-    top: 0;
-    left: 0;
-    box-shadow: none;
+    position: static;          /* ✅ VERY IMPORTANT */
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding-left: 0.5rem;
+    display: block;            /* ✅ remove flex/grid issues */
+
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.35s ease;
+
+    padding: 0;                /* ✅ remove gap */
+    margin: 0;
+
     background: transparent;
-    margin-top: 0.3rem;
+
+    transition: max-height 0.35s ease;
   }
 
   .tools-menu.open {
-    max-height: 500px;
+    max-height: 1000px;
+    margin-top: 0.3rem;        /* only when open */
   }
 
+  /* Remove desktop column behavior */
   .tools-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
+    display: block;            /* ✅ no flex */
     width: 100%;
+    border: none;              /* ✅ remove vertical line */
   }
 
+  /* Category (like “Planning”) */
+  .tools-category {
+    font-weight: 600;
+    padding: 0.5rem 0;
+    margin: 0;
+    cursor: pointer;
+    color: #ffffff;
+  }
+
+  /* Tool links */
   .tools-column a {
     display: none;
-    padding-left: 1.5rem;
-    font-weight: 400;
+    padding: 0.4rem 0 0.4rem 1.5rem; /* clean indent */
+    margin: 0;
     color: #ffffff;
+    font-weight: 400;
   }
 
   .tools-column.open a {
     display: block;
-  }
-
-  .tools-category {
-    font-weight: 600;
-    padding: 0.4rem 0;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.2s;
-    color: #ffffff;
   }
 
   .tools-category:hover {
