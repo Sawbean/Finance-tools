@@ -444,6 +444,8 @@ p {
     box-shadow: -5px 0 20px rgba(0,0,0,0.1); /* shadow from left */
     transition: right 0.4s ease; /* animate right instead of left */
     z-index: 1000;
+    overflow-y: auto;   /* ✅ allow scrolling inside menu */
+    overflow-x: hidden; /* ✅ prevent sideways overflow */
   }
 
   /* Slide in menu */
@@ -488,7 +490,7 @@ p {
   }
 
   .tools-menu.open {
-    max-height: 1000px;
+    max-height: 80vh;
   }
 
   .tools-column {
