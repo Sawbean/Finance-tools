@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,30 +10,26 @@ export default function Header() {
 
   // Toggle mobile menu
   const toggleMenu = () => {
-    const newState = !menuOpen;
-    setMenuOpen(newState);
-
-    if (newState) {
-      document.body.classList.add("menu-open");
-      setToolsOpen(false); // reset dropdown when menu opens
-      setOpenCategory(null);
-    } else {
-      document.body.classList.remove("menu-open");
-    }
+    setMenuOpen(!menuOpen);
+    document.body.classList.toggle("menu-open");
+    // Close tools dropdown when menu opens/closes
+    if (!menuOpen) setToolsOpen(false);
+    if (!menuOpen) setOpenCategory(null);
   };
 
-  // Toggle Tools dropdown
+  // Toggle tools dropdown
   const toggleTools = (e) => {
     e.stopPropagation();
     setToolsOpen(!toolsOpen);
+    // reset categories on open
+    if (!toolsOpen) setOpenCategory(null);
   };
 
-  // Toggle subcategory in Tools
   const toggleCategory = (category) => {
     setOpenCategory(openCategory === category ? null : category);
   };
 
-  // Close menu & reset
+  // Close menu when clicking a link
   const closeMenu = () => {
     setMenuOpen(false);
     setToolsOpen(false);
@@ -41,18 +37,17 @@ export default function Header() {
     document.body.classList.remove("menu-open");
   };
 
-  // Desktop only: close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (window.innerWidth > 768) {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-          setToolsOpen(false);
-        }
+  // Close tools dropdown on desktop when clicking outside
+  const handleClickOutside = (event) => {
+    if (window.innerWidth > 768) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setToolsOpen(false);
       }
-    };
+    }
+  };
+  if (typeof window !== "undefined") {
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }
 
   return (
     <header className="site-header">
@@ -61,13 +56,7 @@ export default function Header() {
         {/* Logo */}
         <div className="logo">
           <Link href="/" onClick={closeMenu}>
-            <Image
-              src="/images/finlogo.png"
-              alt="ToolFinance Logo"
-              height={50}
-              width={165}
-              priority
-            />
+            <Image src="/images/finlogo.png" alt="ToolFinance Logo" height={50} width={165} priority />
           </Link>
         </div>
 
@@ -75,12 +64,8 @@ export default function Header() {
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
-          {/* Tools Dropdown */}
           <div className="tools-dropdown" ref={dropdownRef}>
-            <button
-              className={`tools-btn ${toolsOpen ? "open" : ""}`}
-              onClick={toggleTools}
-            >
+            <button className={`tools-btn ${toolsOpen ? "open" : ""}`} onClick={toggleTools}>
               Tools
               <svg viewBox="0 0 10 10" fill="currentColor">
                 <polygon points="0,0 10,0 5,6" />
@@ -132,12 +117,8 @@ export default function Header() {
           <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
 
-        {/* Mobile Hamburger */}
-        <button
-          className="menu-toggle mobile-only"
-          onClick={toggleMenu}
-          aria-label="Toggle Menu"
-        >
+        {/* Hamburger */}
+        <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle Menu">
           ☰
         </button>
 

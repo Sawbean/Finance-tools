@@ -74,9 +74,6 @@ p {
   margin-bottom: 8px;
 }
 
-/* ===============================  
-   PREMIUM FINTECH HEADER
-================================ */
 :root {
   --primary: rgba(11, 31, 74, 0.95);
 }
@@ -131,7 +128,6 @@ p {
   background-color: rgba(255,255,255,0.08);
 }
 
-/* Tools dropdown */
 .tools-dropdown {
   position: relative;
 }
@@ -150,9 +146,7 @@ p {
   transition: color 0.25s ease;
 }
 
-.tools-btn:hover {
-  color: #f0e68c;
-}
+.tools-btn:hover { color: #f0e68c; }
 
 .tools-btn svg {
   width: 10px;
@@ -160,11 +154,9 @@ p {
   transition: transform 0.25s ease;
 }
 
-.tools-btn.open svg {
-  transform: rotate(180deg);
-}
+.tools-btn.open svg { transform: rotate(180deg); }
 
-/* Mega menu */
+/* Desktop dropdown */
 .tools-menu {
   position: absolute;
   top: calc(100% + 12px);
@@ -205,7 +197,6 @@ p {
   padding-right: 16px;
 }
 
-/* Category Titles */
 .tools-category {
   font-size: 12px;
   text-transform: uppercase;
@@ -222,7 +213,6 @@ p {
   border-radius: 6px;
 }
 
-/* Links inside dropdown */
 .tools-menu a {
   padding: 6px 10px;
   border-radius: 8px;
@@ -237,14 +227,12 @@ p {
   color: #f0e68c;
 }
 
-/* Hide mobile menu toggle on desktop */
-.menu-toggle {
-  display: none;
-}
+/* Hide mobile toggle on desktop */
+.menu-toggle { display: none; }
 
+/* ===================== MOBILE ===================== */
 @media (max-width: 768px) {
 
-  /* Hamburger button */
   .menu-toggle {
     display: block;
     font-size: 2rem;
@@ -255,7 +243,6 @@ p {
     z-index: 1200;
   }
 
-  /* Mobile menu panel */
   .nav-links {
     position: fixed;
     top: 0;
@@ -265,19 +252,14 @@ p {
     height: 100vh;
     background: var(--primary);
     padding: 5rem 1.5rem 2rem;
-    display: flex;
+    display: none; /* hide by default */
     flex-direction: column;
     gap: 1rem;
-    transform: translateX(100%); /* hidden by default */
-    transition: transform 0.3s ease;
     z-index: 1100;
   }
 
-  .nav-links.open {
-    transform: translateX(0);
-  }
+  .nav-links.open { display: flex; }
 
-  /* Menu links style */
   .nav-links a {
     color: #fff;
     font-size: 15px;
@@ -286,11 +268,9 @@ p {
     text-decoration: none;
   }
 
-  .nav-links a:hover {
-    color: #f0e68c;
-  }
+  .nav-links a:hover { color: #f0e68c; }
 
-  /* Tools dropdown */
+  /* Tools dropdown in mobile */
   .tools-menu {
     position: static;
     width: 100%;
@@ -301,34 +281,20 @@ p {
     transition: max-height 0.25s ease;
   }
 
-  .tools-menu.open {
-    max-height: 1000px; /* enough for all items */
-  }
+  .tools-menu.open { max-height: 1000px; }
 
-  .tools-column {
-    width: 100%;
-    border: none;
-  }
+  .tools-column { width: 100%; border: none; }
 
   .tools-column a {
     display: none;
     padding: 0.4rem 0 0.4rem 1.5rem;
   }
 
-  .tools-column.open a {
-    display: block;
-  }
+  .tools-column.open a { display: block; }
 
-  .tools-category {
-    padding: 0.6rem 0;
-    font-weight: 600;
-    cursor: pointer;
-  }
+  .tools-category { padding: 0.6rem 0; font-weight: 600; cursor: pointer; }
 
-  /* Disable body scroll when mobile menu open */
-  body.menu-open {
-    overflow: hidden;
-  }
+  body.menu-open { overflow: hidden; }
 }
 /* ===============================
    HOMEPAGE SEO SECTIONS
