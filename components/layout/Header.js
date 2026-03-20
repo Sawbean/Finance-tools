@@ -34,11 +34,10 @@ export default function Header() {
     setMenuOpen(false);
     setToolsOpen(false);
     setOpenCategory(null);
-
     document.body.classList.remove("menu-open");
   };
 
-  // ✅ ADD THIS (important reset logic)
+  // ✅ RESET when menu closes
   useEffect(() => {
     if (!menuOpen) {
       setToolsOpen(false);
@@ -46,13 +45,24 @@ export default function Header() {
     }
   }, [menuOpen]);
 
-  // Close dropdown when clicking outside
+  // ✅ EXTRA FIX: reset dropdown when menu opens (prevents glitch)
+  useEffect(() => {
+    if (menuOpen) {
+      setToolsOpen(false);
+      setOpenCategory(null);
+    }
+  }, [menuOpen]);
+
+  // ✅ FIXED: disable outside click on mobile
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setToolsOpen(false);
+      if (window.innerWidth > 768) {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+          setToolsOpen(false);
+        }
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
