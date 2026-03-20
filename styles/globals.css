@@ -331,6 +331,44 @@ p {
     transform: none;
   }
 }
+
+/* ===============================
+   MOBILE ACCORDION FIX (ADD ONLY)
+================================ */
+
+@media (max-width: 992px) {
+
+  /* Make category clickable */
+  .tools-category {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Hide all links by default */
+  .tools-column a {
+    display: none;
+  }
+
+  /* Show links when column is open */
+  .tools-column.open a {
+    display: block;
+  }
+
+  /* Arrow indicator */
+  .tools-category::after {
+    content: "▾";
+    font-size: 12px;
+    transition: transform 0.2s ease;
+  }
+
+  /* Rotate arrow when open */
+  .tools-column.open .tools-category::after {
+    transform: rotate(180deg);
+  }
+}
+
 /* ===============================
    HOMEPAGE SEO SECTIONS
 ================================ */
