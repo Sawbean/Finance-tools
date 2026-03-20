@@ -115,6 +115,7 @@ p {
   display: flex;
   align-items: center;
   gap: 24px;
+  margin-left: auto; /* push links to right */
 }
 
 .nav-links a {
@@ -168,14 +169,12 @@ p {
 }
 
 /* ===============================
-   DROPDOWN PANEL (DESKTOP)
+   DROPDOWN PANEL (DESKTOP) - Smart Position
 ================================ */
 .tools-menu {
   position: absolute;
   top: calc(100% + 10px);
-  left: 0; /* align to button */
-  min-width: 320px; /* minimum dropdown width */
-  max-width: 90vw;  /* responsive */
+  left: 0; /* will be adjusted with transform via JS if needed */
   background: rgba(11,31,74,0.96);
   backdrop-filter: blur(14px);
   border-radius: 14px;
@@ -189,11 +188,13 @@ p {
   transition: all 0.28s ease;
   z-index: 1000;
   flex-direction: row;
+  min-width: 280px;
+  max-width: 90vw;
 }
 
+/* Open state */
 .tools-menu.open {
   opacity: 1;
-  transform: translateY(0);
   pointer-events: all;
 }
 
@@ -276,6 +277,7 @@ p {
     z-index: 1000;
     overflow-y: auto;
     overflow-x: hidden;
+    margin-left: 0; /* reset */
   }
 
   .nav-links.open {
