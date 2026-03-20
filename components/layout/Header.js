@@ -8,19 +8,43 @@ export default function Header() {
   const [openCategory, setOpenCategory] = useState(null);
   const dropdownRef = useRef(null);
 
-  const toggleMenu = () => setMenuOpen(!menuOpen);
+  // ✅ FIXED toggleMenu
+  const toggleMenu = () => {
+    const newState = !menuOpen;
+    setMenuOpen(newState);
+
+    if (newState) {
+      document.body.classList.add("menu-open");
+    } else {
+      document.body.classList.remove("menu-open");
+    }
+  };
+
   const toggleTools = (e) => {
     e.stopPropagation();
     setToolsOpen(!toolsOpen);
   };
+
   const toggleCategory = (category) => {
     setOpenCategory(openCategory === category ? null : category);
   };
+
+  // ✅ UPDATED closeMenu
   const closeMenu = () => {
     setMenuOpen(false);
     setToolsOpen(false);
     setOpenCategory(null);
+
+    document.body.classList.remove("menu-open");
   };
+
+  // ✅ ADD THIS (important reset logic)
+  useEffect(() => {
+    if (!menuOpen) {
+      setToolsOpen(false);
+      setOpenCategory(null);
+    }
+  }, [menuOpen]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -50,7 +74,7 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Desktop Navigation */}
+        {/* Navigation */}
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
@@ -76,6 +100,7 @@ export default function Header() {
                 <Link href="/tools/home-loan-vs-rent" onClick={closeMenu}>Home Loan vs Rent</Link>
                 <Link href="/tools/loan-eligibility" onClick={closeMenu}>Loan Eligibility</Link>
               </div>
+
               {/* Column 2 */}
               <div className={`tools-column ${openCategory === "investments" ? "open" : ""}`}>
                 <div className="tools-category" onClick={() => toggleCategory("investments")}>Investments & Savings</div>
@@ -86,6 +111,7 @@ export default function Header() {
                 <Link href="/tools/retirement" onClick={closeMenu}>Retirement Calculator</Link>
                 <Link href="/tools/savings-goal" onClick={closeMenu}>Savings Goal</Link>
               </div>
+
               {/* Column 3 */}
               <div className={`tools-column ${openCategory === "taxes" ? "open" : ""}`}>
                 <div className="tools-category" onClick={() => toggleCategory("taxes")}>Taxes & Financial Planning</div>
@@ -94,6 +120,7 @@ export default function Header() {
                 <Link href="/tools/net-worth" onClick={closeMenu}>Net Worth Calculator</Link>
                 <Link href="/tools/credit-card-payoff" onClick={closeMenu}>Credit Card Payoff</Link>
               </div>
+
               {/* Column 4 */}
               <div className={`tools-column ${openCategory === "quick" ? "open" : ""}`}>
                 <div className="tools-category" onClick={() => toggleCategory("quick")}>Quick Tools / Misc</div>
