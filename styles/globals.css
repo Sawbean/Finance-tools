@@ -162,52 +162,22 @@ p {
 ================================ */
 .tools-menu {
   position: absolute;
-  top: 60px;
-
-  /* shift slightly right from center */
-  left: 52%;                /* was 50% */
-  transform: translateX(-30%) translateY(10px); /* match left shift */
-
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-
-  padding: 20px 24px;
-
-  width: auto;
-  max-width: 95vw;
-
-  background: rgba(11, 31, 74, 0.98);
-  backdrop-filter: blur(12px);
-
-  border: 1px solid rgba(255,255,255,0.08);
+  top: 110%;
+  left: 0;
+  background: var(--primary);
   border-radius: 12px;
-
-  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-
-  opacity: 0;
-  pointer-events: none;
-
-  transition: opacity 0.25s ease, transform 0.25s ease;
-
-  z-index: 999;
+  padding: 1rem;
+  display: none;
+  width: 280px;
+  z-index: 900;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-/* SHOW ON HOVER (DESKTOP) */
-@media (min-width: 993px) {
-  .tools-dropdown:hover .tools-menu {
-    opacity: 1;
-    transform: translateX(-60%) translateY(0); /* match left shift */
-    pointer-events: all;
-  }
-}
-
-/* SHOW ON CLICK */
 .tools-menu.open {
-  opacity: 1;
-  transform: translateX(-52%) translateY(0);
-  pointer-events: all;
+  display: flex;
 }
+
 
 /* ===============================
    COLUMNS (HORIZONTAL ON DESKTOP)
@@ -418,7 +388,6 @@ p {
 ================================= */
 @media (max-width: 768px) {
 
-  /* Mobile menu toggle button */
   .menu-toggle {
     display: block;
     font-size: 2rem;
@@ -429,7 +398,7 @@ p {
     z-index: 1100;
   }
 
-  /* Mobile nav (slide from right) */
+  /* Mobile nav (right slide) */
   .nav-links {
     position: fixed;
     top: 0;
@@ -454,7 +423,6 @@ p {
     right: 0;
   }
 
-  /* Keep header/logo above */
   .header-container {
     position: relative;
     z-index: 1100;
@@ -464,66 +432,61 @@ p {
     z-index: 1101;
   }
 
-  /* Tools dropdown container */
+  /* Tools container */
   .tools-dropdown {
     width: 100%;
   }
 
-  /* Tools button */
   .tools-btn {
     width: 100%;
+    display: flex;
     justify-content: space-between;
     background: rgba(255,255,255,0.1);
     color: #ffffff;
   }
 
-  /* ===============================
-     ✅ FIXED DROPDOWN (MAIN PART)
-  ================================= */
+  /* 🔥 MAIN FIX */
   .tools-menu {
-    position: static;          /* ✅ VERY IMPORTANT */
+    position: static !important;       /* kill absolute */
+    display: block !important;         /* remove flex/grid */
     width: 100%;
-    display: block;            /* ✅ remove flex/grid issues */
+
+    background: transparent !important;
+    box-shadow: none !important;       /* remove floating card */
+    border-radius: 0 !important;
+
+    padding: 0;
+    margin: 0;
 
     max-height: 0;
     overflow: hidden;
-
-    padding: 0;                /* ✅ remove gap */
-    margin: 0;
-
-    background: transparent;
 
     transition: max-height 0.35s ease;
   }
 
   .tools-menu.open {
     max-height: 1000px;
-    margin-top: 0.3rem;        /* only when open */
+    margin-top: 0.3rem;
   }
 
-  /* Remove desktop column behavior */
+  /* 🔥 FIX COLUMN STRUCTURE */
   .tools-column {
-    display: block;            /* ✅ no flex */
+    display: block !important;
     width: 100%;
-    border: none;              /* ✅ remove vertical line */
+    border: none !important;
   }
 
-  /* Category (like “Planning”) */
   .tools-category {
     font-weight: 600;
     padding: 0.5rem 0;
-    margin: 0;
     cursor: pointer;
     color: #ffffff;
   }
 
-  /* Tool links */
   .tools-column a {
     display: none;
-    padding: 0.4rem 0 0.4rem 1.5rem; /* clean indent */
-    margin: 0;
+    padding: 0.4rem 0 0.4rem 1.5rem;
     color: #ffffff;
-    font-weight: 400;
   }
 
   .tools-column.open a {
@@ -533,6 +496,7 @@ p {
   .tools-category:hover {
     background-color: rgba(255,255,255,0.2);
   }
+
 }
 /* ===============================
    HOMEPAGE SEO SECTIONS
