@@ -6,7 +6,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
 
-  // ✅ NEW (mobile accordion)
+  // ✅ Mobile accordion state
   const [openCategory, setOpenCategory] = useState(null);
 
   const dropdownRef = useRef(null);
@@ -18,7 +18,6 @@ export default function Header() {
     setToolsOpen(!toolsOpen);
   };
 
-  // ✅ NEW
   const toggleCategory = (category) => {
     setOpenCategory(openCategory === category ? null : category);
   };
@@ -26,10 +25,10 @@ export default function Header() {
   const closeMenu = () => {
     setMenuOpen(false);
     setToolsOpen(false);
-    setOpenCategory(null); // reset accordion
+    setOpenCategory(null);
   };
 
-  // CLOSE OUTSIDE
+  // ✅ Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -67,7 +66,7 @@ export default function Header() {
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
-          {/* DROPDOWN */}
+          {/* TOOLS DROPDOWN */}
           <div className="tools-dropdown" ref={dropdownRef}>
 
             <button
@@ -128,8 +127,10 @@ export default function Header() {
                 <Link href="/tools/gst-vat-tax" onClick={closeMenu}>GST / VAT / Tax</Link>
                 <Link href="/tools/net-worth" onClick={closeMenu}>Net Worth Calculator</Link>
                 <Link href="/tools/credit-card-payoff" onClick={closeMenu}>Credit Card Payoff</Link>
+              </div>
 
-                {/* Sub category */}
+              {/* Column 4 (Quick Tools FIXED) */}
+              <div className={`tools-column ${openCategory === "quick" ? "open" : ""}`}>
                 <div
                   className="tools-category"
                   style={{ marginTop: "12px" }}
@@ -138,12 +139,10 @@ export default function Header() {
                   Quick Tools / Misc
                 </div>
 
-                <div className={`${openCategory === "quick" ? "open" : ""}`}>
-                  <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
-                  <Link href="/tools/currency" onClick={closeMenu}>Currency Converter</Link>
-                  <Link href="/tools/simple-interest" onClick={closeMenu}>Simple Interest</Link>
-                  <Link href="/tools/inflation" onClick={closeMenu}>Inflation Impact</Link>
-                </div>
+                <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
+                <Link href="/tools/currency" onClick={closeMenu}>Currency Converter</Link>
+                <Link href="/tools/simple-interest" onClick={closeMenu}>Simple Interest</Link>
+                <Link href="/tools/inflation" onClick={closeMenu}>Inflation Impact</Link>
               </div>
 
             </div>
@@ -152,7 +151,7 @@ export default function Header() {
           <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
 
-        {/* Mobile Toggle */}
+        {/* Mobile Menu Toggle */}
         <button className="menu-toggle" onClick={toggleMenu}>
           ☰
         </button>
