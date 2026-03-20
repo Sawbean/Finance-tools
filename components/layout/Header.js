@@ -5,23 +5,18 @@ import { useState, useEffect, useRef } from "react";
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
-
-  // Mobile accordion state
   const [openCategory, setOpenCategory] = useState(null);
 
   const dropdownRef = useRef(null);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-
   const toggleTools = (e) => {
     e.stopPropagation();
     setToolsOpen(!toolsOpen);
   };
-
   const toggleCategory = (category) => {
     setOpenCategory(openCategory === category ? null : category);
   };
-
   const closeMenu = () => {
     setMenuOpen(false);
     setToolsOpen(false);
@@ -38,11 +33,8 @@ export default function Header() {
         setToolsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -62,13 +54,17 @@ export default function Header() {
           </Link>
         </div>
 
+        {/* Mobile Hamburger */}
+        <button className="menu-toggle" onClick={toggleMenu}>
+          ☰
+        </button>
+
         {/* Navigation */}
         <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
           {/* TOOLS DROPDOWN */}
           <div className="tools-dropdown" ref={dropdownRef}>
-
             <button
               className={`tools-btn ${toolsOpen ? "open" : ""}`}
               onClick={toggleTools}
@@ -83,13 +79,9 @@ export default function Header() {
 
               {/* Column 1 */}
               <div className={`tools-column ${openCategory === "loans" ? "open" : ""}`}>
-                <div
-                  className="tools-category"
-                  onClick={() => toggleCategory("loans")}
-                >
+                <div className="tools-category" onClick={() => toggleCategory("loans")}>
                   Loans & EMI
                 </div>
-
                 <Link href="/tools/emi" onClick={closeMenu}>EMI Calculator</Link>
                 <Link href="/tools/mortgage" onClick={closeMenu}>Mortgage Calculator</Link>
                 <Link href="/tools/loan" onClick={closeMenu}>Loan Calculator</Link>
@@ -99,13 +91,9 @@ export default function Header() {
 
               {/* Column 2 */}
               <div className={`tools-column ${openCategory === "investments" ? "open" : ""}`}>
-                <div
-                  className="tools-category"
-                  onClick={() => toggleCategory("investments")}
-                >
+                <div className="tools-category" onClick={() => toggleCategory("investments")}>
                   Investments & Savings
                 </div>
-
                 <Link href="/tools/sip" onClick={closeMenu}>SIP Calculator</Link>
                 <Link href="/tools/compound-interest" onClick={closeMenu}>Compound Interest</Link>
                 <Link href="/tools/fd-rd-calculator" onClick={closeMenu}>FD & RD Calculator</Link>
@@ -116,13 +104,9 @@ export default function Header() {
 
               {/* Column 3 */}
               <div className={`tools-column ${openCategory === "taxes" ? "open" : ""}`}>
-                <div
-                  className="tools-category"
-                  onClick={() => toggleCategory("taxes")}
-                >
+                <div className="tools-category" onClick={() => toggleCategory("taxes")}>
                   Taxes & Financial Planning
                 </div>
-
                 <Link href="/tools/income-tax" onClick={closeMenu}>Income Tax Calculator</Link>
                 <Link href="/tools/gst-vat-tax" onClick={closeMenu}>GST / VAT / Tax</Link>
                 <Link href="/tools/net-worth" onClick={closeMenu}>Net Worth Calculator</Link>
@@ -133,12 +117,10 @@ export default function Header() {
               <div className={`tools-column ${openCategory === "quick" ? "open" : ""}`}>
                 <div
                   className="tools-category"
-                  style={{ marginTop: "8px" }}
                   onClick={() => toggleCategory("quick")}
                 >
                   Quick Tools / Misc
                 </div>
-
                 <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
                 <Link href="/tools/currency" onClick={closeMenu}>Currency Converter</Link>
                 <Link href="/tools/simple-interest" onClick={closeMenu}>Simple Interest</Link>
@@ -150,11 +132,6 @@ export default function Header() {
 
           <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
-
-        {/* Mobile Menu Toggle */}
-        <button className="menu-toggle" onClick={toggleMenu}>
-          ☰
-        </button>
 
       </div>
     </header>
