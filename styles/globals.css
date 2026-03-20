@@ -108,7 +108,7 @@ p {
   width: auto;
 }
 
-/* Nav Links Right Side */
+/* Desktop nav */
 .navLinks {
   display: flex;
   align-items: center;
@@ -131,7 +131,7 @@ p {
   background-color: rgba(255,255,255,0.08);
 }
 
-/* Tools Dropdown */
+/* Tools dropdown */
 .toolsDropdown {
   position: relative;
 }
@@ -164,12 +164,11 @@ p {
   transform: rotate(180deg);
 }
 
-/* Desktop Mega Menu */
+/* Mega menu */
 .toolsMenu {
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  transform: translateY(0);
   display: flex;
   gap: 24px;
   padding: 22px 26px;
@@ -234,8 +233,23 @@ p {
   padding-right: 16px;
 }
 
-/* =============================== Mobile Responsive =============================== */
+/* Hide mobile menu toggle on desktop */
+.menuToggle {
+  display: none;
+}
+
+/* ======================== Mobile ======================== */
 @media (max-width: 768px) {
+  .menuToggle {
+    display: block;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+    z-index: 1100;
+  }
+
   .navLinks {
     position: fixed;
     top: 0;

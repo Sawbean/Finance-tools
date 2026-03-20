@@ -1,14 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import styles from "./Header.module.css"; // Import CSS module
+import styles from "./Header.module.css";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const [openCategory, setOpenCategory] = useState(null);
+  const [dropdownStyle, setDropdownStyle] = useState({});
 
   const dropdownRef = useRef(null);
+  const toolsBtnRef = useRef(null);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const toggleTools = (e) => {
@@ -24,6 +26,25 @@ export default function Header() {
     setOpenCategory(null);
   };
 
+  // Desktop dropdown positioning
+  useEffect(() => {
+    if (toolsOpen && toolsBtnRef.current && dropdownRef.current) {
+      const btnRect = toolsBtnRef.current.getBoundingClientRect();
+      const menu = dropdownRef.current;
+      const viewportWidth = window.innerWidth;
+      const menuWidth = menu.offsetWidth;
+
+      let left = btnRect.left; // align with button
+      if (left + menuWidth > viewportWidth - 16) { // 16px padding
+        left = viewportWidth - menuWidth - 16;
+      }
+      if (left < 16) left = 16;
+
+      setDropdownStyle({ left: `${left}px` });
+    }
+  }, [toolsOpen]);
+
+  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -50,20 +71,27 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Navigation */}
+        {/* Nav Links */}
         <nav className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
           <Link href="/" onClick={closeMenu}>Home</Link>
 
           {/* Tools Dropdown */}
           <div className={styles.toolsDropdown} ref={dropdownRef}>
-            <button className={`${styles.toolsBtn} ${toolsOpen ? styles.open : ""}`} onClick={toggleTools}>
+            <button
+              ref={toolsBtnRef}
+              className={`${styles.toolsBtn} ${toolsOpen ? styles.open : ""}`}
+              onClick={toggleTools}
+            >
               Tools
               <svg viewBox="0 0 10 10" fill="currentColor">
                 <polygon points="0,0 10,0 5,6" />
               </svg>
             </button>
 
-            <div className={`${styles.toolsMenu} ${toolsOpen ? styles.open : ""}`}>
+            <div
+              className={`${styles.toolsMenu} ${toolsOpen ? styles.open : ""}`}
+              style={dropdownStyle}
+            >
               {/* Column 1 */}
               <div className={`${styles.toolsColumn} ${openCategory === "loans" ? styles.open : ""}`}>
                 <div className={styles.toolsCategory} onClick={() => toggleCategory("loans")}>Loans & EMI</div>
@@ -107,6 +135,11 @@ export default function Header() {
 
           <Link href="/blog" onClick={closeMenu}>Financial Blog</Link>
         </nav>
+
+        {/* Mobile Menu Toggle */}
+        <button className={styles.menuToggle} onClick={toggleMenu}>
+          ☰
+        </button>
       </div>
     </header>
   );
