@@ -482,26 +482,28 @@ p {
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-left: 0;
+    padding-left: 0.5rem;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease;
-    background: var(--primary);
+    background: transparent;
+    margin-top: 0.3rem;
   }
 
   .tools-menu.open {
-    max-height: 80vh;
+    max-height: 500px;
   }
 
   .tools-column {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
+    width: 100%;
   }
 
   .tools-column a {
     display: none;
-    padding-left: 1rem;
+    padding-left: 1.5rem;
     font-weight: 400;
     color: #ffffff;
   }
@@ -512,7 +514,7 @@ p {
 
   .tools-category {
     font-weight: 600;
-    padding: 0.4rem 0.5rem;
+    padding: 0.4rem 0;
     cursor: pointer;
     border-radius: 6px;
     transition: background 0.2s;
