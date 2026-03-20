@@ -256,7 +256,7 @@ p {
 ================================= */
 .site-header {
   width: 100%;
-  background-color: #1e40af; /* premium blue */
+  background: var(--primary); /* match footer blue */
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   position: fixed;
   top: 0;
@@ -293,10 +293,9 @@ p {
   transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
-/* Links text (desktop + mobile) */
 .nav-links a {
   text-decoration: none;
-  color: #ffffff; /* white text */
+  color: #ffffff; /* white on footer/primary blue */
   font-weight: 500;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
@@ -330,7 +329,7 @@ p {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  background: #2563eb; /* slightly lighter blue button */
+  background: rgba(255,255,255,0.1); /* slightly lighter transparent on top of primary */
   border: none;
   padding: 0.4rem 0.8rem;
   border-radius: 8px;
@@ -342,13 +341,13 @@ p {
 }
 
 .tools-btn:hover {
-  background-color: #1e3a8a; /* darker hover */
+  background-color: rgba(255,255,255,0.2);
 }
 
 .tools-btn svg {
   width: 10px;
   height: 10px;
-  fill: #ffffff; /* arrow white */
+  fill: #ffffff;
   transition: transform 0.3s ease;
 }
 
@@ -363,7 +362,7 @@ p {
   position: absolute;
   top: 110%;
   left: 0;
-  background: #1e40af; /* premium blue dropdown */
+  background: var(--primary); /* match footer/primary blue */
   border-radius: 12px;
   padding: 1rem;
   display: none;
@@ -384,7 +383,6 @@ p {
   gap: 0.4rem;
 }
 
-/* Tools category text */
 .tools-category {
   font-weight: 600;
   cursor: pointer;
@@ -395,10 +393,9 @@ p {
 }
 
 .tools-category:hover {
-  background-color: rgba(255,255,255,0.2); /* subtle hover */
+  background-color: rgba(255,255,255,0.2);
 }
 
-/* Accordion links */
 .tools-column a {
   padding-left: 1rem;
   font-weight: 400;
@@ -432,11 +429,11 @@ p {
   .nav-links {
     position: fixed;
     top: 0;
-    left: -100%; /* slide from left */
-    width: 80%;   /* compact width */
+    left: -100%;
+    width: 80%;
     max-width: 320px;
     height: 100vh;
-    background-color: #1e40af; /* blue mobile menu */
+    background: var(--primary); /* mobile menu background */
     padding: 4rem 1rem 1rem;
     display: flex;
     flex-direction: column;
@@ -457,7 +454,7 @@ p {
   .tools-btn {
     width: 100%;
     justify-content: space-between;
-    background-color: #2563eb;
+    background: rgba(255,255,255,0.1);
     color: #ffffff;
   }
 
@@ -473,7 +470,7 @@ p {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease;
-    background-color: #1e40af; /* dropdown background */
+    background: var(--primary);
   }
 
   .tools-menu.open {
@@ -490,7 +487,7 @@ p {
     display: none;
     padding-left: 1rem;
     font-weight: 400;
-    color: #ffffff; /* white links */
+    color: #ffffff;
   }
 
   .tools-column.open a {
