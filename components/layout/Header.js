@@ -6,7 +6,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
 
-  // ✅ Mobile accordion state
+  // Mobile accordion state
   const [openCategory, setOpenCategory] = useState(null);
 
   const dropdownRef = useRef(null);
@@ -28,7 +28,7 @@ export default function Header() {
     setOpenCategory(null);
   };
 
-  // ✅ Close dropdown when clicking outside
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -129,11 +129,11 @@ export default function Header() {
                 <Link href="/tools/credit-card-payoff" onClick={closeMenu}>Credit Card Payoff</Link>
               </div>
 
-              {/* Column 4 (Quick Tools FIXED) */}
+              {/* Column 4 */}
               <div className={`tools-column ${openCategory === "quick" ? "open" : ""}`}>
                 <div
                   className="tools-category"
-                  style={{ marginTop: "12px" }}
+                  style={{ marginTop: "8px" }}
                   onClick={() => toggleCategory("quick")}
                 >
                   Quick Tools / Misc
