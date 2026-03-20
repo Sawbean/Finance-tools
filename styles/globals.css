@@ -101,13 +101,15 @@ p {
   padding: 0 24px;
 }
 
+/* LOGO */
 .logo img {
   height: 52px;
   width: auto;
+  display: block;
 }
 
 /* ===============================
-   NAV LINKS
+   NAV LINKS (RIGHT SIDE)
 ================================ */
 .nav-links {
   display: flex;
@@ -170,19 +172,18 @@ p {
 ================================ */
 .tools-menu {
   position: absolute;
-  top: calc(100% + 14px);
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
-  display: flex;
-  gap: 24px;
-  padding: 22px 26px;
-  min-width: 700px;
-  max-width: 95vw;
+  top: calc(100% + 10px);
+  left: 0; /* align to button */
+  min-width: 320px; /* minimum dropdown width */
+  max-width: 90vw;  /* responsive */
   background: rgba(11,31,74,0.96);
   backdrop-filter: blur(14px);
   border-radius: 14px;
   border: 1px solid rgba(255,255,255,0.08);
   box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+  padding: 22px 26px;
+  display: flex;
+  gap: 24px;
   opacity: 0;
   pointer-events: none;
   transition: all 0.28s ease;
@@ -192,11 +193,11 @@ p {
 
 .tools-menu.open {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
   pointer-events: all;
 }
 
-/* COLUMNS */
+/* Columns */
 .tools-column {
   display: flex;
   flex-direction: column;
@@ -204,7 +205,7 @@ p {
   gap: 6px;
 }
 
-/* CATEGORY */
+/* Category Titles */
 .tools-category {
   font-size: 12px;
   text-transform: uppercase;
@@ -213,6 +214,7 @@ p {
   color: #f0e68c;
   margin-bottom: 6px;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
 .tools-category:hover {
@@ -220,7 +222,7 @@ p {
   border-radius: 6px;
 }
 
-/* LINKS */
+/* Links inside dropdown */
 .tools-menu a {
   padding: 6px 10px;
   border-radius: 8px;
@@ -235,17 +237,17 @@ p {
   color: #f0e68c;
 }
 
-/* COLUMN DIVIDER */
+/* Column divider */
 .tools-column:not(:last-child) {
   border-right: 1px solid rgba(255,255,255,0.08);
   padding-right: 16px;
 }
 
 /* ===============================
-   MOBILE RESPONSIVE (MAX 768px)
+   MOBILE RESPONSIVE
 ================================= */
 @media (max-width: 768px) {
-  /* Mobile menu toggle */
+  /* Menu toggle button */
   .menu-toggle {
     display: block;
     font-size: 2rem;
@@ -256,7 +258,7 @@ p {
     z-index: 1100;
   }
 
-  /* Mobile nav */
+  /* Mobile nav sliding from right */
   .nav-links {
     position: fixed;
     top: 0;
@@ -280,13 +282,8 @@ p {
     right: 0;
   }
 
-  /* Logo above menu */
   .header-container {
     position: relative;
-    z-index: 1100;
-  }
-
-  .logo {
     z-index: 1101;
   }
 
@@ -298,17 +295,20 @@ p {
     color: #ffffff;
   }
 
-  /* Mobile accordion menu */
+  /* Mobile accordion dropdown */
   .tools-menu {
     position: static;
-    width: 100%;
     display: block;
-    max-height: 0;
-    overflow: hidden;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
     padding: 0;
     margin: 0;
-    background: transparent;
+    max-height: 0;
+    overflow: hidden;
     transition: max-height 0.35s ease;
+    z-index: 1050;
   }
 
   .tools-menu.open {
@@ -344,122 +344,6 @@ p {
   .tools-category:hover {
     background-color: rgba(255,255,255,0.2);
   }
-}
-
-/* ===============================
-   MOBILE RESPONSIVE
-================================= */
-@media (max-width: 768px) {
-
-  .menu-toggle {
-    display: block;
-    font-size: 2rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ffffff;
-    z-index: 1100;
-  }
-
-  /* Mobile nav (right slide) */
-  .nav-links {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    max-width: 320px;
-    height: 100vh;
-    background: var(--primary);
-    padding: 4rem 1rem 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-    transition: right 0.4s ease;
-    z-index: 1000;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  .nav-links.open {
-    right: 0;
-  }
-
-  .header-container {
-    position: relative;
-    z-index: 1100;
-  }
-
-  .logo {
-    z-index: 1101;
-  }
-
-  /* Tools container */
-  .tools-dropdown {
-    width: 100%;
-  }
-
-  .tools-btn {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    background: rgba(255,255,255,0.1);
-    color: #ffffff;
-  }
-
-  /* 🔥 MAIN FIX */
-  .tools-menu {
-    position: static !important;       /* kill absolute */
-    display: block !important;         /* remove flex/grid */
-    width: 100%;
-
-    background: transparent !important;
-    box-shadow: none !important;       /* remove floating card */
-    border-radius: 0 !important;
-
-    padding: 0;
-    margin: 0;
-
-    max-height: 0;
-    overflow: hidden;
-
-    transition: max-height 0.35s ease;
-  }
-
-  .tools-menu.open {
-    max-height: 1000px;
-    margin-top: 0.3rem;
-  }
-
-  /* 🔥 FIX COLUMN STRUCTURE */
-  .tools-column {
-    display: block !important;
-    width: 100%;
-    border: none !important;
-  }
-
-  .tools-category {
-    font-weight: 600;
-    padding: 0.5rem 0;
-    cursor: pointer;
-    color: #ffffff;
-  }
-
-  .tools-column a {
-    display: none;
-    padding: 0.4rem 0 0.4rem 1.5rem;
-    color: #ffffff;
-  }
-
-  .tools-column.open a {
-    display: block;
-  }
-
-  .tools-category:hover {
-    background-color: rgba(255,255,255,0.2);
-  }
-
 }
 /* ===============================
    HOMEPAGE SEO SECTIONS
