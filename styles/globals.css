@@ -256,7 +256,7 @@ p {
 ================================= */
 .site-header {
   width: 100%;
-  background-color: #1e40af; /* premium blue header background */
+  background-color: #1e40af; /* premium blue */
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   position: fixed;
   top: 0;
@@ -293,18 +293,18 @@ p {
   transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
-/* Links text for header (white for blue background) */
+/* Links text (desktop + mobile) */
 .nav-links a {
   text-decoration: none;
-  color: #ffffff; /* white on blue */
+  color: #ffffff; /* white text */
   font-weight: 500;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s;
 }
 
 .nav-links a:hover {
-  background-color: rgba(255, 255, 255, 0.2); /* subtle white hover */
+  background-color: rgba(255,255,255,0.2); /* subtle hover */
 }
 
 /* ===============================
@@ -316,7 +316,7 @@ p {
   background: none;
   border: none;
   cursor: pointer;
-  color: #ffffff; /* toggle icon white */
+  color: #ffffff; /* white icon */
 }
 
 /* ===============================
@@ -330,7 +330,7 @@ p {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  background: #2563eb; /* slightly lighter blue for button */
+  background: #2563eb; /* slightly lighter blue button */
   border: none;
   padding: 0.4rem 0.8rem;
   border-radius: 8px;
@@ -342,7 +342,7 @@ p {
 }
 
 .tools-btn:hover {
-  background-color: #1e3a8a; /* darker on hover */
+  background-color: #1e3a8a; /* darker hover */
 }
 
 .tools-btn svg {
@@ -395,10 +395,10 @@ p {
 }
 
 .tools-category:hover {
-  background-color: rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.2); /* subtle hover */
 }
 
-/* ACCORDION OPEN STATE */
+/* Accordion links */
 .tools-column a {
   padding-left: 1rem;
   font-weight: 400;
@@ -426,7 +426,7 @@ p {
     background: none;
     border: none;
     cursor: pointer;
-    color: #ffffff; /* toggle icon white */
+    color: #ffffff;
   }
 
   .nav-links {
@@ -447,7 +447,7 @@ p {
   }
 
   .nav-links.open {
-    left: 0; /* slide in */
+    left: 0;
   }
 
   .tools-dropdown {
@@ -457,7 +457,7 @@ p {
   .tools-btn {
     width: 100%;
     justify-content: space-between;
-    background-color: #2563eb; /* button on mobile blue */
+    background-color: #2563eb;
     color: #ffffff;
   }
 
@@ -473,7 +473,7 @@ p {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s ease;
-    background-color: #1e40af; /* dropdown background blue */
+    background-color: #1e40af; /* dropdown background */
   }
 
   .tools-menu.open {
@@ -503,11 +503,11 @@ p {
     cursor: pointer;
     border-radius: 6px;
     transition: background 0.2s;
-    color: #ffffff; /* white text */
+    color: #ffffff;
   }
 
   .tools-category:hover {
-    background-color: rgba(255,255,255,0.2); /* subtle hover */
+    background-color: rgba(255,255,255,0.2);
   }
 }
 /* ===============================
