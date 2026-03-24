@@ -2,7 +2,8 @@
 
 import fs from "fs";
 import path from "path";
-import { blogContent } from "../../data/blogPosts"; // make sure this exists
+import { blogEducational } from "../../data/blogEducational";
+import { blogGuides } from "../../data/blogGuides";
 
 const SITE_URL = "https://finance-tools-mu.vercel.app";
 
