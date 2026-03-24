@@ -1,5 +1,4 @@
 // pages/api/sitemap.js
-
 import fs from "fs";
 import path from "path";
 import { blogEducational } from "../../data/blogEducational";
@@ -20,17 +19,25 @@ export default function handler(req, res) {
   // ================================
   const toolsDir = path.join(process.cwd(), "pages/tools");
 
-  const toolPages = fs
-    .readdirSync(toolsDir)
-    .filter((file) => file.endsWith(".js"))
-    .map((file) => `/tools/${file.replace(".js", "")}`);
+  let toolPages = [];
+  try {
+    toolPages = fs
+      .readdirSync(toolsDir)
+      .filter((file) => file.endsWith(".js"))
+      .map((file) => `/tools/${file.replace(".js", "")}`);
+  } catch (err) {
+    console.warn("Warning: Tools directory not found", err);
+  }
 
   // ================================
   // BLOG PAGES
   // ================================
-  const blogPages = Object.keys(blogContent).map((slug) => {
-    const blog = blogContent[slug];
-    const lastmod = blog.lastModified || currentDate; // use blog's lastModified if exists
+  // Merge all blog files for sitemap
+  const allBlogs = { ...blogEducational, ...blogGuides };
+
+  const blogPages = Object.keys(allBlogs).map((slug) => {
+    const blog = allBlogs[slug];
+    const lastmod = blog.lastModified || currentDate;
     return {
       url: `/blog/${slug}`,
       lastmod,
@@ -53,13 +60,12 @@ export default function handler(req, res) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allPages
   .map(
-    (page) => `
-  <url>
+    (page) => `  <url>
     <loc>${SITE_URL}${page.url}</loc>
     <lastmod>${page.lastmod}</lastmod>
   </url>`
   )
-  .join("")}
+  .join("\n")}
 </urlset>`;
 
   // ================================
