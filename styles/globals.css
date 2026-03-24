@@ -282,9 +282,7 @@ p {
 /* ===================== MOBILE ===================== */
 @media (max-width: 768px) {
 
-  /* ===============================
-     Hamburger
-  ============================== */
+  /* Hamburger */
   .menu-toggle {
     display: block;
     font-size: 2rem;
@@ -295,9 +293,7 @@ p {
     z-index: 1200;
   }
 
-  /* ===============================
-     Mobile nav panel
-  ============================== */
+  /* Mobile nav panel */
   .nav-links {
     position: fixed;
     top: 0;
@@ -307,14 +303,13 @@ p {
     height: 100vh;
     background: var(--primary);
     padding: 5rem 1.5rem 2rem;
-    display: none; /* hidden by default */
+    display: none;
     flex-direction: column;
     gap: 1rem;
     box-shadow: -5px 0 20px rgba(0,0,0,0.5);
     border-left: 1px solid rgba(255,255,255,0.08);
     overflow-y: auto;
     z-index: 1100;
-    transition: all 0.3s ease;
   }
 
   .nav-links.open { display: flex; }
@@ -335,47 +330,34 @@ p {
   }
 
   /* ===============================
-     Main nav links
+     Main nav links & Tools button
   ============================== */
-  .nav-links a {
-    color: #fff;
+  .nav-links a,
+  .tools-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* centers text horizontally */
+    width: 100%;
     font-size: 16px;
     font-weight: 600;
+    color: #fff;
     padding: 0.8rem 0;
     text-decoration: none;
     border-bottom: 1px solid rgba(255,255,255,0.08);
+    position: relative;
     transition: all 0.2s ease;
   }
 
-  .nav-links a:hover { color: #f0e68c; }
-
-  /* ===============================
-     Tools dropdown wrapper
-  ============================== */
-  .tools-dropdown {
-    width: 100%;
+  .nav-links a:hover,
+  .tools-btn:hover {
+    color: #f0e68c;
+    background: rgba(255,255,255,0.08);
   }
 
-  /* ===============================
-     Tools button as full-width nav item
-  ============================== */
-  .tools-btn {
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 0.8rem 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    background: none;
-    border: none;
-    cursor: pointer;
-    position: relative;
-  }
-
+  /* Dropdown arrow for tools button */
   .tools-btn svg {
     position: absolute;
-    right: 0;
+    right: 16px; /* fixed from right, keeps arrow close to text */
     top: 50%;
     transform: translateY(-50%);
     width: 12px;
@@ -401,7 +383,7 @@ p {
   }
 
   .tools-menu.open {
-    max-height: 2000px; /* enough for all items */
+    max-height: 2000px;
     padding: 0.5rem 0;
   }
 
@@ -416,15 +398,32 @@ p {
   .tools-category {
     width: 100%;
     font-weight: 600;
-    padding: 0.8rem 0;
     font-size: 15px;
+    padding: 0.8rem 0;
     cursor: pointer;
+    text-align: center; /* center text horizontally */
+    position: relative;
     transition: background 0.2s ease;
   }
 
   .tools-category:hover {
     background: rgba(255,255,255,0.08);
     color: #f0e68c;
+  }
+
+  /* Dropdown arrow for categories (optional) */
+  .tools-category::after {
+    content: '▼';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    transition: transform 0.25s ease;
+  }
+
+  .tools-category.open::after {
+    transform: translateY(-50%) rotate(180deg);
   }
 
   /* ===============================
@@ -441,7 +440,7 @@ p {
   }
 
   .tools-submenu.open {
-    max-height: 1000px; /* enough for all links */
+    max-height: 1000px;
     padding: 0.5rem 0 0.5rem 1.5rem;
   }
 
@@ -460,9 +459,7 @@ p {
     padding-left: 2rem;
   }
 
-  /* ===============================
-     Body overflow when menu is open
-  ============================== */
+  /* Body overflow when menu is open */
   body.menu-open {
     overflow: hidden;
   }
