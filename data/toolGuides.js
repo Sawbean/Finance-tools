@@ -134,7 +134,7 @@ export const toolGuides = {
   },
 
   /* ================= COMPOUND ================= */
-  "compound-interest-calculator-guide": {
+  "compound-interest-guide": {
     title: "Compound Interest Explained: How Your Money Grows Faster",
     description: "Understand compound interest and how it helps grow your investments.",
     keywords: ["compound interest Nepal", "investment growth", "finance basics"],
@@ -163,7 +163,7 @@ export const toolGuides = {
   },
 
   /* ================= TAX ================= */
-  "income-tax-calculator-guide": {
+  "income-tax-guide": {
     title: "Income Tax Guide Nepal: How to Calculate and Save Tax",
     description: "Learn how income tax works in Nepal and how to calculate and reduce your tax legally.",
     keywords: ["income tax Nepal", "tax calculation Nepal", "tax saving"],
