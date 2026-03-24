@@ -1,8 +1,9 @@
 // pages/api/sitemap.js
+
 import fs from "fs";
 import path from "path";
 import { blogEducational } from "../../data/blogEducational";
-import { blogGuides } from "../../data/blogGuides";
+import { toolGuides } from "../../data/toolGuides";
 
 const SITE_URL = "https://finance-tools-mu.vercel.app";
 
@@ -23,24 +24,26 @@ export default function handler(req, res) {
   try {
     toolPages = fs
       .readdirSync(toolsDir)
-      .filter((file) => file.endsWith(".js"))
+      .filter((file) => file.endsWith(".js") && !file.startsWith("_"))
       .map((file) => `/tools/${file.replace(".js", "")}`);
   } catch (err) {
     console.warn("Warning: Tools directory not found", err);
   }
 
   // ================================
-  // BLOG PAGES
+  // BLOG PAGES (FIXED)
   // ================================
-  // Merge all blog files for sitemap
-  const allBlogs = { ...blogEducational, ...blogGuides };
+  const allBlogs = {
+    ...blogEducational,
+    ...toolGuides, // ✅ correct variable
+  };
 
   const blogPages = Object.keys(allBlogs).map((slug) => {
     const blog = allBlogs[slug];
-    const lastmod = blog.lastModified || currentDate;
+
     return {
       url: `/blog/${slug}`,
-      lastmod,
+      lastmod: blog?.lastModified || currentDate,
     };
   });
 
@@ -48,8 +51,14 @@ export default function handler(req, res) {
   // BUILD ALL PAGES
   // ================================
   const allPages = [
-    ...staticPages.map((url) => ({ url, lastmod: currentDate })),
-    ...toolPages.map((url) => ({ url, lastmod: currentDate })),
+    ...staticPages.map((url) => ({
+      url,
+      lastmod: currentDate,
+    })),
+    ...toolPages.map((url) => ({
+      url,
+      lastmod: currentDate,
+    })),
     ...blogPages,
   ];
 
