@@ -282,7 +282,9 @@ p {
 /* ===================== MOBILE ===================== */
 @media (max-width: 768px) {
 
-  /* Hamburger */
+  /* ===============================
+     Hamburger (Menu Icon)
+  ============================== */
   .menu-toggle {
     display: block;
     font-size: 2rem;
@@ -293,7 +295,9 @@ p {
     z-index: 1200;
   }
 
-  /* Mobile nav panel */
+  /* ===============================
+     Mobile Nav Panel
+  ============================== */
   .nav-links {
     position: fixed;
     top: 0;
@@ -301,21 +305,19 @@ p {
     width: 80%;
     max-width: 360px;
     height: 100vh;
-    background: var(--primary);
+    background: rgba(11, 31, 74, 0.95); /* semi-transparent premium look */
+    backdrop-filter: blur(12px); /* soft blur */
     padding: 5rem 1.5rem 2rem;
     display: none;
     flex-direction: column;
-    gap: 1rem;
-    box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+    gap: 0.5rem;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.5);
     border-left: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px 0 0 12px; /* rounded panel */
     overflow-y: auto;
     z-index: 1100;
-  }
 
-  .nav-links.open { display: flex; }
-
-  /* Smooth scroll if panel too long */
-  .nav-links {
+    /* Smooth scroll if panel too long */
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,0.2) transparent;
   }
@@ -329,6 +331,8 @@ p {
     border-radius: 3px;
   }
 
+  .nav-links.open { display: flex; }
+
   /* ===============================
      Main nav links & Tools button
   ============================== */
@@ -336,16 +340,20 @@ p {
   .tools-btn {
     display: flex;
     align-items: center;
-    justify-content: center; /* centers text horizontally */
+    justify-content: center; /* centers text */
     width: 100%;
     font-size: 16px;
     font-weight: 600;
     color: #fff;
-    padding: 0.8rem 0;
+    padding: 0.8rem 1rem;
     text-decoration: none;
+    border-radius: 8px; /* slightly rounded buttons */
     border-bottom: 1px solid rgba(255,255,255,0.08);
     position: relative;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
+    text-align: center;
+    box-sizing: border-box;
+    background: rgba(11, 31, 74, 0.85);
   }
 
   .nav-links a:hover,
@@ -357,12 +365,13 @@ p {
   /* Dropdown arrow for tools button */
   .tools-btn svg {
     position: absolute;
-    right: 16px; /* fixed from right, keeps arrow close to text */
+    right: 16px;
     top: 50%;
     transform: translateY(-50%);
     width: 12px;
     height: 12px;
     transition: transform 0.25s ease;
+    color: #ffffff;
   }
 
   .tools-btn.open svg {
@@ -378,8 +387,11 @@ p {
     max-height: 0;
     overflow: hidden;
     padding: 0;
-    margin: 0.3rem 0;
+    margin: 0.5rem 0; /* spacing between categories */
     transition: max-height 0.35s ease, padding 0.35s ease;
+    border-radius: 8px;
+    background: rgba(15, 35, 85, 0.92);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
 
   .tools-menu.open {
@@ -395,15 +407,22 @@ p {
     border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
+  /* Tools category with professional dropdown arrow */
   .tools-category {
+    display: flex;
+    justify-content: space-between; /* text left, triangle right */
+    align-items: center;
     width: 100%;
     font-weight: 600;
     font-size: 15px;
-    padding: 0.8rem 0;
+    padding: 0.8rem 1rem;
     cursor: pointer;
-    text-align: center; /* center text horizontally */
-    position: relative;
     transition: background 0.2s ease;
+    color: #ffffff;
+    text-align: left;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: rgba(11, 31, 74, 0.85);
   }
 
   .tools-category:hover {
@@ -411,19 +430,17 @@ p {
     color: #f0e68c;
   }
 
-  /* Dropdown arrow for categories (optional) */
+  /* Dropdown triangle */
   .tools-category::after {
     content: '▼';
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
     font-size: 10px;
     transition: transform 0.25s ease;
+    margin-left: 6px;
+    color: #ffffff;
   }
 
   .tools-category.open::after {
-    transform: translateY(-50%) rotate(180deg);
+    transform: rotate(180deg);
   }
 
   /* ===============================
@@ -463,6 +480,12 @@ p {
   body.menu-open {
     overflow: hidden;
   }
+
+  /* Smooth spacing between categories */
+  .tools-item + .tools-item {
+    margin-top: 0.2rem;
+  }
+
 }
 /* ===============================
    HOMEPAGE SEO SECTIONS
