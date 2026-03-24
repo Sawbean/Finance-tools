@@ -3,7 +3,10 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { blogContent } from "../../data/blogPosts";
+
+// IMPORT BOTH SOURCES
+import { blogEducational } from "../../data/blogEducational";
+import { toolGuides } from "../../data/toolGuides";
 
 export default function BlogPost() {
 
@@ -12,13 +15,19 @@ export default function BlogPost() {
 
   if (!slug) return <p>Loading...</p>;
 
-  const post = blogContent[slug];
+  // ✅ MERGE BOTH CONTENT TYPES
+  const allPosts = {
+    ...blogEducational,
+    ...toolGuides
+  };
+
+  const post = allPosts[slug];
 
   if (!post) return <p>Post not found.</p>;
 
 
   /* ================================
-     JSON-LD STRUCTURED DATA
+     JSON-LD STRUCTURED DATA (SEO)
   ================================= */
 
   const jsonLd = {
@@ -47,7 +56,7 @@ export default function BlogPost() {
 
 
   /* ================================
-     EXTRACT H2 HEADINGS FOR TOC
+     TABLE OF CONTENTS
   ================================= */
 
   const headings =
@@ -57,7 +66,7 @@ export default function BlogPost() {
 
 
   /* ================================
-     ADD ID TO EACH H2 FOR ANCHOR LINK
+     ADD IDs TO H2
   ================================= */
 
   let sectionIndex = 0;
@@ -66,6 +75,15 @@ export default function BlogPost() {
     /<h2>/g,
     () => `<h2 id="section-${sectionIndex++}">`
   );
+
+
+  /* ================================
+     RELATED POSTS (ENGAGEMENT BOOST)
+  ================================= */
+
+  const relatedPosts = Object.entries(allPosts)
+    .filter(([key]) => key !== slug)
+    .slice(0, 3);
 
 
   return (
@@ -78,13 +96,14 @@ export default function BlogPost() {
 
         <meta name="description" content={post.description} />
 
-        <meta name="keywords" content={post.keywords.join(", ")} />
+        <meta name="keywords" content={post.keywords?.join(", ")} />
 
         <link
           rel="canonical"
           href={`https://finance-tools-mu.vercel.app/blog/${slug}`}
         />
 
+        {/* JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -95,59 +114,50 @@ export default function BlogPost() {
       </Head>
 
 
-      {/* BLOG HEADER */}
+      {/* ================================
+         HEADER
+      ================================= */}
 
       <div className="blog-header">
-
         <h1>{post.title}</h1>
-
         <p className="blog-date">
           Published on {post.publishDate}
         </p>
-
       </div>
 
 
-
-      {/* ADS PLACEHOLDER */}
+      {/* ================================
+         TOP AD (AdSense)
+      ================================= */}
 
       <div className="adsense-placeholder">
         Advertisement
       </div>
 
 
-
-      {/* TABLE OF CONTENTS */}
+      {/* ================================
+         TABLE OF CONTENTS
+      ================================= */}
 
       {headings.length > 0 && (
-
         <div className="table-of-contents">
-
           <h3>Contents</h3>
-
           <ul>
-
             {headings.map((heading, index) => (
-
               <li key={index}>
-
                 <a href={`#section-${index}`}>
                   {heading}
                 </a>
-
               </li>
-
             ))}
-
           </ul>
-
         </div>
-
       )}
 
 
-
-      {/* BLOG CONTENT */}
+      {/* ================================
+         BLOG CONTENT (FIRST HALF)
+      ================================= */}
 
       <div
         className="blog-content"
@@ -155,8 +165,65 @@ export default function BlogPost() {
       />
 
 
+      {/* ================================
+         MIDDLE AD (BEST PERFORMING)
+      ================================= */}
 
-      {/* BOTTOM ACTION BUTTONS */}
+      <div className="adsense-placeholder">
+        Advertisement
+      </div>
+
+
+      {/* ================================
+         FAQ SECTION (SEO BOOST)
+      ================================= */}
+
+      {post.faq && (
+        <div className="faq-section">
+          <h2>Frequently Asked Questions</h2>
+
+          {post.faq.map((item, index) => (
+            <div key={index} className="faq-item">
+              <h4>{item.question}</h4>
+              <p>{item.answer}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+
+      {/* ================================
+         RELATED POSTS (TRAFFIC BOOST)
+      ================================= */}
+
+      <div className="related-posts">
+        <h3>Related Articles</h3>
+
+        <div className="related-grid">
+          {relatedPosts.map(([slug, item]) => (
+            <div key={slug} className="related-card">
+              <h4>{item.title}</h4>
+              <Link href={`/blog/${slug}`}>
+                Read More →
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+
+
+      {/* ================================
+         BOTTOM AD
+      ================================= */}
+
+      <div className="adsense-placeholder">
+        Advertisement
+      </div>
+
+
+      {/* ================================
+         ACTION BUTTONS
+      ================================= */}
 
       <div className="blog-bottom-actions">
 
@@ -165,7 +232,7 @@ export default function BlogPost() {
         </Link>
 
         <Link href="/blog" className="blog-action-btn secondary">
-          More About Finance
+          More Finance Articles
         </Link>
 
       </div>
