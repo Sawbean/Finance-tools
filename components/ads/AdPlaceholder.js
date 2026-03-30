@@ -1,8 +1,13 @@
 // components/ads/AdPlaceholder.js
 
 import { useEffect } from "react";
+import Link from "next/link";
 
-export default function AdPlaceholder({ className = "" }) {
+export default function AdPlaceholder({
+  className = "",
+  toolLink = "/tools/emi",          // Default link if AdSense not approved
+  ctaText = "[ Try our EMI Calculator → ]" // Default text CTA
+}) {
   useEffect(() => {
     try {
       if (typeof window !== "undefined") {
@@ -14,7 +19,9 @@ export default function AdPlaceholder({ className = "" }) {
   }, []);
 
   return (
-    <div className={`ad-placeholder ${className}`}>
+    <div className={`ad-placeholder cta-block ${className}`}>
+      
+      {/* ====== AdSense (uncomment when approved) ====== */}
       <ins
         className="adsbygoogle"
         style={{ display: "block" }}
@@ -23,6 +30,9 @@ export default function AdPlaceholder({ className = "" }) {
         data-ad-format="auto"
         data-full-width-responsive="true"
       />
+
+      {/* ====== Fallback CTA if AdSense not live ====== */}
+      <Link href={toolLink}>{ctaText}</Link>
     </div>
   );
 }

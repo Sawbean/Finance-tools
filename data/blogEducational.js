@@ -2,69 +2,62 @@
 
 export const blogEducational = {
   "financial-planning-basics": {
+    id: "blog-001",
     title: "Financial Planning Basics: How to Manage Your Money Effectively",
-    description: "Learn the fundamental steps for creating a financial plan, budgeting, and saving for your goals.",
-    keywords: ["financial planning", "budgeting", "saving", "personal finance", "ToolFinance"],
+    description:
+      "Learn the fundamental steps for creating a financial plan, budgeting, and saving for your goals.",
+    category: "personal-finance",
+    keywords: ["financial planning", "budgeting", "saving"],
     publishDate: "2026-02-25",
-    image: "/images/financial-planning.jpg", // optional
-    content: `
-      <p>Financial planning is the process of managing your money so that you can achieve your life goals. It involves budgeting, saving, investing, and understanding how to manage debt.</p>
+    readTime: "5 min",
+    image: "/images/financial-planning.jpg",
 
-      <h2>Why Financial Planning Matters</h2>
-      <p>Without a plan, it's easy to overspend and fail to save for emergencies or goals.</p>
+    content: [
+      { type: "paragraph", text: "Financial planning helps you control your money and achieve your life goals." },
 
-      <h2>Steps to Start Planning</h2>
-      <ul>
-        <li>Track your income and expenses</li>
-        <li>Create a budget</li>
-        <li>Set financial goals</li>
-        <li>Start saving and investing</li>
-      </ul>
+      { type: "heading", text: "Why Financial Planning Matters" },
+      { type: "paragraph", text: "Without a plan, it's easy to overspend and miss long-term goals." },
 
-      <h2>Conclusion</h2>
-      <p>By planning your finances, you can reduce stress, achieve your goals faster, and build a secure financial future.</p>
-    `,
+      {
+        type: "callout",
+        style: "info",
+        text: "Tip: Start tracking your expenses today — awareness is the first step."
+      },
+
+      { type: "heading", text: "Steps to Start Planning" },
+      {
+        type: "list",
+        items: [
+          "Track income and expenses",
+          "Create a budget",
+          "Set financial goals",
+          "Start saving and investing"
+        ]
+      },
+
+      {
+        type: "image",
+        src: "/images/budget-chart.jpg",
+        alt: "Budget planning illustration"
+      },
+
+      {
+        type: "cta",
+        text: "Try our EMI Calculator",
+        link: "/tools/emi"
+      },
+
+      {
+        type: "video",
+        url: "https://www.youtube.com/embed/your-video-id"
+      }
+    ],
+
     faq: [
       {
         question: "Why is financial planning important?",
-        answer: "It helps you manage your money effectively, avoid debt, and reach your financial goals."
-      },
-      {
-        question: "How do I start a budget?",
-        answer: "Track your income and expenses, then plan your spending and savings each month."
+        answer: "It helps you manage money and achieve goals."
       }
     ]
-  },
-
-  "saving-strategies": {
-    title: "Top Saving Strategies for Young Adults",
-    description: "Discover practical tips for saving money, building an emergency fund, and investing smartly.",
-    keywords: ["saving tips", "budgeting", "emergency fund", "investing", "personal finance", "ToolFinance"],
-    publishDate: "2026-03-10",
-    image: "/images/saving-strategies.jpg",
-    content: `
-      <p>Saving money is critical for financial security. By creating a strategy, you can build an emergency fund and invest for future goals.</p>
-
-      <h2>Emergency Fund</h2>
-      <p>Save at least 3-6 months of living expenses for unexpected situations.</p>
-
-      <h2>Automate Your Savings</h2>
-      <p>Set up automatic transfers to your savings account each month.</p>
-
-      <h2>Invest Wisely</h2>
-      <p>Consider low-cost index funds or retirement accounts for long-term growth.</p>
-    `,
-    faq: [
-      {
-        question: "How much should I save monthly?",
-        answer: "Aim for at least 10-20% of your income depending on your expenses and goals."
-      },
-      {
-        question: "What is an emergency fund?",
-        answer: "A reserve of money set aside to cover unexpected expenses like medical bills or job loss."
-      }
-    ]
-  },
-
-  // Add more educational posts here in the same format
+  }
 };

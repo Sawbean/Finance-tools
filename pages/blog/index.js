@@ -1,31 +1,68 @@
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import { blogEducational } from "../../data/blogEducational";
 
 export default function BlogIndex() {
+  const [activeCategory, setActiveCategory] = useState("all");
 
   // Convert object → array
-  const postsArray = Object.entries(blogEducational);
+  let postsArray = Object.entries(blogEducational);
 
-  // Sort by latest
+  // Sort latest first
   postsArray.sort(
     (a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate)
   );
 
-  return (
-    <div className="container">
+  // Categories
+  const categories = ["all", ...new Set(postsArray.map(([_, p]) => p.category))];
 
+  // Filter
+  const filteredPosts =
+    activeCategory === "all"
+      ? postsArray
+      : postsArray.filter(([_, p]) => p.category === activeCategory);
+
+  // Featured
+  const [featuredSlug, featuredPost] = postsArray[0] || [];
+
+  /* ================================
+     JSON-LD (SEO BOOST)
+  ================================= */
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "ToolFinance Blog",
+    "url": "https://finance-tools-mu.vercel.app/blog",
+    "description":
+      "Financial guides, tools, and strategies to improve your money decisions.",
+  };
+
+  return (
+    <div className="blog-container">
       <Head>
         <title>Financial Blog | ToolFinance</title>
 
+        <meta property="og:title" content="Financial Blog | ToolFinance" />
         <meta
-          name="description"
-          content="Explore financial guides on saving, budgeting, loans, and personal finance tips to improve your money management."
+          property="og:description"
+          content="Learn smart money strategies, financial tools, and practical guides."
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://finance-tools-mu.vercel.app/blog"
+        />
+        <meta
+          property="og:image"
+          content={`https://finance-tools-mu.vercel.app${
+            featuredPost?.image || "/og-image.png"
+          }`}
         />
 
         <meta
-          name="keywords"
-          content="finance blog, saving tips, budgeting, loans, personal finance, Nepal finance, ToolFinance"
+          name="description"
+          content="Learn smart money strategies, financial tools, calculators, and practical guides to improve your financial decisions."
         />
 
         <link
@@ -33,89 +70,117 @@ export default function BlogIndex() {
           href="https://finance-tools-mu.vercel.app/blog"
         />
 
-        {/* Open Graph (for sharing) */}
-        <meta property="og:title" content="Financial Blog | ToolFinance" />
-        <meta
-          property="og:description"
-          content="Learn finance with simple guides on saving, budgeting, and money management."
+        {/* JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
         />
-        <meta property="og:type" content="website" />
       </Head>
 
-
-      {/* ================================
-         HEADER
-      ================================= */}
-
+      {/* ================= HERO ================= */}
       <div className="blog-header">
-        <h1>📖 Financial Blog</h1>
-
-        <p className="blog-intro">
-          Learn personal finance with simple, practical guides on saving, budgeting,
-          loans, and money management. Improve your financial knowledge step by step.
+        <h1>Financial Insights & Guides</h1>
+        <p>
+          Learn smart money strategies, explore financial tools, and grow your
+          wealth with practical insights.
         </p>
       </div>
 
-
-      {/* ================================
-         TOP AD (AdSense)
-      ================================= */}
-
-      <div className="adsense-placeholder">
-        Advertisement
+      {/* ================= TOP AD ================= */}
+      <div className="adsense-placeholder cta-block">
+        <Link href="/tools/emi">Try our EMI Calculator →</Link>
       </div>
 
+      {/* ================= FEATURED (VERY IMPORTANT) ================= */}
+      {featuredPost && (
+        <Link href={`/blog/${featuredSlug}`} className="featured-card">
+          <img src={featuredPost.image} alt={featuredPost.title} />
 
-      {/* ================================
-         BLOG GRID
-      ================================= */}
+          <div className="featured-content">
+            <span className="badge">🔥 Featured</span>
 
+            <h2>{featuredPost.title}</h2>
+            <p>{featuredPost.description}</p>
+
+            <div className="meta">
+              <span>{featuredPost.publishDate}</span>
+              <span>{featuredPost.readTime}</span>
+            </div>
+          </div>
+        </Link>
+      )}
+
+      {/* ================= CATEGORY ================= */}
+      <div className="category-tabs">
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            className={activeCategory === cat ? "active" : ""}
+            onClick={() => setActiveCategory(cat)}
+          >
+            {cat.replace("-", " ")}
+          </button>
+        ))}
+      </div>
+
+      {/* ================= MIDDLE AD ================= */}
+      <div className="adsense-placeholder cta-block">
+        <Link href="/tools/emi">Try our EMI Calculator →</Link>
+      </div>
+
+      {/* ================= BLOG GRID ================= */}
       <div className="blog-grid">
+        {filteredPosts.map(([slug, post]) => (
+          <div key={slug} className="blog-card">
 
-        {postsArray.length === 0 ? (
-          <p>No articles available yet.</p>
-        ) : (
-          postsArray.map(([slug, post]) => (
-            <div key={slug} className="blog-card">
+            {/* ✅ FIX 1: CATEGORY TAG (NEW POSITION) */}
+            <span className="blog-tag">{post.category}</span>
 
-              {/* Image */}
-              {post.image && (
-                <div className="blog-card-image">
-                  <img src={post.image} alt={post.title} />
-                </div>
-              )}
+            <Link href={`/blog/${slug}`}>
+              <img src={post.image} alt={post.title} />
+            </Link>
 
-              {/* Title */}
-              <h3>{post.title}</h3>
+            {/* ✅ FIX 2: CONTENT WRAPPER */}
+            <div className="blog-card-content">
 
-              {/* Date (SEO + trust) */}
-              <p className="blog-date">
-                {post.publishDate}
-              </p>
+              <h3>
+                <Link href={`/blog/${slug}`}>
+                  {post.title}
+                </Link>
+              </h3>
 
-              {/* Description */}
               <p>{post.description}</p>
 
-              {/* CTA */}
+              <div className="meta">
+                <span>{post.publishDate}</span>
+                <span>{post.readTime}</span>
+              </div>
+
               <Link href={`/blog/${slug}`} className="read-more">
-                Read More →
+                Read article →
               </Link>
 
             </div>
-          ))
-        )}
-
+          </div>
+        ))}
       </div>
 
-
-      {/* ================================
-         BOTTOM AD
-      ================================= */}
-
-      <div className="adsense-placeholder">
-        Advertisement
+      {/* ================= BOTTOM AD ================= */}
+      <div className="adsense-placeholder cta-block">
+        <Link href="/tools/emi">Try our EMI Calculator →</Link>
       </div>
 
+      {/* ================= CTA ================= */}
+      <div className="blog-bottom-cta">
+        <h3>Boost Your Financial Knowledge 🚀</h3>
+        <p>Explore powerful tools and make smarter money decisions today.</p>
+
+        <Link href="/" className="cta-btn">
+          Explore Tools
+        </Link>
+      </div>
     </div>
   );
 }

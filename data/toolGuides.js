@@ -4,38 +4,181 @@ export const toolGuides = {
 
   /* ================= EMI ================= */
   "emi-calculator-guide": {
+    id: "tool-emi-001",
+    tool: "emi",
     title: "What is EMI? How to Calculate and Manage Loan Installments",
-    description: "Learn how EMI works, how to calculate monthly installments, and smart strategies to manage your loan repayments.",
-    keywords: ["EMI calculator Nepal", "loan EMI", "monthly installment", "EMI formula", "ToolFinance"],
+    description:
+      "Learn how EMI works, calculate monthly installments for loans, and manage repayments smartly in Nepal.",
+    keywords: [
+      "EMI calculator Nepal",
+      "loan EMI",
+      "monthly installment",
+      "EMI formula",
+      "ToolFinance"
+    ],
     publishDate: "2026-02-25",
-    content: `
-      <p>EMI (Equated Monthly Installment) is the fixed monthly payment you make to repay a loan.</p>
+    readTime: "6 min",
+    image: "/images/emi-guide.jpg",
 
-      <h2>How EMI is Calculated</h2>
-      <p>EMI depends on loan amount, interest rate, and tenure.</p>
+    content: [
+      // Intro
+      {
+        type: "paragraph",
+        text: "EMI (Equated Monthly Installment) is the fixed monthly payment you make to repay a loan. Understanding EMI helps you plan your budget and manage your finances effectively."
+      },
 
-      <h2>Why EMI Matters</h2>
-      <ul>
-        <li>Helps plan monthly budget</li>
-        <li>Prevents over-borrowing</li>
-      </ul>
+      // Table of Contents: automatically generated from headings in [slug].js
 
-      <h2>Tips to Manage EMI</h2>
-      <ul>
-        <li>Keep EMI below 30–40% of income</li>
-        <li>Choose shorter tenure if possible</li>
-      </ul>
-    `,
+      // Heading 1
+      {
+        type: "heading",
+        text: "How EMI is Calculated"
+      },
+      {
+        type: "paragraph",
+        text: "EMI depends on three main factors: the principal loan amount, the interest rate, and the tenure of the loan. Calculating it correctly ensures you avoid surprises and plan your repayments efficiently."
+      },
+      {
+        type: "list",
+        items: [
+          "Principal Amount (P) – the total loan you borrow",
+          "Interest Rate (R) – annual rate charged by the lender",
+          "Tenure (N) – number of months/years to repay the loan"
+        ]
+      },
+
+      // Heading 2
+      {
+        type: "heading",
+        text: "EMI Formula Explained"
+      },
+      {
+        type: "paragraph",
+        text: "The standard formula for EMI is:"
+      },
+      {
+        type: "paragraph",
+        text: "EMI = [P × R × (1+R)^N] / [(1+R)^N – 1]"
+      },
+      {
+        type: "callout",
+        style: "info",
+        text: "Tip: You don’t have to calculate EMI manually. Use our EMI Calculator to get instant results."
+      },
+
+      // Mid CTA / Ad
+      {
+        type: "cta",
+        text: "Try our EMI Calculator →",
+        link: "/tools/emi"
+      },
+
+      // Heading 3
+      {
+        type: "heading",
+        text: "Why EMI Matters for Financial Planning"
+      },
+      {
+        type: "paragraph",
+        text: "Knowing your EMI helps you manage monthly cash flow, avoid over-borrowing, and plan investments without stress."
+      },
+      {
+        type: "list",
+        items: [
+          "Keeps your monthly expenses predictable",
+          "Helps avoid defaulting on loans",
+          "Supports long-term financial planning"
+        ]
+      },
+
+      // Heading 4
+      {
+        type: "heading",
+        text: "Tips to Manage Your EMI"
+      },
+      {
+        type: "list",
+        items: [
+          "Ensure EMI does not exceed 30–40% of your monthly income",
+          "Choose shorter tenure loans if possible to reduce interest",
+          "Pay extra installments whenever possible to save on interest",
+          "Use online EMI calculators before taking new loans"
+        ]
+      },
+
+      // Optional image
+      {
+        type: "image",
+        src: "/images/emi-chart.jpg",
+        alt: "EMI calculation chart illustration"
+      },
+
+      // Heading 5
+      {
+        type: "heading",
+        text: "Common EMI Mistakes to Avoid"
+      },
+      {
+        type: "list",
+        items: [
+          "Ignoring the interest rate while choosing a loan",
+          "Overestimating your repayment capacity",
+          "Missing payment deadlines which leads to penalties",
+          "Not considering other financial obligations"
+        ]
+      },
+
+      // Heading 6
+      {
+        type: "heading",
+        text: "Videos to Understand EMI"
+      },
+      {
+        type: "video",
+        url: "https://www.youtube.com/embed/your-video-id"
+      },
+
+      // End CTA
+      {
+        type: "cta",
+        text: "Calculate Your EMI Now →",
+        link: "/tools/emi"
+      }
+    ],
+
     faq: [
       {
         question: "What is EMI?",
-        answer: "EMI is a fixed monthly payment used to repay loans."
+        answer:
+          "EMI stands for Equated Monthly Installment, which is a fixed amount paid by a borrower to a lender every month."
+      },
+      {
+        question: "How can I calculate EMI for my loan?",
+        answer:
+          "You can calculate EMI manually using the formula or use our EMI Calculator for instant results."
+      },
+      {
+        question: "Why is EMI important?",
+        answer:
+          "EMI helps you plan your monthly budget, avoid defaulting, and manage your finances effectively."
+      },
+      {
+        question: "Can I pay extra to reduce interest?",
+        answer:
+          "Yes, paying extra installments can reduce the total interest and shorten your loan tenure."
+      },
+      {
+        question: "Where can I find a reliable EMI Calculator?",
+        answer:
+          "Use our ToolFinance EMI Calculator for fast, accurate, and easy EMI calculations for any loan."
       }
     ]
   },
 
   /* ================= LOAN ================= */
   "loan-calculator-guide": {
+    id: "tool-loan-002",
+    tool: "loan",
     title: "Loan Guide: Types, Interest Rates, and Smart Borrowing Tips",
     description: "Understand different types of loans, interest rates, and how to borrow responsibly.",
     keywords: ["loan guide Nepal", "loan interest", "borrowing tips"],
@@ -72,6 +215,8 @@ export const toolGuides = {
 
   /* ================= FUEL ================= */
   "fuel-calculator-guide": {
+    id: "tool-fuel-003",
+    tool: "fuel",
     title: "Fuel Cost Guide: Calculate and Reduce Vehicle Expenses",
     description: "Learn how to calculate fuel cost and reduce daily travel expenses.",
     keywords: ["fuel cost Nepal", "fuel calculator", "vehicle expense"],
@@ -102,6 +247,8 @@ export const toolGuides = {
 
   /* ================= SIP ================= */
   "sip-calculator-guide": {
+    id: "tool-sip-005",
+    tool: "sip",
     title: "SIP Investment Guide: How to Build Wealth Step by Step",
     description: "Learn how SIP works, its benefits, and how to start investing with small amounts.",
     keywords: ["SIP Nepal", "systematic investment plan", "mutual funds"],
@@ -135,6 +282,8 @@ export const toolGuides = {
 
   /* ================= COMPOUND ================= */
   "compound-interest-guide": {
+    id: "tool-compound-interest-006",
+    tool: "compound-interest",
     title: "Compound Interest Explained: How Your Money Grows Faster",
     description: "Understand compound interest and how it helps grow your investments.",
     keywords: ["compound interest Nepal", "investment growth", "finance basics"],
@@ -164,6 +313,8 @@ export const toolGuides = {
 
   /* ================= TAX ================= */
   "income-tax-guide": {
+    id: "tool-income-tax-007",
+    tool: "income-tax",
     title: "Income Tax Guide Nepal: How to Calculate and Save Tax",
     description: "Learn how income tax works in Nepal and how to calculate and reduce your tax legally.",
     keywords: ["income tax Nepal", "tax calculation Nepal", "tax saving"],
@@ -191,8 +342,10 @@ export const toolGuides = {
     ]
   },
 
-/* ================= Mortgage ================= */
+  /* ================= Mortgage ================= */
   "mortgage-calculator-guide": {
+  id: "tool-mortgage-004",
+  tool: "mortgage",
   title: "Mortgage Calculator Guide: How to Estimate Home Loan Payments and Plan Smartly",
   description: "Learn how mortgage calculators work, how to estimate monthly home loan payments, and smart strategies to manage your mortgage efficiently.",
   keywords: ["mortgage calculator Nepal", "home loan EMI", "housing loan guide", "mortgage planning", "ToolFinance"],
@@ -308,10 +461,12 @@ export const toolGuides = {
       answer: "Financial experts suggest keeping EMI below 30–40% of your monthly income."
     }
   ]
-},
+ },
 
-/* ================= FD Calculator ================= */
-"fd-calculator-guide": {
+  /* ================= FD Calculator ================= */
+ "fd-calculator-guide": {
+  id: "tool-fd-008",
+  tool: "fd",
   title: "FD Calculator Guide: How to Plan Your Fixed Deposits and Maximize Returns",
   description: "Learn how fixed deposits work, calculate interest, and plan your savings effectively using our FD calculator for maximum returns.",
   keywords: ["FD Calculator Nepal", "fixed deposit interest", "FD planning", "savings calculator", "ToolFinance"],
@@ -451,6 +606,8 @@ export const toolGuides = {
 
 /* ================= Saving Goal Calculator ================= */
 "savings-goal-guide": {
+  id: "tool-savings-goal-009",
+  tool: "savings-goal",
   title: "Saving Goal Calculator Guide: Plan and Achieve Your Financial Goals Easily",
   description: "Learn how to set and achieve your savings goals using our saving goal calculator. Plan effectively by calculating target amount, current savings, time period, and expected returns.",
   keywords: ["Saving Goal Calculator Nepal", "savings planning", "financial goals", "ToolFinance", "target savings calculator"],
@@ -590,6 +747,8 @@ export const toolGuides = {
 
 /* ================= Retirement Planning Calculator ================= */
 "retirement-planning-guide": {
+  id: "tool-retirement-010",
+  tool: "retirement",
   title: "Retirement Planning Calculator Guide: Plan Your Financial Freedom Smartly",
   description: "Learn how to calculate your retirement corpus using our retirement planning calculator. Plan effectively based on current age, retirement age, monthly investment, and expected return rate.",
   keywords: ["Retirement Planning Calculator Nepal", "retirement savings", "financial freedom", "ToolFinance", "retirement corpus calculator"],
@@ -734,6 +893,8 @@ export const toolGuides = {
 
 /* ================= Loan Eligibility Calculator ================= */
 "loan-eligibility-guide": {
+  id: "tool-loan-eligibility-011",
+  tool: "loan-eligibility",
   title: "Loan Eligibility Calculator Guide: Determine Your Maximum Loan Amount Easily",
   description: "Learn how to calculate your loan eligibility using our loan eligibility calculator. Plan effectively by considering loan amount, existing EMI, interest rate, and loan term.",
   keywords: ["Loan Eligibility Calculator Nepal", "loan planning", "maximum loan calculator", "ToolFinance", "loan eligibility guide"],
@@ -875,6 +1036,8 @@ export const toolGuides = {
 
 /* ================= Credit Card Payoff Calculator ================= */
 "credit-card-payoff-guide": {
+  id: "tool-credit-card-payoff-012",
+  tool: "credit-card-payoff",
   title: "Credit Card Payoff Calculator Guide: Manage Debt and Pay Off Faster",
   description: "Learn how to calculate your credit card payoff using our calculator. Plan effectively by considering credit card balance, interest rate, and monthly payment to become debt-free faster.",
   keywords: ["Credit Card Payoff Calculator Nepal", "credit card debt", "debt management", "ToolFinance", "payoff calculator"],
@@ -1009,6 +1172,8 @@ export const toolGuides = {
 
 /* ================= FD & RD Calculator ================= */
 "fd-rd-calculator-guide": {
+  id: "tool-fd-rd-calculator-013",
+  tool: "fd-rd-calculator",
   title: "FD & RD Calculator Guide: Plan Fixed and Recurring Deposits for Maximum Returns",
   description: "Learn how to calculate returns for fixed deposits (FD) and recurring deposits (RD) using our FD & RD Calculator. Plan effectively based on principal, monthly deposit, interest rate, and duration.",
   keywords: ["FD RD Calculator Nepal", "fixed deposit calculator", "recurring deposit calculator", "ToolFinance", "savings calculator"],
@@ -1141,6 +1306,8 @@ export const toolGuides = {
 
 /* ================= PPF / NPS Calculator ================= */
 "ppf-nps-calculator-guide": {
+  id: "tool-ppf-nps-calculator-014",
+  tool: "ppf-nps-calculator",
   title: "PPF & NPS Calculator Guide: Plan Your Long-Term Retirement Savings",
   description: "Learn how to calculate your PPF and NPS returns using our calculator. Plan effectively based on monthly contribution, expected interest rate, and duration to achieve retirement goals.",
   keywords: ["PPF NPS Calculator Nepal", "long-term savings", "retirement planning", "ToolFinance", "PPF NPS returns calculator"],
@@ -1266,6 +1433,8 @@ export const toolGuides = {
 
 /* ================= Home Loan vs Rent Calculator ================= */
 "home-loan-vs-rent-guide": {
+  id: "tool-home-loan-vs-rent-015",
+  tool: "home-loan-vs-rent",
   title: "Home Loan vs Rent Calculator Guide: Decide Whether to Buy or Rent",
   description: "Learn how to compare buying a home versus renting using our calculator. Plan effectively based on home price, loan interest rate, loan duration, and monthly rent to make the right decision.",
   keywords: ["Home Loan vs Rent Calculator Nepal", "buy vs rent calculator", "home financing", "ToolFinance", "rent vs buy guide"],
@@ -1393,6 +1562,8 @@ export const toolGuides = {
 
 /* ================= Net Worth Calculator ================= */
 "net-worth-calculator-guide": {
+  id: "tool-net-worth-016",
+  tool: "net-worth",
   title: "Net Worth Calculator Guide: Calculate Your True Financial Health",
   description: "Learn how to calculate your net worth using our calculator. Plan effectively by considering total assets and total liabilities to understand your financial position.",
   keywords: ["Net Worth Calculator Nepal", "financial health", "assets vs liabilities", "ToolFinance", "personal finance calculator"],
@@ -1501,6 +1672,8 @@ export const toolGuides = {
 
 /* ================= Inflation Impact Calculator ================= */
 "inflation-calculator-guide": {
+  id: "tool-inflation-017",
+  tool: "inflation",
   title: "Inflation Impact Calculator Guide: Plan Your Savings Against Inflation",
   description: "Learn how to calculate the impact of inflation on your savings using our Inflation Impact Calculator. Plan effectively based on current amount, annual inflation rate, and number of years to protect your wealth.",
   keywords: ["Inflation Impact Calculator Nepal", "savings vs inflation", "financial planning", "ToolFinance", "future value calculator"],
@@ -1617,6 +1790,8 @@ export const toolGuides = {
 
 /* ================= Currency Converter ================= */
 "currency-converter-guide": {
+  id: "tool-currency-018",
+  tool: "currency",
   title: "Currency Converter Calculator Guide: Convert Money Accurately",
   description: "Learn how to convert currencies using our Currency Converter Calculator. Plan effectively by entering the amount and exchange rate to know the equivalent value in another currency.",
   keywords: ["Currency Converter Calculator Nepal", "convert money online", "foreign exchange calculator", "ToolFinance", "currency conversion"],
@@ -1729,6 +1904,8 @@ export const toolGuides = {
 
 /* ================= Simple Interest Calculator ================= */
 "simple-interest-guide": {
+  id: "tool-simple-interest-019",
+  tool: "simple-interest",
   title: "Simple Interest Calculator Guide: Calculate Interest Quickly",
   description: "Learn how to calculate simple interest using our Simple Interest Calculator. Plan effectively by entering principal amount, annual interest rate, and time period to know your total interest.",
   keywords: ["Simple Interest Calculator Nepal", "calculate interest", "financial planning", "ToolFinance", "loan interest calculator"],
@@ -1844,113 +2021,179 @@ export const toolGuides = {
 
 /* ================= GST / VAT / Tax Calculator ================= */
 "gst-vat-tax-guide": {
-  title: "GST / VAT / Tax Calculator Guide: Calculate Tax Quickly and Accurately",
-  description: "Learn how to calculate GST, VAT, or any percentage-based tax using our calculator. Plan effectively by entering amount and tax rate to know total tax and final amount.",
-  keywords: ["GST Calculator Nepal", "VAT Calculator Nepal", "Tax Calculator Nepal", "ToolFinance", "calculate tax online"],
+  id: "tool-gst-vat-tax-020",
+  tool: "gst-vat-tax",
+  title: "GST / VAT / Tax Calculator Guide: Calculate Tax Easily with Formula & Examples",
+  description:
+    "Learn how to calculate GST, VAT, and tax accurately using formulas, examples, and online tools. Perfect for businesses and individuals in Nepal.",
+  keywords: [
+    "GST calculator Nepal",
+    "VAT calculator Nepal",
+    "tax calculation formula",
+    "online tax calculator",
+    "ToolFinance tax guide"
+  ],
   publishDate: "2026-03-24",
+  readTime: "8 min",
   image: "/images/gst-vat-tax-guide.jpg",
-  content: `
-    <p>Calculating GST, VAT, or other taxes can be confusing, especially when rates change or multiple items are involved. Our GST / VAT / Tax Calculator simplifies this process by providing quick and accurate results.</p>
 
-    <p>With this tool, you can calculate the tax payable or the final price including tax instantly, saving time and reducing errors.</p>
+  content: [
+    {
+      type: "paragraph",
+      text: "Calculating GST, VAT, or other taxes can be confusing. A tax calculator helps you quickly determine tax amount and final price without manual errors."
+    },
 
-    <h2>What is a GST / VAT / Tax Calculator?</h2>
-    <p>A GST / VAT / Tax Calculator is an online tool that calculates the tax amount based on the original amount and applicable tax rate. It’s helpful for businesses, freelancers, and individuals to determine tax liability quickly.</p>
+    {
+      type: "heading",
+      text: "What is GST / VAT / Tax Calculator?"
+    },
+    {
+      type: "paragraph",
+      text: "It is an online tool that calculates tax based on amount and tax rate. It is widely used by businesses, freelancers, and individuals."
+    },
 
-    <h2>Key Inputs for the Calculator</h2>
-    <ul>
-      <li><strong>Amount:</strong> The base price or value of goods/services before tax.</li>
-      <li><strong>Tax Rate:</strong> Applicable percentage of GST, VAT, or other tax.</li>
-    </ul>
+    {
+      type: "heading",
+      text: "Key Inputs Required"
+    },
+    {
+      type: "list",
+      items: [
+        "Amount – base price before tax",
+        "Tax Rate – percentage applied"
+      ]
+    },
 
-    <h2>How the GST / VAT / Tax Calculator Works</h2>
-    <p>The calculation is straightforward:</p>
-    <p><strong>Tax Amount = Amount × Tax Rate / 100</strong></p>
-    <p><strong>Total Amount = Amount + Tax Amount</strong></p>
+    {
+      type: "heading",
+      text: "Tax Calculation Formula"
+    },
+    {
+      type: "paragraph",
+      text: "Tax Amount = Amount × Tax Rate / 100"
+    },
+    {
+      type: "paragraph",
+      text: "Total Amount = Amount + Tax Amount"
+    },
+    {
+      type: "callout",
+      style: "info",
+      text: "Tip: Use our GST/VAT Calculator to get instant results."
+    },
 
-    <ul>
-      <li>Amount = Original price of goods or services</li>
-      <li>Tax Rate = Applicable tax percentage</li>
-    </ul>
+    {
+      type: "cta",
+      text: "Try GST/VAT Calculator →",
+      link: "/tools/gst-vat-tax"
+    },
 
-    <p>This calculation helps you know both the tax payable and the final price including tax.</p>
+    {
+      type: "heading",
+      text: "Example Calculation"
+    },
+    {
+      type: "paragraph",
+      text: "If the amount is NPR 1,000 and tax rate is 13%, tax = 130 and total = 1,130."
+    },
 
-    <h2>Benefits of Using a GST / VAT / Tax Calculator</h2>
-    <ul>
-      <li>Quickly calculate taxes without manual errors</li>
-      <li>Plan budgets and invoices accurately</li>
-      <li>Compare different tax rates and scenarios</li>
-      <li>Helps businesses comply with tax regulations</li>
-    </ul>
+    {
+      type: "heading",
+      text: "Benefits of Using a Tax Calculator"
+    },
+    {
+      type: "list",
+      items: [
+        "Quick and accurate calculation",
+        "Useful for invoices and billing",
+        "Helps avoid manual errors",
+        "Supports financial planning"
+      ]
+    },
 
-    <h2>Factors Affecting Tax Calculation</h2>
-    <ul>
-      <li><strong>Tax Rate:</strong> Different goods/services have varying GST/VAT rates.</li>
-      <li><strong>Base Amount:</strong> Larger amounts result in higher tax payable.</li>
-      <li><strong>Multiple Taxes:</strong> Some items may have combined taxes (e.g., VAT + service tax).</li>
-    </ul>
+    {
+      type: "heading",
+      text: "Factors Affecting Tax Calculation"
+    },
+    {
+      type: "list",
+      items: [
+        "Different tax rates for products/services",
+        "Base amount value",
+        "Multiple taxes in some cases"
+      ]
+    },
 
-    <h2>How to Use the GST / VAT / Tax Calculator Effectively</h2>
-    <ol>
-      <li>Enter the base amount of the goods or services.</li>
-      <li>Input the applicable tax rate.</li>
-      <li>Click “Calculate” to see the tax amount and total payable amount including tax.</li>
-    </ol>
+    {
+      type: "image",
+      src: "/images/gst-vat-chart.jpg",
+      alt: "Tax calculation example chart"
+    },
 
-    <p>Use this calculator to quickly determine tax for invoices, bills, or budgeting purposes.</p>
+    {
+      type: "heading",
+      text: "Common Mistakes to Avoid"
+    },
+    {
+      type: "list",
+      items: [
+        "Using incorrect tax rate",
+        "Confusing inclusive vs exclusive tax",
+        "Ignoring additional charges",
+        "Not updating tax rates"
+      ]
+    },
 
-    <h2>Tips for Using the Tax Calculator</h2>
-    <ul>
-      <li>Double-check tax rates for accuracy</li>
-      <li>Use the calculator for multiple items by summing individual amounts</li>
-      <li>Compare different rates to plan discounts and promotions</li>
-      <li>Keep a record of calculated tax for accounting purposes</li>
-      <li>Use it for both business and personal financial planning</li>
-    </ul>
+    {
+      type: "heading",
+      text: "How to Use the Calculator Effectively"
+    },
+    {
+      type: "list",
+      items: [
+        "Enter correct base amount",
+        "Use accurate tax rate",
+        "Check results before billing",
+        "Use for budgeting and planning"
+      ]
+    },
 
-    <h2>Common Mistakes to Avoid</h2>
-    <ul>
-      <li>Using wrong tax rates for specific products or services</li>
-      <li>Confusing inclusive and exclusive tax calculation</li>
-      <li>Ignoring additional charges or fees that may affect total cost</li>
-      <li>Not updating rates as per latest government regulations</li>
-    </ul>
+    {
+      type: "heading",
+      text: "Videos to Understand Tax Calculation"
+    },
+    {
+      type: "video",
+      url: "https://www.youtube.com/embed/your-video-id"
+    },
 
-    <h2>GST / VAT / Tax Calculator vs Other Financial Tools</h2>
-    <p>This tool is primarily for tax calculations, but it’s useful to combine it with:</p>
-    <ul>
-      <li>Invoice calculators for billing purposes</li>
-      <li>Budget planners to include tax in expense planning</li>
-      <li>Financial reporting tools for businesses</li>
-    </ul>
+    {
+      type: "cta",
+      text: "Calculate Tax Now →",
+      link: "/tools/gst-vat-tax"
+    }
+  ],
 
-    <h2>Conclusion</h2>
-    <p>A GST / VAT / Tax Calculator is an essential tool for businesses, freelancers, and individuals to quickly calculate taxes accurately. By inputting the base amount and tax rate, you can determine both tax payable and total cost in seconds.</p>
-
-    <p>Use this tool to simplify your tax calculations and plan finances effectively.</p>
-
-    <p>Check out our <a href="/blog/gst-vat-tax-calculator-guide">GST / VAT / Tax Calculator Guide</a> for detailed examples and strategies.</p>
-  `,
   faq: [
     {
-      question: "What is a GST / VAT / Tax Calculator?",
-      answer: "It calculates tax payable based on the amount and applicable tax rate."
+      question: "What is GST/VAT calculator?",
+      answer: "It calculates tax amount based on amount and rate."
     },
     {
       question: "How is tax calculated?",
-      answer: "Tax Amount = Amount × Tax Rate / 100, and Total Amount = Amount + Tax Amount."
+      answer: "Tax = Amount × Rate / 100."
     },
     {
-      question: "Can I calculate different tax rates?",
-      answer: "Yes, you can input any percentage to calculate tax for different scenarios."
+      question: "Can I use it for any tax?",
+      answer: "Yes, any percentage-based tax."
     },
     {
-      question: "Is this useful for businesses?",
-      answer: "Absolutely, it helps generate accurate invoices and plan taxes effectively."
+      question: "Is it useful for business?",
+      answer: "Yes, for invoices and financial planning."
     },
     {
-      question: "Does it include additional charges?",
-      answer: "The calculator focuses on base amount and tax; additional fees must be added separately."
+      question: "Does it include extra charges?",
+      answer: "No, only base amount and tax."
     }
   ]
 }
