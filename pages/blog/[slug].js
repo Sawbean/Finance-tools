@@ -14,20 +14,29 @@ export default function BlogPost() {
   const router = useRouter();
   const { slug } = router.query;
 
-  if (!slug) return <p>Loading...</p>;
+  if (!slug) return <div className="container"><p>Loading...</p></div>;
 
-  // Merge all posts
+  // Merge all posts from your two new files
   const allPosts = { ...blogEducational, ...toolGuides };
   const post = allPosts[slug];
 
-  if (!post) return <p>Post not found.</p>;
+  // 1. Handle case where post doesn't exist
+  if (!post) {
+    return (
+      <div className="container" style={{ textAlign: 'center', padding: '100px 20px' }}>
+        <h1>Post Not Found</h1>
+        <p>The article you are looking for does not exist or has been moved.</p>
+        <Link href="/blog" className="blog-action-btn">Back to Blog</Link>
+      </div>
+    );
+  }
 
-  // JSON-LD for SEO + FAQ
+  // 2. Safety Check for JSON-LD
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.title,
-    description: post.description,
+    headline: post.title || "Financial Guide",
+    description: post.description || "",
     author: { "@type": "Organization", name: "ToolFinance" },
     publisher: {
       "@type": "Organization",
@@ -36,8 +45,8 @@ export default function BlogPost() {
     },
     datePublished: post.publishDate,
     mainEntityOfPage: { "@type": "WebPage", "@id": `https://finance-tools-mu.vercel.app/blog/${slug}` },
-    image: `https://finance-tools-mu.vercel.app${post.image}`,
-    ...(post.faq && {
+    image: post.image ? `https://finance-tools-mu.vercel.app${post.image}` : "",
+    ...(post.faq && Array.isArray(post.faq) && {
       mainEntity: post.faq.map(f => ({
         "@type": "Question",
         name: f.question,
@@ -46,20 +55,22 @@ export default function BlogPost() {
     })
   };
 
-  // Table of Contents
-  const headings = post.content
-    .filter(block => block.type === "heading")
-    .map((block, i) => ({ text: block.text, id: `section-${i}` }));
+  // 3. Table of Contents - Defensive Filter
+  const headings = Array.isArray(post.content)
+    ? post.content
+        .filter(block => block.type === "heading")
+        .map((block, i) => ({ text: block.text, id: `section-${i}` }))
+    : [];
 
-  // Render blocks
+  // 4. Render blocks logic
   const renderBlock = (block, index) => {
+    if (!block) return null;
+    
     switch (block.type) {
       case "paragraph":
         return <p key={index}>{block.text}</p>;
 
       case "heading":
-        // Prevent first heading from duplicating title
-        
         return (
           <h2 id={`section-${index}`} key={index}>
             {block.text}
@@ -69,7 +80,7 @@ export default function BlogPost() {
       case "list":
         return (
           <ul key={index}>
-            {block.items.map((item, i) => (
+            {Array.isArray(block.items) && block.items.map((item, i) => (
               <li key={i}>{item}</li>
             ))}
           </ul>
@@ -80,12 +91,12 @@ export default function BlogPost() {
           <div key={index} className="blog-image-wrapper">
             <Image
                 src={block.src}
-                alt={`${post.title} - ${block.alt}`}
-                width={800} // base width
-                height={533} // base height
-                style={{ width: "100%", height: "auto" }} // fully responsive
+                alt={`${post.title} - ${block.alt || 'image'}`}
+                width={800}
+                height={533}
+                style={{ width: "100%", height: "auto" }}
                 className="blog-image"
-                priority
+                priority={index === 0}
             />
           </div>
         );
@@ -93,20 +104,20 @@ export default function BlogPost() {
       case "video":
         return (
           <div className="video-wrapper" key={index}>
-            <iframe src={block.url} allowFullScreen />
+            <iframe src={block.url} allowFullScreen title="Video Content" />
           </div>
         );
 
       case "cta":
         return (
-          <Link href={`/tools/${post.tool}`} key={index} className="cta-box">
+          <Link href={`/tools/${post.tool || ''}`} key={index} className="cta-box">
             {block.text}
           </Link>
         );
 
       case "callout":
         return (
-          <div key={index} className={`callout ${block.style}`}>
+          <div key={index} className={`callout ${block.style || 'info'}`}>
             {block.text}
           </div>
         );
@@ -125,15 +136,11 @@ export default function BlogPost() {
     <div className="container blog-page">
       <Head>
         <title>{post.title} | ToolFinance</title>
+        <meta name="description" content={post.description} />
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.description} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://finance-tools-mu.vercel.app/blog/${slug}`} />
         <meta property="og:image" content={`https://finance-tools-mu.vercel.app${post.image}`} />
-        <meta name="description" content={post.description} />
-        <meta name="keywords" content={post.keywords?.join(", ")} />
         <link rel="canonical" href={`https://finance-tools-mu.vercel.app/blog/${slug}`} />
-
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -152,9 +159,11 @@ export default function BlogPost() {
       </div>
 
       {/* TOP CTA */}
-      <div className="adsense-placeholder cta-block">
-        <Link href={`/tools/${post.tool}`}>Try our {post.tool.toUpperCase()} Calculator →</Link>
-      </div>
+      {post.tool && (
+        <div className="adsense-placeholder cta-block">
+          <Link href={`/tools/${post.tool}`}>Try our {post.tool.toUpperCase()} Calculator →</Link>
+        </div>
+      )}
 
       {/* TOC */}
       {headings.length > 0 && (
@@ -172,23 +181,28 @@ export default function BlogPost() {
 
       {/* BLOG CONTENT */}
       <article className="blog-content">
-        {post.content.map((block, index) => {
-          if (index === 3) {
-            return (
-              <React.Fragment key={index}>
-                {renderBlock(block, index)}
-                <div className="adsense-placeholder cta-block">
-                  <Link href={`/tools/${post.tool}`}>Try our {post.tool.toUpperCase()} Calculator →</Link>
-                </div>
-              </React.Fragment>
-            );
-          }
-          return renderBlock(block, index);
-        })}
+        {Array.isArray(post.content) ? (
+          post.content.map((block, index) => {
+            // Inject Ad/CTA after 4th block if it's a long post
+            if (index === 3 && post.tool) {
+              return (
+                <React.Fragment key={index}>
+                  {renderBlock(block, index)}
+                  <div className="adsense-placeholder cta-block">
+                    <Link href={`/tools/${post.tool}`}>Try our {post.tool.toUpperCase()} Calculator →</Link>
+                  </div>
+                </React.Fragment>
+              );
+            }
+            return renderBlock(block, index);
+          })
+        ) : (
+          <p>Content is currently being updated.</p>
+        )}
       </article>
 
       {/* FAQ */}
-      {post.faq && (
+      {post.faq && Array.isArray(post.faq) && (
         <div className="faq-section">
           <h2>Frequently Asked Questions</h2>
           {post.faq.map((item, index) => (
@@ -204,18 +218,13 @@ export default function BlogPost() {
       <div className="related-posts">
         <h3>Related Articles</h3>
         <div className="related-grid">
-          {relatedPosts.map(([slug, item]) => (
-            <div key={slug} className="related-card">
+          {relatedPosts.map(([relSlug, item]) => (
+            <div key={relSlug} className="related-card">
               <h4>{item.title}</h4>
-              <Link href={`/blog/${slug}`}>Read More →</Link>
+              <Link href={`/blog/${relSlug}`}>Read More →</Link>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* BOTTOM CTA */}
-      <div className="adsense-placeholder cta-block">
-        <Link href={`/tools/${post.tool}`}>Try our {post.tool.toUpperCase()} Calculator →</Link>
       </div>
 
       {/* BOTTOM ACTIONS */}

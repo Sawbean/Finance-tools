@@ -1,0 +1,53 @@
+/* =============================================================
+   10. FOOTER & MISC COMPONENTS
+============================================================= */
+.site-footer {
+  background: var(--primary);
+  color: #ffffff;
+  margin-top: 60px;
+  padding: 50px 20px 20px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.footer-column h4 { color: #f0e68c; margin-bottom: 15px; }
+.footer-column a { display: block; margin-bottom: 8px; font-size: 14px; opacity: 0.9; color: #ffffff; }
+
+.footer-bottom {
+  text-align: center;
+  padding: 18px 0;
+  background: #071a40;
+  font-size: 13px;
+  margin-top: 30px;
+  border-radius: 0 0 14px 14px;
+}
+
+/* Ads & Placeholders */
+.adsense-placeholder, .ad-placeholder {
+  margin: 25px auto;
+  padding: 16px;
+  text-align: center;
+  border: 1px dashed #ccc;
+  background: #fafafa;
+  border-radius: 10px;
+}
+
+.cta-block {
+  width: 100%;
+  min-height: 90px;
+  border: 1px dashed #2a3441;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 25px 0;
+  font-weight: 600;
+}

@@ -1,0 +1,88 @@
+/* =============================================================
+   8. BLOG SYSTEM (INDEX & CARDS)
+============================================================= */
+.blog-container { max-width: 1200px; margin: auto; padding: 20px; }
+
+.category-tabs { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; }
+.category-tabs button {
+  padding: 8px 14px;
+  border: none;
+  background: #1f2937;
+  color: #cbd5e1;
+  border-radius: 20px;
+  cursor: pointer;
+}
+.category-tabs .active { background: var(--accent-blue); color: #fff; }
+
+/* Featured Hero Card */
+.featured-card {
+  position: relative;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 35px;
+}
+
+.featured-card img { width: 100%; height: 380px; object-fit: cover; display: block; }
+.featured-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+}
+
+.featured-content { position: absolute; bottom: 25px; left: 25px; z-index: 2; color: #fff; max-width: 600px; }
+.featured-content h2 { font-size: 1.8rem; margin-bottom: 10px; color: #fff; }
+
+/* Standard Blog Grid */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.blog-card {
+  background: #111827;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.blog-card img { width: 100%; height: 180px; object-fit: cover; }
+.blog-tag, .badge { background: var(--accent-blue); color: #fff; font-size: 11px; padding: 4px 8px; border-radius: 6px; }
+
+.blog-card-content { padding: 0 18px 18px; }
+.blog-card h3 a { color: #fff; }
+.blog-card p { font-size: 0.9rem; color: var(--text-light); }
+
+.meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-light); }
+
+/* =============================================================
+   9. SINGLE BLOG POST CONTENT
+============================================================= */
+.blog-page { max-width: 780px; margin: auto; }
+
+.blog-header { text-align: center; margin-bottom: 30px; }
+.blog-header p { color: var(--text-light); font-size: 1.1rem; }
+
+.blog-content { font-size: 16.5px; line-height: 1.8; color: #333; margin-top: 20px; }
+.blog-content h2 { 
+    font-size: 1.4rem; 
+    margin-top: 32px; 
+    border-left: 4px solid var(--primary); 
+    padding-left: 10px; 
+}
+
+.table-of-contents {
+  background: #f5f8ff;
+  border: 1px solid #dbe3f2;
+  border-radius: 14px;
+  padding: 18px;
+  margin: 25px 0;
+}
+
+.callout { padding: 15px; border-left: 4px solid var(--accent-blue); background-color: #f0f8ff; margin: 20px 0; }
+
+.blog-bottom-actions { display: flex; justify-content: center; gap: 18px; margin-top: 40px; flex-wrap: wrap; }
+.blog-action-btn { padding: 14px 22px; background: var(--primary); color: white; border-radius: 10px; font-weight: 600; }
+.blog-action-btn.secondary { background: #f0e68c; color: #333; }
