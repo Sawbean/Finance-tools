@@ -4,41 +4,41 @@ export default function CalculatorForm({
   onSubmit,
   onReset,
   children,
-  adComponent = null,        // optional ad component
-  hideDefaultButton = false, // hide default Calculate button
-  hideDefaultReset = false,  // hide default Reset button
-  customButtons = null,      // provide fully custom buttons
-  className = "",            // extra CSS class for customization
+  adComponent = null,
+  hideDefaultButton = false,
+  hideDefaultReset = false,
+  customButtons = null,
+  className = "",
 }) {
   return (
     <>
       <form onSubmit={onSubmit} className={`form-box ${className}`}>
-        {/* All form inputs go here */}
         {children}
 
-        {/* Buttons area */}
+        {/* If you pass custom buttons in emi.js, we render ONLY those.
+           If not, we show the default ones based on your hide/show props.
+        */}
         {customButtons ? (
-          // If custom buttons are passed, render them instead
           <div className="calculator-buttons">{customButtons}</div>
         ) : (
-          <div className="calculator-buttons">
-            {/* Default Calculate button */}
-            {!hideDefaultButton && (
-              <button type="submit" className="calc-btn">
-                Calculate
-              </button>
-            )}
-            {/* Default Reset button */}
-            {!hideDefaultReset && (
-              <button type="button" onClick={onReset} className="reset-btn">
-                Reset
-              </button>
-            )}
-          </div>
+          /* Only show this div if there is at least one button to show */
+          (!hideDefaultButton || !hideDefaultReset) && (
+            <div className="calculator-buttons">
+              {!hideDefaultButton && (
+                <button type="submit" className="calc-btn">
+                  Calculate
+                </button>
+              )}
+              {!hideDefaultReset && (
+                <button type="button" onClick={onReset} className="reset-btn">
+                  Reset
+                </button>
+              )}
+            </div>
+          )
         )}
       </form>
 
-      {/* Optional ad block */}
       {adComponent && <div className="calculator-ad">{adComponent}</div>}
     </>
   );

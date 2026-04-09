@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -8,54 +11,55 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function SIPCalculator() {
-  const [monthlyInvestment, setMonthlyInvestment] = useState("");
-  const [rate, setRate] = useState("");
-  const [years, setYears] = useState("");
+  // 1. STATE MANAGEMENT
+  const [monthlyInvestment, setMonthlyInvestment] = useState(5000);
+  const [rate, setRate] = useState(12);
+  const [years, setYears] = useState(10);
+  
+  // Advanced Top-up State
+  const [stepUp, setStepUp] = useState(0); 
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
 
-  // Nepali currency format
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
-  };
-
-  const calculateSIP = (e) => {
-    e.preventDefault();
-
+  // 2. CALCULATION LOGIC
+  const calculateSIP = () => {
     const P = parseFloat(monthlyInvestment) || 0;
     const R = parseFloat(rate) || 0;
     const Y = parseFloat(years) || 0;
+    const S = parseFloat(stepUp) || 0;
 
-    if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
-      alert("⚠️ Please enter valid values");
-      return;
-    }
+    if (P <= 0 || R <= 0 || Y <= 0) return;
 
-    const n = Y * 12;
+    let totalValue = 0;
+    let totalInvested = 0;
+    let currentMonthlyP = P;
     const r = R / (12 * 100);
 
-    const futureValue =
-      P *
-      ((Math.pow(1 + r, n) - 1) / r) *
-      (1 + r);
-
-    const totalInvestment = P * n;
-    const totalReturns = futureValue - totalInvestment;
+    // If there's a step-up, we calculate year by year
+    if (S > 0) {
+      for (let i = 1; i <= Y; i++) {
+        // Future value of 12 months of current investment
+        const n = 12;
+        const yearlyFV = currentMonthlyP * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+        
+        // Add existing corpus growth for the year + the new year's SIP
+        totalValue = (totalValue * Math.pow(1 + r, 12)) + yearlyFV;
+        totalInvested += (currentMonthlyP * 12);
+        
+        // Increase investment for next year
+        currentMonthlyP += (currentMonthlyP * (S / 100));
+      }
+    } else {
+      // Standard SIP Formula
+      const n = Y * 12;
+      totalValue = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+      totalInvested = P * n;
+    }
 
     setResult({
-      invested: totalInvestment,
-      returns: totalReturns,
-      totalValue: futureValue,
+      "Total Investment": totalInvested,
+      "Estimated Returns": totalValue - totalInvested,
+      "Total Wealth Created": totalValue,
     });
   };
 
@@ -63,61 +67,121 @@ export default function SIPCalculator() {
     setMonthlyInvestment("");
     setRate("");
     setYears("");
+    setStepUp(0);
     setResult(null);
   };
+
+  // Auto-calculate for smooth UX
+  useEffect(() => {
+    calculateSIP();
+  }, [monthlyInvestment, rate, years, stepUp]);
 
   return (
     <>
       <Head>
-        <title>SIP Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Calculate SIP returns, total investment, and future value with our easy SIP calculator."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/sip"
+        <title>SIP Calculator with Step-Up Feature | ToolFinance</title>
+        <meta 
+          name="description" 
+          content="Calculate your mutual fund SIP returns. Use the step-up feature to see how increasing your monthly investment grows your wealth." 
         />
       </Head>
 
       <div className="container">
-        <h1>📈 SIP Calculator</h1>
+        {/* HEADER SECTION */}
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>📈 SIP Calculator</h1>
+            <p style={{color: '#666'}}>Visualize your long-term wealth creation through Systematic Investment Plans.</p>
+        </div>
 
-        <CalculatorForm onSubmit={calculateSIP} onReset={resetForm}>
-          <CalculatorInput
-            placeholder="Monthly Investment (Rs)"
-            value={monthlyInvestment}
-            onChange={(val) => setMonthlyInvestment(val)}
-          />
-          <CalculatorInput
-            step="0.01"
-            placeholder="Expected Return Rate (%)"
-            value={rate}
-            onChange={(val) => setRate(val)}
-          />
-          <CalculatorInput
-            placeholder="Time Period (Years)"
-            value={years}
-            onChange={(val) => setYears(val)}
-          />
-        </CalculatorForm>
+        <div className="calculator-grid">
+          
+          {/* LEFT COLUMN: INPUTS */}
+          <div className="form-box">
+            <CalculatorForm 
+              onSubmit={(e) => { e.preventDefault(); calculateSIP(); }}
+              customButtons={
+                <>
+                  <button type="submit" className="calc-btn">Calculate Growth</button>
+                  <button type="button" className="reset-btn" onClick={resetForm}>Reset</button>
+                </>
+              }
+            >
+              
+              <CalculatorInput
+                label="Monthly Investment"
+                value={monthlyInvestment}
+                onChange={setMonthlyInvestment}
+                icon={globalCurrency}
+              />
 
-        <AdPlaceholder />
+              <div className="input-row">
+                <CalculatorInput
+                  label="Expected Return Rate"
+                  value={rate}
+                  onChange={setRate}
+                  suffix="%"
+                />
+                <CalculatorInput
+                  label="Time Period"
+                  value={years}
+                  onChange={setYears}
+                  suffix="Years"
+                />
+              </div>
 
-        {result && (
-          <ResultBox
-            title="📊 SIP Summary"
-            results={result}
-            formatCurrency={nepaliCurrency}
-          />
-        )}
+              {/* Advanced Step-Up Toggle */}
+              <div className="advanced-toggle-container">
+                <button 
+                  type="button" 
+                  className="advanced-btn" 
+                  onClick={() => setShowAdvanced(!showAdvanced)}
+                >
+                  {showAdvanced ? "▲ Hide Step-Up Option" : "▼ Add Annual Step-Up (%)"}
+                </button>
+              </div>
 
-        <Link
-          href="/blog/sip-calculator-guide"
-          className="read-guide-card"
-        >
-          📖 More About SIP
-        </Link>
+              {showAdvanced && (
+                <div className="advanced-fields">
+                  <CalculatorInput 
+                      label="Annual Investment Increase" 
+                      value={stepUp} 
+                      onChange={setStepUp} 
+                      suffix="%" 
+                      placeholder="e.g. 10"
+                  />
+                  <p style={{fontSize: '0.8rem', color: '#64748b', marginTop: '5px'}}>
+                    *Increasing your SIP every year significantly boosts your final corpus.
+                  </p>
+                </div>
+              )}
+
+            </CalculatorForm>
+          </div>
+
+          {/* RIGHT COLUMN: RESULTS & SIDEBAR */}
+          <div className="result-side">
+            {result ? (
+              <ResultBox
+                title="Investment Summary"
+                results={result}
+                formatCurrency={formatCurrency}
+              />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter details to see your future wealth
+              </div>
+            )}
+            
+            <div className="sidebar-ad">
+               <AdPlaceholder />
+            </div>
+
+            <Link href="/blog/sip-calculator-guide" className="sidebar-guide-link">
+                📖 Why SIP is better than Lumpsum?
+            </Link>
+          </div>
+          
+        </div>
       </div>
     </>
   );

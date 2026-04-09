@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -8,104 +8,147 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function LoanCalculator() {
-  const [amount, setAmount] = useState("");
-  const [rate, setRate] = useState("");
-  const [years, setYears] = useState("");
+  const [amount, setAmount] = useState(100000);
+  const [rate, setRate] = useState(12);
+  const [duration, setDuration] = useState(1);
+  const [durationType, setDurationType] = useState("years");
   const [result, setResult] = useState(null);
 
+  // International/Indian Number Formatting Logic
   const formatCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
+    return new Intl.NumberFormat('en-IN').format(Math.round(num));
   };
 
-  const calculateLoan = (e) => {
-    e.preventDefault();
-
+  const calculateLoan = () => {
     const P = parseFloat(amount) || 0;
     const R = parseFloat(rate) || 0;
-    const Y = parseFloat(years) || 0;
+    const D = parseFloat(duration) || 0;
 
-    if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
-      alert("Enter valid values");
-      return;
-    }
+    if (P <= 0 || R <= 0 || D <= 0) return;
 
-    const interest = (P * R * Y) / 100;
+    // Simple Interest Calculation for basic Loan Calculator
+    // (Note: For reducing balance, use the EMI formula from emi.js)
+    const T = durationType === "years" ? D : D / 12;
+    const interest = (P * R * T) / 100;
     const totalPayable = P + interest;
 
     setResult({
-      principal: Math.round(P),
-      totalInterest: Math.round(interest),
-      totalPayable: Math.round(totalPayable),
+      "Principal Amount": P,
+      "Total Interest": interest,
+      "Total Payable": totalPayable,
     });
   };
 
   const resetForm = () => {
     setAmount("");
     setRate("");
-    setYears("");
+    setDuration("");
     setResult(null);
   };
+
+  // Auto-calculate on input change for premium feel
+  useEffect(() => {
+    calculateLoan();
+  }, [amount, rate, duration, durationType]);
 
   return (
     <>
       <Head>
-        <title>Loan Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Calculate total interest and total payable loan amount in Nepal."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/loan"
-        />
+        <title>Professional Loan Calculator | ToolFinance</title>
+        <meta name="description" content="Calculate total interest and total payable loan amount with our easy-to-use tool." />
       </Head>
 
       <div className="container">
-        <h1>🏦 Loan Calculator</h1>
+        {/* HEADER SECTION */}
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>Loan Calculator</h1>
+            <p style={{color: '#666'}}>Quickly estimate your simple interest and total repayment amount.</p>
+        </div>
 
-        <CalculatorForm onSubmit={calculateLoan} onReset={resetForm}>
-          <CalculatorInput
-            placeholder="Loan Amount (Rs)"
-            value={amount}
-            onChange={(val) => setAmount(val)}
-          />
-          <CalculatorInput
-            step="0.01"
-            placeholder="Interest Rate (%)"
-            value={rate}
-            onChange={(val) => setRate(val)}
-          />
-          <CalculatorInput
-            placeholder="Loan Duration (Years)"
-            value={years}
-            onChange={(val) => setYears(val)}
-          />
-        </CalculatorForm>
+        <div className="calculator-grid">
+          
+          {/* LEFT COLUMN: INPUTS */}
+          <div className="form-box">
+            <CalculatorForm 
+              onSubmit={(e) => {
+                e.preventDefault();
+                calculateLoan();
+              }}
+              customButtons={
+                <>
+                  <button type="submit" className="calc-btn">
+                     Calculate Interest
+                  </button>
+                  <button type="button" className="reset-btn" onClick={resetForm}>
+                     Reset
+                  </button>
+                </>
+              }
+            >
+              
+              <CalculatorInput
+                label="Loan Amount"
+                value={amount}
+                onChange={setAmount}
+                icon="Rs"
+              />
 
-        <AdPlaceholder />
+              <div className="input-row">
+                <CalculatorInput
+                  label="Interest Rate"
+                  value={rate}
+                  onChange={setRate}
+                  suffix="%"
+                />
+                
+                <div className="tenure-group">
+                    <label className="input-label">Tenure ({durationType})</label>
+                    <div style={{display: 'flex', gap: '8px'}}>
+                        <input 
+                            type="number" 
+                            className="input-wrapper" 
+                            style={{width: '60%', padding: '12px', borderRadius: '10px', border: '1px solid #d1d5db'}}
+                            value={duration} 
+                            onChange={(e) => setDuration(e.target.value)} 
+                        />
+                        <select 
+                            style={{width: '40%', borderRadius: '10px', border: '1px solid #d1d5db', padding: '10px', background: '#fff'}}
+                            value={durationType} 
+                            onChange={(e) => setDurationType(e.target.value)}
+                        >
+                            <option value="years">Years</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+              </div>
+            </CalculatorForm>
+          </div>
 
-        {result && (
-          <ResultBox
-            title="Loan Summary"
-            results={result}
-            formatCurrency={formatCurrency}
-          />
-        )}
+          {/* RIGHT COLUMN: RESULTS & SIDEBAR */}
+          <div className="result-side">
+            {result ? (
+              <ResultBox
+                title="Loan Summary"
+                results={result}
+                formatCurrency={formatCurrency}
+              />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter values to see your loan breakdown
+              </div>
+            )}
+            
+            <div className="sidebar-ad">
+               <AdPlaceholder />
+            </div>
 
-        <Link href="/blog/loan-calculator-guide" className="read-guide-card">
-          📖 More About Loan
-        </Link>
+            <Link href="/blog/loan-calculator-guide" className="sidebar-guide-link">
+                📖 Read the Full Loan Guide
+            </Link>
+          </div>
+          
+        </div>
       </div>
     </>
   );

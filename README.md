@@ -14,7 +14,6 @@ fintools
 ├─ css
 ├─ data
 │  ├─ blogEducational.js
-│  ├─ blogPosts.js
 │  ├─ toolGuides.js
 │  └─ tools.js
 ├─ images
@@ -68,13 +67,27 @@ fintools
 │  ├─ images
 │  │  ├─ emi-chart.JPG
 │  │  ├─ finlogo.png
-│  │  └─ gst-vat-chart.JPG
+│  │  ├─ gst-vat-chart.JPG
+│  │  └─ loan-types-chart.JPG
 │  ├─ og-image.png
 │  ├─ robots.txt
 │  └─ site.webmanifest
 ├─ README.md
-└─ styles
-   ├─ globals.css
-   └─ Home.module.css
+├─ styles
+│  ├─ base
+│  │  ├─ typography.css
+│  │  └─ variables.css
+│  ├─ components
+│  │  ├─ blog.css
+│  │  ├─ calculator.css
+│  │  ├─ footer.css
+│  │  ├─ header.css
+│  │  └─ ui-elements.css
+│  ├─ globals.css
+│  ├─ Home.module.css
+│  └─ layout
+│     └─ container.css
+└─ utils
+   └─ formatters.js
 
 ```

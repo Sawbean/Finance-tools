@@ -2,208 +2,176 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function EMICalculator() {
-  // --- MAIN INPUT STATES ---
-  const [principal, setPrincipal] = useState("");
-  const [rate, setRate] = useState("");
-  const [duration, setDuration] = useState("");
-  const [durationType, setDurationType] = useState("years"); // Toggle: Years / Months
+  // 1. STATE MANAGEMENT
+  const [principal, setPrincipal] = useState(500000);
+  const [rate, setRate] = useState(10.5);
+  const [duration, setDuration] = useState(5);
+  const [durationType, setDurationType] = useState("years");
   const [result, setResult] = useState(null);
 
-  // --- ADVANCED OPTIONS STATES ---
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [extraPayment, setExtraPayment] = useState("");
   const [processingFee, setProcessingFee] = useState("");
   const [insurance, setInsurance] = useState("");
 
-  // --- FORMAT NUMBER AS NEPALI CURRENCY ---
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
-  };
-
-  // --- CALCULATION FUNCTION ---
+  // 2. CALCULATION LOGIC
   const calculateEMI = () => {
     const P = parseFloat(principal) || 0;
     const R = parseFloat(rate) || 0;
     let D = parseFloat(duration) || 0;
     const extra = parseFloat(extraPayment) || 0;
-    const feePercent = parseFloat(processingFee) || 0;
-    const insuranceCost = parseFloat(insurance) || 0;
+    const feeP = parseFloat(processingFee) || 0;
+    const ins = parseFloat(insurance) || 0;
 
-    if (P <= 0 || R <= 0 || R > 100 || D <= 0) return;
+    if (P <= 0 || R <= 0 || D <= 0) return;
 
-    // Convert duration based on type
-    if (durationType === "years") D = D * 12;
-    else if (durationType === "months") D = D;
-    else if (durationType === "weeks") D = Math.round(D * 52 / 12);
-    else if (durationType === "days") D = Math.round(D / 30);
+    const n = durationType === "years" ? D * 12 : D;
+    const r = R / (12 * 100);
+    
+    let emi = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+    emi += extra;
 
-    const monthlyRate = R / (12 * 100);
-    let emi = (P * monthlyRate * Math.pow(1 + monthlyRate, D)) /
-      (Math.pow(1 + monthlyRate, D) - 1);
-
-    // Add extra payment effect
-    if (extra > 0) emi += extra;
-
-    // Total Payment
-    let totalPayment = emi * D;
-
-    // Add processing fee and insurance
-    totalPayment += P * (feePercent / 100) + insuranceCost;
-
-    const totalInterest = totalPayment - P;
+    const totalPayable = (emi * n) + (P * (feeP / 100)) + ins;
+    const totalInterest = totalPayable - P - ins - (P * (feeP / 100));
 
     setResult({
       "Monthly EMI": emi,
-      "Total Payment": totalPayment,
-      "Total Interest": totalInterest
+      "Total Interest": totalInterest,
+      "Total Amount": totalPayable
     });
   };
-
-  // --- REAL-TIME CALCULATION ---
-  useEffect(() => {
-    calculateEMI();
-  }, [principal, rate, duration, durationType, extraPayment, processingFee, insurance]);
 
   const resetForm = () => {
     setPrincipal("");
     setRate("");
     setDuration("");
-    setDurationType("years");
     setExtraPayment("");
     setProcessingFee("");
     setInsurance("");
     setResult(null);
   };
 
+  useEffect(() => {
+    calculateEMI();
+  }, [principal, rate, duration, durationType, extraPayment, processingFee, insurance]);
+
   return (
     <>
       <Head>
-        <title>EMI Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Advanced EMI calculator with optional prepayment, fees, and insurance. Calculate monthly EMI, total payment, and interest for loans in Nepal."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/emi"
-        />
+        <title>Global EMI Calculator | ToolFinance</title>
+        <meta name="description" content="Professional EMI calculator with advanced payment options." />
       </Head>
 
       <div className="container">
-        <h1>💰 Advanced EMI Calculator</h1>
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>EMI Calculator</h1>
+            <p style={{color: '#666'}}>Plan your loans with precision using our global financial tools.</p>
+        </div>
 
-        <CalculatorForm onSubmit={(e) => e.preventDefault()} onReset={resetForm} hideDefaultButton={true}  hideDefaultReset={true}>
-          {/* Loan Amount */}
-          <CalculatorInput
-            placeholder="Loan Amount (Rs)"
-            value={principal}
-            onChange={setPrincipal}
-          />
-
-          {/* Interest Rate */}
-          <CalculatorInput
-            step="0.01"
-            placeholder="Interest Rate (%)"
-            value={rate}
-            onChange={setRate}
-          />
-
-          {/* Duration with inline toggle */}
-          <div className="duration-wrapper">
-            <CalculatorInput
-              placeholder="Duration"
-              value={duration}
-              onChange={setDuration}
-            />
-            <div className="duration-toggle">
-              <button
-                type="button"
-                className={durationType === "years" ? "active" : ""}
-                onClick={() => setDurationType("years")}
-              >
-                Years
-              </button>
-              <button
-                type="button"
-                className={durationType === "months" ? "active" : ""}
-                onClick={() => setDurationType("months")}
-              >
-                Months
-              </button>
-            </div>
-          </div>
-
-          {/* Advanced Options Toggle (CENTERED) */}
-          <div className="advanced-toggle center">
-            <button
-              type="button"
-              onClick={() => setShowAdvanced(!showAdvanced)}
+        <div className="calculator-grid">
+          
+          {/* LEFT COLUMN: FORM INPUTS */}
+          <div className="form-box">
+            <CalculatorForm 
+              onSubmit={(e) => {
+                e.preventDefault();
+                calculateEMI();
+              }}
+              customButtons={
+                <>
+                  <button type="submit" className="calc-btn">Calculate My EMI</button>
+                  <button type="button" className="reset-btn" onClick={resetForm}>Reset</button>
+                </>
+              }
             >
-              {showAdvanced ? "Hide Advanced Options ▲" : "Show Advanced Options ▼"}
-            </button>
+              
+              <CalculatorInput
+                label="Loan Amount"
+                value={principal}
+                onChange={setPrincipal}
+                icon={globalCurrency} 
+              />
+
+              <div className="input-row">
+                <CalculatorInput label="Interest Rate" value={rate} onChange={setRate} suffix="%" />
+                <div className="tenure-group">
+                    <label className="input-label">Tenure ({durationType})</label>
+                    <div style={{display: 'flex', gap: '8px'}}>
+                        <input 
+                            type="number" 
+                            className="input-wrapper" 
+                            style={{width: '60%', padding: '12px', borderRadius: '10px', border: '1px solid #d1d5db'}}
+                            value={duration} 
+                            onChange={(e) => setDuration(e.target.value)} 
+                        />
+                        <select 
+                            style={{width: '40%', borderRadius: '10px', border: '1px solid #d1d5db', padding: '10px', background: '#fff'}}
+                            value={durationType} 
+                            onChange={(e) => setDurationType(e.target.value)}
+                        >
+                            <option value="years">Years</option>
+                            <option value="months">Months</option>
+                        </select>
+                    </div>
+                </div>
+              </div>
+
+              <div className="advanced-toggle-container">
+                <button type="button" className="advanced-btn" onClick={() => setShowAdvanced(!showAdvanced)}>
+                  {showAdvanced ? "▲ Hide Advanced Options" : "▼ Show Advanced Options"}
+                </button>
+              </div>
+
+              {showAdvanced && (
+                <div className="advanced-fields">
+                  <CalculatorInput
+                    label="Extra Monthly Payment"
+                    value={extraPayment}
+                    onChange={setExtraPayment}
+                    icon={globalCurrency}
+                  />
+                  <div className="advanced-row">
+                    <CalculatorInput label="Fee (%)" value={processingFee} onChange={setProcessingFee} suffix="%" />
+                    <CalculatorInput label="Insurance" value={insurance} onChange={setInsurance} icon={globalCurrency} />
+                  </div>
+                </div>
+              )}
+            </CalculatorForm>
           </div>
 
-          {showAdvanced && (
-            <div className="advanced-options">
-              <CalculatorInput
-                placeholder="Extra Monthly Payment (Rs)"
-                value={extraPayment}
-                onChange={setExtraPayment}
+          {/* RIGHT COLUMN: RESULTS & SIDEBAR */}
+          <div className="result-side">
+            {result ? (
+              <ResultBox
+                title="Repayment Summary"
+                results={result}
+                formatCurrency={formatCurrency}
               />
-              <CalculatorInput
-                placeholder="Processing Fee (%)"
-                value={processingFee}
-                onChange={setProcessingFee}
-              />
-              <CalculatorInput
-                placeholder="Insurance (Rs)"
-                value={insurance}
-                onChange={setInsurance}
-              />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter values to see your breakdown
+              </div>
+            )}
+            
+            <div className="sidebar-ad">
+               <AdPlaceholder />
             </div>
-          )}
 
-          {/* Buttons */}
-          <div className="calculator-buttons">
-            <button type="button" className="calc-btn" onClick={calculateEMI}>
-              Calculate
-            </button>
-            <button type="button" className="reset-btn" onClick={resetForm}>
-              Reset
-            </button>
+            <Link href="/blog/emi-calculator-guide" className="sidebar-guide-link">
+                📖 Read the Full EMI Guide
+            </Link>
           </div>
-        </CalculatorForm>
-
-        <AdPlaceholder />
-
-        {result && (
-          <ResultBox
-            title="📊 EMI Summary"
-            results={result}
-            formatCurrency={nepaliCurrency}
-          />
-        )}
-
-        <Link href="/blog/emi-calculator-guide" className="read-guide-card">
-          📖 More About EMI
-        </Link>
+          
+        </div>
       </div>
     </>
   );

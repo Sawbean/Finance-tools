@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -8,109 +11,186 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function MortgageCalculator() {
-  const [principal, setPrincipal] = useState("");
-  const [rate, setRate] = useState("");
-  const [years, setYears] = useState("");
+  // 1. STATE MANAGEMENT
+  const [homePrice, setHomePrice] = useState(300000);
+  const [downPayment, setDownPayment] = useState(60000);
+  const [rate, setRate] = useState(6.5);
+  const [years, setYears] = useState(30);
+  
+  // Advanced PITI States
+  const [propertyTax, setPropertyTax] = useState(1.2); // Yearly %
+  const [insurance, setInsurance] = useState(1200);   // Yearly fixed
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
 
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
-  };
-
-  const calculateMortgage = (e) => {
-    e.preventDefault();
-    const P = parseFloat(principal) || 0;
+  // 2. CALCULATION LOGIC
+  const calculateMortgage = () => {
+    const P_Home = parseFloat(homePrice) || 0;
+    const DP = parseFloat(downPayment) || 0;
     const R = parseFloat(rate) || 0;
     const Y = parseFloat(years) || 0;
 
-    if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
-      alert("⚠️ Please enter valid values");
-      return;
-    }
+    const principal = P_Home - DP;
+
+    if (principal <= 0 || R <= 0 || Y <= 0) return;
 
     const N = Y * 12;
     const monthlyRate = R / (12 * 100);
-    const payment =
-      (P * monthlyRate * Math.pow(1 + monthlyRate, N)) /
+    
+    // Monthly Principal & Interest (EMI)
+    const monthlyPI =
+      (principal * monthlyRate * Math.pow(1 + monthlyRate, N)) /
       (Math.pow(1 + monthlyRate, N) - 1);
 
-    const totalPayment = payment * N;
-    const totalInterest = totalPayment - P;
+    // Monthly Tax & Insurance
+    const monthlyTax = (P_Home * (parseFloat(propertyTax) / 100)) / 12;
+    const monthlyIns = (parseFloat(insurance) || 0) / 12;
 
-    setResult({ monthlyPayment: payment, totalPayment, totalInterest });
+    const totalMonthly = monthlyPI + monthlyTax + monthlyIns;
+    const totalPayment = (monthlyPI * N) + DP;
+    const totalInterest = (monthlyPI * N) - principal;
+
+    setResult({
+      "Loan Amount": principal,
+      "Monthly P&I": monthlyPI,
+      "Monthly Tax & Ins": monthlyTax + monthlyIns,
+      "Total Monthly Pay": totalMonthly,
+      "Total Interest": totalInterest,
+      "Total Cost of Home": totalPayment + (monthlyTax * N) + (monthlyIns * N),
+    });
   };
 
   const resetForm = () => {
-    setPrincipal("");
+    setHomePrice("");
+    setDownPayment("");
     setRate("");
     setYears("");
     setResult(null);
   };
 
+  // Auto-calculate for premium experience
+  useEffect(() => {
+    calculateMortgage();
+  }, [homePrice, downPayment, rate, years, propertyTax, insurance]);
+
   return (
     <>
       <Head>
-        <title>Mortgage Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Calculate your monthly mortgage payment, total interest, and total cost of your home loan."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/mortgage"
+        <title>Mortgage Calculator with Taxes & Insurance | ToolFinance</title>
+        <meta 
+          name="description" 
+          content="Calculate your total monthly mortgage payment including principal, interest, taxes, and insurance (PITI). Plan your home purchase accurately." 
         />
       </Head>
 
       <div className="container">
-        <h1>🏠 Mortgage Calculator</h1>
+        {/* HEADER SECTION */}
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>🏠 Mortgage Calculator</h1>
+            <p style={{color: '#666'}}>Get a complete breakdown of your monthly home loan payments.</p>
+        </div>
 
-        {/* Use CalculatorForm's submit button */}
-        <CalculatorForm onSubmit={calculateMortgage} onReset={resetForm}>
-          <CalculatorInput
-            placeholder="Loan Amount (Rs)"
-            value={principal}
-            onChange={(val) => setPrincipal(val)}
-          />
-          <CalculatorInput
-            step="0.01"
-            placeholder="Annual Interest Rate (%)"
-            value={rate}
-            onChange={(val) => setRate(val)}
-          />
-          <CalculatorInput
-            placeholder="Loan Term (Years)"
-            value={years}
-            onChange={(val) => setYears(val)}
-          />
-        </CalculatorForm>
+        <div className="calculator-grid">
+          
+          {/* LEFT COLUMN: INPUTS */}
+          <div className="form-box">
+            <CalculatorForm 
+              onSubmit={(e) => { e.preventDefault(); calculateMortgage(); }}
+              customButtons={
+                <>
+                  <button type="submit" className="calc-btn">Calculate Payment</button>
+                  <button type="button" className="reset-btn" onClick={resetForm}>Reset</button>
+                </>
+              }
+            >
+              
+              <div className="input-row">
+                <CalculatorInput
+                  label="Home Price"
+                  value={homePrice}
+                  onChange={setHomePrice}
+                  icon={globalCurrency}
+                />
+                <CalculatorInput
+                  label="Down Payment"
+                  value={downPayment}
+                  onChange={setDownPayment}
+                  icon={globalCurrency}
+                />
+              </div>
 
-        <AdPlaceholder />
+              <div className="input-row">
+                <CalculatorInput
+                  label="Interest Rate"
+                  value={rate}
+                  onChange={setRate}
+                  suffix="%"
+                />
+                <CalculatorInput
+                  label="Loan Term"
+                  value={years}
+                  onChange={setYears}
+                  suffix="Years"
+                />
+              </div>
 
-        {result && (
-          <ResultBox
-            title="📊 Mortgage Summary"
-            results={result}
-            formatCurrency={nepaliCurrency}
-          />
-        )}
+              {/* Advanced Options Toggle */}
+              <div className="advanced-toggle-container">
+                <button 
+                  type="button" 
+                  className="advanced-btn" 
+                  onClick={() => setShowAdvanced(!showAdvanced)}
+                >
+                  {showAdvanced ? "▲ Hide Taxes & Insurance" : "▼ Include Taxes & Insurance"}
+                </button>
+              </div>
 
-        <Link
-          href="/blog/mortgage-calculator-guide"
-          className="read-guide-card"
-        >
-          📖 More About Mortgage
-        </Link>
+              {showAdvanced && (
+                <div className="advanced-fields">
+                  <div className="advanced-row">
+                    <CalculatorInput 
+                        label="Property Tax (Yearly %)" 
+                        value={propertyTax} 
+                        onChange={setPropertyTax} 
+                        suffix="%" 
+                    />
+                    <CalculatorInput 
+                        label="Home Insurance (Yearly)" 
+                        value={insurance} 
+                        onChange={setInsurance} 
+                        icon={globalCurrency} 
+                    />
+                  </div>
+                </div>
+              )}
+
+            </CalculatorForm>
+          </div>
+
+          {/* RIGHT COLUMN: RESULTS & SIDEBAR */}
+          <div className="result-side">
+            {result ? (
+              <ResultBox
+                title="Monthly Payment Breakdown"
+                results={result}
+                formatCurrency={formatCurrency}
+              />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter loan details to see your monthly estimate
+              </div>
+            )}
+            
+            <div className="sidebar-ad">
+               <AdPlaceholder />
+            </div>
+
+            <Link href="/blog/mortgage-calculator-guide" className="sidebar-guide-link">
+                📖 Understanding Principal vs. Interest
+            </Link>
+          </div>
+          
+        </div>
       </div>
     </>
   );
