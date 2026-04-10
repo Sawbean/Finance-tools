@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -8,173 +11,158 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function FDRDCalculator() {
-  const [fdPrincipal, setFdPrincipal] = useState("");
-  const [fdRate, setFdRate] = useState("");
-  const [fdYears, setFdYears] = useState("");
+  // 1. STATE MANAGEMENT
+  const [activeTab, setActiveTab] = useState("fd");
+  
+  // FD States
+  const [fdPrincipal, setFdPrincipal] = useState(100000);
+  const [fdRate, setFdRate] = useState(8.5);
+  const [fdYears, setFdYears] = useState(5);
 
-  const [rdMonthly, setRdMonthly] = useState("");
-  const [rdRate, setRdRate] = useState("");
-  const [rdYears, setRdYears] = useState("");
+  // RD States
+  const [rdMonthly, setRdMonthly] = useState(5000);
+  const [rdRate, setRdRate] = useState(7.5);
+  const [rdYears, setRdYears] = useState(3);
 
-  const [fdResult, setFdResult] = useState(null);
-  const [rdResult, setRdResult] = useState(null);
+  const [result, setResult] = useState(null);
 
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
+  // 2. CALCULATION LOGIC
+  const calculateResult = () => {
+    if (activeTab === "fd") {
+      const P = parseFloat(fdPrincipal) || 0;
+      const R = parseFloat(fdRate) || 0;
+      const Y = parseFloat(fdYears) || 0;
+      if (P <= 0 || R <= 0 || Y <= 0) return;
+
+      const n = 4; // Quarterly Compounding
+      const total = P * Math.pow(1 + R / (100 * n), n * Y);
+      const interest = total - P;
+
+      setResult({
+        "Total Principal": P,
+        "Interest Earned": interest,
+        "Maturity Amount": total,
+        "Growth %": `${((interest / P) * 100).toFixed(1)}%`
+      });
+    } else {
+      const M = parseFloat(rdMonthly) || 0;
+      const R = parseFloat(rdRate) || 0;
+      const Y = parseFloat(rdYears) || 0;
+      if (M <= 0 || R <= 0 || Y <= 0) return;
+
+      const n = 4; // Quarterly Compounding
+      const i = R / 400;
+      const total = M * ((Math.pow(1 + i, 4 * Y) - 1) / (1 - Math.pow(1 + i, -1/3)));
+      const totalInvested = M * (Y * 12);
+      const interest = total - totalInvested;
+
+      setResult({
+        "Monthly Deposit": M,
+        "Total Invested": totalInvested,
+        "Interest Earned": interest,
+        "Maturity Amount": total
+      });
     }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
   };
 
-  // FD calculation
-  const calculateFD = (e) => {
-    e.preventDefault();
-    const P = parseFloat(fdPrincipal) || 0;
-    const R = parseFloat(fdRate) || 0;
-    const Y = parseFloat(fdYears) || 0;
+  useEffect(() => {
+    calculateResult();
+  }, [activeTab, fdPrincipal, fdRate, fdYears, rdMonthly, rdRate, rdYears]);
 
-    if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
-      alert("⚠️ Please enter valid FD values");
-      return;
+  const handleReset = () => {
+    if (activeTab === "fd") {
+      setFdPrincipal(""); setFdRate(""); setFdYears("");
+    } else {
+      setRdMonthly(""); setRdRate(""); setRdYears("");
     }
-
-    const n = 12; // monthly compounding
-    const total = P * Math.pow(1 + R / (100 * n), n * Y);
-    const interest = total - P;
-
-    setFdResult({ total: total, interest });
-  };
-
-  // RD calculation
-  const calculateRD = (e) => {
-    e.preventDefault();
-    const M = parseFloat(rdMonthly) || 0;
-    const R = parseFloat(rdRate) || 0;
-    const Y = parseFloat(rdYears) || 0;
-
-    if (M <= 0 || R <= 0 || R > 100 || Y <= 0) {
-      alert("⚠️ Please enter valid RD values");
-      return;
-    }
-
-    const n = 12; // monthly compounding
-    const months = Y * 12;
-    let total = 0;
-    for (let i = 1; i <= months; i++) {
-      total += M * Math.pow(1 + R / (100 * n), months - i + 1);
-    }
-    const interest = total - M * months;
-
-    setRdResult({ total, interest });
-  };
-
-  const resetFD = () => {
-    setFdPrincipal("");
-    setFdRate("");
-    setFdYears("");
-    setFdResult(null);
-  };
-
-  const resetRD = () => {
-    setRdMonthly("");
-    setRdRate("");
-    setRdYears("");
-    setRdResult(null);
+    setResult(null);
   };
 
   return (
     <>
       <Head>
-        <title>FD & RD Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Calculate Fixed Deposit (FD) and Recurring Deposit (RD) maturity and interest in Nepal."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/fd-rd-calculator"
-        />
+        <title>FD & RD Calculator | Fixed & Recurring Deposit Planner | ToolFinance</title>
+        <meta name="description" content="Calculate maturity amounts for both Fixed Deposits (FD) and Recurring Deposits (RD) with quarterly compounding options." />
       </Head>
 
       <div className="container">
-        <h1>💰 Fixed Deposit & Recurring Deposit Calculator</h1>
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💰 FD & RD Planner</h1>
+            <p style={{color: '#666'}}>Compare guaranteed returns to grow your wealth safely.</p>
+        </div>
 
-        <h2>Fixed Deposit (FD)</h2>
-        <CalculatorForm onSubmit={calculateFD} onReset={resetFD}>
-          <CalculatorInput
-            placeholder="Principal Amount (Rs)"
-            value={fdPrincipal}
-            onChange={(val) => setFdPrincipal(val)}
-          />
-          <CalculatorInput
-            step="0.01"
-            placeholder="Interest Rate (%)"
-            value={fdRate}
-            onChange={(val) => setFdRate(val)}
-          />
-          <CalculatorInput
-            placeholder="Duration (Years)"
-            value={fdYears}
-            onChange={(val) => setFdYears(val)}
-          />
-        </CalculatorForm>
+        {/* Standardized Tab Switcher */}
+        <div style={{display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '30px'}}>
+            <button 
+                onClick={() => {setActiveTab("fd"); setResult(null);}}
+                style={{
+                  padding: '10px 25px', borderRadius: '30px', border: 'none', cursor: 'pointer', 
+                  fontWeight: 'bold', background: activeTab === 'fd' ? 'var(--primary)' : '#e2e8f0', 
+                  color: activeTab === 'fd' ? '#fff' : '#475569', transition: '0.3s'
+                }}
+            >
+                🏢 Fixed Deposit (FD)
+            </button>
+            <button 
+                onClick={() => {setActiveTab("rd"); setResult(null);}}
+                style={{
+                  padding: '10px 25px', borderRadius: '30px', border: 'none', cursor: 'pointer', 
+                  fontWeight: 'bold', background: activeTab === 'rd' ? 'var(--primary)' : '#e2e8f0', 
+                  color: activeTab === 'rd' ? '#fff' : '#475569', transition: '0.3s'
+                }}
+            >
+                🔄 Recurring Deposit (RD)
+            </button>
+        </div>
 
-        {fdResult && (
-          <ResultBox
-            title="📊 FD Summary"
-            results={{
-              "Total Amount": nepaliCurrency(fdResult.total),
-              "Total Interest": nepaliCurrency(fdResult.interest),
-            }}
-          />
-        )}
+        <div className="calculator-grid">
+          <div className="form-box">
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+              {activeTab === "fd" ? (
+                <>
+                  <CalculatorInput label="Lumpsum Principal" value={fdPrincipal} onChange={setFdPrincipal} icon={globalCurrency} />
+                  <div className="input-row">
+                      <CalculatorInput label="Interest Rate" value={fdRate} onChange={setFdRate} suffix="%" />
+                      <CalculatorInput label="Duration" value={fdYears} onChange={setFdYears} suffix="Years" />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <CalculatorInput label="Monthly Deposit" value={rdMonthly} onChange={setRdMonthly} icon={globalCurrency} />
+                  <div className="input-row">
+                      <CalculatorInput label="Interest Rate" value={rdRate} onChange={setRdRate} suffix="%" />
+                      <CalculatorInput label="Duration" value={rdYears} onChange={setRdYears} suffix="Years" />
+                  </div>
+                </>
+              )}
+            </CalculatorForm>
+            
+            <div style={{marginTop: '25px'}}>
+                <Link href="/blog/fd-rd-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 Comparison: FD vs RD — Which strategy fits your goal?
+                </Link>
+            </div>
+          </div>
 
-        <h2>Recurring Deposit (RD)</h2>
-        <CalculatorForm onSubmit={calculateRD} onReset={resetRD}>
-          <CalculatorInput
-            placeholder="Monthly Deposit (Rs)"
-            value={rdMonthly}
-            onChange={(val) => setRdMonthly(val)}
-          />
-          <CalculatorInput
-            step="0.01"
-            placeholder="Interest Rate (%)"
-            value={rdRate}
-            onChange={(val) => setRdRate(val)}
-          />
-          <CalculatorInput
-            placeholder="Duration (Years)"
-            value={rdYears}
-            onChange={(val) => setRdYears(val)}
-          />
-        </CalculatorForm>
+          <div className="result-side">
+            {result ? (
+              <ResultBox title={`${activeTab.toUpperCase()} Maturity Summary`} results={result} formatCurrency={formatCurrency} />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter details to calculate maturity roadmap.
+              </div>
+            )}
+            <AdPlaceholder />
+          </div>
+        </div>
 
-        {rdResult && (
-          <ResultBox
-            title="📊 RD Summary"
-            results={{
-              "Total Amount": nepaliCurrency(rdResult.total),
-              "Total Interest": nepaliCurrency(rdResult.interest),
-            }}
-          />
-        )}
-
-        <AdPlaceholder />
-
-        <Link
-          href="/blog/fd-rd-calculator-guide"
-          className="read-guide-card"
-        >
-          📖 Learn About FD & RD
-        </Link>
+        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
+            <h3 style={{color: '#166534', marginBottom: '10px'}}>Understanding Quarterly Compounding</h3>
+            <p style={{fontSize: '0.9rem', color: '#166534', lineHeight: '1.6'}}>
+                Most global banks compound FD and RD interest every 3 months. This means you earn interest on your interest four times a year. This cycle significantly boosts your final maturity amount compared to simple interest calculation.
+            </p>
+            
+        </div>
       </div>
     </>
   );

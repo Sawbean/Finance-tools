@@ -15,8 +15,6 @@ export default function SIPCalculator() {
   const [monthlyInvestment, setMonthlyInvestment] = useState(5000);
   const [rate, setRate] = useState(12);
   const [years, setYears] = useState(10);
-  
-  // Advanced Top-up State
   const [stepUp, setStepUp] = useState(0); 
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
@@ -35,35 +33,33 @@ export default function SIPCalculator() {
     let currentMonthlyP = P;
     const r = R / (12 * 100);
 
-    // If there's a step-up, we calculate year by year
     if (S > 0) {
       for (let i = 1; i <= Y; i++) {
-        // Future value of 12 months of current investment
-        const n = 12;
-        const yearlyFV = currentMonthlyP * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
-        
-        // Add existing corpus growth for the year + the new year's SIP
+        const yearlyFV = currentMonthlyP * ((Math.pow(1 + r, 12) - 1) / r) * (1 + r);
         totalValue = (totalValue * Math.pow(1 + r, 12)) + yearlyFV;
         totalInvested += (currentMonthlyP * 12);
-        
-        // Increase investment for next year
         currentMonthlyP += (currentMonthlyP * (S / 100));
       }
     } else {
-      // Standard SIP Formula
       const n = Y * 12;
       totalValue = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
       totalInvested = P * n;
     }
 
     setResult({
-      "Total Investment": totalInvested,
+      "Amount Invested": totalInvested,
       "Estimated Returns": totalValue - totalInvested,
       "Total Wealth Created": totalValue,
+      "Wealth Multiplier": `${(totalValue / totalInvested).toFixed(2)}x`
     });
   };
 
-  const resetForm = () => {
+  useEffect(() => {
+    calculateSIP();
+  }, [monthlyInvestment, rate, years, stepUp]);
+
+  // Handle the default reset logic
+  const handleReset = () => {
     setMonthlyInvestment("");
     setRate("");
     setYears("");
@@ -71,116 +67,83 @@ export default function SIPCalculator() {
     setResult(null);
   };
 
-  // Auto-calculate for smooth UX
-  useEffect(() => {
-    calculateSIP();
-  }, [monthlyInvestment, rate, years, stepUp]);
-
   return (
     <>
       <Head>
-        <title>SIP Calculator with Step-Up Feature | ToolFinance</title>
-        <meta 
-          name="description" 
-          content="Calculate your mutual fund SIP returns. Use the step-up feature to see how increasing your monthly investment grows your wealth." 
-        />
+        <title>SIP Calculator | Mutual Fund Wealth Estimator | ToolFinance</title>
+        <meta name="description" content="Calculate your future wealth with our SIP calculator. Feature-rich tool including annual step-up options." />
       </Head>
 
       <div className="container">
-        {/* HEADER SECTION */}
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>📈 SIP Calculator</h1>
-            <p style={{color: '#666'}}>Visualize your long-term wealth creation through Systematic Investment Plans.</p>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>📈 SIP Wealth Calculator</h1>
+            <p style={{color: '#666'}}>Plan your financial freedom with the power of compounding.</p>
         </div>
 
         <div className="calculator-grid">
-          
-          {/* LEFT COLUMN: INPUTS */}
           <div className="form-box">
-            <CalculatorForm 
-              onSubmit={(e) => { e.preventDefault(); calculateSIP(); }}
-              customButtons={
-                <>
-                  <button type="submit" className="calc-btn">Calculate Growth</button>
-                  <button type="button" className="reset-btn" onClick={resetForm}>Reset</button>
-                </>
-              }
-            >
+            {/* Standardized: Use onReset prop, removed manual reset-btn div */}
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+              <CalculatorInput label="Monthly Investment" value={monthlyInvestment} onChange={setMonthlyInvestment} icon={globalCurrency} />
               
-              <CalculatorInput
-                label="Monthly Investment"
-                value={monthlyInvestment}
-                onChange={setMonthlyInvestment}
-                icon={globalCurrency}
-              />
-
               <div className="input-row">
-                <CalculatorInput
-                  label="Expected Return Rate"
-                  value={rate}
-                  onChange={setRate}
-                  suffix="%"
-                />
-                <CalculatorInput
-                  label="Time Period"
-                  value={years}
-                  onChange={setYears}
-                  suffix="Years"
-                />
+                <CalculatorInput label="Expected Returns" value={rate} onChange={setRate} suffix="%" />
+                <CalculatorInput label="Time Period" value={years} onChange={setYears} suffix="Years" />
               </div>
 
-              {/* Advanced Step-Up Toggle */}
-              <div className="advanced-toggle-container">
-                <button 
-                  type="button" 
-                  className="advanced-btn" 
-                  onClick={() => setShowAdvanced(!showAdvanced)}
-                >
-                  {showAdvanced ? "▲ Hide Step-Up Option" : "▼ Add Annual Step-Up (%)"}
-                </button>
-              </div>
+              {/* Styled Step-up Toggle */}
+              <button 
+                type="button" 
+                onClick={() => setShowAdvanced(!showAdvanced)}
+                style={{
+                  marginTop: '10px', width: '100%', padding: '10px', 
+                  background: 'transparent', border: '1px dashed #cbd5e1', 
+                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
+                }}
+              >
+                {showAdvanced ? "▲ Hide Step-Up" : "▼ Add Annual Step-Up (%)"}
+              </button>
 
               {showAdvanced && (
-                <div className="advanced-fields">
-                  <CalculatorInput 
-                      label="Annual Investment Increase" 
-                      value={stepUp} 
-                      onChange={setStepUp} 
-                      suffix="%" 
-                      placeholder="e.g. 10"
-                  />
-                  <p style={{fontSize: '0.8rem', color: '#64748b', marginTop: '5px'}}>
-                    *Increasing your SIP every year significantly boosts your final corpus.
+                <div style={{marginTop: '15px', padding: '15px', background: '#f0fdf4', borderRadius: '10px', border: '1px solid #dcfce7'}}>
+                  <CalculatorInput label="Annual Increase (%)" value={stepUp} onChange={setStepUp} suffix="%" />
+                  <p style={{fontSize: '0.75rem', color: '#166534', marginTop: '8px'}}>
+                    💡 <strong>Step-up SIP:</strong> Increasing your investment yearly drastically boosts long-term wealth.
                   </p>
                 </div>
               )}
-
             </CalculatorForm>
+
+            {/* Consistant Guide Button location (Inside form-box area) */}
+            <div style={{marginTop: '25px'}}>
+                <Link href="/blog/best-mutual-funds" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 SIP Guide: How to Choose the Right Mutual Fund
+                </Link>
+            </div>
           </div>
 
-          {/* RIGHT COLUMN: RESULTS & SIDEBAR */}
           <div className="result-side">
             {result ? (
-              <ResultBox
-                title="Investment Summary"
-                results={result}
-                formatCurrency={formatCurrency}
-              />
+              <ResultBox title="Investment Summary" results={result} formatCurrency={formatCurrency} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
-                Enter details to see your future wealth
+                Adjust parameters to see your investment grow.
               </div>
             )}
-            
-            <div className="sidebar-ad">
-               <AdPlaceholder />
-            </div>
-
-            <Link href="/blog/sip-calculator-guide" className="sidebar-guide-link">
-                📖 Why SIP is better than Lumpsum?
-            </Link>
+            <AdPlaceholder />
           </div>
-          
+        </div>
+
+        {/* Consistant Insight Card */}
+        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
+            <h3 style={{marginBottom: '15px'}}>The Magic of Compounding</h3>
+            <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#475569'}}>
+                A Systematic Investment Plan (SIP) allows you to invest small amounts regularly. Over time, you earn interest on your interest. This exponential growth is why the "Time Period" often matters more than the "Amount" you start with.
+            </p>
+            
+
+[Image of compound interest vs simple interest graph]
+
         </div>
       </div>
     </>

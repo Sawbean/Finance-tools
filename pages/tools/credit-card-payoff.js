@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -8,115 +11,131 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function CreditCardPayoffCalculator() {
-  const [balance, setBalance] = useState("");
-  const [interestRate, setInterestRate] = useState("");
-  const [monthlyPayment, setMonthlyPayment] = useState("");
+  const [balance, setBalance] = useState(50000);
+  const [interestRate, setInterestRate] = useState(36); 
+  const [monthlyPayment, setMonthlyPayment] = useState(5000);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
-  };
-
-  const calculatePayoff = (e) => {
-    e.preventDefault();
+  const calculatePayoff = () => {
     const B = parseFloat(balance) || 0;
     const R = parseFloat(interestRate) || 0;
     const M = parseFloat(monthlyPayment) || 0;
 
-    if (B <= 0 || R <= 0 || R > 100 || M <= 0) {
-      alert("⚠️ Please enter valid values");
+    if (B <= 0 || R <= 0 || M <= 0) {
+      setResult(null);
       return;
     }
 
     const monthlyRate = R / (12 * 100);
-    let months = 0;
-    let remainingBalance = B;
-
-    while (remainingBalance > 0) {
-      remainingBalance = remainingBalance * (1 + monthlyRate) - M;
-      months++;
-      if (months > 1000) break; // safety to avoid infinite loop
+    const firstMonthInterest = B * monthlyRate;
+    
+    // Safety Check: Payment vs Interest
+    if (M <= firstMonthInterest) {
+      setError(`Your payment must be higher than ${formatCurrency(firstMonthInterest)} to cover the monthly interest.`);
+      setResult(null);
+      return;
+    } else {
+      setError("");
     }
 
-    const totalPaid = M * months;
-    const totalInterest = totalPaid - B;
+    let months = 0;
+    let remainingBalance = B;
+    let totalInterest = 0;
 
-    setResult({ months, totalPaid, totalInterest });
+    // Simulation loop for payoff timeline
+    while (remainingBalance > 0) {
+      const interestForMonth = remainingBalance * monthlyRate;
+      totalInterest += interestForMonth;
+      remainingBalance = remainingBalance + interestForMonth - M;
+      months++;
+      if (months > 600) break; // 50-year cap
+    }
+
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+
+    setResult({
+      "Time to Freedom": `${years > 0 ? years + " years " : ""}${remainingMonths} months`,
+      "Total Interest Paid": totalInterest,
+      "Total Amount Paid": B + totalInterest,
+      "Monthly Interest Cost": firstMonthInterest,
+      "Debt Markup": `${((totalInterest / B) * 100).toFixed(0)}% additional cost`
+    });
   };
 
-  const resetForm = () => {
-    setBalance("");
-    setInterestRate("");
-    setMonthlyPayment("");
-    setResult(null);
+  useEffect(() => {
+    calculatePayoff();
+  }, [balance, interestRate, monthlyPayment]);
+
+  const handleReset = () => {
+    setBalance(""); 
+    setInterestRate(36); 
+    setMonthlyPayment(""); 
+    setResult(null); 
+    setError("");
   };
 
   return (
     <>
       <Head>
-        <title>Credit Card Payoff Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Plan how to pay off your credit card debt efficiently by calculating months to pay and interest."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/credit-card-payoff"
-        />
+        <title>Credit Card Payoff Calculator | Debt Timeline Tool | ToolFinance</title>
+        <meta name="description" content="Calculate how long it takes to pay off credit card debt globally. See the true cost of interest and plan your debt-free date." />
       </Head>
 
       <div className="container">
-        <h1>💳 Credit Card Payoff Calculator</h1>
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💳 Credit Card Payoff</h1>
+            <p style={{color: '#666'}}>Stop the interest drain. See exactly when you'll be debt-free.</p>
+        </div>
 
-        <CalculatorForm onSubmit={calculatePayoff} onReset={resetForm}>
-          <CalculatorInput
-            placeholder="Credit Card Balance (Rs)"
-            value={balance}
-            onChange={(val) => setBalance(val)}
-          />
-          <CalculatorInput
-            step="0.01"
-            placeholder="Interest Rate (%)"
-            value={interestRate}
-            onChange={(val) => setInterestRate(val)}
-          />
-          <CalculatorInput
-            placeholder="Monthly Payment (Rs)"
-            value={monthlyPayment}
-            onChange={(val) => setMonthlyPayment(val)}
-          />
-        </CalculatorForm>
+        <div className="calculator-grid">
+          <div className="form-box">
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+              <CalculatorInput label="Total Balance" value={balance} onChange={setBalance} icon={globalCurrency} />
+              
+              <div className="input-row">
+                <CalculatorInput label="Interest Rate (APR)" value={interestRate} onChange={setInterestRate} suffix="%" />
+                <CalculatorInput label="Monthly Payment" value={monthlyPayment} onChange={setMonthlyPayment} icon={globalCurrency} />
+              </div>
 
-        <AdPlaceholder />
+              {error && (
+                <div style={{
+                    color: '#dc2626', background: '#fef2f2', padding: '12px', 
+                    borderRadius: '8px', fontSize: '0.8rem', marginTop: '15px', 
+                    border: '1px solid #fecaca', fontWeight: '500'
+                }}>
+                  ⚠️ {error}
+                </div>
+              )}
+            </CalculatorForm>
 
-        {result && (
-          <ResultBox
-            title="📊 Payoff Summary"
-            results={{
-              "Months to Pay Off": result.months,
-              "Total Paid": nepaliCurrency(result.totalPaid),
-              "Total Interest Paid": nepaliCurrency(result.totalInterest),
-            }}
-          />
-        )}
+            <div style={{marginTop: '25px'}}>
+                <Link href="/blog/debt-snowball-vs-avalanche" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 Strategy: Snowball vs. Avalanche — Which clears debt faster?
+                </Link>
+            </div>
+          </div>
 
-        <Link
-          href="/blog/credit-card-payoff-guide"
-          className="read-guide-card"
-        >
-          📖 Learn About Credit Card Payoff
-        </Link>
+          <div className="result-side">
+            {result ? (
+              <ResultBox title="Payoff Summary" results={result} formatCurrency={formatCurrency} />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                {error ? "Please increase your payment amount." : "Enter your balance to see your debt-free roadmap."}
+              </div>
+            )}
+            <AdPlaceholder />
+          </div>
+        </div>
+
+        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#fff7ed', borderRadius: '12px', border: '1px solid #ffedd5'}}>
+            <h3 style={{color: '#9a3412', marginBottom: '10px'}}>The "Minimum Payment" Trap</h3>
+            <p style={{fontSize: '0.95rem', color: '#9a3412', lineHeight: '1.6'}}>
+                Financial institutions often set the minimum payment at a very low percentage of your balance. This strategy is designed to maximize interest revenue over a longer period. By paying even a small amount above the minimum, you compound your progress and save significantly on total interest.
+            </p>
+            
+        </div>
       </div>
     </>
   );

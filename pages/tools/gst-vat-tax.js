@@ -1,7 +1,9 @@
-// pages/tools/gst-vat-tax.js
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -9,86 +11,167 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function GSTVATTaxCalculator() {
-  const [amount, setAmount] = useState("");
-  const [taxRate, setTaxRate] = useState("");
+  // 1. STATE MANAGEMENT
+  const [amount, setAmount] = useState(1000);
+  const [taxRate, setTaxRate] = useState(13); 
+  const [taxMode, setTaxMode] = useState("exclusive"); // 'exclusive' or 'inclusive'
   const [result, setResult] = useState(null);
 
-  const nepaliCurrency = (num) => {
-    num = Math.round(num * 100) / 100;
-    return num.toLocaleString("en-IN", { minimumFractionDigits: 2 });
-  };
-
-  const calculateTax = (e) => {
-    e.preventDefault();
+  // 2. CALCULATION LOGIC
+  const calculateTax = () => {
     const A = parseFloat(amount) || 0;
     const R = parseFloat(taxRate) || 0;
 
     if (A <= 0 || R < 0) {
-      alert("⚠️ Please enter valid values");
+      setResult(null);
       return;
     }
 
-    const tax = (A * R) / 100;
-    const totalAmount = A + tax;
+    let netAmount, taxAmount, totalAmount;
 
-    setResult({ tax, totalAmount });
+    if (taxMode === "exclusive") {
+      // Add tax to the amount
+      taxAmount = (A * R) / 100;
+      netAmount = A;
+      totalAmount = A + taxAmount;
+    } else {
+      // Amount already includes tax (Reverse Calculation)
+      netAmount = A / (1 + R / 100);
+      taxAmount = A - netAmount;
+      totalAmount = A;
+    }
+
+    setResult({
+      "Net Amount (Pre-Tax)": netAmount,
+      [`Tax Amount (${R}%)`]: taxAmount,
+      "Total Gross Amount": totalAmount,
+    });
   };
 
-  const resetForm = () => {
+  useEffect(() => {
+    calculateTax();
+  }, [amount, taxRate, taxMode]);
+
+  const handleReset = () => {
     setAmount("");
-    setTaxRate("");
+    setTaxRate(13);
+    setTaxMode("exclusive");
     setResult(null);
   };
 
   return (
     <>
       <Head>
-        <title>GST / VAT / Tax Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Calculate GST, VAT, or any tax on your amount and get the total payable amount instantly."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/gst-vat-tax"
+        <title>GST / VAT Calculator | Inclusive & Exclusive Tax Tool | ToolFinance</title>
+        <meta 
+          name="description" 
+          content="Calculate GST, VAT, and sales tax globally. Supports inclusive and exclusive tax calculations for business and personal bills." 
         />
       </Head>
 
       <div className="container">
-        <h1>💵 GST / VAT / Tax Calculator</h1>
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💵 Tax Calculator</h1>
+            <p style={{color: '#666'}}>Calculate VAT or GST additions and perform reverse tax extractions instantly.</p>
+        </div>
 
-        <CalculatorForm onSubmit={calculateTax} onReset={resetForm}>
-          <CalculatorInput
-            placeholder="Amount (Rs)"
-            value={amount}
-            onChange={(val) => setAmount(val)}
-          />
-          <CalculatorInput
-            placeholder="Tax Rate (%)"
-            value={taxRate}
-            onChange={(val) => setTaxRate(val)}
-          />
-        </CalculatorForm>
+        {/* TAX MODE TOGGLE */}
+        <div style={{display: 'flex', justifyContent: 'center', gap: '0', marginBottom: '30px', border: '1px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden', maxWidth: '420px', margin: '0 auto 30px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)'}}>
+            <button 
+                onClick={() => setTaxMode("exclusive")}
+                style={{flex: 1, padding: '14px', border: 'none', cursor: 'pointer', background: taxMode === 'exclusive' ? 'var(--primary)' : '#fff', color: taxMode === 'exclusive' ? '#fff' : '#475569', fontWeight: 'bold', transition: 'all 0.2s'}}
+            >
+                Exclusive (+)
+            </button>
+            <button 
+                onClick={() => setTaxMode("inclusive")}
+                style={{flex: 1, padding: '14px', border: 'none', cursor: 'pointer', background: taxMode === 'inclusive' ? 'var(--primary)' : '#fff', color: taxMode === 'inclusive' ? '#fff' : '#475569', fontWeight: 'bold', transition: 'all 0.2s'}}
+            >
+                Inclusive (-)
+            </button>
+        </div>
 
-        <AdPlaceholder />
+        <div className="calculator-grid">
+          <div className="form-box">
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+              
+              <CalculatorInput 
+                label={taxMode === "exclusive" ? "Net Price (Pre-Tax)" : "Gross Price (With Tax)"} 
+                value={amount} 
+                onChange={setAmount} 
+                icon={globalCurrency} 
+              />
+              
+              <CalculatorInput label="Tax Rate (%)" value={taxRate} onChange={setTaxRate} suffix="%" />
 
-        {result && (
-          <ResultBox
-            title="📊 Tax Calculation Result"
-            results={{
-              "Tax Amount": nepaliCurrency(result.tax),
-              "Total Amount": nepaliCurrency(result.totalAmount),
-            }}
-          />
-        )}
+              <div style={{display: 'flex', gap: '8px', marginTop: '15px'}}>
+                <button type="button" onClick={() => setTaxRate(13)} className="preset-btn-small">13% VAT</button>
+                <button type="button" onClick={() => setTaxRate(18)} className="preset-btn-small">18% GST</button>
+                <button type="button" onClick={() => setTaxRate(5)} className="preset-btn-small">5% Tax</button>
+              </div>
+            </CalculatorForm>
 
-        <Link
-          href="/blog/gst-vat-tax-guide"
-          className="read-guide-card"
-        >
-          📖 More About GST / VAT / Tax
-        </Link>
+            <div style={{marginTop: '25px'}}>
+                <Link href="/blog/gst-vat-tax-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 Explainer: Inclusive vs. Exclusive Tax — What's the difference?
+                </Link>
+            </div>
+          </div>
+
+          <div className="result-side">
+            {result ? (
+              <ResultBox
+                title={`${taxMode === 'exclusive' ? 'Tax Addition' : 'Tax Extraction'} Summary`}
+                results={result}
+                formatCurrency={formatCurrency}
+              />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter amount to see the tax breakdown.
+              </div>
+            )}
+            <AdPlaceholder />
+          </div>
+        </div>
+
+        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
+            <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>The Reverse Tax Formula</h3>
+            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginBottom: '15px'}}>
+                When a price is <strong>Tax Inclusive</strong>, you cannot simply subtract the tax percentage from the total. You must use the reverse calculation formula to find the true base price:
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '1.2rem', color: 'var(--primary)', fontWeight: 'bold', margin: '20px 0' }}>
+              <span>Base Price = </span>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ borderBottom: '2px solid var(--primary)', padding: '0 10px' }}>Total Amount</div>
+                <div>1 + (Tax Rate / 100)</div>
+              </div>
+            </div>
+
+            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
+                This method ensures that the tax amount calculated from the base price matches the total you paid. This is standard practice for Value Added Tax (VAT) and Goods and Services Tax (GST) globally.
+            </p>
+        </div>
       </div>
+
+      <style jsx>{`
+        .preset-btn-small {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.8rem;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #475569;
+            transition: all 0.2s;
+        }
+        .preset-btn-small:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #f0fdf4;
+        }
+      `}</style>
     </>
   );
 }

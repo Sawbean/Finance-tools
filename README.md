@@ -1,3 +1,4 @@
+
 fintools
 ├─ components
 │  ├─ ads
@@ -11,7 +12,6 @@ fintools
 │  │  └─ Header.js
 │  └─ ui
 │     └─ ToolCard.js
-├─ css
 ├─ data
 │  ├─ blogEducational.js
 │  ├─ toolGuides.js
@@ -36,9 +36,11 @@ fintools
 │  ├─ privacy-policy.js
 │  ├─ terms.js
 │  ├─ tools
+│  │  ├─ break-even.js
 │  │  ├─ compound-interest.js
 │  │  ├─ credit-card-payoff.js
 │  │  ├─ currency.js
+│  │  ├─ dividend-yield.js
 │  │  ├─ emi.js
 │  │  ├─ fd-rd-calculator.js
 │  │  ├─ fd.js
@@ -49,13 +51,16 @@ fintools
 │  │  ├─ inflation.js
 │  │  ├─ loan-eligibility.js
 │  │  ├─ loan.js
+│  │  ├─ lumpsum.js
+│  │  ├─ margin-markup.js
 │  │  ├─ mortgage.js
 │  │  ├─ net-worth.js
 │  │  ├─ ppf-nps-calculator.js
 │  │  ├─ retirement.js
 │  │  ├─ savings-goal.js
 │  │  ├─ simple-interest.js
-│  │  └─ sip.js
+│  │  ├─ sip.js
+│  │  └─ stock-average.js
 │  ├─ _app.js
 │  └─ _document.js
 ├─ public

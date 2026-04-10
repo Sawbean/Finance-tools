@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -8,106 +11,149 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function IncomeTaxCalculator() {
-  const [income, setIncome] = useState("");
+  const [income, setIncome] = useState(800000);
+  const [deductions, setDeductions] = useState(0);
+  const [filingStatus, setFilingStatus] = useState("single");
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
 
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
-  };
+  const calculateTax = () => {
+    const grossIncome = parseFloat(income) || 0;
+    const totalDeductions = parseFloat(deductions) || 0;
+    const taxableIncome = Math.max(0, grossIncome - totalDeductions);
 
-  const calculateTax = (e) => {
-    e.preventDefault();
-
-    const inc = parseFloat(income) || 0;
-
-    if (inc <= 0) {
-      alert("⚠️ Please enter valid income");
-      return;
-    }
+    if (grossIncome <= 0) return;
 
     let tax = 0;
+    const threshold = filingStatus === "single" ? 500000 : 600000;
 
-    // Simple progressive tax (example model)
-    if (inc <= 500000) {
-      tax = inc * 0.01;
-    } else if (inc <= 700000) {
-      tax = 500000 * 0.01 + (inc - 500000) * 0.10;
-    } else if (inc <= 1000000) {
-      tax = 500000 * 0.01 + 200000 * 0.10 + (inc - 700000) * 0.20;
+    if (taxableIncome <= threshold) {
+      tax = taxableIncome * 0.01; 
+    } else if (taxableIncome <= threshold + 200000) {
+      tax = (threshold * 0.01) + (taxableIncome - threshold) * 0.10;
+    } else if (taxableIncome <= threshold + 500000) {
+      tax = (threshold * 0.01) + (200000 * 0.10) + (taxableIncome - (threshold + 200000)) * 0.20;
+    } else if (taxableIncome <= threshold + 1500000) {
+      tax = (threshold * 0.01) + (200000 * 0.10) + (300000 * 0.20) + (taxableIncome - (threshold + 500000)) * 0.30;
     } else {
-      tax =
-        500000 * 0.01 +
-        200000 * 0.10 +
-        300000 * 0.20 +
-        (inc - 1000000) * 0.30;
+      tax = (threshold * 0.01) + (200000 * 0.10) + (300000 * 0.20) + (1000000 * 0.30) + (taxableIncome - (threshold + 1500000)) * 0.36;
     }
 
-    const netIncome = inc - tax;
-
     setResult({
-      income: inc,
-      tax: tax,
-      netIncome: netIncome,
+      "Annual Taxable Income": taxableIncome,
+      "Total Annual Tax": tax,
+      "Effective Tax Rate": `${((tax / grossIncome) * 100).toFixed(2)}%`,
+      "Monthly Take-Home": (grossIncome - tax) / 12,
+      "Annual Net Income": grossIncome - tax,
     });
   };
 
-  const resetForm = () => {
-    setIncome("");
+  useEffect(() => {
+    calculateTax();
+  }, [income, deductions, filingStatus]);
+
+  const handleReset = () => {
+    setIncome(""); 
+    setDeductions(0); 
+    setFilingStatus("single");
     setResult(null);
   };
 
   return (
     <>
       <Head>
-        <title>Income Tax Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Calculate your income tax, net salary, and tax breakdown easily with our income tax calculator."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/income-tax"
-        />
+        <title>Income Tax Calculator | Salary Planner | ToolFinance</title>
+        <meta name="description" content="Calculate your income tax liability and monthly take-home salary based on the latest tax slabs." />
       </Head>
 
       <div className="container">
-        <h1>💼 Income Tax Calculator</h1>
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💼 Income Tax Calculator</h1>
+            <p style={{color: '#666'}}>Understand your tax burden and net salary with the latest tax slabs.</p>
+        </div>
 
-        <CalculatorForm onSubmit={calculateTax} onReset={resetForm}>
-          <CalculatorInput
-            placeholder="Annual Income (Rs)"
-            value={income}
-            onChange={(val) => setIncome(val)}
-          />
-        </CalculatorForm>
+        <div className="calculator-grid">
+          <div className="form-box">
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+              
+              <CalculatorInput label="Total Annual Income" value={income} onChange={setIncome} icon={globalCurrency} />
 
-        <AdPlaceholder />
+              <div style={{marginBottom: '20px'}}>
+                <label className="input-label">Filing Status</label>
+                <div style={{display: 'flex', gap: '10px', marginTop: '5px'}}>
+                  <button 
+                    type="button" 
+                    onClick={() => setFilingStatus("single")}
+                    style={{
+                        flex: 1, padding: '12px', borderRadius: '10px', cursor: 'pointer', 
+                        border: filingStatus === 'single' ? '2px solid var(--primary)' : '1px solid #d1d5db', 
+                        background: filingStatus === 'single' ? '#eff6ff' : '#fff', 
+                        color: filingStatus === 'single' ? 'var(--primary)' : '#64748b',
+                        fontWeight: 'bold', transition: '0.3s'
+                    }}
+                  >Single</button>
+                  <button 
+                    type="button" 
+                    onClick={() => setFilingStatus("married")}
+                    style={{
+                        flex: 1, padding: '12px', borderRadius: '10px', cursor: 'pointer', 
+                        border: filingStatus === 'married' ? '2px solid var(--primary)' : '1px solid #d1d5db', 
+                        background: filingStatus === 'married' ? '#eff6ff' : '#fff', 
+                        color: filingStatus === 'married' ? 'var(--primary)' : '#64748b',
+                        fontWeight: 'bold', transition: '0.3s'
+                    }}
+                  >Married</button>
+                </div>
+              </div>
 
-        {result && (
-          <ResultBox
-            title="📊 Tax Summary"
-            results={result}
-            formatCurrency={nepaliCurrency}
-          />
-        )}
+              <button 
+                type="button" 
+                onClick={() => setShowAdvanced(!showAdvanced)}
+                style={{
+                  marginTop: '10px', width: '100%', padding: '10px', 
+                  background: 'transparent', border: '1px dashed #cbd5e1', 
+                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
+                }}
+              >
+                {showAdvanced ? "▲ Hide Deductions" : "▼ Add Tax Deductions (CIT, PF, Insurance)"}
+              </button>
 
-        <Link
-          href="/blog/income-tax-guide"
-          className="read-guide-card"
-        >
-          📖 Learn About Income Tax
-        </Link>
+              {showAdvanced && (
+                <div style={{marginTop: '15px', padding: '15px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0'}}>
+                  <CalculatorInput label="Total Deductions" value={deductions} onChange={setDeductions} icon={globalCurrency} />
+                  <p style={{fontSize: '0.75rem', color: '#64748b', marginTop: '8px'}}>
+                    *Deductions like CIT, PF, or Insurance premiums reduce your taxable income.
+                  </p>
+                </div>
+              )}
+            </CalculatorForm>
+
+            <div style={{marginTop: '25px'}}>
+                <Link href="/blog/tax-saving-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 Tax Guide: How to Legally Reduce Your Income Tax in Nepal
+                </Link>
+            </div>
+          </div>
+
+          <div className="result-side">
+            {result ? (
+              <ResultBox title="Tax Summary" results={result} formatCurrency={formatCurrency} />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter income details to see breakdown.
+              </div>
+            )}
+            <AdPlaceholder />
+          </div>
+        </div>
+
+        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd'}}>
+            <h3 style={{color: '#0369a1', marginBottom: '15px'}}>💡 Understanding Progressive Taxation</h3>
+            <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#0369a1'}}>
+                In a progressive tax system, your income is divided into "slabs." You only pay the higher tax rate on the portion of your income that falls into that specific slab.
+            </p>
+            
+        </div>
       </div>
     </>
   );

@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -8,109 +11,117 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function CompoundInterestCalculator() {
-  const [principal, setPrincipal] = useState("");
-  const [rate, setRate] = useState("");
-  const [years, setYears] = useState("");
+  // 1. STATE MANAGEMENT
+  const [principal, setPrincipal] = useState(100000);
+  const [rate, setRate] = useState(10);
+  const [years, setYears] = useState(5);
+  const [frequency, setFrequency] = useState(12); // Compounding periods per year
   const [result, setResult] = useState(null);
 
-  // Nepali currency format
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
-  };
-
-  const calculateCompound = (e) => {
-    e.preventDefault();
-
+  // 2. CALCULATION LOGIC
+  const calculateCompoundInterest = () => {
     const P = parseFloat(principal) || 0;
-    const R = parseFloat(rate) || 0;
-    const Y = parseFloat(years) || 0;
+    const r = (parseFloat(rate) || 0) / 100;
+    const t = parseFloat(years) || 0;
+    const n = parseInt(frequency);
 
-    if (P <= 0 || R <= 0 || R > 100 || Y <= 0) {
-      alert("⚠️ Please enter valid values");
-      return;
-    }
+    if (P <= 0 || r <= 0 || t <= 0) return;
 
-    // Compound Interest Formula: A = P (1 + r)^n
-    const A = P * Math.pow(1 + R / 100, Y);
-    const interest = A - P;
+    // Formula: A = P(1 + r/n)^(nt)
+    const amount = P * Math.pow((1 + (r / n)), (n * t));
+    const totalInterest = amount - P;
+    const apy = (Math.pow((1 + (r / n)), n) - 1) * 100;
 
     setResult({
-      principal: P,
-      interest: interest,
-      totalAmount: A,
+      "Initial Principal": P,
+      "Total Interest Earned": totalInterest,
+      "Final Balance": amount,
+      "Effective Annual Yield (APY)": `${apy.toFixed(2)}%`
     });
   };
 
-  const resetForm = () => {
+  useEffect(() => {
+    calculateCompoundInterest();
+  }, [principal, rate, years, frequency]);
+
+  // Handle standardized reset
+  const handleReset = () => {
     setPrincipal("");
     setRate("");
     setYears("");
+    setFrequency(12);
     setResult(null);
   };
 
   return (
     <>
       <Head>
-        <title>Compound Interest Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Calculate compound interest, total amount, and earnings over time with our easy compound interest calculator."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/compound-interest"
-        />
+        <title>Compound Interest Calculator | Future Value Tool | ToolFinance</title>
+        <meta name="description" content="Calculate the growth of your investments with compounding. Compare daily, monthly, and yearly compounding frequencies." />
       </Head>
 
       <div className="container">
-        <h1>📊 Compound Interest Calculator</h1>
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>🧪 Compound Interest Calculator</h1>
+            <p style={{color: '#666'}}>See how "interest on interest" accelerates your savings over time.</p>
+        </div>
 
-        <CalculatorForm onSubmit={calculateCompound} onReset={resetForm}>
-          <CalculatorInput
-            placeholder="Principal Amount (Rs)"
-            value={principal}
-            onChange={(val) => setPrincipal(val)}
-          />
-          <CalculatorInput
-            step="0.01"
-            placeholder="Annual Interest Rate (%)"
-            value={rate}
-            onChange={(val) => setRate(val)}
-          />
-          <CalculatorInput
-            placeholder="Time Period (Years)"
-            value={years}
-            onChange={(val) => setYears(val)}
-          />
-        </CalculatorForm>
+        <div className="calculator-grid">
+          <div className="form-box">
+            {/* onReset prop handles the logic; manual reset buttons removed */}
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+              <CalculatorInput label="Initial Deposit" value={principal} onChange={setPrincipal} icon={globalCurrency} />
+              
+              <div className="input-row">
+                <CalculatorInput label="Annual Rate (%)" value={rate} onChange={setRate} suffix="%" />
+                <CalculatorInput label="Duration" value={years} onChange={setYears} suffix="Years" />
+              </div>
 
-        <AdPlaceholder />
+              <div style={{marginTop: '15px'}}>
+                <label className="input-label">Compounding Frequency</label>
+                <select 
+                    className="input-wrapper" 
+                    style={{width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer'}}
+                    value={frequency} 
+                    onChange={(e) => setFrequency(e.target.value)}
+                >
+                    <option value="365">Daily</option>
+                    <option value="12">Monthly</option>
+                    <option value="4">Quarterly</option>
+                    <option value="2">Half-Yearly</option>
+                    <option value="1">Annually</option>
+                </select>
+              </div>
+            </CalculatorForm>
 
-        {result && (
-          <ResultBox
-            title="📈 Investment Summary"
-            results={result}
-            formatCurrency={nepaliCurrency}
-          />
-        )}
+            {/* Standardized Guide Card inside form-box */}
+            <div style={{marginTop: '25px'}}>
+                <Link href="/blog/compounding-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 Compounding Guide: How to build wealth exponentially
+                </Link>
+            </div>
+          </div>
 
-        <Link
-          href="/blog/compound-interest-guide"
-          className="read-guide-card"
-        >
-          📖 Learn About Compound Interest
-        </Link>
+          <div className="result-side">
+            {result ? (
+              <ResultBox title="Growth Forecast" results={result} formatCurrency={formatCurrency} />
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter a principal amount to start calculating.
+              </div>
+            )}
+            <AdPlaceholder />
+          </div>
+        </div>
+
+        {/* Standardized Insight Card */}
+        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#fff7ed', borderRadius: '12px', border: '1px solid #ffedd5'}}>
+            <h3 style={{color: '#9a3412', marginBottom: '10px'}}>💡 Why Frequency Matters</h3>
+            <p style={{fontSize: '0.9rem', color: '#9a3412', lineHeight: '1.6'}}>
+                The more frequently interest is compounded, the faster your money grows. For example, monthly compounding will always result in more wealth than annual compounding at the same interest rate. This is because you start earning interest on your interest sooner!
+            </p>
+            
+        </div>
       </div>
     </>
   );

@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
+// Import global utilities
+import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -8,121 +11,163 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function HomeLoanVsRentCalculator() {
-  const [homePrice, setHomePrice] = useState("");
-  const [loanRate, setLoanRate] = useState("");
-  const [loanYears, setLoanYears] = useState("");
-  const [monthlyRent, setMonthlyRent] = useState("");
+  // 1. STATE MANAGEMENT
+  const [homePrice, setHomePrice] = useState(15000000); 
+  const [loanRate, setLoanRate] = useState(11);
+  const [loanYears, setLoanYears] = useState(20);
+  const [monthlyRent, setMonthlyRent] = useState(35000);
+  const [propertyAppreciation, setPropertyAppreciation] = useState(5);
+  const [rentIncrease, setRentIncrease] = useState(8);
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
 
-  const nepaliCurrency = (num) => {
-    num = Math.round(num);
-    let str = num.toString();
-    if (str.length <= 3) return str;
-    let lastThree = str.slice(-3);
-    let remaining = str.slice(0, -3);
-    let parts = [];
-    while (remaining.length > 2) {
-      parts.unshift(remaining.slice(-2));
-      remaining = remaining.slice(0, -2);
-    }
-    if (remaining.length) parts.unshift(remaining);
-    return parts.join(",") + "," + lastThree;
-  };
-
-  const calculateComparison = (e) => {
-    e.preventDefault();
-
+  // 2. CALCULATION LOGIC
+  const calculateComparison = () => {
     const P = parseFloat(homePrice) || 0;
     const R = parseFloat(loanRate) || 0;
     const Y = parseFloat(loanYears) || 0;
-    const rent = parseFloat(monthlyRent) || 0;
+    const initialRent = parseFloat(monthlyRent) || 0;
+    const appRate = parseFloat(propertyAppreciation) / 100;
+    const rentIncRate = parseFloat(rentIncrease) / 100;
 
-    if (P <= 0 || R <= 0 || R > 100 || Y <= 0 || rent < 0) {
-      alert("⚠️ Please enter valid values");
+    if (P <= 0 || R <= 0 || Y <= 0) {
+      setResult(null);
       return;
     }
 
+    // EMI Calculation
     const N = Y * 12;
     const monthlyRate = R / (12 * 100);
-    const monthlyEMI = (P * monthlyRate * Math.pow(1 + monthlyRate, N)) /
-                       (Math.pow(1 + monthlyRate, N) - 1);
-    const totalLoanPayment = monthlyEMI * N;
-    const totalRentPayment = rent * N;
+    const monthlyEMI = (P * monthlyRate * Math.pow(1 + monthlyRate, N)) / (Math.pow(1 + monthlyRate, N) - 1);
+    const totalLoanCost = monthlyEMI * N;
 
-    const difference = totalRentPayment - totalLoanPayment;
+    // Rent Calculation (Compound Growth)
+    let totalRentCost = 0;
+    let currentYearlyRent = initialRent * 12;
+    for (let i = 0; i < Y; i++) {
+        totalRentCost += currentYearlyRent;
+        currentYearlyRent *= (1 + rentIncRate);
+    }
 
-    setResult({ monthlyEMI, totalLoanPayment, totalRentPayment, difference });
+    // Future Value of Home
+    const futureHomeValue = P * Math.pow(1 + appRate, Y);
+
+    // Final Net Gain for Buying (Future Value - Total Paid)
+    const netHomeWealth = futureHomeValue - totalLoanCost;
+
+    setResult({
+      "Monthly EMI": monthlyEMI,
+      "Total Interest Payable": totalLoanCost - P,
+      "Total Rent (Over Tenure)": totalRentCost,
+      "Future Property Value": futureHomeValue,
+      "Net Wealth (If Buying)": netHomeWealth,
+    });
   };
 
-  const resetForm = () => {
-    setHomePrice("");
-    setLoanRate("");
-    setLoanYears("");
-    setMonthlyRent("");
+  useEffect(() => {
+    calculateComparison();
+  }, [homePrice, loanRate, loanYears, monthlyRent, propertyAppreciation, rentIncrease]);
+
+  const handleReset = () => {
+    setHomePrice(15000000);
+    setLoanRate(11);
+    setLoanYears(20);
+    setMonthlyRent(35000);
+    setPropertyAppreciation(5);
+    setRentIncrease(8);
     setResult(null);
   };
 
   return (
     <>
       <Head>
-        <title>Home Loan vs Rent Calculator | ToolFinance</title>
-        <meta
-          name="description"
-          content="Compare total cost of buying a home with loan vs paying rent in Nepal."
-        />
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/tools/home-loan-vs-rent"
-        />
+        <title>Home Loan vs Rent Calculator | Should You Buy or Rent? | ToolFinance</title>
+        <meta name="description" content="Compare the long-term financial impact of buying a home versus renting. Analyze EMI, property appreciation, and rising rent costs." />
       </Head>
 
       <div className="container">
-        <h1>🏡 Home Loan vs Rent Calculator</h1>
+        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
+            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>🏡 Home Loan vs Rent</h1>
+            <p style={{color: '#666'}}>Compare the financial impact of owning versus renting over your loan tenure.</p>
+        </div>
 
-        <CalculatorForm onSubmit={calculateComparison} onReset={resetForm}>
-          <CalculatorInput
-            placeholder="Home Price (Rs)"
-            value={homePrice}
-            onChange={(val) => setHomePrice(val)}
-          />
-          <CalculatorInput
-            step="0.01"
-            placeholder="Loan Interest Rate (%)"
-            value={loanRate}
-            onChange={(val) => setLoanRate(val)}
-          />
-          <CalculatorInput
-            placeholder="Loan Duration (Years)"
-            value={loanYears}
-            onChange={(val) => setLoanYears(val)}
-          />
-          <CalculatorInput
-            placeholder="Monthly Rent (Rs)"
-            value={monthlyRent}
-            onChange={(val) => setMonthlyRent(val)}
-          />
-        </CalculatorForm>
+        <div className="calculator-grid">
+          <div className="form-box">
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+              <CalculatorInput label="Property Price" value={homePrice} onChange={setHomePrice} icon={globalCurrency} />
+              
+              <div className="input-row">
+                <CalculatorInput label="Loan Rate" value={loanRate} onChange={setLoanRate} suffix="%" />
+                <CalculatorInput label="Tenure" value={loanYears} onChange={setLoanYears} suffix="Yrs" />
+              </div>
 
-        {result && (
-          <ResultBox
-            title="📊 Home Loan vs Rent Summary"
-            results={{
-              "Monthly EMI": nepaliCurrency(result.monthlyEMI),
-              "Total Loan Payment": nepaliCurrency(result.totalLoanPayment),
-              "Total Rent Payment": nepaliCurrency(result.totalRentPayment),
-              "Rent vs Loan Difference": nepaliCurrency(result.difference),
-            }}
-          />
-        )}
+              <CalculatorInput label="Current Monthly Rent" value={monthlyRent} onChange={setMonthlyRent} icon={globalCurrency} />
 
-        <AdPlaceholder />
+              <button 
+                type="button" 
+                onClick={() => setShowAdvanced(!showAdvanced)}
+                style={{
+                  marginTop: '10px', width: '100%', padding: '10px', 
+                  background: 'transparent', border: '1px dashed #cbd5e1', 
+                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
+                }}
+              >
+                {showAdvanced ? "▲ Hide Market Projections" : "▼ Include Appreciation & Rent Growth"}
+              </button>
 
-        <Link
-          href="/blog/home-loan-vs-rent-guide"
-          className="read-guide-card"
-        >
-          📖 Learn About Home Loan vs Rent
-        </Link>
+              {showAdvanced && (
+                <div style={{marginTop: '15px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
+                  <div className="input-row">
+                    <CalculatorInput label="Home Appreciation" value={propertyAppreciation} onChange={setPropertyAppreciation} suffix="%/yr" />
+                    <CalculatorInput label="Annual Rent Hike" value={rentIncrease} onChange={setRentIncrease} suffix="%/yr" />
+                  </div>
+                  <p style={{fontSize: '0.75rem', color: '#64748b', marginTop: '10px'}}>
+                    *Market appreciation varies by location; 5-8% is often used for long-term estimates.
+                  </p>
+                </div>
+              )}
+            </CalculatorForm>
+
+            <div style={{marginTop: '25px'}}>
+                <Link href="/blog/home-loan-vs-rent-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 Guide: Is real estate still a strong investment in 2026?
+                </Link>
+            </div>
+          </div>
+
+          <div className="result-side">
+            {result ? (
+              <>
+                <ResultBox title="Financial Comparison" results={result} formatCurrency={formatCurrency} />
+                <div style={{
+                    marginTop: '20px', padding: '20px', borderRadius: '12px', 
+                    textAlign: 'center', border: '2px dashed #e2e8f0',
+                    background: result["Net Wealth (If Buying)"] > 0 ? '#f0fdf4' : '#fff7ed'
+                }}>
+                    <h4 style={{color: result["Net Wealth (If Buying)"] > 0 ? '#166534' : '#9a3412'}}>💡 Quick Verdict</h4>
+                    <p style={{fontSize: '0.85rem', marginTop: '5px', color: '#475569'}}>
+                        {result["Net Wealth (If Buying)"] > 0 
+                        ? "Buying creates significant long-term wealth in this scenario as appreciation outpaces interest costs." 
+                        : "Renting may be more beneficial here, especially if you invest the difference between rent and EMI."}
+                    </p>
+                </div>
+              </>
+            ) : (
+              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+                Enter details to compare buying vs. renting.
+              </div>
+            )}
+            <AdPlaceholder />
+          </div>
+        </div>
+
+        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
+            <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>Buy vs Rent: The Opportunity Cost</h3>
+            <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.6'}}>
+                The "Rent vs Buy" decision isn't just about monthly payments. When you buy, you are forced to save through equity, but you also pay significant interest and maintenance. When you rent, you have lower monthly commitments, but you lose out on property appreciation. The true winner depends on the **Appreciation Rate** vs the **Interest Rate**.
+            </p>
+            
+        </div>
       </div>
     </>
   );
