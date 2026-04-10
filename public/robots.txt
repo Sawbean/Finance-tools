@@ -2,5 +2,10 @@
 User-agent: *
 Allow: /
 
+# Focus Google on content, not internal code
+Disallow: /_next/
+Disallow: /api/
+Disallow: /static/
+
 # Sitemap location
 Sitemap: https://finance-tools-mu.vercel.app/sitemap.xml

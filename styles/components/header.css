@@ -1,186 +1,193 @@
-/* =============================================================
-   4. SITE HEADER & NAVIGATION
-============================================================= */
-.site-header {
-  width: 100%;
-  background: var(--primary);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  font-family: 'Inter', sans-serif;
-}
-
-.header-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 72px;
-  padding: 0 24px;
-}
-
-.logo img {
-  display: block;
-  height: 52px;
-  width: auto;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin-left: auto;
-}
-
-.nav-links a {
-  color: #ffffff;
-  font-weight: 500;
-  font-size: 15px;
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-}
-
-.nav-links a:hover {
-  color: #f0e68c;
-  background-color: rgba(255,255,255,0.08);
+/* header.css */
+:root {
+  --nav-bg: #0b1f4a;
+  --nav-accent: #f0e68c;
+  --nav-text: #ffffff;
+  --nav-hover: rgba(255, 255, 255, 0.1);
 }
 
 .menu-toggle {
-  display: none;
+  display: none !important; /* Forces the hamburger menu to hide on desktop */
 }
 
-/* =============================================================
-   5. DROPDOWN MENUS (MULTI-LEVEL)
-============================================================= */
-.tools-dropdown { position: relative; }
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex !important; /* Only shows on mobile */
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 2100;
+  }
+  
+  .bar {
+    width: 25px;
+    height: 3px;
+    background: white; /* This is where the white color comes from */
+    border-radius: 2px;
+  }
+}
 
-.tools-btn {
-  background: none;
-  border: none;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 500;
-  color: #ffffff;
-  cursor: pointer;
+.site-header {
+  width: 100%;
+  background: var(--nav-bg);
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 70px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
-.tools-btn:hover { color: #f0e68c; }
-.tools-btn svg { width: 10px; height: 10px; transition: transform 0.25s ease; }
-.tools-btn.open svg { transform: rotate(180deg); }
+/* DESKTOP STYLES (769px and up) */
+@media (min-width: 769px) {
+  .nav-links { display: flex; gap: 30px; align-items: center; }
+  .nav-item, .tools-btn {
+    color: var(--nav-text);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.3s;
+  }
+  .nav-item:hover, .tools-btn:hover { color: var(--nav-accent); }
 
-/* Level 1 */
-.tools-menu {
-  position: absolute;
-  top: calc(100% + 12px);
-  left: 50%;
-  width: 260px;
-  background: rgba(11,31,74,0.96);
-  backdrop-filter: blur(14px);
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-  padding: 10px 0;
-  opacity: 0;
-  transform: translateY(10px) translateX(-20%);
-  pointer-events: none;
-  transition: all 0.25s ease;
-  z-index: 1000;
+  .tools-dropdown { position: relative; }
+  
+  /* The Main Tools Dropdown Box */
+  .tools-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 240px;
+    background: var(--nav-bg);
+    border-radius: 8px;
+    padding: 10px 0;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .tools-menu.show { visibility: visible; opacity: 1; transform: translateY(0); }
+
+  .category-title {
+    padding: 12px 20px;
+    color: white;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .category-title:hover { background: var(--nav-hover); }
+
+  /* Submenu (Flyout to the right) */
+  .tools-submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 220px;
+    background: #0f2a61;
+    border-radius: 8px;
+    padding: 10px 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.2s;
+  }
+  .tools-submenu.show { visibility: visible; opacity: 1; }
+  
+  /* Smart Flip Logic */
+  .tools-item.flip .tools-submenu { left: auto; right: 100%; }
+
+  .tools-submenu a {
+    display: block;
+    padding: 10px 20px;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .tools-submenu a:hover { color: white; background: var(--nav-hover); }
 }
 
-.tools-menu.open { opacity: 1; transform: translateY(0) translateX(-20%); pointer-events: auto; }
-.tools-item { position: relative; }
-
-.tools-category {
-  padding: 12px 18px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tools-category:hover {
-  background-color: rgba(255,255,255,0.08);
-  color: #f0e68c;
-}
-
-/* Level 2 */
-.tools-submenu {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  margin-left: 8px;
-  width: 260px;
-  background: rgba(15, 35, 85, 0.98);
-  backdrop-filter: blur(14px);
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-  padding: 10px 0;
-  opacity: 0;
-  transform: translateX(10px);
-  pointer-events: none;
-  transition: all 0.25s ease;
-  z-index: 1100;
-}
-
-.tools-submenu.open { opacity: 1; transform: translateX(0); pointer-events: auto; }
-.tools-item.flip .tools-submenu { left: auto; right: 100%; margin-left: 0; margin-right: 8px; }
-
-.tools-submenu a {
-  display: block;
-  padding: 10px 18px;
-  font-size: 14px;
-  color: #dddddd;
-}
-
-.tools-submenu a:hover {
-  background: rgba(255,255,255,0.08);
-  color: #ffffff;
-  padding-left: 22px;
-}
-
-/* =============================================================
-   11. MEDIA QUERIES (RESPONSIVE)
-============================================================= */
+/* MOBILE STYLES (Max 768px) */
 @media (max-width: 768px) {
-  .menu-toggle { display: block; font-size: 2rem; background: none; border: none; color: #fff; z-index: 1200; }
-
+  .menu-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .bar { width: 25px; height: 3px; background: white; transition: 0.3s; }
+  
   .nav-links {
     position: fixed;
-    top: 0;
-    right: 0;
-    width: 80%;
-    max-width: 360px;
-    height: 100vh;
-    background: rgba(11, 31, 74, 0.95);
-    backdrop-filter: blur(12px);
-    padding: 5rem 1.5rem 2rem;
-    display: none;
-    flex-direction: column;
-    z-index: 1100;
-  }
-
-  .nav-links.open { display: flex; }
-
-  .nav-links a, .tools-btn {
+    top: 70px;
+    left: -100%;
     width: 100%;
-    background: rgba(11, 31, 74, 0.85);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    padding: 0.8rem 1rem;
-    justify-content: center;
+    height: calc(100vh - 70px);
+    background: var(--nav-bg);
+    flex-direction: column;
+    padding: 20px;
+    transition: 0.4s ease-in-out;
+    overflow-y: auto; /* Allow scrolling on long lists */
+  }
+  .nav-links.open { left: 0; }
+
+  .nav-item, .tools-btn {
+    width: 100%;
+    text-align: left;
+    padding: 15px;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
 
-  .tools-menu { position: static; width: 100%; transform: none; opacity: 1; display: none; pointer-events: auto; }
-  .tools-menu.open { display: block; max-height: none; }
+  .tools-menu { width: 100%; display: none; }
+  .tools-menu.show { display: block; }
 
-  .blog-header h1 { font-size: 1.8rem; }
-  .featured-card img { height: 250px; }
-  .featured-content h2 { font-size: 1.3rem; }
+  .category-title {
+    padding: 15px;
+    color: var(--nav-accent);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+  }
+  .category-title .chevron { transition: 0.3s; transform: rotate(90deg); }
+  .category-title.active .chevron { transform: rotate(-90deg); }
+
+  .tools-submenu {
+    display: none;
+    background: rgba(0,0,0,0.2);
+    padding-left: 20px;
+  }
+  .tools-submenu.show { display: block; }
+  
+  .tools-submenu a {
+    display: block;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+  }
+
+  .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto; /* This pushes Home/Tools/Blog to the right */
+  justify-content: flex-end; /* Ensures they align to the end of the container */
+}
 }

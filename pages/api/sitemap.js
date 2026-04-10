@@ -1,5 +1,4 @@
 // pages/api/sitemap.js
-
 import fs from "fs";
 import path from "path";
 import { blogEducational } from "../../data/blogEducational";
@@ -10,46 +9,36 @@ const SITE_URL = "https://finance-tools-mu.vercel.app";
 export default function handler(req, res) {
   const currentDate = new Date().toISOString();
 
-  // ================================
-  // STATIC PAGES
-  // ================================
-  const staticPages = ["", "/blog"];
+  // 1. STATIC PAGES
+  const staticPages = ["", "/blog", "/about", "/contact"];
 
-  // ================================
-  // TOOLS PAGES
-  // ================================
+  // 2. TOOLS PAGES (Dynamic from Directory)
   const toolsDir = path.join(process.cwd(), "pages/tools");
-
   let toolPages = [];
   try {
     toolPages = fs
       .readdirSync(toolsDir)
-      .filter((file) => file.endsWith(".js") && !file.startsWith("_"))
+      .filter((file) => file.endsWith(".js") && !file.startsWith("_") && !file.startsWith("["))
       .map((file) => `/tools/${file.replace(".js", "")}`);
   } catch (err) {
     console.warn("Warning: Tools directory not found", err);
   }
 
-  // ================================
-  // BLOG PAGES (FIXED)
-  // ================================
+  // 3. BLOG PAGES (Dynamic from Data Files)
   const allBlogs = {
     ...blogEducational,
-    ...toolGuides, // ✅ correct variable
+    ...toolGuides,
   };
 
   const blogPages = Object.keys(allBlogs).map((slug) => {
     const blog = allBlogs[slug];
-
     return {
       url: `/blog/${slug}`,
       lastmod: blog?.lastModified || currentDate,
     };
   });
 
-  // ================================
-  // BUILD ALL PAGES
-  // ================================
+  // 4. COMBINE ALL PAGES
   const allPages = [
     ...staticPages.map((url) => ({
       url,
@@ -62,24 +51,37 @@ export default function handler(req, res) {
     ...blogPages,
   ];
 
-  // ================================
-  // GENERATE SITEMAP XML
-  // ================================
+  // 5. GENERATE SITEMAP XML
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allPages
-  .map(
-    (page) => `  <url>
+  .map((page) => {
+    // SEO Logic: Prioritize tools and home page
+    let priority = "0.7"; 
+    let freq = "monthly";
+
+    if (page.url === "") {
+      priority = "1.0";
+      freq = "daily";
+    } else if (page.url.startsWith("/tools")) {
+      priority = "0.9";
+      freq = "monthly";
+    } else if (page.url === "/blog") {
+      priority = "0.8";
+      freq = "daily";
+    }
+
+    return `  <url>
     <loc>${SITE_URL}${page.url}</loc>
     <lastmod>${page.lastmod}</lastmod>
-  </url>`
-  )
+    <changefreq>${freq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+  })
   .join("\n")}
 </urlset>`;
 
-  // ================================
-  // SEND RESPONSE
-  // ================================
+  // 6. SEND RESPONSE
   res.setHeader("Content-Type", "text/xml");
   res.status(200).send(sitemap);
 }
