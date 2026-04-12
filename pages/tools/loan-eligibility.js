@@ -120,7 +120,7 @@ export default function LoanEligibilityCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/improve-loan-eligibility" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/loan-eligibility-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Guide: 5 Ways to Increase Your Loan Eligibility
                 </Link>
             </div>

@@ -85,7 +85,7 @@ export default function DividendYieldCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/dividend-investing-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/dividend-yield-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Passive Income: How to build a dividend-focused portfolio?
                 </Link>
             </div>

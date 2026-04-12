@@ -96,7 +96,7 @@ export default function CompoundInterestCalculator() {
 
             {/* Standardized Guide Card inside form-box */}
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/compounding-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/compound-interest-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Compounding Guide: How to build wealth exponentially
                 </Link>
             </div>

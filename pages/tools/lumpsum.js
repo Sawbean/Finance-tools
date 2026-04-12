@@ -83,7 +83,7 @@ export default function LumpsumCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/lumpsum-vs-sip-strategy" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/lumpsum-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Comparison: Is Lumpsum better than SIP in a bull market?
                 </Link>
             </div>

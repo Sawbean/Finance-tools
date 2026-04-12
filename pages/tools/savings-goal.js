@@ -115,7 +115,7 @@ export default function SavingsGoalCalculator() {
 
             {/* Standardized Guide Card location */}
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/savings-strategies" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/savings-goal-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Roadmap: How to reach your financial goals faster
                 </Link>
             </div>

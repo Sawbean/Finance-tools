@@ -27,92 +27,57 @@ export default function BlogIndex() {
   const [featuredSlug, featuredPost] = postsArray[0] || [];
 
   /* ================================
-     JSON-LD (SEO BOOST)
+      JSON-LD (SEO BOOST)
   ================================= */
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
     "name": "ToolFinance Blog",
     "url": "https://finance-tools-mu.vercel.app/blog",
-    "description":
-      "Financial guides, tools, and strategies to improve your money decisions.",
+    "description": "Financial guides, tools, and strategies to improve your money decisions.",
   };
 
   return (
     <div className="blog-container">
       <Head>
         <title>Financial Blog | ToolFinance</title>
-
         <meta property="og:title" content="Financial Blog | ToolFinance" />
-        <meta
-          property="og:description"
-          content="Learn smart money strategies, financial tools, and practical guides."
-        />
+        <meta property="og:description" content="Learn smart money strategies, financial tools, and practical guides." />
         <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content="https://finance-tools-mu.vercel.app/blog"
-        />
-        <meta
-          property="og:image"
-          content={`https://finance-tools-mu.vercel.app${
-            featuredPost?.image || "/og-image.png"
-          }`}
-        />
-
-        <meta
-          name="description"
-          content="Learn smart money strategies, financial tools, calculators, and practical guides to improve your financial decisions."
-        />
-
-        <link
-          rel="canonical"
-          href="https://finance-tools-mu.vercel.app/blog"
-        />
-
-        {/* JSON-LD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(jsonLd),
-          }}
-        />
+        <meta property="og:url" content="https://finance-tools-mu.vercel.app/blog" />
+        <meta property="og:image" content={`https://finance-tools-mu.vercel.app${featuredPost?.image || "/og-image.png"}`} />
+        <meta name="description" content="Learn smart money strategies, financial tools, calculators, and practical guides to improve your financial decisions." />
+        <link rel="canonical" href="https://finance-tools-mu.vercel.app/blog" />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </Head>
 
-      {/* ================= HERO ================= */}
+      {/* ================= NEW PROFESSIONAL HERO ================= */}
       <div className="blog-header">
-        <h1>Financial Insights & Guides</h1>
-        <p>
-          Learn smart money strategies, explore financial tools, and grow your
-          wealth with practical insights.
-        </p>
+        <h1 className="text-gradient">Financial Insights & Guides</h1>
+        <p>Expert analysis and smart strategies to help you navigate the world of finance.</p>
       </div>
 
-      {/* ================= TOP AD ================= */}
-      <div className="adsense-placeholder cta-block">
-        <Link href="/tools/emi">Try our EMI Calculator →</Link>
-      </div>
-
-      {/* ================= FEATURED (VERY IMPORTANT) ================= */}
+      {/* ================= UPDATED FEATURED SECTION ================= */}
       {featuredPost && (
-        <Link href={`/blog/${featuredSlug}`} className="featured-card">
-          <img src={featuredPost.image} alt={featuredPost.title} />
-
-          <div className="featured-content">
-            <span className="badge">🔥 Featured</span>
-
-            <h2>{featuredPost.title}</h2>
-            <p>{featuredPost.description}</p>
-
-            <div className="meta">
-              <span>{featuredPost.publishDate}</span>
-              <span>{featuredPost.readTime}</span>
+        <section className="featured-hero">
+          <Link href={`/blog/${featuredSlug}`} className="hero-wrapper">
+            <div className="hero-image">
+              <img src={featuredPost.image} alt={featuredPost.title} />
             </div>
-          </div>
-        </Link>
+            <div className="hero-info">
+              <span className="category-badge">{featuredPost.category}</span>
+              <h2>{featuredPost.title}</h2>
+              <p>{featuredPost.description}</p>
+              <div className="meta">
+                <span>{featuredPost.publishDate}</span>
+                <span style={{ marginLeft: '15px' }}>{featuredPost.readTime}</span>
+              </div>
+            </div>
+          </Link>
+        </section>
       )}
 
-      {/* ================= CATEGORY ================= */}
+      {/* ================= CATEGORY TABS ================= */}
       <div className="category-tabs">
         {categories.map((cat) => (
           <button
@@ -125,61 +90,59 @@ export default function BlogIndex() {
         ))}
       </div>
 
-      {/* ================= MIDDLE AD ================= */}
       <div className="adsense-placeholder cta-block">
         <Link href="/tools/emi">Try our EMI Calculator →</Link>
       </div>
 
-      {/* ================= BLOG GRID ================= */}
-      <div className="blog-grid">
-        {filteredPosts.map(([slug, post]) => (
-          <div key={slug} className="blog-card">
-
-            {/* ✅ FIX 1: CATEGORY TAG (NEW POSITION) */}
-            <span className="blog-tag">{post.category}</span>
-
-            <Link href={`/blog/${slug}`}>
-              <img src={post.image} alt={post.title} />
-            </Link>
-
-            {/* ✅ FIX 2: CONTENT WRAPPER */}
-            <div className="blog-card-content">
-
-              <h3>
-                <Link href={`/blog/${slug}`}>
-                  {post.title}
-                </Link>
-              </h3>
-
-              <p>{post.description}</p>
-
-              <div className="meta">
-                <span>{post.publishDate}</span>
-                <span>{post.readTime}</span>
+      {/* ================= MAIN CONTENT GRID WITH SIDEBAR ================= */}
+      <div className="blog-main-grid">
+        
+        {/* LEFT SIDE: The Post Feed */}
+        <div className="blog-feed">
+          {filteredPosts.slice(1).map(([slug, post]) => (
+            <Link href={`/blog/${slug}`} key={slug} className="post-card-v2">
+              <div className="card-img">
+                <img src={post.image} alt={post.title} />
               </div>
+              <div className="card-body">
+                <span className="mini-tag">{post.category}</span>
+                <h3>{post.title}</h3>
+                <p>{post.description.substring(0, 100)}...</p>
+                <div className="meta">
+                  <span>{post.publishDate}</span>
+                  <span>{post.readTime}</span>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
 
-              <Link href={`/blog/${slug}`} className="read-more">
-                Read article →
-              </Link>
-
+        {/* RIGHT SIDE: Sidebar for Better UX */}
+        <aside className="blog-sidebar">
+          <div className="sidebar-widget">
+            <h4>Popular Tools</h4>
+            <div className="sidebar-links">
+              <Link href="/tools/emi">EMI Calculator</Link>
+              <Link href="/tools/sip">SIP Calculator</Link>
+              <Link href="/tools/loan-eligibility">Loan Eligibility</Link>
+              <Link href="/tools/retirement">Retirement Planner</Link>
             </div>
           </div>
-        ))}
+
+          <div className="sidebar-widget">
+            <h4>Financial Education</h4>
+            <p style={{ fontSize: '0.9rem', color: '#6b7280', lineHeight: '1.5' }}>
+              We simplify complex financial concepts to help you build a better future.
+            </p>
+          </div>
+        </aside>
       </div>
 
-      {/* ================= BOTTOM AD ================= */}
-      <div className="adsense-placeholder cta-block">
-        <Link href="/tools/emi">Try our EMI Calculator →</Link>
-      </div>
-
-      {/* ================= CTA ================= */}
+      {/* ================= BOTTOM CTA ================= */}
       <div className="blog-bottom-cta">
-        <h3>Boost Your Financial Knowledge 🚀</h3>
+        <h3 className="text-gradient">Boost Your Financial Knowledge 🚀</h3>
         <p>Explore powerful tools and make smarter money decisions today.</p>
-
-        <Link href="/" className="cta-btn">
-          Explore Tools
-        </Link>
+        <Link href="/" className="cta-btn">Explore Tools</Link>
       </div>
     </div>
   );

@@ -1,5 +1,3 @@
-// pages/blog/[slug].js
-
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -62,7 +60,7 @@ export default function BlogPost() {
         .map((block, i) => ({ text: block.text, id: `section-${i}` }))
     : [];
 
-  // 4. Render blocks logic
+  // 4. Render blocks logic (UPDATED WITH PROFESSIONAL SUB-BLOCKS)
   const renderBlock = (block, index) => {
     if (!block) return null;
     
@@ -76,6 +74,18 @@ export default function BlogPost() {
             {block.text}
           </h2>
         );
+
+      // --- NEW SUGGESTED UPDATES START ---
+      case "sub-heading":
+        return (
+          <h3 key={index} style={{ marginTop: '30px', color: '#111827', fontSize: '1.4rem' }}>
+            {block.text}
+          </h3>
+        );
+
+      case "divider":
+        return <hr key={index} style={{ margin: '40px 0', border: '0', borderTop: '1px solid #eee' }} />;
+      // --- NEW SUGGESTED UPDATES END ---
 
       case "list":
         return (
@@ -153,7 +163,7 @@ export default function BlogPost() {
           <h1>{post.title}</h1>  
           <div className="meta">
             <span>{post.publishDate}</span>
-            <span>{post.readTime}</span>
+            <span style={{ marginLeft: '15px' }}>{post.readTime}</span>
           </div>
         </div>
       </div>
@@ -168,7 +178,7 @@ export default function BlogPost() {
       {/* TOC */}
       {headings.length > 0 && (
         <div className="table-of-contents">
-          <h3>Contents</h3>
+          <h3 className="text-gradient">Contents</h3>
           <ul>
             {headings.map((h, i) => (
               <li key={i}>
@@ -204,7 +214,7 @@ export default function BlogPost() {
       {/* FAQ */}
       {post.faq && Array.isArray(post.faq) && (
         <div className="faq-section">
-          <h2>Frequently Asked Questions</h2>
+          <h2 className="text-gradient">Frequently Asked Questions</h2>
           {post.faq.map((item, index) => (
             <div key={index} className="faq-item">
               <h4>{item.question}</h4>
@@ -216,7 +226,7 @@ export default function BlogPost() {
 
       {/* RELATED POSTS */}
       <div className="related-posts">
-        <h3>Related Articles</h3>
+        <h3 className="text-gradient">Related Articles</h3>
         <div className="related-grid">
           {relatedPosts.map(([relSlug, item]) => (
             <div key={relSlug} className="related-card">

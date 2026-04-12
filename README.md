@@ -1,4 +1,3 @@
-
 fintools
 ├─ components
 │  ├─ ads
@@ -17,6 +16,7 @@ fintools
 │  ├─ toolGuides.js
 │  └─ tools.js
 ├─ images
+│  └─ financial-planning.jpg
 ├─ js
 │  ├─ calculators.js
 │  └─ script.js
@@ -68,6 +68,7 @@ fintools
 │  ├─ favicon-16x16.png
 │  ├─ favicon-32x32.png
 │  ├─ favicon.ico
+│  ├─ financial-planning.jpg
 │  ├─ google703b14412bfda3ec.html
 │  ├─ images
 │  │  ├─ emi-chart.JPG

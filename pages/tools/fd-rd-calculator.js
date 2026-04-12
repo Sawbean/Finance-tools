@@ -138,7 +138,7 @@ export default function FDRDCalculator() {
             </CalculatorForm>
             
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/fd-rd-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/fd-rd-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Comparison: FD vs RD — Which strategy fits your goal?
                 </Link>
             </div>

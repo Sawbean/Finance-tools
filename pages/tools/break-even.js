@@ -98,7 +98,7 @@ export default function BreakEvenCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/break-even-analysis-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/break-even-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Business Strategy: How to lower your break-even point?
                 </Link>
             </div>

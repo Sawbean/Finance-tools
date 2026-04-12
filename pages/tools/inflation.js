@@ -86,7 +86,7 @@ export default function InflationCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/inflation-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/inflation-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Strategy: How to beat inflation with SIPs and Equity
                 </Link>
             </div>

@@ -111,7 +111,7 @@ export default function CreditCardPayoffCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/debt-snowball-vs-avalanche" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/credit-card-payoff-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Strategy: Snowball vs. Avalanche — Which clears debt faster?
                 </Link>
             </div>

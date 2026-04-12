@@ -87,7 +87,7 @@ export default function MarginMarkupCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/margin-vs-markup-explained" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/margin-markup-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Business 101: Why a 25% Markup is NOT a 25% Margin
                 </Link>
             </div>

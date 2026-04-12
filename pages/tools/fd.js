@@ -120,8 +120,8 @@ export default function FDCalculator() {
 
             {/* Guide Button inside the form box */}
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/best-fixed-deposit-rates" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
-                    📖 Bank Guide: Current FD Rates in Nepal Comparison
+                <Link href="/blog/fd-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 FD Mastery: How to get the highest returns on your savings
                 </Link>
             </div>
           </div>

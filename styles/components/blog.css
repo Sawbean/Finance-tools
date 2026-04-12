@@ -3,32 +3,35 @@
 ============================================================= */
 .blog-container { max-width: 1200px; margin: auto; padding: 20px; }
 
-.category-tabs { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; }
+.category-tabs { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 5px; }
 .category-tabs button {
-  padding: 8px 14px;
+  padding: 8px 16px;
   border: none;
   background: #1f2937;
   color: #cbd5e1;
   border-radius: 20px;
   cursor: pointer;
+  white-space: nowrap;
+  transition: 0.3s;
 }
 .category-tabs .active { background: var(--accent-blue); color: #fff; }
 
-/* Featured Hero Card */
+/* Featured Hero Card (Original Style) */
 .featured-card {
   position: relative;
   display: block;
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 35px;
+  transition: transform 0.3s ease;
 }
-
+.featured-card:hover { transform: scale(1.01); }
 .featured-card img { width: 100%; height: 380px; object-fit: cover; display: block; }
 .featured-card::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+  background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.1));
 }
 
 .featured-content { position: absolute; bottom: 25px; left: 25px; z-index: 2; color: #fff; max-width: 600px; }
@@ -46,43 +49,181 @@
   border-radius: 14px;
   overflow: hidden;
   position: relative;
+  transition: 0.3s;
 }
+.blog-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
 .blog-card img { width: 100%; height: 180px; object-fit: cover; }
 .blog-tag, .badge { background: var(--accent-blue); color: #fff; font-size: 11px; padding: 4px 8px; border-radius: 6px; }
 
 .blog-card-content { padding: 0 18px 18px; }
-.blog-card h3 a { color: #fff; }
-.blog-card p { font-size: 0.9rem; color: var(--text-light); }
+.blog-card h3 a { color: #fff; text-decoration: none; }
+.blog-card p { font-size: 0.9rem; color: var(--text-light); line-height: 1.5; }
 
-.meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-light); }
+.meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-light); margin-top: 10px; }
 
 /* =============================================================
    9. SINGLE BLOG POST CONTENT
 ============================================================= */
-.blog-page { max-width: 780px; margin: auto; }
+.blog-page { max-width: 800px; margin: auto; padding: 0 20px; }
 
-.blog-header { text-align: center; margin-bottom: 30px; }
-.blog-header p { color: var(--text-light); font-size: 1.1rem; }
+.blog-header { text-align: center; margin-bottom: 30px; padding: 40px 0; }
+.blog-header h1 { font-size: 2.5rem; margin-bottom: 15px; }
+.blog-header p { color: #6b7280; font-size: 1.1rem; }
 
-.blog-content { font-size: 16.5px; line-height: 1.8; color: #333; margin-top: 20px; }
+.blog-content { 
+    font-size: 1.1rem; 
+    line-height: 1.8; 
+    color: #1f2937; 
+    margin-top: 20px; 
+}
+.blog-content p { margin-bottom: 25px; }
 .blog-content h2 { 
-    font-size: 1.4rem; 
-    margin-top: 32px; 
-    border-left: 4px solid var(--primary); 
-    padding-left: 10px; 
+    font-size: 1.6rem; 
+    margin: 40px 0 20px; 
+    border-left: 5px solid var(--primary); 
+    padding-left: 15px; 
+    color: #111827;
 }
 
 .table-of-contents {
-  background: #f5f8ff;
-  border: 1px solid #dbe3f2;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 14px;
-  padding: 18px;
-  margin: 25px 0;
+  padding: 20px;
+  margin: 30px 0;
+}
+.table-of-contents h3 { margin-bottom: 10px; font-size: 1.2rem; }
+.table-of-contents ul { list-style: none; padding-left: 0; }
+.table-of-contents li { margin-bottom: 8px; }
+.table-of-contents a { color: var(--accent-blue); text-decoration: none; font-size: 0.95rem; }
+
+.callout { 
+    padding: 20px; 
+    border-left: 4px solid var(--accent-blue); 
+    background-color: #f0f9ff; 
+    margin: 30px 0; 
+    border-radius: 0 8px 8px 0;
 }
 
-.callout { padding: 15px; border-left: 4px solid var(--accent-blue); background-color: #f0f8ff; margin: 20px 0; }
+.blog-bottom-actions { display: flex; justify-content: center; gap: 18px; margin-top: 60px; padding-bottom: 40px; flex-wrap: wrap; }
+.blog-action-btn { padding: 14px 28px; background: var(--primary); color: white; border-radius: 10px; font-weight: 600; text-decoration: none; transition: 0.3s; }
+.blog-action-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+.blog-action-btn.secondary { background: #fef9c3; color: #713f12; }
 
-.blog-bottom-actions { display: flex; justify-content: center; gap: 18px; margin-top: 40px; flex-wrap: wrap; }
-.blog-action-btn { padding: 14px 22px; background: var(--primary); color: white; border-radius: 10px; font-weight: 600; }
-.blog-action-btn.secondary { background: #f0e68c; color: #333; }
+/* =============================================================
+   10. MODERN MAGAZINE LAYOUT UPDATES
+============================================================= */
+.blog-modern-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+/* FIXED: background-clip compatibility */
+.text-gradient { 
+    background: linear-gradient(90deg, #2ecc71, #27ae60); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    font-weight: 800;
+}
+
+/* Hero Section (Magazine Style) */
+.featured-hero { margin-bottom: 60px; border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #f3f4f6; }
+.hero-wrapper { display: flex; text-decoration: none; color: inherit; }
+.hero-image { flex: 1.5; height: 450px; overflow: hidden; }
+.hero-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+.hero-wrapper:hover .hero-image img { transform: scale(1.05); }
+.hero-info { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; background: white; }
+.category-badge { color: var(--accent-blue); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 10px; display: block; }
+
+/* Grid Feed & Sidebar */
+.blog-main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 50px; margin-top: 40px; }
+
+.post-card-v2 { display: flex; gap: 25px; margin-bottom: 40px; border-bottom: 1px solid #f1f5f9; padding-bottom: 40px; text-decoration: none; color: inherit; }
+.card-img { flex: 0.8; height: 200px; border-radius: 12px; overflow: hidden; }
+.card-img img { width: 100%; height: 100%; object-fit: cover; }
+.card-body { flex: 1.2; }
+.card-body h3 { font-size: 1.4rem; margin: 10px 0; line-height: 1.3; color: #111827; }
+.card-body p { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
+
+.blog-sidebar { display: flex; flex-direction: column; gap: 30px; }
+.sidebar-widget { background: #f8fafc; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; }
+.sidebar-widget h4 { margin-bottom: 20px; font-size: 1.2rem; color: #111827; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .blog-main-grid { grid-template-columns: 1fr; }
+    .blog-sidebar { order: 2; }
+}
+
+@media (max-width: 768px) {
+  .hero-wrapper { flex-direction: column; }
+  .hero-image { height: 250px; flex: none; }
+  .hero-info { padding: 25px; }
+  .post-card-v2 { flex-direction: column; gap: 15px; }
+  .card-img { height: 200px; flex: none; }
+  .featured-card img { height: 280px; }
+  .blog-header h1 { font-size: 1.8rem; }
+}
+
+/* Sleek Footer-style Blog Preview */
+.home-blog-footer {
+  margin-top: 80px;
+  padding: 40px 0;
+  border-top: 1px solid #eef2f6;
+}
+
+.home-blog-footer .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.view-all-link {
+  font-size: 14px;
+  color: #27ae60;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.mini-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.minimal-blog-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 15px;
+  background: #f8fafc;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.minimal-blog-card:hover {
+  background: #edf2f7;
+  transform: translateY(-2px);
+}
+
+.card-dot {
+  width: 8px;
+  height: 8px;
+  background: #27ae60;
+  border-radius: 50%;
+  margin-top: 6px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.card-info h4 {
+  margin: 0 0 5px 0;
+  font-size: 15px;
+  color: #1a202c;
+  line-height: 1.4;
+}
+
+.card-info span {
+  font-size: 12px;
+  color: #718096;
+}

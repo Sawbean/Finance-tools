@@ -120,7 +120,7 @@ export default function PPFNPSCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/long-term-investment-strategies" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/ppf-nps-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Roadmap: How to maximize long-term compounding benefits
                 </Link>
             </div>

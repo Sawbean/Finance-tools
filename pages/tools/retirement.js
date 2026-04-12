@@ -114,7 +114,7 @@ export default function RetirementCalculator() {
 
             {/* Standardized Guide Card location */}
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/retirement-planning-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/retirement-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Roadmap: How to build a multi-million dollar retirement fund
                 </Link>
             </div>

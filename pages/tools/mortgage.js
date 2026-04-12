@@ -119,8 +119,8 @@ export default function MortgageCalculator() {
 
             {/* Standardized Guide Card: Moved INSIDE the form area for consistency */}
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/mortgage-tips" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
-                    📖 Home Loan Guide: 5 Mistakes to Avoid in Nepal
+                <Link href="/blog/mortgage-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 Home Loan Guide: 5 Mistakes to Avoid
                 </Link>
             </div>
           </div>

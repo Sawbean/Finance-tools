@@ -129,8 +129,8 @@ export default function IncomeTaxCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/tax-saving-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
-                    📖 Tax Guide: How to Legally Reduce Your Income Tax in Nepal
+                <Link href="/blog/income-tax-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                    📖 Tax Guide: How to Legally Reduce Your Income Tax
                 </Link>
             </div>
           </div>

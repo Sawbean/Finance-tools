@@ -108,7 +108,7 @@ export default function LoanCalculator() {
 
             <div style={{marginTop: '25px'}}>
                 <Link href="/blog/loan-types-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
-                    📖 Loan Guide: Understanding interest rates in Nepal
+                    📖 Loan Guide: Understanding interest rates
                 </Link>
             </div>
           </div>

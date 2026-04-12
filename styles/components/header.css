@@ -4,29 +4,7 @@
   --nav-accent: #f0e68c;
   --nav-text: #ffffff;
   --nav-hover: rgba(255, 255, 255, 0.1);
-}
-
-.menu-toggle {
-  display: none !important; /* Forces the hamburger menu to hide on desktop */
-}
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: flex !important; /* Only shows on mobile */
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 2100;
-  }
-  
-  .bar {
-    width: 25px;
-    height: 3px;
-    background: white; /* This is where the white color comes from */
-    border-radius: 2px;
-  }
+  --mobile-sub-bg: #05122b;
 }
 
 .site-header {
@@ -48,9 +26,16 @@
   padding: 0 20px;
 }
 
-/* DESKTOP STYLES (769px and up) */
+/* --- DESKTOP STYLES (769px and up) --- */
 @media (min-width: 769px) {
-  .nav-links { display: flex; gap: 30px; align-items: center; }
+  .menu-toggle { display: none !important; }
+
+  .nav-links { 
+    display: flex; 
+    gap: 30px; 
+    align-items: center; 
+  }
+
   .nav-item, .tools-btn {
     color: var(--nav-text);
     text-decoration: none;
@@ -61,12 +46,15 @@
     cursor: pointer;
     padding: 10px;
     transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
   }
+
   .nav-item:hover, .tools-btn:hover { color: var(--nav-accent); }
 
   .tools-dropdown { position: relative; }
   
-  /* The Main Tools Dropdown Box */
   .tools-menu {
     position: absolute;
     top: 100%;
@@ -81,6 +69,7 @@
     transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   }
+
   .tools-menu.show { visibility: visible; opacity: 1; transform: translateY(0); }
 
   .category-title {
@@ -91,9 +80,9 @@
     justify-content: space-between;
     cursor: pointer;
   }
+
   .category-title:hover { background: var(--nav-hover); }
 
-  /* Submenu (Flyout to the right) */
   .tools-submenu {
     position: absolute;
     top: 0;
@@ -106,9 +95,8 @@
     opacity: 0;
     transition: 0.2s;
   }
+
   .tools-submenu.show { visibility: visible; opacity: 1; }
-  
-  /* Smart Flip Logic */
   .tools-item.flip .tools-submenu { left: auto; right: 100%; }
 
   .tools-submenu a {
@@ -121,73 +109,106 @@
   .tools-submenu a:hover { color: white; background: var(--nav-hover); }
 }
 
-/* MOBILE STYLES (Max 768px) */
+/* --- MOBILE STYLES (Max 768px) --- */
 @media (max-width: 768px) {
   .menu-toggle {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 5px;
-    background: none;
+    background: transparent !important; /* Force transparent */
     border: none;
     cursor: pointer;
+    z-index: 2100;
+    padding: 5px;
   }
-  .bar { width: 25px; height: 3px; background: white; transition: 0.3s; }
-  
+
+  .bar { width: 25px; height: 3px; background: white; transition: 0.3s; border-radius: 2px; }
+
+  .menu-toggle.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+  .menu-toggle.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
   .nav-links {
     position: fixed;
     top: 70px;
     left: -100%;
     width: 100%;
     height: calc(100vh - 70px);
-    background: var(--nav-bg);
+    background: #0b1f4a !important; /* Force the deep blue */
+    display: flex;
     flex-direction: column;
-    padding: 20px;
-    transition: 0.4s ease-in-out;
-    overflow-y: auto; /* Allow scrolling on long lists */
+    padding: 0; /* Remove padding to avoid gaps */
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    align-items: stretch;
   }
+
   .nav-links.open { left: 0; }
 
+  /* FIX: Explicitly remove white backgrounds from buttons and items */
   .nav-item, .tools-btn {
     width: 100%;
     text-align: left;
-    padding: 15px;
+    padding: 20px 25px;
     font-size: 18px;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: white !important;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: transparent !important; /* KILL THE WHITE BACKGROUND */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    outline: none;
+    -webkit-tap-highlight-color: transparent; /* Remove the gray box on tap */
   }
 
-  .tools-menu { width: 100%; display: none; }
+  .tools-dropdown {
+    width: 100%;
+    background: transparent !important;
+  }
+
+  /* The block that opens when you tap 'Tools' */
+  .tools-menu { 
+    width: 100%; 
+    display: none; 
+    background: #081635 !important; /* Darker navy for the block */
+  }
   .tools-menu.show { display: block; }
 
   .category-title {
-    padding: 15px;
-    color: var(--nav-accent);
-    font-weight: bold;
+    padding: 18px 30px;
+    color: var(--nav-accent) !important;
+    font-weight: 600;
+    font-size: 16px;
     display: flex;
     justify-content: space-between;
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
   }
+
   .category-title .chevron { transition: 0.3s; transform: rotate(90deg); }
   .category-title.active .chevron { transform: rotate(-90deg); }
 
   .tools-submenu {
     display: none;
-    background: rgba(0,0,0,0.2);
-    padding-left: 20px;
+    background: #040d21 !important; /* Deepest blue for sub-items */
+    padding: 0;
   }
+
   .tools-submenu.show { display: block; }
   
   .tools-submenu a {
     display: block;
-    padding: 12px;
-    color: white;
+    padding: 15px 50px;
+    color: #cbd5e0 !important;
     text-decoration: none;
     font-size: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    background: transparent !important;
   }
 
-  .nav-links {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin-left: auto; /* This pushes Home/Tools/Blog to the right */
-  justify-content: flex-end; /* Ensures they align to the end of the container */
-}
+  /* Add a nice touch effect */
+  .nav-item:active, .tools-submenu a:active, .category-title:active {
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
 }

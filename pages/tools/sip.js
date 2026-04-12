@@ -116,7 +116,7 @@ export default function SIPCalculator() {
 
             {/* Consistant Guide Button location (Inside form-box area) */}
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/best-mutual-funds" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/sip-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 SIP Guide: How to Choose the Right Mutual Fund
                 </Link>
             </div>

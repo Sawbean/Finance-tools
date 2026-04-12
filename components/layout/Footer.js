@@ -4,37 +4,54 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-container">
-        {/* About */}
+        {/* Brand Section */}
         <div className="footer-column">
           <div className="footer-brand">ToolFinance</div>
-          <div className="footer-description">
-            Free online financial calculators and guides to help you make smarter money decisions.
-          </div>
+          <p className="footer-description">
+            Your trusted destination for free, accurate, and easy-to-use financial calculators. 
+            Empowering you to plan your future with confidence.
+          </p>
         </div>
 
-        {/* Quick Links */}
+        {/* Categories / Popular Tools */}
         <div className="footer-column">
-          <h4>Quick Links</h4>
-          
-          <Link href="/tools/emi">EMI Calculator</Link>
-          <Link href="/tools/loan">Loan Calculator</Link>
-          <Link href="/tools/fuel">Fuel Calculator</Link>
-          <Link href="/blog">Financial Blog</Link>
+          <h4>Calculators</h4>
+          <ul className="footer-links">
+            <li><Link href="/tools/emi">EMI & Loans</Link></li>
+            <li><Link href="/tools/sip">SIP & Investments</Link></li>
+            <li><Link href="/tools/stock-average">Stock Market</Link></li>
+            <li><Link href="/tools/gst-vat-tax">Tax Tools</Link></li>
+            <li><Link href="/tools/fuel">Utility Calculators</Link></li>
+          </ul>
+        </div>
+
+        {/* Resources */}
+        <div className="footer-column">
+          <h4>Resources</h4>
+          <ul className="footer-links">
+            <li><Link href="/blog">Financial Blog</Link></li>
+            <li><Link href="/about">About Us</Link></li>
+            <li><Link href="/contact">Contact Support</Link></li>
+            <li><Link href="/sitemap.xml">Sitemap</Link></li>
+          </ul>
         </div>
 
         {/* Legal */}
         <div className="footer-column">
           <h4>Legal</h4>
-          <Link href="/about">About Us</Link>
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/terms">Terms & Conditions</Link>
-          <Link href="/disclaimer">Disclaimer</Link>
-          <Link href="/contact">Contact</Link>
+          <ul className="footer-links">
+            <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+            <li><Link href="/terms">Terms of Service</Link></li>
+            <li><Link href="/disclaimer">Disclaimer</Link></li>
+          </ul>
         </div>
       </div>
 
       <div className="footer-bottom">
-        &copy; {new Date().getFullYear()} ToolFinance. All rights reserved.
+        <p>&copy; {new Date().getFullYear()} ToolFinance. All rights reserved.</p>
+        <p style={{ fontSize: '12px', marginTop: '5px', opacity: 0.7 }}>
+          Disclaimer: Calculations are for informational purposes only.
+        </p>
       </div>
     </footer>
   );

@@ -17,6 +17,7 @@ export default function Header() {
   };
 
   const toggleTools = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     setToolsOpen(!toolsOpen);
     setOpenCategory(null); 

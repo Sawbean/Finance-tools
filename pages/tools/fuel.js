@@ -110,7 +110,7 @@ export default function FuelCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/fuel-efficiency-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/fuel-mileage-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Mileage Guide: 10 Ways to Increase Vehicle Mileage
                 </Link>
             </div>

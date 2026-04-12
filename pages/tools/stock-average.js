@@ -94,7 +94,7 @@ export default function StockAverageCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/stock-averaging-strategy" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/stock-average-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Strategy: When to 'Average Down' a falling stock?
                 </Link>
             </div>
