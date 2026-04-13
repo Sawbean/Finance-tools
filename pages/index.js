@@ -2,17 +2,18 @@ import Head from "next/head";
 import Link from "next/link";
 import ToolCard from "../components/ui/ToolCard";
 import { tools } from "../data/tools";
-import { blogEducational } from "../data/blogEducational";
+// CHANGED: Pointing to the new file name
+import { financeArticles } from "../data/financeArticles"; 
 
 export default function Home() {
-  // 1. CALCULATOR LOGIC
+  // 1. CALCULATOR LOGIC (Restored exactly)
   const loanTools = tools.filter(t => t.link.includes('loan') || t.link.includes('emi') || t.link.includes('mortgage'));
   const investTools = tools.filter(t => t.link.includes('sip') || t.link.includes('lumpsum') || t.link.includes('interest') || t.link.includes('retirement') || t.link.includes('fd'));
   const businessTools = tools.filter(t => t.link.includes('stock') || t.link.includes('margin') || t.link.includes('break-even') || t.link.includes('dividend'));
   const taxMiscTools = tools.filter(t => !loanTools.includes(t) && !investTools.includes(t) && !businessTools.includes(t));
 
-  // 2. BLOG LOGIC (LIMITED TO LATEST 3)
-  const latestBlogs = Object.entries(blogEducational)
+  // 2. BLOG LOGIC (Updated to use financeArticles)
+  const latestBlogs = Object.entries(financeArticles)
     .sort((a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate))
     .slice(0, 3);
 
@@ -23,7 +24,7 @@ export default function Home() {
         <meta name="description" content="Accurate financial calculators for EMI, SIP, Loans, and Taxes. Stay updated with our expert financial guides." />
       </Head>
 
-      {/* --- HERO SECTION (Calculators First) --- */}
+      {/* --- HERO SECTION --- */}
       <section className="hero-section">
         <h1>Master Your Money with <span className="text-gradient">Precision</span></h1>
         <p>
@@ -36,15 +37,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- MAIN TOOLS SECTION (The Star of the Show) --- */}
+      {/* --- MAIN TOOLS SECTION --- */}
       <div id="calculators" style={{ paddingTop: '20px' }}>
         
         {/* Featured Section */}
         <div className="featured-tool-highlight" style={{ background: '#f8fafc', padding: '30px', borderRadius: '16px', marginBottom: '40px', border: '1px solid #e2e8f0' }}>
           <h3 style={{ marginTop: 0 }}>Most Popular This Week</h3>
           <div className="tools-grid">
-             <ToolCard title="Personal Loan EMI" link="/tools/emi" />
-             <ToolCard title="SIP Growth Calculator" link="/tools/sip" />
+              <ToolCard title="Personal Loan EMI" link="/tools/emi" />
+              <ToolCard title="SIP Growth Calculator" link="/tools/sip" />
           </div>
         </div>
 
@@ -77,7 +78,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* --- LATEST BLOGS SECTION (Moved to Bottom for SEO & UX) --- */}
+      {/* --- LATEST BLOGS SECTION --- */}
       <section className="home-blog-footer" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
           <h2 style={{ margin: 0, fontSize: '1.5rem' }}>Latest Financial Insights</h2>
