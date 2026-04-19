@@ -6,6 +6,7 @@ export const toolGuides = {
   "emi-calculator-guide": {
     id: "tool-emi-001",
     tool: "emi",
+    masterCategory: "protection",
     title: "Loan Planning Guide: How to Pay Off Your Loan Five Years Early",
     description: "Master your EMI calculations and discover the secret strategy to save thousands in interest and become debt-free years ahead of schedule.",
     keywords: [

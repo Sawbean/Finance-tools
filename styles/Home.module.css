@@ -1,0 +1,58 @@
+/* styles/Home.module.css */
+
+.heroSection {
+    /* Reduced vertical padding from 80px to 45px */
+    padding: 45px 20px;
+    text-align: center;
+    background: radial-gradient(circle at top, #f8fafc 0%, #ffffff 100%);
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.heroContent {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.mainTitle {
+    /* Slightly smaller font for better space management */
+    font-size: 2.75rem; 
+    font-weight: 800;
+    color: #1e293b;
+    line-height: 1.1;
+    /* Reduced margin from 20px to 12px */
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+
+.textGradient {
+    background: linear-gradient(135deg, #2563eb, #10b981);
+    -webkit-background-clip: text;
+    background-clip: text;         
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.subText {
+    /* Smaller font (1.1rem) to keep everything on fewer lines */
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.5;
+    /* Reduced margin from 30px to 0 */
+    margin-bottom: 0;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+    .heroSection {
+        padding: 30px 15px;
+    }
+    .mainTitle {
+        font-size: 2rem;
+    }
+    .subText {
+        font-size: 1rem;
+    }
+}

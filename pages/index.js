@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import ToolCard from "../components/ui/ToolCard";
 import { tools } from "../data/tools";
+import styles from "../styles/Home.module.css";
 // CHANGED: Pointing to the new file name
 import { financeArticles } from "../data/financeArticles"; 
 
@@ -25,15 +26,15 @@ export default function Home() {
       </Head>
 
       {/* --- HERO SECTION --- */}
-      <section className="hero-section">
-        <h1>Master Your Money with <span className="text-gradient">Precision</span></h1>
-        <p>
-          ToolFinance provides simple and accurate financial calculators and expert educational content. 
-          Use our tools to plan loans, track investments, and make smarter economic decisions.
-        </p>
-        <div className="hero-btns">
-          <a href="#calculators" className="btn-primary">Explore Tools</a>
-          <Link href="/blog" className="btn-secondary">Read Our Blog</Link>
+      <section className={styles.heroSection}>
+        <div className={styles.heroContent}>
+          <h1 className={styles.mainTitle}>
+            Master Your Money with <span className={styles.textGradient}>Precision</span>
+          </h1>
+          <p className={styles.subText}>
+            ToolFinance provides <strong>simple and accurate</strong> financial calculators and expert educational content. 
+            Plan loans, track investments, and make smarter economic decisions today.
+          </p>
         </div>
       </section>
 
@@ -41,8 +42,8 @@ export default function Home() {
       <div id="calculators" style={{ paddingTop: '20px' }}>
         
         {/* Featured Section */}
-        <div className="featured-tool-highlight" style={{ background: '#f8fafc', padding: '30px', borderRadius: '16px', marginBottom: '40px', border: '1px solid #e2e8f0' }}>
-          <h3 style={{ marginTop: 0 }}>Most Popular This Week</h3>
+        <div className="home-section-title" style={{ background: '#f8fafc', padding: '30px', borderRadius: '16px', marginBottom: '40px', border: '1px solid #e2e8f0' }}>
+          <h2 style={{ marginTop: 0 }}>Most Popular This Week</h2>
           <div className="tools-grid">
               <ToolCard title="Personal Loan EMI" link="/tools/emi" />
               <ToolCard title="SIP Growth Calculator" link="/tools/sip" />
