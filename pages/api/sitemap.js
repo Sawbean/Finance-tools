@@ -1,7 +1,7 @@
 // pages/api/sitemap.js
 import fs from "fs";
 import path from "path";
-import { blogEducational } from "../../data/blogEducational";
+import { financeArticles } from "../../data/financeArticles";
 import { toolGuides } from "../../data/toolGuides";
 
 const SITE_URL = "https://finance-tools-mu.vercel.app";
@@ -26,7 +26,7 @@ export default function handler(req, res) {
 
   // 3. BLOG PAGES (Dynamic from Data Files)
   const allBlogs = {
-    ...blogEducational,
+    ...financeArticles,
     ...toolGuides,
   };
 
