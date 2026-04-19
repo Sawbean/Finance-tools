@@ -34,7 +34,8 @@ export default function handler(req, res) {
     const blog = allBlogs[slug];
     return {
       url: `/blog/${slug}`,
-      lastmod: blog?.lastModified || currentDate,
+      // --- UPDATED LINE BELOW ---
+      lastmod: blog?.publishDate || currentDate, 
     };
   });
 

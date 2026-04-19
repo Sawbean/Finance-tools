@@ -68,9 +68,14 @@
 /* Grouping inputs */
 .input-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 15px;
-  margin-bottom: 10px; /* Reduced to pull toggle closer */
+  margin-bottom: 15px; /* Reduced to pull toggle closer */
+}
+@media (min-width: 480px) {
+  .input-row {
+    grid-template-columns: 1fr 1fr; /* Side-by-side for tablet/desktop */
+  }
 }
 
 /* Advanced Options Toggle (Tightened Spacing) */
@@ -196,4 +201,43 @@
 .sidebar-ad {
   width: 100%;
   margin: 0;
+}
+
+/* --- 1. ICON & SUFFIX POSITIONING (The "Rs." and "%" fix) --- */
+.input-icon, .input-suffix {
+  position: absolute;
+  color: #94a3b8;
+  font-weight: 600;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.input-icon { left: 14px; }
+.input-suffix { right: 14px; }
+
+/* Padding so text doesn't overlap the icons */
+.input-wrapper input.has-icon { padding-left: 40px !important; }
+/* This targets the input when a suffix span exists after it */
+.input-wrapper input:has(+ .input-suffix) { padding-right: 45px !important; }
+
+/* --- 2. MOBILE RESPONSIVENESS (The "Redmi Fix") --- */
+@media (max-width: 480px) {
+  .input-row {
+    grid-template-columns: 1fr !important; /* Forces 1 column on phones */
+    gap: 15px;
+  }
+  
+  .form-box {
+    padding: 20px; /* More breathing room on small screens */
+  }
+}
+
+/* --- 3. RESULT HIGHLIGHTING (The "Green Money" fix) --- */
+/* Makes the first result (Monthly EMI / Maturity Amount) look premium */
+.result-item:first-of-type .result-value {
+  font-size: 1.5rem;
+  color: #10b981; 
+  font-weight: 800;
 }

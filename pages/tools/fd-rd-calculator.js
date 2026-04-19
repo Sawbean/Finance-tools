@@ -164,6 +164,18 @@ export default function FDRDCalculator() {
             
         </div>
       </div>
+      <style jsx>{`
+        @media (max-width: 480px) {
+          .tool-intro h1 { font-size: 1.8rem !important; }
+          .container { padding: 15px; }
+          
+          /* This finds the button container and stacks them on mobile */
+          div[style*="display: flex"][style*="justify-content: center"] {
+            flex-direction: column !important;
+            padding: 0 20px;
+          }
+        }
+      `}</style>
     </>
   );
 }

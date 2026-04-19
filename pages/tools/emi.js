@@ -98,18 +98,31 @@ export default function EMICalculator() {
               <CalculatorInput label="Loan Amount" value={principal} onChange={setPrincipal} icon={globalCurrency} />
               
               <div className="input-row">
-                <CalculatorInput label="Interest Rate" value={rate} onChange={setRate} suffix="%" />
-                <div style={{flex: 1}}>
-                    <label className="input-label">Duration</label>
-                    <div style={{display: 'flex', gap: '5px'}}>
-                        <input type="number" className="input-wrapper" style={{width: '60%'}} value={duration} onChange={(e) => setDuration(e.target.value)} />
-                        <select className="input-wrapper" style={{width: '40%'}} value={durationType} onChange={(e) => setDurationType(e.target.value)}>
-                            <option value="years">Yrs</option>
-                            <option value="months">Mo</option>
-                        </select>
-                    </div>
+              {/* 1. Interest Rate Input */}
+              <CalculatorInput 
+                label="Interest Rate" 
+                value={rate} 
+                onChange={setRate} 
+                suffix="%"/>
+                {/* 2. Duration Input with Select Menu */}
+              <div className="calculator-input-group">
+                <label className="input-label">Duration</label>
+                <div className="input-wrapper" style={{ display: 'flex', gap: '5px' }}>
+                  <input 
+                    type="number" 
+                    style={{ width: '65%' }} 
+                    value={duration} 
+                    onChange={(e) => setDuration(e.target.value)}/>                  
+                  <select 
+                    style={{ width: '35%', padding: '10px', borderRadius: '10px', border: '1px solid #d1d5db' }} 
+                    value={durationType} 
+                    onChange={(e) => setDurationType(e.target.value)}>                 
+                    <option value="years">Yrs</option>
+                    <option value="months">Mo</option>
+                  </select>
                 </div>
               </div>
+            </div>
 
               <div className="advanced-toggle-container">
                 <button type="button" className="advanced-btn" onClick={() => setShowAdvanced(!showAdvanced)}>
