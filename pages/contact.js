@@ -1,7 +1,7 @@
 export default function Contact() {
   const cardStyle = { background: '#f8fafc', padding: '25px', borderRadius: '16px', border: '1px solid #e2e8f0', marginBottom: '30px' };
   const h2Style = { fontSize: '1.3rem', fontWeight: '800', color: '#1e293b', marginBottom: '15px' };
-
+  const sectionStyle = { marginBottom: '30px' };
   return (
     <div className="container" style={{ maxWidth: '800px', margin: '60px auto', padding: '0 20px', color: '#475569', lineHeight: '1.6' }}>
       <header style={{ textAlign: 'center', marginBottom: '50px' }}>
