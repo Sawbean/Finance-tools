@@ -89,7 +89,7 @@ export default function NetWorthCalculator() {
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
-                <Link href="/blog/net-worth-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+                <Link href="/blog/net-worth-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 Roadmap: 5 proven steps to increase your Net Worth
                 </Link>
             </div>

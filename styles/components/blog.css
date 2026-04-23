@@ -423,3 +423,91 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+/* Intelligence Hub - Strategic Layout */
+.hub-section-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #1e293b;
+    width: fit-content;
+    padding-bottom: 5px;
+}
+
+.featured-analysis-card {
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #eef2f6;
+    transition: transform 0.3s ease;
+}
+
+.featured-analysis-card:hover { transform: translateY(-5px); }
+
+.featured-img-wrapper { width: 100%; height: 260px; overflow: hidden; }
+.featured-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+.featured-text-content { padding: 25px; }
+
+.featured-tag { 
+    font-size: 11px; font-weight: 800; color: #2563eb; 
+    text-transform: uppercase; letter-spacing: 1px; 
+}
+
+.read-analysis-btn { margin-top: 15px; font-weight: bold; color: #1e293b; }
+
+.pulse-row-item {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #eef2f6;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.pulse-thumb {
+    width: 75px; height: 75px; border-radius: 8px;
+    overflow: hidden; flex-shrink: 0;
+}
+.pulse-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+.pulse-date { font-size: 11px; color: #94a3b8; }
+
+.view-all-link {
+    text-align: center; margin-top: 10px; color: #2563eb; 
+    font-weight: bold; text-decoration: none; font-size: 14px;
+}
+
+/* Mobile Responsiveness for Redmi Note 12 and others */
+@media (max-width: 768px) {
+    .hub-header h1 {
+        font-size: 2.2rem; /* Shrink title slightly on mobile */
+    }
+
+    .intelligence-hub {
+        gap: 20px; /* Reduce gap between sections on mobile */
+        margin-top: 40px !important;
+    }
+
+    .featured-img-wrapper {
+        height: 200px; /* Smaller image height for mobile screens */
+    }
+
+    .pulse-row-item {
+        padding: 12px; /* Tighter padding for mobile */
+    }
+
+    /* Standard post rows in the Archive */
+    .standard-post-row {
+        gap: 15px;
+    }
+
+    .standard-thumb-100 {
+        width: 80px; /* Smaller thumbnails so text has more room */
+        height: 80px;
+    }
+}
+

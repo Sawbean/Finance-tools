@@ -11,7 +11,7 @@ export const financeArticles = {
     category: "Investing",
     publishDate: "2026-04-10",
     readTime: "8 min read",
-    image: "/images/financial-planning.jpg",
+    image: "/images/grow_your_wealth.webp",
     tool: "stock-calc", // Added tool for ad integration
     content: [
       { type: "paragraph", text: "Investing is the act of allocating resources, usually money, with the expectation of generating an income or profit. Unlike saving, which is simply putting money aside, investing involves putting your capital to work to grow over time." },
@@ -22,6 +22,12 @@ export const financeArticles = {
         "Diversification helps spread risk across different asset classes.",
         "Consistency often beats timing the market for long-term growth."
       ]},
+      /* if chart image is needed=== { type: "paragraph", text: "..." },
+        { 
+          type: "image", 
+          src: "/images/inflation-chart-2026.webp", 
+          alt: "Line graph showing the 5-year trend of consumer price index vs. cash savings" // This is your descriptive alt text
+        }, */
       { type: "heading", text: "Common Asset Classes" },
       { type: "list", items: [
         "**Stocks**: Representing ownership in a company.",
@@ -42,7 +48,7 @@ export const financeArticles = {
     category: "Security",
     publishDate: "2026-04-12",
     readTime: "7 min read",
-    image: "/images/financial-planning.jpg",
+    image: "/images/financial-planning.webp",
     tool: "loan-emi", // Mapping to protection-related tool
     content: [
       { type: "paragraph", text: "In the digital age, financial scammers are becoming more sophisticated. They use social engineering, fake websites, and psychological pressure to gain access to your accounts." },
@@ -68,7 +74,7 @@ export const financeArticles = {
     category: "Income",
     publishDate: "2026-04-13",
     readTime: "10 min read",
-    image: "/images/financial-planning.jpg",
+    image: "/images/passive_income.webp",
     tool: "margin-calculator", // Mapping to digital business tool
     content: [
       { type: "paragraph", text: "Passive income is money earned with minimal activity through a variety of ventures. In 2026, the digital economy has opened more doors for creators and investors than ever before." },
@@ -96,8 +102,9 @@ export const financeArticles = {
     publishDate: "2026-04-12",
     readTime: "9 min read",
     category: "Economic Basics",
-    masterCategory: "foundation", 
-    image: "/blog/inflation-basics.jpg", 
+    masterCategory: "foundation",
+    type: "guide",
+    image: "/images/inflation-basics.webp", 
     tool: "budgeter",
     
     content: [

@@ -7,7 +7,8 @@ import { toolGuides } from "../../data/toolGuides";
 const SITE_URL = "https://finance-tools-mu.vercel.app";
 
 export default function handler(req, res) {
-  const currentDate = new Date().toISOString();
+  // Ensuring the date is always YYYY-MM-DD
+  const currentDate = new Date().toISOString().split('T')[0];
 
   // 1. STATIC PAGES
   const staticPages = ["", "/blog", "/about", "/contact"];
@@ -32,10 +33,17 @@ export default function handler(req, res) {
 
   const blogPages = Object.keys(allBlogs).map((slug) => {
     const blog = allBlogs[slug];
+    
+    // --- IMPROVED DATE LOGIC ---
+    let finalDate = currentDate;
+    if (blog?.publishDate) {
+      const d = new Date(blog.publishDate);
+      finalDate = !isNaN(d.getTime()) ? d.toISOString().split('T')[0] : currentDate;
+    }
+
     return {
       url: `/blog/${slug}`,
-      // --- UPDATED LINE BELOW ---
-      lastmod: blog?.publishDate || currentDate, 
+      lastmod: finalDate, 
     };
   });
 
@@ -59,14 +67,14 @@ ${allPages
   .map((page) => {
     // SEO Logic: Prioritize tools and home page
     let priority = "0.7"; 
-    let freq = "monthly";
+    let freq = "weekly"; // Changed to weekly for better indexing
 
     if (page.url === "") {
       priority = "1.0";
       freq = "daily";
     } else if (page.url.startsWith("/tools")) {
       priority = "0.9";
-      freq = "monthly";
+      freq = "weekly"; // Google prefers weekly over monthly for tools
     } else if (page.url === "/blog") {
       priority = "0.8";
       freq = "daily";

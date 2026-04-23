@@ -39,7 +39,13 @@ function MyApp({ Component, pageProps }) {
         <meta property="og:image" content="/og-image.png" />
         <meta name="google-site-verification" content="xxxxxxxxxxxx" />
       </Head>
-
+      {/* Google AdSense Script */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
+          crossorigin="anonymous"
+          strategy="afterInteractive"
+        />
       {/* Google Analytics */}
       <Script
         strategy="afterInteractive"

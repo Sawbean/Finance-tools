@@ -1,55 +1,41 @@
 import Link from "next/link";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
+  
   return (
     <footer className="site-footer">
       <div className="footer-container">
         {/* Brand Section */}
         <div className="footer-column">
-          <div className="footer-brand">ToolFinance</div>
-          <p className="footer-description">
-            Your trusted destination for free, accurate, and easy-to-use financial calculators. 
-            Empowering you to plan your future with confidence.
+          <div className="footer-brand" style={{ fontSize: '1.4rem', fontWeight: '900', marginBottom: '10px' }}>ToolFinance</div>
+          <p style={{ fontSize: '13px', lineHeight: '1.5', opacity: 0.8, maxWidth: '280px' }}>
+            Free, accurate financial tools and research. Empowering your economic intelligence.
           </p>
         </div>
 
-        {/* Categories / Popular Tools */}
-        <div className="footer-column">
-          <h4>Calculators</h4>
-          <ul className="footer-links">
-            <li><Link href="/tools/emi">EMI & Loans</Link></li>
-            <li><Link href="/tools/sip">SIP & Investments</Link></li>
-            <li><Link href="/tools/stock-average">Stock Market</Link></li>
-            <li><Link href="/tools/gst-vat-tax">Tax Tools</Link></li>
-            <li><Link href="/tools/fuel">Utility Calculators</Link></li>
-          </ul>
-        </div>
-
-        {/* Resources */}
-        <div className="footer-column">
-          <h4>Resources</h4>
-          <ul className="footer-links">
-            <li><Link href="/blog">Financial Blog</Link></li>
-            <li><Link href="/about">About Us</Link></li>
-            <li><Link href="/contact">Contact Support</Link></li>
-            <li><Link href="/sitemap.xml">Sitemap</Link></li>
-          </ul>
-        </div>
-
-        {/* Legal */}
-        <div className="footer-column">
-          <h4>Legal</h4>
-          <ul className="footer-links">
-            <li><Link href="/privacy-policy">Privacy Policy</Link></li>
-            <li><Link href="/terms">Terms of Service</Link></li>
-            <li><Link href="/disclaimer">Disclaimer</Link></li>
-          </ul>
-        </div>
+        {/* Columns Logic */}
+        {[
+          { title: "Calculators", links: [{n: "EMI & Loans", h: "/tools/emi"}, {n: "SIP & Investments", h: "/tools/sip"}, {n: "Stock Market", h: "/tools/stock-average"}, {n: "Tax Tools", h: "/tools/gst-vat-tax"}, {n: "Utility", h: "/tools/fuel"}] },
+          { title: "Resources", links: [{n: "Financial Blog", h: "/blog"}, {n: "About Us", h: "/about"}, {n: "Contact", h: "/contact"}, {n: "Sitemap", h: "/sitemap.xml"}] },
+          { title: "Legal", links: [{n: "Privacy Policy", h: "/privacy-policy"}, {n: "Terms of service", h: "/terms"}, {n: "Disclaimer", h: "/disclaimer"}] }
+        ].map((col, i) => (
+          <div key={i} className="footer-column">
+            <h4>{col.title}</h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {col.links.map((link, j) => (
+                <li key={j} style={{ marginBottom: '6px' }}>
+                  <Link href={link.h}>{link.n}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} ToolFinance. All rights reserved.</p>
-        <p style={{ fontSize: '12px', marginTop: '5px', opacity: 0.7 }}>
+        <p>&copy; {currentYear} ToolFinance. All rights reserved.</p>
+        <p style={{ fontSize: '11px', marginTop: '4px', opacity: 0.6 }}>
           Disclaimer: Calculations are for informational purposes only.
         </p>
       </div>

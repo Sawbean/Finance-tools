@@ -24,7 +24,6 @@ export default function Home() {
         <title>ToolFinance | Smart Financial Calculators & Investment Guides</title>
         <meta name="description" content="Accurate financial calculators for EMI, SIP, Loans, and Taxes. Stay updated with our expert financial guides." />
       </Head>
-
       {/* --- HERO SECTION --- */}
       <section className={styles.heroSection}>
         <div className={styles.heroContent}>
@@ -50,34 +49,62 @@ export default function Home() {
           </div>
         </div>
 
-        <h2 className="home-section-title">Loans & EMI Calculators</h2>
+       <h2 className="home-section-title">Personal Loan & Mortgage EMI Calculators</h2>
+         <p style={{ color: '#64748b', marginBottom: '20px', fontSize: '0.95rem', textAlign: 'center' }}>
+           Plan your debt efficiently with our accurate calculators for home, car, and personal loans.
+         </p>
         <div className="tools-grid">
           {loanTools.map((tool) => (
             <ToolCard key={tool.link} title={tool.title} link={tool.link} />
           ))}
         </div>
 
-        <h2 className="home-section-title">Investment & Savings</h2>
+        <h2 className="home-section-title">Investment Planning & Savings Growth Tools</h2>
+        <p style={{ color: '#64748b', marginBottom: '25px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+           Calculate future wealth and visualize your long-term financial goals with SIP, FD, and compound interest planners.
+        </p>
         <div className="tools-grid">
           {investTools.map((tool) => (
             <ToolCard key={tool.link} title={tool.title} link={tool.link} />
           ))}
         </div>
 
-        <h2 className="home-section-title">Business & Stock Market</h2>
+        <h2 className="home-section-title">Essential Business & Stock Market Calculators</h2>
+        <p style={{ color: '#64748b', marginBottom: '25px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+            Analyze business profitability, margins, and stock market averages to make data-driven investment decisions.
+        </p>
         <div className="tools-grid">
           {businessTools.map((tool) => (
             <ToolCard key={tool.link} title={tool.title} link={tool.link} />
           ))}
         </div>
 
-        <h2 className="home-section-title">Tax & Utility Tools</h2>
+        <h2 className="home-section-title">Income Tax, GST & Financial Utility Tools</h2>
+        <p style={{ color: '#64748b', marginBottom: '25px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+          Stay compliant and simplify your daily finances with quick tools for tax estimation, GST, and currency conversion.
+        </p>
         <div className="tools-grid">
           {taxMiscTools.map((tool) => (
             <ToolCard key={tool.link} title={tool.title} link={tool.link} />
           ))}
         </div>
       </div>
+
+              {/* --- TRUST STATS --- */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', margin: '40px 0', textAlign: 'center' }}>
+          <div>
+            <h3 style={{ color: 'var(--primary)', margin: 0 }}>25+</h3>
+            <p style={{ fontSize: '14px', color: '#64748b' }}>Precision Tools</p>
+          </div>
+          <div>
+            <h3 style={{ color: 'var(--primary)', margin: 0 }}>100%</h3>
+            <p style={{ fontSize: '14px', color: '#64748b' }}>Free to Use</p>
+          </div>
+          <div>
+            <h3 style={{ color: 'var(--primary)', margin: 0 }}>Secure</h3>
+            <p style={{ fontSize: '14px', color: '#64748b' }}>No Data Collection</p>
+          </div>
+        </div>  
 
       {/* --- LATEST BLOGS SECTION --- */}
       <section className="home-blog-footer" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>

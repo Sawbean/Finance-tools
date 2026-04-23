@@ -56,3 +56,15 @@
         font-size: 1rem;
     }
 }
+
+/* This makes sure the heading stops 100px before the top of the screen */
+.article-h2 {
+  scroll-margin-top: 100px;
+  scroll-behavior: smooth; /* This makes the jump look like a smooth slide */
+}
+
+/* Optional: Make the Table of Contents look even better */
+.table-of-contents ul li a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}

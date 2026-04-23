@@ -19,12 +19,12 @@ export default function AdPlaceholder({
   }, []);
 
   return (
-    <div className={`ad-placeholder cta-block ${className}`}>
+    <div className={`ad-placeholder cta-block ${className}`} style={{ overflow: 'hidden' }}>
       
       {/* ====== AdSense (uncomment when approved) ====== */}
       <ins
         className="adsbygoogle"
-        style={{ display: "block" }}
+        style={{ display: "block", minHeight: '100px' }}
         data-ad-client="ca-pub-XXXXXXXXXXXX"
         data-ad-slot="1234567890"
         data-ad-format="auto"

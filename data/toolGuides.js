@@ -19,7 +19,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-10",
     readTime: "8 min",
-    image: "/images/emi-guide.jpg",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -84,9 +84,13 @@ export const toolGuides = {
         type: "list",
         items: [
           "Always check for 'Prepayment Penalties' before paying extra.",
-          "Prioritize high-interest loans (like credit cards) over low-interest home loans.",
+          "Prioritize high-interest loans (like credit cards) over low-interest home loans. [Compare Loan Types here](/blog/loan-types-guide).",
           "Aim for a total EMI-to-Income ratio of less than 40%."
         ]
+      },
+            {
+        type: "note",
+        text: "ToolFinance Disclaimer: This guide is for informational purposes only. Loan terms and interest rates vary by lender. Always review your official loan agreement before making prepayments."
       }
     ],
     faq: [
@@ -99,12 +103,14 @@ export const toolGuides = {
         answer: "If your goal is to save money, always choose to **Reduce the Tenure**. This reduces the time interest has to accumulate, saving you the most money."
       }
     ]
+    
   },
 
   /* ================= Mortgage ================= */
   "mortgage-calculator-guide": {
     id: "tool-mortgage-002",
     tool: "mortgage",
+    masterCategory: "protection",
     title: "Home Loan Guide: 5 Mistakes to Avoid When Financing Your Dream House",
     description: "Buying a home is the biggest investment of your life. Learn the critical mistakes to avoid, how to calculate your true affordability, and strategies to save on interest.",
     keywords: [
@@ -117,7 +123,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-10",
     readTime: "9 min",
-    image: "/images/mortgage-guide.jpg",
+    image:"https://plus.unsplash.com/premium_photo-1661771671323-c639a299f3b2?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -201,6 +207,7 @@ export const toolGuides = {
   "loan-types-guide": {
     id: "tool-loan-003",
     tool: "loan",
+    masterCategory: "protection",
     title: "Loan Guide: Understanding Interest Rates (Flat vs. Reducing)",
     description: "Don't be misled by low-interest advertisements. Learn the critical difference between flat and reducing rates, and how to calculate the true cost of your loan.",
     keywords: [
@@ -212,7 +219,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-10",
     readTime: "7 min",
-    image: "/images/loan-guide.jpg",
+    image: "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -307,6 +314,7 @@ export const toolGuides = {
   "home-loan-vs-rent-guide": {
     id: "tool-home-loan-vs-rent-004",
     tool: "home-loan-vs-rent",
+    masterCategory: "protection",
     title: "Buy vs. Rent: Is Real Estate Still a Strong Investment in 2026?",
     description: "Stop guessing and start calculating. Learn the 5-year rule, how inflation impacts rent, and use our math-driven guide to decide if buying a home is your best financial move this year.",
     keywords: [
@@ -319,7 +327,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-10",
     readTime: "10 min",
-    image: "/images/home-loan-vs-rent-guide.jpg",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -407,6 +415,7 @@ export const toolGuides = {
   "loan-eligibility-guide": {
     id: "tool-loan-eligibility-005",
     tool: "loan-eligibility",
+    masterCategory: "protection",
     title: "5 Proven Ways to Increase Your Loan Eligibility Instantly",
     description: "Rejected by the bank or getting a low offer? Discover 5 expert strategies to boost your loan approval limit and get the funding you need in 2026.",
     keywords: [
@@ -418,7 +427,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-10",
     readTime: "6 min",
-    image: "/images/eligibility-guide.jpg",
+    image: "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -511,6 +520,7 @@ export const toolGuides = {
   "sip-calculator-guide": {
     id: "tool-sip-006",
     tool: "sip",
+    masterCategory: "protection",
     title: "SIP Guide: How to Choose the Right Mutual Fund for Your Goals",
     description: "Don't pick a fund based on last year's returns. Learn the 3-step framework to pick the perfect mutual fund, understand risk ratios, and maximize your SIP wealth.",
     keywords: [
@@ -522,7 +532,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-10",
     readTime: "8 min",
-    image: "/images/sip-selection-guide.jpg",
+    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -610,6 +620,7 @@ export const toolGuides = {
   "lumpsum-calculator-guide": {
     id: "tool-lumpsum-007",
     tool: "lumpsum",
+    masterCategory: "protection",
     title: "Lumpsum vs. SIP: Is Lumpsum Better in a Bull Market?",
     description: "Got a large sum of cash? Learn when to go all-in, the risks of market timing in 2026, and how to use the 'Lumpsum + STP' strategy to protect your wealth.",
     keywords: [
@@ -621,7 +632,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-10",
     readTime: "7 min",
-    image: "/images/lumpsum-vs-sip.jpg",
+    image: "https://images.unsplash.com/photo-1704026437282-91dfa7ced81e?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -689,6 +700,7 @@ export const toolGuides = {
   "compound-interest-guide": {
     id: "tool-compound-interest-008",
     tool: "compound-interest",
+    masterCategory: "protection",
     title: "Compounding Guide: How to Build Wealth Exponentially",
     description: "Einstein called it the 8th wonder of the world. Learn the math of exponential growth, the Rule of 72, and why starting just 5 years earlier can double your final wealth.",
     keywords: [
@@ -701,7 +713,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "7 min",
-    image: "/images/compounding-wealth-guide.jpg",
+    image: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -781,6 +793,7 @@ export const toolGuides = {
   "fd-rd-guide": {
     id: "tool-fd-rd-calculator-009",
     tool: "fd-rd-calculator",
+    masterCategory: "protection",
     title: "Comparison: FD vs RD — Which Strategy Fits Your Goal?",
     description: "Choosing between a Fixed Deposit and a Recurring Deposit in 2026? Learn the math of interest compounding, how inflation impacts your 'Real Return', and which safe-haven fits your current cash flow.",
     keywords: [
@@ -792,7 +805,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "6 min",
-    image: "/images/fd-rd-strategy-guide.jpg",
+    image: "https://images.unsplash.com/photo-1501167786227-4cba60f6d58f?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -863,6 +876,7 @@ export const toolGuides = {
   "fd-calculator-guide": {
     id: "tool-fd-010",
     tool: "fd",
+    masterCategory: "protection",
     title: "FD Mastery: How to Get the Highest Returns on Your Savings",
     description: "Fixed Deposits are more than just 'safe.' Learn the FD Laddering strategy, how to beat inflation, and the secrets to maximizing your interest income without locking your cash forever.",
     keywords: [
@@ -874,7 +888,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "9 min",
-    image: "/images/fd-mastery-guide.jpg",
+    image: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -954,6 +968,7 @@ export const toolGuides = {
   "retirement-guide": {
     id: "tool-retirement-011",
     tool: "retirement",
+    masterCategory: "protection",
     title: "Retirement Roadmap: How to Build a Multi-Million Dollar Fund",
     description: "Will your savings last as long as you do? Discover the 4% rule, how to calculate your 'Freedom Number,' and the 3-step strategy to outpace inflation for a stress-free retirement.",
     keywords: [
@@ -965,7 +980,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "12 min",
-    image: "/images/retirement-roadmap-guide.jpg",
+    image: "https://plus.unsplash.com/premium_photo-1661405426747-62e00b115240?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1045,6 +1060,7 @@ export const toolGuides = {
   "simple-interest-guide": {
     id: "tool-simple-interest-012",
     tool: "simple-interest",
+    masterCategory: "protection",
     title: "Roadmap: When is Simple Interest More Beneficial Than Compound?",
     description: "Compounding is usually king, but not always. Learn the specific scenarios where Simple Interest saves you money on loans and why it's the foundation of short-term lending.",
     keywords: [
@@ -1056,7 +1072,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "6 min",
-    image: "/images/simple-interest-roadmap.jpg",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1139,6 +1155,7 @@ export const toolGuides = {
   "stock-average-guide": {
     id: "tool-stock-average-013",
     tool: "stock-average",
+    masterCategory: "protection",
     title: "Strategy: When to 'Average Down' a Falling Stock?",
     description: "Averaging down can be a genius move or a 'sunk cost' trap. Learn the 3-step criteria for buying the dip, how to calculate your new break-even price, and when to walk away.",
     keywords: [
@@ -1150,7 +1167,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "8 min",
-    image: "/images/stock-average-strategy.jpg",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1230,6 +1247,7 @@ export const toolGuides = {
   "margin-markup-guide": {
     id: "tool-margin-markup-014",
     tool: "margin-markup",
+    masterCategory: "protection",
     title: "Business 101: Why a 25% Markup is NOT a 25% Margin",
     description: "Confusing margin and markup is the #1 reason small businesses fail. Learn the math behind profitable pricing, the 'Margin Gap,' and how to price your products for real growth.",
     keywords: [
@@ -1241,7 +1259,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "7 min",
-    image: "/images/margin-vs-markup-guide.jpg",
+    image: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1329,6 +1347,7 @@ export const toolGuides = {
   "dividend-yield-guide": {
     id: "tool-dividend-yield-015",
     tool: "dividend-yield",
+    masterCategory: "protection",
     title: "Passive Income: How to Build a Dividend-Focused Portfolio?",
     description: "Stop chasing hype and start building a paycheck. Learn the 'Dividend Aristocrat' strategy, how to spot 'Yield Traps,' and how to use dividends to reach financial freedom faster.",
     keywords: [
@@ -1340,7 +1359,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "9 min",
-    image: "/images/dividend-portfolio-guide.jpg",
+    image: "https://plus.unsplash.com/premium_photo-1742902896890-ad9449aae2dc?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1420,6 +1439,7 @@ export const toolGuides = {
   "break-even-guide": {
     id: "tool-break-even-016",
     tool: "break-even",
+    masterCategory: "protection",
     title: "Business Strategy: How to Lower Your Break-Even Point?",
     description: "Are you working hard but not seeing profit? Learn the 4 levers to lower your break-even point, reduce your financial risk, and reach profitability faster in 2026.",
     keywords: [
@@ -1431,7 +1451,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "8 min",
-    image: "/images/break-even-strategy-guide.jpg",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1520,6 +1540,7 @@ export const toolGuides = {
   "credit-card-payoff-guide": {
     id: "tool-credit-card-payoff-017",
     tool: "credit-card-payoff",
+    masterCategory: "protection",
     title: "Strategy: Snowball vs. Avalanche — Which Clears Debt Faster?",
     description: "Stuck in the credit card trap? Compare the math of the Avalanche method with the psychology of the Snowball effect to find the perfect plan to become debt-free in 2026.",
     keywords: [
@@ -1531,7 +1552,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "8 min",
-    image: "/images/snowball-vs-avalanche.jpg",
+    image: "https://images.unsplash.com/photo-1609429019995-8c40f49535a5?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1618,6 +1639,7 @@ export const toolGuides = {
   "ppf-nps-guide": {
     id: "tool-ppf-nps-calculator-018",
     tool: "ppf-nps-calculator",
+    masterCategory: "protection",
     title: "Roadmap: How to Maximize Long-Term Compounding Benefits",
     description: "Unlock the secrets of the EEE tax status and market-linked growth. Learn the 'April 5th Rule' for PPF and how the NPS Tier-1 extra deduction can save you an additional ₹15,000 in taxes every year.",
     keywords: [
@@ -1629,7 +1651,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "10 min",
-    image: "/images/ppf-nps-compounding-guide.jpg",
+    image: "https://plus.unsplash.com/premium_photo-1661775443983-33b3426fcb9b?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1709,6 +1731,7 @@ export const toolGuides = {
   "savings-goal-guide": {
     id: "tool-savings-goal-019",
     tool: "savings-goal",
+    masterCategory: "protection",
     title: "Roadmap: How to Reach Your Financial Goals Faster",
     description: "Stop guessing and start winning. Learn the 'Pay Yourself First' rule, how to bridge the savings gap, and 3 proven strategies to shave years off your timeline.",
     keywords: [
@@ -1720,7 +1743,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "7 min",
-    image: "/images/savings-goal-roadmap.jpg",
+    image: "https://images.unsplash.com/photo-1758599543113-9857a0f0681c?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1800,6 +1823,7 @@ export const toolGuides = {
   "income-tax-guide": {
     id: "tool-income-tax-020",
     tool: "income-tax",
+    masterCategory: "protection",
     title: "Tax Guide: How to Legally Reduce Your Income Tax",
     description: "Don't pay more than you owe. Learn the difference between tax evasion and tax avoidance, the best deductions for 2026, and how to structure your salary for maximum savings.",
     keywords: [
@@ -1811,7 +1835,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "11 min",
-    image: "/images/income-tax-saving-guide.jpg",
+    image: "https://images.unsplash.com/photo-1598432439250-0330f9130e14?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -1902,6 +1926,7 @@ export const toolGuides = {
   "gst-vat-tax-guide": {
     id: "tool-gst-vat-tax-021",
     tool: "gst-vat-tax",
+    masterCategory: "protection",
     title: "Explainer: Inclusive vs. Exclusive Tax — What's the Difference?",
     description: "Don't get surprised by the bill. Learn how to calculate GST/VAT, the hidden math of inclusive pricing, and how businesses manage tax credits to stay profitable.",
     keywords: [
@@ -1913,7 +1938,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "6 min",
-    image: "/images/inclusive-exclusive-tax-guide.jpg",
+    image: "https://images.unsplash.com/photo-1586486855514-8c633cc6fd38?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -2000,6 +2025,7 @@ export const toolGuides = {
   "net-worth-guide": {
     id: "tool-net-worth-022",
     tool: "net-worth",
+    masterCategory: "protection",
     title: "Roadmap: 5 Proven Steps to Increase Your Net Worth",
     description: "Your salary is what you earn; your Net Worth is what you keep. Learn the 5-step blueprint to build real wealth, eliminate 'Wealth Killers,' and track your progress to financial independence.",
     keywords: [
@@ -2011,7 +2037,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "9 min",
-    image: "/images/net-worth-roadmap-guide.jpg",
+    image: "https://images.unsplash.com/photo-1768207450151-30c0bf8e8091?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -2094,6 +2120,7 @@ export const toolGuides = {
   "fuel-mileage-guide": {
     id: "tool-fuel-023",
     tool: "fuel",
+    masterCategory: "protection",
     title: "Mileage Guide: 10 Ways to Increase Vehicle Mileage",
     description: "Fuel prices aren't in your control, but your consumption is. Learn 10 proven ways to boost your KM/L, reduce engine wear, and save thousands on your annual commute.",
     keywords: [
@@ -2105,7 +2132,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "6 min",
-    image: "/images/fuel-efficiency-guide.jpg",
+    image: "https://images.unsplash.com/photo-1612181345252-485e25c59eb2?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -2184,6 +2211,7 @@ export const toolGuides = {
   "currency-converter-guide": {
     id: "tool-currency-converter-024",
     tool: "currency-converter",
+    masterCategory: "protection",
     title: "Explainer: How are Global Exchange Rates Determined?",
     description: "Ever wonder why $1 buys more today than it did yesterday? Learn the 5 forces that move global markets, the difference between 'Mid-Market' and 'Retail' rates, and how to time your currency exchanges.",
     keywords: [
@@ -2195,7 +2223,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "7 min",
-    image: "/images/currency-exchange-explainer.jpg",
+    image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
@@ -2277,6 +2305,7 @@ export const toolGuides = {
   "inflation-guide": {
     id: "tool-inflation-025",
     tool: "inflation",
+    masterCategory: "protection",
     title: "Strategy: How to Beat Inflation with SIPs and Equity",
     description: "Inflation is the silent thief of your savings. Learn why cash is a 'leaky bucket' and how a disciplined SIP strategy in Equity can protect your future purchasing power.",
     keywords: [
@@ -2288,7 +2317,7 @@ export const toolGuides = {
     ],
     publishDate: "2026-04-12",
     readTime: "8 min",
-    image: "/images/inflation-vs-equity-guide.jpg",
+    image: "https://images.unsplash.com/photo-1741520965035-263d8a2fc652?auto=format&fit=crop&q=80&w=1200&h=450",
     content: [
       {
         type: "paragraph",
