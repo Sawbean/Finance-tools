@@ -24,9 +24,9 @@ export default function CategoryPage() {
     <div className="blog-hub-container">
       <Head><title>{cat.name} | ToolFinance</title></Head>
       <nav className="article-breadcrumb"><Link href="/blog">Library</Link> / <span>{cat.name}</span></nav>
-      <header style={{ marginBottom: '60px', borderLeft: `8px solid ${cat.color}`, paddingLeft: '30px' }}>
+     <header style={{ marginBottom: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '0 20px'}}>
         <h1 style={{ fontSize: '3rem', fontWeight: '900' }}>{cat.name}</h1>
-        <p style={{ fontSize: '1.2rem', color: '#64748b', maxWidth: '700px' }}>{cat.desc}</p>
+        <p style={{ fontSize: '1.2rem', color: '#64748b', maxWidth: '700px', margin: '0 auto' }}>{cat.desc}</p>
       </header>
       <main className="blog-grid">
         {filtered.length > 0 ? filtered.map(([slug, post]) => (

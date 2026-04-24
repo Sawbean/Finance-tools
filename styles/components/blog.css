@@ -72,6 +72,7 @@
 .royal { border-left: 6px solid #8b5cf6; }
 .gold { border-left: 6px solid #f59e0b; }
 
+
 /* SEARCH BAR STYLING */
 .search-container {
   max-width: 700px;
@@ -510,4 +511,6 @@
         height: 80px;
     }
 }
+
+
 

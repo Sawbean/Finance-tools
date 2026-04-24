@@ -137,7 +137,7 @@ export default function BlogPost() {
       );
 
       case "keyTakeaways": return (
-        <div key={index} className="takeaways-box" style={{ borderLeft: `4px solid ${currentTheme.color}` }}>
+        <div key={index} className="takeaways-box" style={{ backgroundColor: '#f8fafc', borderRadius: '12px', marginBottom: '30px'}}>
           <h4 style={{ color: currentTheme.color }}>⚡ Key Takeaways</h4>
           <ul>{block.items.map((item, i) => <li key={i}>{item}</li>)}</ul>
         </div>

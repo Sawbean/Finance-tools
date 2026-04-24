@@ -1,5 +1,6 @@
 // data/financeArticles.js
 export const financeArticles = {
+  // Article 1: Investment Basics: How to Grow Your Wealth
   "understanding-investment-basics": {
     title: "Investment Basics: How to Grow Your Wealth",
     description: "A beginner's guide to understanding how compounding works and where to start.",
@@ -36,7 +37,7 @@ export const financeArticles = {
       ]}
     ]
   },
-
+  // Article 2: How to Spot and Avoid Online Financial Scams
   "how-to-spot-online-scams": {
     title: "How to Spot and Avoid Online Financial Scams",
     description: "Protect your hard-earned money from common digital frauds and phishing attempts.",
@@ -62,7 +63,7 @@ export const financeArticles = {
       { type: "paragraph", text: "Always verify the source by calling the official number of the institution. Enable Two-Factor Authentication (2FA) on all financial accounts to add an extra layer of security beyond just your password." }
     ]
   },
-
+ // Article 3: 5 Passive Income Ideas for 2026
   "passive-income-ideas-2026": {
     title: "5 Passive Income Ideas for 2026",
     description: "Explore realistic ways to earn money while you sleep using digital tools.",
@@ -93,7 +94,7 @@ export const financeArticles = {
       ]}
     ]
   },
-
+  // Article 4: Inflation 101: Why Your Money Buys Less Over Time
   "understanding-inflation-basics": {
     title: "Inflation 101: Why Your Money Buys Less Over Time",
     description: "A beginner's guide to how inflation works, why it happens, and how it impacts global economies.",
@@ -154,6 +155,42 @@ export const financeArticles = {
         label: "Purchasing Power Formula",
         equation: "Value = Initial Amount / (1 + Inflation Rate)^n"
       }
+    ]
+  },
+  // Article 5: The 50/30/20 Rule: A Simple Strategy for Financial Freedom
+  "mastering-the-50-30-20-budgeting-rule": {
+    title: "The 50/30/20 Rule: A Simple Strategy for Financial Freedom",
+    description: "Learn how to split your income effectively between needs, wants, and savings to build long-term wealth.",
+    
+    masterCategory: "foundation", 
+    type: "guide", 
+    
+    category: "Personal Finance",
+    publishDate: "2026-04-23",
+    readTime: "6 min read",
+    image: "/images/50-30-20-rule-pie-chart.jpg",
+    tool: "savings-goal", 
+    content: [
+      { type: "paragraph", text: "Budgeting doesn't have to be complicated. One of the most effective and popular methods for managing money is the 50/30/20 rule. Developed by Senator Elizabeth Warren, this rule provides a simple blueprint for balancing your lifestyle with your future goals." },
+      
+      { type: "heading", text: "How the 50/30/20 Rule Works" },
+      { type: "paragraph", text: "The rule suggests dividing your after-tax income into three distinct categories:" },
+      { type: "list", items: [
+        "**50% for Needs**: Essential expenses like rent, groceries, utilities, and insurance.",
+        "**30% for Wants**: Flexible spending such as dining out, hobbies, and entertainment.",
+        "**20% for Financial Goals**: Debt repayment, emergency funds, and long-term investments."
+      ]},
+
+      { type: "keyTakeaways", items: [
+        "Pay yourself first: The 20% savings portion is your most important allocation.",
+        "Focus on net income: Always calculate your percentages based on your take-home pay, not gross salary.",
+        "Consistency over perfection: If you can't hit 20% today, start with 5% and scale up."
+      ]},
+
+      { type: "heading", text: "Why This Rule is Perfect for Beginners" },
+      { type: "paragraph", text: "Unlike traditional 'line-item' budgeting where you track every single cent, the 50/30/20 rule focuses on the big picture. It allows for flexibility in your 'Wants' category as long as your 'Needs' and 'Goals' are covered. This makes it easier to stick to over several years." },
+
+      { type: "paragraph", text: "To see how these numbers look for your specific income, you can use our Savings Goal calculator to project how your 20% allocation will grow over time." }
     ]
   },
 };

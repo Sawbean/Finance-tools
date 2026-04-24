@@ -19,18 +19,18 @@ export default function Home() {
     .slice(0, 3);
 
   return (
-    <div className="container">
+    <div className="container" style={{ paddingTop: '0px' }}>
       <Head>
         <title>ToolFinance | Smart Financial Calculators & Investment Guides</title>
         <meta name="description" content="Accurate financial calculators for EMI, SIP, Loans, and Taxes. Stay updated with our expert financial guides." />
       </Head>
       {/* --- HERO SECTION --- */}
-      <section className={styles.heroSection}>
+      <section className={styles.heroSection} style={{ marginTop: '0px', paddingBottom: '10px' }}> {/* Reduced padding at the bottom */}
         <div className={styles.heroContent}>
-          <h1 className={styles.mainTitle}>
+          <h1 className={styles.mainTitle} style={{ marginTop: '0px' }}>
             Master Your Money with <span className={styles.textGradient}>Precision</span>
           </h1>
-          <p className={styles.subText}>
+          <p className={styles.subText} style={{ marginBottom: '0px' }}> {/* Removed bottom margin */}
             ToolFinance provides <strong>simple and accurate</strong> financial calculators and expert educational content. 
             Plan loans, track investments, and make smarter economic decisions today.
           </p>
@@ -38,10 +38,10 @@ export default function Home() {
       </section>
 
       {/* --- MAIN TOOLS SECTION --- */}
-      <div id="calculators" style={{ paddingTop: '20px' }}>
+      <div id="calculators" style={{ paddingTop: '0px' }}>
         
         {/* Featured Section */}
-        <div className="home-section-title" style={{ background: '#f8fafc', padding: '30px', borderRadius: '16px', marginBottom: '40px', border: '1px solid #e2e8f0' }}>
+        <div className="home-section-title" style={{ marginTop: '0px', background: '#f8fafc', padding: '20px', borderRadius: '16px', marginBottom: '10px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ marginTop: 0 }}>Most Popular This Week</h2>
           <div className="tools-grid">
               <ToolCard title="Personal Loan EMI" link="/tools/emi" />
@@ -50,7 +50,7 @@ export default function Home() {
         </div>
 
        <h2 className="home-section-title">Personal Loan & Mortgage EMI Calculators</h2>
-         <p style={{ color: '#64748b', marginBottom: '20px', fontSize: '0.95rem', textAlign: 'center' }}>
+         <p style={{ color: '#64748b', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center' }}>
            Plan your debt efficiently with our accurate calculators for home, car, and personal loans.
          </p>
         <div className="tools-grid">
@@ -60,7 +60,7 @@ export default function Home() {
         </div>
 
         <h2 className="home-section-title">Investment Planning & Savings Growth Tools</h2>
-        <p style={{ color: '#64748b', marginBottom: '25px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+        <p style={{ color: '#64748b', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
            Calculate future wealth and visualize your long-term financial goals with SIP, FD, and compound interest planners.
         </p>
         <div className="tools-grid">
@@ -70,7 +70,7 @@ export default function Home() {
         </div>
 
         <h2 className="home-section-title">Essential Business & Stock Market Calculators</h2>
-        <p style={{ color: '#64748b', marginBottom: '25px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+        <p style={{ color: '#64748b', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
             Analyze business profitability, margins, and stock market averages to make data-driven investment decisions.
         </p>
         <div className="tools-grid">
@@ -80,7 +80,7 @@ export default function Home() {
         </div>
 
         <h2 className="home-section-title">Income Tax, GST & Financial Utility Tools</h2>
-        <p style={{ color: '#64748b', marginBottom: '25px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+        <p style={{ color: '#64748b', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
           Stay compliant and simplify your daily finances with quick tools for tax estimation, GST, and currency conversion.
         </p>
         <div className="tools-grid">
@@ -91,7 +91,7 @@ export default function Home() {
       </div>
 
               {/* --- TRUST STATS --- */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', margin: '40px 0', textAlign: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', margin: '20px 0', textAlign: 'center' }}>
           <div>
             <h3 style={{ color: 'var(--primary)', margin: 0 }}>25+</h3>
             <p style={{ fontSize: '14px', color: '#64748b' }}>Precision Tools</p>
@@ -107,8 +107,8 @@ export default function Home() {
         </div>  
 
       {/* --- LATEST BLOGS SECTION --- */}
-      <section className="home-blog-footer" style={{ marginTop: '80px', paddingTop: '40px', borderTop: '1px solid #eee' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+      <section className="home-blog-footer" style={{ marginTop: '20px', paddingTop: '10px', borderTop: '1px solid #eee', paddingBottom: '0px', marginBottom: '0px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <h2 style={{ margin: 0, fontSize: '1.5rem' }}>Latest Financial Insights</h2>
           <Link href="/blog" style={{ color: '#27ae60', fontWeight: '600', textDecoration: 'none' }}>View All Articles →</Link>
         </div>
@@ -127,9 +127,9 @@ export default function Home() {
       </section>
 
       {/* --- BOTTOM CTA --- */}
-      <section style={{ textAlign: 'center', padding: '60px 20px', background: '#111827', borderRadius: '20px', color: 'white', marginTop: '60px' }}>
+      <section style={{ textAlign: 'center', padding: '30px 20px', background: '#111827', borderRadius: '20px', color: 'white', marginTop: '10px',}}>
         <h2 className="text-gradient" style={{ fontSize: '2rem' }}>Ready to Plan Your Future?</h2>
-        <p style={{ color: '#9ca3af', marginBottom: '30px' }}>Simple tools for complex financial decisions.</p>
+        <p style={{ color: '#9ca3af', marginBottom: '10px' }}>Simple tools for complex financial decisions.</p>
         <Link href="/tools/emi" className="btn-primary">Calculate My EMI Now</Link>
       </section>
     </div>

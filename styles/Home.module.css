@@ -2,10 +2,11 @@
 
 .heroSection {
     /* Reduced vertical padding from 80px to 45px */
-    padding: 45px 20px;
+    padding: 0px 10px 20px 10px;
     text-align: center;
     background: radial-gradient(circle at top, #f8fafc 0%, #ffffff 100%);
     border-bottom: 1px solid #f1f5f9;
+    margin-top: -20px
 }
 
 .heroContent {
@@ -15,12 +16,16 @@
 
 .mainTitle {
     /* Slightly smaller font for better space management */
-    font-size: 2.75rem; 
+    font-size: 2.5rem; 
     font-weight: 800;
     color: #1e293b;
     line-height: 1.1;
     /* Reduced margin from 20px to 12px */
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+    margin-top: 0 !important; 
+    padding-top: 20px !important;
+    margin-bottom: 10px;
     letter-spacing: -0.02em;
 }
 
