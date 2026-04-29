@@ -11,6 +11,7 @@ export default function Document() {
         <meta name="author" content="ToolFinance" />
         <meta name="robots" content="index, follow" />
         <meta name="theme-color" content="#0a2a66" />
+        <meta name="description" content="Free financial tools, calculators, and guides to help you manage your wealth, loans, and investments." />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />

@@ -1,8 +1,8 @@
 import { useState } from "react"; 
 import Head from "next/head";
 import Link from "next/link";
-import { financeArticles } from "../../data/financeArticles";
-import { toolGuides } from "../../data/toolGuides";
+import { allFinanceArticles } from "../../data/articles/index";
+import { allToolGuides } from "../../data/tool-guides/index";
 
 export default function BlogIndex() {
   // 1. Search State
@@ -19,7 +19,7 @@ export default function BlogIndex() {
   ];
 
   // 3. Merge and Sort Data
-  const allPosts = { ...financeArticles, ...toolGuides };
+  const allPosts = { ...allFinanceArticles, ...allToolGuides };
   const postsArray = Object.entries(allPosts).sort(
     (a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate)
   );
@@ -117,7 +117,7 @@ export default function BlogIndex() {
           </section>
 
           {/* --- UPDATED: STRATEGIC INTELLIGENCE HUB (The Magazine Layout) --- */}
-          <section className="intelligence-hub" style={{ marginTop: '80px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px' }}>
+          <section className="intelligence-hub" style={{ marginTop: '40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px' }}>
             
             {/* Left: Strategic Analysis (Large Card) */}
             <div className="analysis-focus">
@@ -132,7 +132,7 @@ export default function BlogIndex() {
                         <img src={post.image} alt={post.title} />
                       </div>
                       <div className="featured-text-content">
-                        <span className="featured-tag">{post.category}</span>
+                        <span className="featured-tag">{post.category || post.masterCategory}</span>
                         <h3>{post.title}</h3>
                         <p>{post.description?.substring(0, 150)}...</p>
                         <div className="read-analysis-btn">Read Full Analysis →</div>
@@ -191,20 +191,20 @@ export default function BlogIndex() {
       )}
 
       {/* --- SECTION 4: RESEARCH ARCHIVE (Smart Filtered) --- */}
-        <section style={{ marginTop: '80px', paddingBottom: '60px' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '30px', borderBottom: '2px solid #eef2f6', paddingBottom: '10px' }}>Research Archive</h2>
+        <section style={{ marginTop: '40px', paddingBottom: '20px' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '15px', borderBottom: '2px solid #eef2f6', paddingBottom: '10px' }}>Research Archive</h2>
           <div className="blog-grid">
             {(() => {
               const featSlug = postsArray.find(([_, p]) => ['guide', 'case-study', 'white-paper'].includes(p.type))?.[0];
               const pulseSlugs = postsArray.filter(([_, p]) => p.type === 'news' || p.type === 'opinion').slice(0, 4).map(([s]) => s);
 
-              return postsArray.filter(([slug]) => slug !== featSlug && !pulseSlugs.includes(slug)).slice(0, 10).map(([slug, post]) => (
+              return postsArray.filter(([slug]) => slug !== featSlug && !pulseSlugs.includes(slug)).slice(0, 9).map(([slug, post]) => (
                 <Link href={`/blog/${slug}`} key={slug} className="standard-post-row" style={{ display: 'flex', gap: '20px', textDecoration: 'none', color: 'inherit', marginBottom: '25px', alignItems: 'center' }}>
                   <div style={{ width: '100px', height: '100px', background: '#eef2f6', borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}>
                     <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div>
-                    <span style={{ fontSize: '11px', fontWeight: '700', color: '#2563eb', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{post.masterCategory || 'Library'}</span>
+                    <span style={{ fontSize: '11px', fontWeight: '700', color: '#2563eb', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{post.category || post.masterCategory || 'Library'}</span>
                     <h3 style={{ fontSize: '1.15rem', margin: '5px 0', lineHeight: '1.3' }}>{post.title}</h3>
                     <p style={{ fontSize: '14px', color: '#64748b', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.description}</p>
                   </div>

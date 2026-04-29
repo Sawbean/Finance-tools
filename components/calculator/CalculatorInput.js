@@ -19,6 +19,7 @@ export default function CalculatorInput({
         
         <input
           type={type}
+          inputMode={type === "number" ? "decimal" : "text"}
           step={step}
           placeholder={placeholder || label}
           value={value ?? ""} // Fallback to empty string to keep input controlled

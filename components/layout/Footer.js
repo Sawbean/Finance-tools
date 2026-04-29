@@ -9,7 +9,7 @@ export default function Footer() {
         {/* Brand Section */}
         <div className="footer-column">
           <div className="footer-brand" style={{ fontSize: '1.4rem', fontWeight: '900', marginBottom: '10px' }}>ToolFinance</div>
-          <p style={{ fontSize: '13px', lineHeight: '1.5', opacity: 0.8, maxWidth: '280px' }}>
+          <p style={{ fontSize: '13px', lineHeight: '1.5', opacity: 0.8, maxWidth: '280px', margin: '0 auto' }}>
             Free, accurate financial tools and research. Empowering your economic intelligence.
           </p>
         </div>

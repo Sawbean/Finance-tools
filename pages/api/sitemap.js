@@ -1,8 +1,8 @@
 // pages/api/sitemap.js
 import fs from "fs";
 import path from "path";
-import { financeArticles } from "../../data/financeArticles";
-import { toolGuides } from "../../data/toolGuides";
+import { allFinanceArticles } from "../../data/articles/index";
+import { allToolGuides } from "../../data/tool-guides/index";
 
 const SITE_URL = "https://finance-tools-mu.vercel.app";
 
@@ -11,7 +11,7 @@ export default function handler(req, res) {
   const currentDate = new Date().toISOString().split('T')[0];
 
   // 1. STATIC PAGES
-  const staticPages = ["", "/blog", "/about", "/contact"];
+  const staticPages = ["", "/blog", "/about", "/contact", "/privacy-policy", "/terms", "/disclaimer", "/blog/news"];
 
   // 2. TOOLS PAGES (Dynamic from Directory)
   const toolsDir = path.join(process.cwd(), "pages/tools");
@@ -25,10 +25,14 @@ export default function handler(req, res) {
     console.warn("Warning: Tools directory not found", err);
   }
 
-  // 3. BLOG PAGES (Dynamic from Data Files)
+  // 3. BLOG CATEGORY PAGES (The 6 Master Categories)
+  const categories = ['foundation', 'wealth', 'markets', 'protection', 'digital', 'systems'];
+  const categoryPages = categories.map(id => `/blog/category/${id}`);
+
+  // 4. BLOG PAGES (Dynamic from Data Files)
   const allBlogs = {
-    ...financeArticles,
-    ...toolGuides,
+    ...allFinanceArticles,
+    ...allToolGuides,
   };
 
   const blogPages = Object.keys(allBlogs).map((slug) => {
@@ -47,9 +51,13 @@ export default function handler(req, res) {
     };
   });
 
-  // 4. COMBINE ALL PAGES
+  // 5. COMBINE ALL PAGES
   const allPages = [
     ...staticPages.map((url) => ({
+      url,
+      lastmod: currentDate,
+    })),
+    ...categoryPages.map((url) => ({
       url,
       lastmod: currentDate,
     })),
@@ -60,24 +68,27 @@ export default function handler(req, res) {
     ...blogPages,
   ];
 
-  // 5. GENERATE SITEMAP XML
+  // 6. GENERATE SITEMAP XML
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allPages
   .map((page) => {
-    // SEO Logic: Prioritize tools and home page
+    // SEO Logic: Prioritize tools, home page, and category hubs
     let priority = "0.7"; 
-    let freq = "weekly"; // Changed to weekly for better indexing
+    let freq = "weekly"; 
 
     if (page.url === "") {
       priority = "1.0";
       freq = "daily";
     } else if (page.url.startsWith("/tools")) {
       priority = "0.9";
-      freq = "weekly"; // Google prefers weekly over monthly for tools
+      freq = "weekly"; 
     } else if (page.url === "/blog") {
       priority = "0.8";
       freq = "daily";
+    } else if (page.url.startsWith("/blog/category")) {
+      priority = "0.8";
+      freq = "daily"; // Categories update as you add 3-4 articles daily
     }
 
     return `  <url>
@@ -90,7 +101,7 @@ ${allPages
   .join("\n")}
 </urlset>`;
 
-  // 6. SEND RESPONSE
+  // 7. SEND RESPONSE
   res.setHeader("Content-Type", "text/xml");
   res.status(200).send(sitemap);
 }

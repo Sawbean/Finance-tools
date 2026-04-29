@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { financeArticles } from '../../data/financeArticles';
+import { allFinanceArticles } from "../../data/articles/index";
+import { allToolGuides } from "../../data/tool-guides/index";
 
 export default function NewsFeed() {
+  const allPosts = { ...allFinanceArticles, ...allToolGuides };
   // Filter for ONLY news and opinions across ALL categories
-  const newsPosts = Object.entries(financeArticles)
+  const newsPosts = Object.entries(allPosts)
     .filter(([_, p]) => p.type === 'news' || p.type === 'opinion')
     .sort((a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate));
 

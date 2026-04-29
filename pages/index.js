@@ -4,7 +4,9 @@ import ToolCard from "../components/ui/ToolCard";
 import { tools } from "../data/tools";
 import styles from "../styles/Home.module.css";
 // CHANGED: Pointing to the new file name
-import { financeArticles } from "../data/financeArticles"; 
+// import { financeArticles } from "../data/financeArticles"; 
+import { allFinanceArticles as financeArticles } from "../data/articles/index";
+import { allToolGuides } from "../data/tool-guides/index";
 
 export default function Home() {
   // 1. CALCULATOR LOGIC (Restored exactly)
@@ -12,9 +14,9 @@ export default function Home() {
   const investTools = tools.filter(t => t.link.includes('sip') || t.link.includes('lumpsum') || t.link.includes('interest') || t.link.includes('retirement') || t.link.includes('fd'));
   const businessTools = tools.filter(t => t.link.includes('stock') || t.link.includes('margin') || t.link.includes('break-even') || t.link.includes('dividend'));
   const taxMiscTools = tools.filter(t => !loanTools.includes(t) && !investTools.includes(t) && !businessTools.includes(t));
-
+  const allPostsCombined = { ...financeArticles, ...allToolGuides };
   // 2. BLOG LOGIC (Updated to use financeArticles)
-  const latestBlogs = Object.entries(financeArticles)
+  const latestBlogs = Object.entries(allPostsCombined)
     .sort((a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate))
     .slice(0, 3);
 
@@ -116,10 +118,28 @@ export default function Home() {
         <div className="mini-blog-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
           {latestBlogs.map(([slug, post]) => (
             <Link href={`/blog/${slug}`} key={slug} className="minimal-blog-link" style={{ textDecoration: 'none' }}>
-              <div style={{ padding: '20px', background: '#f9fafb', borderRadius: '12px', border: '1px solid #f3f4f6', transition: '0.2s', height: '100%' }}>
-                <span style={{ color: '#27ae60', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>{post.category}</span>
-                <h4 style={{ margin: '10px 0', color: '#111827', fontSize: '1.1rem', lineHeight: '1.4' }}>{post.title}</h4>
-                <div style={{ color: '#9ca3af', fontSize: '12px' }}>{post.publishDate} • {post.readTime}</div>
+              <div style={{ 
+                padding: '20px', 
+                background: '#f9fafb', 
+                borderRadius: '12px', 
+                border: '1px solid #f3f4f6', 
+                transition: '0.2s', 
+                height: '100%' 
+              }}>
+                {/* 1. Category Label with Fallback */}
+                <span style={{ color: '#27ae60', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>
+                  {post.category || post.masterCategory || "Finance"}
+                </span>
+
+                {/* 2. Title */}
+                <h4 style={{ margin: '10px 0', color: '#111827', fontSize: '1.1rem', lineHeight: '1.4' }}>
+                  {post.title}
+                </h4>
+
+                {/* 3. Date and Read Time with Fallback */}
+                <div style={{ color: '#9ca3af', fontSize: '12px' }}>
+                  {post.publishDate} • {post.readTime || "5 min read"}
+                </div>
               </div>
             </Link>
           ))}

@@ -4,10 +4,11 @@
 .site-footer {
   background: var(--primary);
   color: #ffffff;
-  margin-top: 60px;
-  padding: 50px 20px 20px;
+  margin-top: 0px;
+  padding: 30px 20px 20px;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
+  
 }
 
 .footer-container {
@@ -26,7 +27,7 @@
   padding: 18px 0;
   background: #071a40;
   font-size: 13px;
-  margin-top: 30px;
+  margin-top: 15px;
   border-radius: 0 0 14px 14px;
 }
 
@@ -50,4 +51,53 @@
   justify-content: center;
   margin: 25px 0;
   font-weight: 600;
+}
+
+/* --- Professional Mobile Centering --- */
+@media (max-width: 768px) {
+  .site-footer {
+    text-align: center; /* Centers all inline text */
+  }
+
+  .footer-container {
+    display: flex;
+    flex-direction: column; /* Stack columns vertically */
+    align-items: center;    /* Center columns horizontally */
+    width: 100%;             /* Consistent 40px gap between sections */
+    padding: 0%;
+    gap: 0px;
+  }
+
+  .footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* Centers the h4 and the ul list */
+  }
+
+  .footer-column h4 {
+    /* Reduce heading margin from 15px to 8px for a tighter look */
+    margin-top: 10px;
+    margin-bottom: 8px; 
+  }
+
+  .footer-column p {
+    margin: 0 auto;         /* Centers the "Free, accurate..." description */
+    margin-bottom: 10px;
+  }
+
+  .footer-column ul {
+    width: 100%;
+    padding: 0;
+  }
+
+  .footer-column ul li {
+    /* Keep links close together */
+    margin-bottom: 4px; 
+  }
+
+  /* Ensures the links themselves are clickable across the center */
+  .footer-column a {
+    text-align: center;
+    padding: 5px 0;
+  }
 }

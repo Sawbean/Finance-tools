@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
-import { financeArticles } from '../../../data/financeArticles';
-import { toolGuides } from '../../../data/toolGuides';
+import { allFinanceArticles } from "../../../data/articles/index";
+import { allToolGuides } from "../../../data/tool-guides/index";
 
 export default function CategoryPage() {
   const { query: { id } } = useRouter();
@@ -15,8 +15,8 @@ export default function CategoryPage() {
     systems: { name: 'Systems & News', desc: 'Navigating taxes, banking, and global policy.', color: '#f59e0b' }
   };
   const cat = themes[id];
-  const allPosts = { ...financeArticles, ...toolGuides };
-  const filtered = Object.entries(allPosts).filter(([_, p]) => p.masterCategory === id).sort((a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate));
+  const allPosts = { ...allFinanceArticles, ...allToolGuides };
+  const filtered = Object.entries(allPosts).filter(([_, p]) => p && p.masterCategory === id).sort((a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate));
 
   if (!cat) return <div style={{textAlign: 'center', padding: '50px'}}>Loading {id}...</div>;
 

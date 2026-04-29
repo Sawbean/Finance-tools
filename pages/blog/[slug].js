@@ -5,12 +5,19 @@ import Image from "next/image";
 import styles from "../../styles/Home.module.css";
 import React, { useState, useEffect } from "react";
 
+
 // 1. DATA SOURCES
-import { financeArticles } from "../../data/financeArticles";
-import { toolGuides } from "../../data/toolGuides";
+//import { financeArticles } from "../../data/financeArticles";
+//import { toolGuides } from "../../data/toolGuides";
+import { allFinanceArticles } from "../../data/articles/index";
+import { allToolGuides } from "../../data/tool-guides/index";
 
 // NEW: Import the standardized Ad component
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+
+console.log("ALL GUIDES KEYS:", Object.keys(allToolGuides));
+// 💡 HELPER: Combine them into one library for the slug to search
+const allContent = { ...allFinanceArticles, ...allToolGuides };
 
 export default function BlogPost() {
   const [readingProgress, setReadingProgress] = useState(0);
@@ -32,11 +39,10 @@ export default function BlogPost() {
 
   if (!router.isReady || !slug) return <div className="container"><p>Loading...</p></div>;
 
-  const allPosts = { ...financeArticles, ...toolGuides };
-  const post = allPosts[slug];
+  const post = allContent[slug];
 
   // Helper to check if this is a finance article for specific ad logic
-  const isFinanceArticle = !!financeArticles[slug];
+  const isFinanceArticle = !!allFinanceArticles[slug];
 
   if (!post) {
     return (
@@ -50,20 +56,20 @@ export default function BlogPost() {
 
   // 2. MASTER THEMING
   const masterThemes = {
-    foundation: { color: "#64748b", label: "Economics", tool: { name: "Budget Planner", link: "/tools/budgeter" } },
-    wealth: { color: "#10b981", label: "Wealth", tool: { name: "SIP Calculator", link: "/tools/sip-calculator" } },
-    markets: { color: "#0ea5e9", label: "Markets", tool: { name: "Stock Estimator", link: "/tools/stock-calc" } },
-    protection: { color: "#ef4444", label: "Security", tool: { name: "Loan EMI Tool", link: "/tools/loan-emi" } },
-    digital: { color: "#8b5cf6", label: "Digital", tool: { name: "Profit Margin Tool", link: "/tools/margin-calculator" } },
-    systems: { color: "#f59e0b", label: "Systems", tool: { name: "Tax Estimator", link: "/tools/tax-calc" } }
+    foundation: { color: "#64748b", label: "Economics", tool: { name: "Budget Planner", link: "/tools/inflation" } },
+    wealth: { color: "#10b981", label: "Wealth", tool: { name: "SIP Calculator", link: "/tools/sip" } },
+    markets: { color: "#0ea5e9", label: "Markets", tool: { name: "Stock Estimator", link: "/tools/stock-average" } },
+    protection: { color: "#ef4444", label: "Security", tool: { name: "Loan EMI Tool", link: "/tools/emi" } },
+    digital: { color: "#8b5cf6", label: "Digital", tool: { name: "Profit Margin Tool", link: "/tools/margin-markup" } },
+    systems: { color: "#f59e0b", label: "Systems", tool: { name: "Tax Estimator", link: "/tools/income-tax" } }
   };
 
   const currentTheme = masterThemes[post.masterCategory] || { color: "#2563eb", label: "Guide" };
   const smartTool = currentTheme.tool;
 
   // 3. RELATED ARTICLES LOGIC
-  const relatedPosts = Object.entries(allPosts)
-    .filter(([s, p]) => p.masterCategory === post.masterCategory && s !== slug)
+  const relatedPosts = Object.entries(allContent)
+    .filter(([s, p]) => p && p.masterCategory === post.masterCategory && s !== slug)
     .slice(0, 2);
 
   // 4. RENDER LOGIC
@@ -178,7 +184,7 @@ export default function BlogPost() {
             {block.text ? block.text.replace(/\$\$/g, '') : ''}
           </div>
           {block.caption && (
-            <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px dotted #cbd5e1', fontSize: '13px', color: '#64748b' }}>
+            <div style={{ marginTop: '15px', paddingTop: '15px', borderTop: '1px dotted #cbd5e1', fontSize: '14px', color: '#64748b' }}>
               {block.caption}
             </div>
           )}
@@ -205,13 +211,14 @@ export default function BlogPost() {
       <meta property="og:title" content={post.title} />
       <meta property="og:description" content={post.excerpt} />
       {/* Join the domain and the image path */}
-      <meta property="og:image" content={post.image?.startsWith('http') ? post.image : `${siteDomain}${post.image}`} />
+      <meta property="og:image" content={post.image ? (post.image.startsWith('http') ? post.image : `${siteDomain}${post.image}`) : `${siteDomain}/default-share-image.jpg`}/>
 
       {/* 3. Twitter Cards: Makes the post look big and clickable on X */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={post.title} />
       <meta name="twitter:description" content={post.excerpt} />
-      <meta name="twitter:image" content={post.image?.startsWith('http') ? post.image : `${siteDomain}${post.image}`} />
+      <meta 
+  name="twitter:image" content={post.image ? (post.image.startsWith('http') ? post.image : `${siteDomain}${post.image}`) : `${siteDomain}/default-share-image.jpg`}/>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "NewsArticle", "headline": post.title, "description": post.excerpt, "author": {"@type": "Organization", "name": "ToolFinance"}, "datePublished": post.publishDate, "image": `${siteDomain}${post.image}` }) }} />
     </Head>
 
@@ -262,7 +269,7 @@ export default function BlogPost() {
         </div>
       )}
 
-      <div className="article-layout-container" style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '50px', maxWidth: '1200px', margin: '0 auto', alignItems: 'start'}}>
+      <div className="article-layout-container" style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '30px', maxWidth: '1200px', margin: '0 auto', alignItems: 'stretch', paddingBottom: '40px'}}>
         <article className="article-body">
           {headings.length > 0 && (
             <div className="table-of-contents" style={{ background: '#f8fafc', padding: '20px', borderRadius: '12px', marginBottom: '30px' }}>
@@ -270,7 +277,7 @@ export default function BlogPost() {
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                 {headings.map((h, i) => (
                   <li key={i} style={{ marginBottom: '8px' }}>
-                    <a href={`#section-${post.content.findIndex(b => b.text === h.text)}`} style={{ color: currentTheme.color, textDecoration: 'none', fontSize: '14px' }}>
+                    <a href={`#section-${post.content.indexOf(h)}`} style={{ color: currentTheme.color, textDecoration: 'none', fontSize: '14px' }}>
                       {h.text}
                     </a>
                   </li>
@@ -321,7 +328,7 @@ export default function BlogPost() {
             </div>
           )}
 
-          <div className="author-box" style={{ display: 'flex', gap: '20px', alignItems: 'center', background: '#fff', border: '1px solid #eef2f6', padding: '20px', borderRadius: '16px', marginTop: '40px' }}>
+          <div className="author-box" style={{ display: 'flex', gap: '20px', alignItems: 'center', background: '#fff', border: '1px solid #eef2f6', padding: '20px', borderRadius: '16px', marginTop: '40px', marginBottom: '0px', fontSize: '15px' }}>
             <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: currentTheme.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
               TF
             </div>
@@ -333,8 +340,8 @@ export default function BlogPost() {
             </div>
           </div>
 
-          <div className="share-article-section" style={{ marginTop: '50px', paddingTop: '30px', borderTop: '1px solid #f1f5f9' }}>
-            <p style={{ fontSize: '14px', fontWeight: '700', color: '#64748b', marginBottom: '15px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Share this Analysis:</p>
+          <div className="share-article-section" style={{ marginTop: '40px', paddingTop: '20px', fontSize: '15px', borderTop: '1px solid #f1f5f9' }}>
+            <p style={{ fontSize: '14px', fontWeight: '700', color: '#64748b', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Share this Analysis:</p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               {/* Twitter / X */}
               <a 
@@ -370,8 +377,8 @@ export default function BlogPost() {
           </div>
 
           {relatedPosts.length > 0 && (
-            <div className="related-section" style={{ marginTop: '40px', borderTop: '1px solid #eef2f6', paddingTop: '40px' }}>
-              <h4 style={{ marginBottom: '20px' }}>Related Analysis</h4>
+            <div className="related-section" style={{ marginTop: '40px', borderTop: '1px solid #eef2f6', paddingTop: '20px', paddingBottom: '10px', marginBottom: '0px' }}>
+              <h4 style={{ marginBottom: '15px' }}>Related Analysis</h4>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 {relatedPosts.map(([s, p]) => (
                   <Link href={`/blog/${s}`} key={s} style={{ textDecoration: 'none', color: 'inherit' }}>
