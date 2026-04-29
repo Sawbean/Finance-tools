@@ -102,6 +102,20 @@
   animation: fadeIn 0.3s ease;
 }
 
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+  .main-search-input {
+    padding: 14px 18px !important; /* Slightly smaller padding */
+    font-size: 0.95rem !important;  /* Smaller font to fit the placeholder */
+    border-radius: 30px !important; /* Less aggressive curve looks better on small screens */
+  }
+
+  .search-container {
+    margin-bottom: 30px; /* Reduce bottom margin on mobile */
+    padding: 0 15px;      /* Ensure the bar doesn't touch the screen edges */
+  }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }

@@ -61,7 +61,7 @@ export default function BlogIndex() {
             className="main-search-input"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ paddingRight: '85px' }} 
+            style={{ paddingRight: searchQuery ? '90px' : '25px' }} 
           />
           
           {searchQuery && (

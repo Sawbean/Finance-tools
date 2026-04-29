@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 
         <meta property="og:image" content="/og-image.png" />
-        <meta name="google-site-verification" content="xxxxxxxxxxxx" />
+        <meta name="google-site-verification" content="A-VDqo9ZfV4Gl-6RK3gYm8p-nySB2lvq584nwERC43E"/>
       </Head>
       {/* Google AdSense Script */}
         <Script
