@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
-
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';  
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function DividendYieldCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/dividend-yield');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "dividend-yield");
   // 1. STATE MANAGEMENT
   const [sharePrice, setSharePrice] = useState(1000);
   const [annualDividend, setAnnualDividend] = useState(50);
@@ -48,13 +51,7 @@ export default function DividendYieldCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Dividend Yield Calculator | Income Investing Tool | ToolFinance</title>
-        <meta 
-          name="description" 
-          content="Calculate the dividend yield of any stock instantly. Compare annual payouts against share prices to find the best income-generating investments." 
-        />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

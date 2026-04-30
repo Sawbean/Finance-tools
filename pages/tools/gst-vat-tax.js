@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function GSTVATTaxCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/gst-vat-tax');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "gst-vat-tax");
+
   // 1. STATE MANAGEMENT
   const [amount, setAmount] = useState(1000);
   const [taxRate, setTaxRate] = useState(13); 
@@ -61,13 +66,7 @@ export default function GSTVATTaxCalculator() {
 
   return (
     <>
-      <Head>
-        <title>GST / VAT Calculator | Inclusive & Exclusive Tax Tool | ToolFinance</title>
-        <meta 
-          name="description" 
-          content="Calculate GST, VAT, and sales tax globally. Supports inclusive and exclusive tax calculations for business and personal bills." 
-        />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

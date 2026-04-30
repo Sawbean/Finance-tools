@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
+import { allToolGuides } from '../../data/tool-guides/index';
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
@@ -11,6 +13,11 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function BreakEvenCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/break-even');
+
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "break-even");
+
   // 1. STATE MANAGEMENT
   const [fixedCosts, setFixedCosts] = useState(50000);
   const [variableCost, setVariableCost] = useState(300);
@@ -53,13 +60,7 @@ export default function BreakEvenCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Break-Even Calculator | Business Profitability Tool | ToolFinance</title>
-        <meta 
-          name="description" 
-          content="Calculate your business break-even point in units and sales value. Essential tool for entrepreneurs to determine sales targets and pricing." 
-        />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

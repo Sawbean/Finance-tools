@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function HomeLoanVsRentCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/home-loan-vs-rent');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "home-loan-vs-rent");
   // 1. STATE MANAGEMENT
   const [homePrice, setHomePrice] = useState(15000000); 
   const [loanRate, setLoanRate] = useState(11);
@@ -80,10 +84,7 @@ export default function HomeLoanVsRentCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Home Loan vs Rent Calculator | Should You Buy or Rent? | ToolFinance</title>
-        <meta name="description" content="Compare the long-term financial impact of buying a home versus renting. Analyze EMI, property appreciation, and rising rent costs." />
-      </Head>
+     <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

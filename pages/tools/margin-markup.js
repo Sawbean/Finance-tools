@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function MarginMarkupCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/margin-markup');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "margin-markup");
   // 1. STATE MANAGEMENT
   const [cost, setCost] = useState(100);
   const [sellingPrice, setSellingPrice] = useState(125);
@@ -50,13 +54,8 @@ export default function MarginMarkupCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Margin vs Markup Calculator | Business Profit Tools | ToolFinance</title>
-        <meta 
-          name="description" 
-          content="Calculate profit margin and markup percentages instantly. Understand the difference between margin and markup to price your products correctly." 
-        />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
+      
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function SimpleInterestCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/simple-interest');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "simple-interest");
   // 1. STATE MANAGEMENT
   const [principal, setPrincipal] = useState(100000);
   const [rate, setRate] = useState(12);
@@ -56,13 +60,7 @@ export default function SimpleInterestCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Simple Interest Calculator | Principal Wealth Tool | ToolFinance</title>
-        <meta 
-          name="description" 
-          content="Calculate simple interest (P*R*T/100) instantly for loans and personal finance globally." 
-        />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

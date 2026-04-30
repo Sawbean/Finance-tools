@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
-
+import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
@@ -9,8 +8,14 @@ import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function FDCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/fd');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "fd");
+
   // 1. STATE MANAGEMENT
   const [principal, setPrincipal] = useState(100000);
   const [rate, setRate] = useState(7.5);
@@ -59,10 +64,7 @@ export default function FDCalculator() {
 
   return (
     <>
-      <Head>
-        <title>FD Calculator | Fixed Deposit Interest & TDS Planner | ToolFinance</title>
-        <meta name="description" content="Calculate your FD maturity amount accurately. Include TDS tax calculations and compounding options." />
-      </Head>
+     <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
-
+import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
@@ -9,8 +8,13 @@ import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function RetirementCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/retirement');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "retirement");
   // 1. STATE MANAGEMENT
   const [currentAge, setCurrentAge] = useState(25);
   const [retireAge, setRetireAge] = useState(60);
@@ -69,10 +73,7 @@ export default function RetirementCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Retirement Calculator | Pension & Corpus Planner | ToolFinance</title>
-        <meta name="description" content="Plan your retirement corpus with inflation adjustments. See your future monthly pension and wealth growth." />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

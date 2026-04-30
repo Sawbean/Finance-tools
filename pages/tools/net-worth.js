@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
-
+import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
@@ -9,8 +8,13 @@ import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function NetWorthCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/net-worth');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "net-worth");
   // 1. STATE MANAGEMENT
   const [cash, setCash] = useState(50000);
   const [investments, setInvestments] = useState(500000);
@@ -55,10 +59,7 @@ export default function NetWorthCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Net Worth Calculator | Track Your Wealth | ToolFinance</title>
-        <meta name="description" content="Calculate your total net worth globally. Itemize assets and liabilities to get a clear picture of your financial health today." />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

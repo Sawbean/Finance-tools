@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function IncomeTaxCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/income-tax');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "income-tax");
   const [income, setIncome] = useState(800000);
   const [deductions, setDeductions] = useState(0);
   const [filingStatus, setFilingStatus] = useState("single");
@@ -61,10 +65,7 @@ export default function IncomeTaxCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Income Tax Calculator | Salary Planner | ToolFinance</title>
-        <meta name="description" content="Calculate your income tax liability and monthly take-home salary based on the latest tax slabs." />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

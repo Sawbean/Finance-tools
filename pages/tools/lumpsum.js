@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function LumpsumCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/lumpsum');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "lumpsum");
   // 1. STATE MANAGEMENT
   const [investment, setInvestment] = useState(100000);
   const [expectedReturn, setExpectedReturn] = useState(12);
@@ -52,13 +56,7 @@ export default function LumpsumCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Lumpsum Calculator | Future Value of One-Time Investment | ToolFinance</title>
-        <meta 
-          name="description" 
-          content="Calculate the future value of your one-time investment. See how compounding grows your wealth over time with our Lumpsum calculator." 
-        />
-      </Head>
+        <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

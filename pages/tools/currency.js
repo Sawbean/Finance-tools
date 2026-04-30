@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 // Import global utilities
 import { formatCurrency } from "../../utils/formatters"; 
@@ -9,8 +10,11 @@ import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
-
+import { allToolGuides } from '../../data/tool-guides/index';    
 export default function CurrencyConverter() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/currency');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "currency");
   // 1. STATE MANAGEMENT
   const [amount, setAmount] = useState(100);
   const [rate, setRate] = useState(133.50); 
@@ -58,13 +62,7 @@ export default function CurrencyConverter() {
 
   return (
     <>
-      <Head>
-        <title>Currency Converter | Global Exchange Rates | ToolFinance</title>
-        <meta 
-          name="description" 
-          content="Fast and accurate currency converter for international exchange. Calculate USD, EUR, INR, and NPR conversions with custom rates." 
-        />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

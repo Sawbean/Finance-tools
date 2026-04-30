@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function MortgageCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/mortgage');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "mortgage");
   // 1. STATE MANAGEMENT
   const [homePrice, setHomePrice] = useState(5000000);
   const [downPayment, setDownPayment] = useState(1000000);
@@ -64,10 +68,7 @@ export default function MortgageCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Mortgage Calculator | Home Loan PITI Estimator | ToolFinance</title>
-        <meta name="description" content="Estimate your total monthly mortgage including principal, interest, taxes, and insurance." />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
+import { allToolGuides } from '../../data/tool-guides/index';
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
@@ -11,6 +13,9 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function CompoundInterestCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/compound-interest');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "compound-interest");   
   // 1. STATE MANAGEMENT
   const [principal, setPrincipal] = useState(100000);
   const [rate, setRate] = useState(10);
@@ -55,10 +60,7 @@ export default function CompoundInterestCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Compound Interest Calculator | Future Value Tool | ToolFinance</title>
-        <meta name="description" content="Calculate the growth of your investments with compounding. Compare daily, monthly, and yearly compounding frequencies." />
-      </Head>
+        <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

@@ -46,8 +46,8 @@ export default function Home() {
         <div className="home-section-title" style={{ marginTop: '0px', background: '#f8fafc', padding: '20px', borderRadius: '16px', marginBottom: '10px', border: '1px solid #e2e8f0' }}>
           <h2 style={{ marginTop: 0 }}>Most Popular This Week</h2>
           <div className="tools-grid">
-              <ToolCard title="Personal Loan EMI" link="/tools/emi" />
-              <ToolCard title="SIP Growth Calculator" link="/tools/sip" />
+              <ToolCard key="emi" tool={{ title: "Personal Loan EMI", link: "/tools/emi" }} />
+              <ToolCard key="sip" tool={{ title: "SIP Growth Calculator", link: "/tools/sip" }} />
           </div>
         </div>
 
@@ -57,7 +57,7 @@ export default function Home() {
          </p>
         <div className="tools-grid">
           {loanTools.map((tool) => (
-            <ToolCard key={tool.link} title={tool.title} link={tool.link} />
+            <ToolCard key={tool.id} tool={tool} />
           ))}
         </div>
 
@@ -67,7 +67,7 @@ export default function Home() {
         </p>
         <div className="tools-grid">
           {investTools.map((tool) => (
-            <ToolCard key={tool.link} title={tool.title} link={tool.link} />
+            <ToolCard key={tool.id} tool={tool} />
           ))}
         </div>
 
@@ -77,7 +77,7 @@ export default function Home() {
         </p>
         <div className="tools-grid">
           {businessTools.map((tool) => (
-            <ToolCard key={tool.link} title={tool.title} link={tool.link} />
+            <ToolCard key={tool.id} tool={tool} />
           ))}
         </div>
 
@@ -87,7 +87,7 @@ export default function Home() {
         </p>
         <div className="tools-grid">
           {taxMiscTools.map((tool) => (
-            <ToolCard key={tool.link} title={tool.title} link={tool.link} />
+            <ToolCard key={tool.id} tool={tool} />
           ))}
         </div>
       </div>

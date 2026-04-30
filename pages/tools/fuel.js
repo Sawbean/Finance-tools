@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
@@ -9,8 +8,14 @@ import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
+import { allToolGuides } from '../../data/tool-guides/index';
 
 export default function FuelCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/fuel');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "fuel");
   // 1. STATE MANAGEMENT
   const [distance, setDistance] = useState(150);
   const [mileage, setMileage] = useState(15);
@@ -63,10 +68,7 @@ export default function FuelCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Fuel Cost Calculator | Trip Expense Splitter | ToolFinance</title>
-        <meta name="description" content="Calculate fuel consumption, total trip costs, and split expenses among passengers instantly." />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function SavingsGoalCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/savings-goal');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "savings-goal");
   const [goal, setGoal] = useState(1000000);
   const [currentSavings, setCurrentSavings] = useState(50000);
   const [years, setYears] = useState(5);
@@ -68,10 +72,8 @@ export default function SavingsGoalCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Savings Goal Calculator | Reach Your Financial Targets | ToolFinance</title>
-        <meta name="description" content="Calculate monthly savings required to hit your financial goals. Includes inflation adjustments." />
-      </Head>
+      
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

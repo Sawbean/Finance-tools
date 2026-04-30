@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
+import { allToolGuides } from '../../data/tool-guides/index';
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
@@ -11,6 +13,11 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function CreditCardPayoffCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/credit-card-payoff');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "credit-card-payoff");
+
+  // 1. STATE MANAGEMENT
   const [balance, setBalance] = useState(50000);
   const [interestRate, setInterestRate] = useState(36); 
   const [monthlyPayment, setMonthlyPayment] = useState(5000);
@@ -78,10 +85,7 @@ export default function CreditCardPayoffCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Credit Card Payoff Calculator | Debt Timeline Tool | ToolFinance</title>
-        <meta name="description" content="Calculate how long it takes to pay off credit card debt globally. See the true cost of interest and plan your debt-free date." />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

@@ -217,9 +217,8 @@ export default function BlogPost() {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={post.title} />
       <meta name="twitter:description" content={post.excerpt} />
-      <meta 
-  name="twitter:image" content={post.image ? (post.image.startsWith('http') ? post.image : `${siteDomain}${post.image}`) : `${siteDomain}/default-share-image.jpg`}/>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "NewsArticle", "headline": post.title, "description": post.excerpt, "author": {"@type": "Organization", "name": "ToolFinance"}, "datePublished": post.publishDate, "image": `${siteDomain}${post.image}` }) }} />
+      <meta name="twitter:image" content={post.image ? (post.image.startsWith('http') ? post.image : `${siteDomain}${post.image}`) : `${siteDomain}/default-share-image.jpg`}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", "headline": post.title, "description": post.excerpt || post.title, "image": post.image ? `${siteDomain}${post.image}` : `${siteDomain}/og-image.png`, "datePublished": post.publishDate || new Date().toISOString(), "author": { "@type": "Organization", "name": "ToolFinance", "url": siteDomain }, "publisher": { "@type": "Organization", "name": "ToolFinance", "logo": { "@type": "ImageObject", "url": `${siteDomain}/favicon-32x32.png` } }, "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteDomain}/blog/${slug}` } }) }} />
     </Head>
 
     <div style={{ position: 'fixed', top: 0, left: 0, width: `${readingProgress}%`, height: '4px', background: currentTheme.color, zIndex: 1000, transition: 'width 0.2s ease'}} />

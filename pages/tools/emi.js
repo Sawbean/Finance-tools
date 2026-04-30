@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link"; 
-
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
+import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
@@ -11,6 +12,9 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function EMICalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/emi');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "emi");
   // 1. STATE MANAGEMENT
   const [principal, setPrincipal] = useState(500000);
   const [rate, setRate] = useState(10.5);
@@ -81,10 +85,7 @@ export default function EMICalculator() {
 
   return (
     <>
-      <Head>
-        <title>EMI Calculator | Personal & Home Loan Planner | ToolFinance</title>
-        <meta name="description" content="Calculate your monthly loan EMI and see how extra payments reduce your interest and tenure." />
-      </Head>
+       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

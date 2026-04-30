@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
 
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function LoanEligibilityCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/loan-eligibility');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "loan-eligibility");
   const [income, setIncome] = useState(100000);
   const [existingEMI, setExistingEMI] = useState(0);
   const [interestRate, setInterestRate] = useState(9.5);
@@ -67,10 +71,7 @@ export default function LoanEligibilityCalculator() {
 
   return (
     <>
-      <Head>
-        <title>Loan Eligibility Calculator | Borrowing Power | ToolFinance</title>
-        <meta name="description" content="Calculate your maximum loan amount based on salary and existing debt. Understand bank lending limits globally." />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>

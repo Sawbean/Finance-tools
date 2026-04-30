@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Link from "next/link";
-
+import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
 import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
 
@@ -9,8 +8,13 @@ import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
+import { tools } from '../../data/tools';
+import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function PPFNPSCalculator() {
+  // Automatically find the data for THIS tool
+  const toolData = tools.find(t => t.link === '/tools/ppf-nps');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "ppf-nps");
   // 1. STATE MANAGEMENT
   const [monthlyInvest, setMonthlyInvest] = useState(12500); 
   const [rate, setRate] = useState(7.1); 
@@ -66,10 +70,7 @@ export default function PPFNPSCalculator() {
 
   return (
     <>
-      <Head>
-        <title>PPF & NPS Calculator | Long-term Wealth Planner | ToolFinance</title>
-        <meta name="description" content="Calculate your long-term maturity value with compounding and tax savings analysis for retirement planning." />
-      </Head>
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
         <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
