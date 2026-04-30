@@ -13,7 +13,7 @@ import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function PPFNPSCalculator() {
   // Automatically find the data for THIS tool
-  const toolData = tools.find(t => t.link === '/tools/ppf-nps');
+  const toolData = tools.find(t => t.link === '/tools/ppf-nps-calculator');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "ppf-nps");
   // 1. STATE MANAGEMENT
   const [monthlyInvest, setMonthlyInvest] = useState(12500); 
