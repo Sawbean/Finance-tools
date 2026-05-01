@@ -100,7 +100,9 @@ export default function Header() {
                   <Link href="/tools/lumpsum" onClick={closeMenu}>Lumpsum Investment</Link>
                   <Link href="/tools/compound-interest" onClick={closeMenu}>Compound Interest</Link>
                   <Link href="/tools/fd-rd-calculator" onClick={closeMenu}>FD & RD Calculator</Link>
+                  <Link href="/tools/fd" onClick={closeMenu}>FD Calculator</Link>
                   <Link href="/tools/retirement" onClick={closeMenu}>Retirement Plan</Link>
+                  <Link href="/tools/simple-interest" onClick={closeMenu}>Simple Interest</Link>
                 </div>
               </div>
 
@@ -125,11 +127,16 @@ export default function Header() {
                   Tax & Quick Tools <span className="chevron">▸</span>
                 </div>
                 <div className={`tools-submenu ${openCategory === "misc" ? "show" : ""}`}>
+                  <Link href="/tools/credit-card-payoff" onClick={closeMenu}>Credit Card Payoff</Link>
+                  <Link href="/tools/ppf-nps-calculator" onClick={closeMenu}>PPF & NPS Calculator</Link>
+                  <Link href="/tools/saving-goal" onClick={closeMenu}>Saving Goal Calculator</Link>
                   <Link href="/tools/income-tax" onClick={closeMenu}>Income Tax</Link>
                   <Link href="/tools/gst-vat-tax" onClick={closeMenu}>GST / VAT / Tax</Link>
+                  <Link href="/tools/net-worth" onClick={closeMenu}>Net Worth Calculator</Link>
+                  <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
                   <Link href="/tools/currency" onClick={closeMenu}>Currency Converter</Link>
                   <Link href="/tools/inflation" onClick={closeMenu}>Inflation Impact</Link>
-                  <Link href="/tools/fuel" onClick={closeMenu}>Fuel Calculator</Link>
+                  
                 </div>
               </div>
             </div>

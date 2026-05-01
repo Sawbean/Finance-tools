@@ -259,6 +259,11 @@ export default function BlogPost() {
 
         <div className="article-meta">
           <span>📅 Updated: {post.publishDate}</span> • <span>⏱️ {post.readTime} Read</span>
+          <span className="type-badge">{post.type}</span>
+          <span style={{ marginLeft: '10px', padding: '4px 12px', background: '#eef2f6', borderRadius: '4px', fontSize: '12px', fontWeight: 'bold', color: '#334155' }}>
+            {post.category}
+          </span>
+          <span>📅 {post.publishDate}</span> • <span>⏱️ {post.readTime}</span>
         </div>
       </header>
 

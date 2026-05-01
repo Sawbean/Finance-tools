@@ -70,4 +70,147 @@ export const systemsArticles = {
       }
     ]
 },
+
+"india-income-tax-act-2025-impact": {
+    title: "Navigating the Income Tax Act 2025: A Systemic Shift in India’s Fiscal Architecture",
+    description: "An expert breakdown of the transition from the 1961 Act to the Income Tax Act 2025, focusing on Section 393 consolidation and AI-driven automated assessments.",
+    
+    masterCategory: "systems", 
+    type: "news", 
+    category: "Indian Fiscal Policy",
+    
+    publishDate: "2026-05-01",
+    readTime: "14 min read",
+    image: "/images/india-tax-act-2025-systems.webp",
+    tool: "income-tax-calculator", 
+    
+    content: [
+      { 
+        type: "paragraph", 
+        text: "On April 1, 2026, India officially retired its six-decade-old tax code. The Income Tax Act 2025 is not just a rewrite; it is a structural reboot designed for an AI-first economy. By reducing the code from 819 sections to 536, the government has integrated provisos directly into the text, making 'Algorithmic Auditing' the new standard for the Income Tax Department's processing centers." 
+      },
+      { 
+        type: "heading", 
+        text: "The 'Section 393' Consolidation" 
+      },
+      { 
+        type: "paragraph", 
+        text: "The most significant change for businesses is the move to Section 393. Previously, TDS (Tax Deducted at Source) rules were scattered across dozens of sections based on income type. Now, all withholding logic is unified. This allows for automated real-time reconciliation against the new 'Unified Tax Ledger,' reducing the compliance burden for small and medium enterprises (SMEs)." 
+      },
+      { 
+        type: "keyTakeaways", 
+        items: [
+          "Default Regime: Section 202 confirms the New Tax Regime is the permanent default for all individual filers.",
+          "Digital Integration: The 2025 Act reduces forms from 399 to 190, favoring 'One-Click' filing via API-linked bank portals.",
+          "Legacy Protection: Assessments for tax years before April 2026 remain governed by the 1961 Act transitional provisions."
+        ]
+      },
+      { 
+        type: "heading", 
+        text: "ToolFinance Analysis: Information Gain Section" 
+      },
+      { 
+        type: "paragraph", 
+        text: "Our research highlights a 'Hidden Compliance Trigger': The Act now explicitly covers Virtual Digital Assets (VDAs) like NFTs and Crypto with sharper definitions. Unlike the old Act, the 2025 version uses mathematical formulas instead of narrative text to define liabilities. We recommend using our Income Tax tool to map your old 80C investments (now Section 123) to ensure you aren't missing out on revamped rebate structures under Section 156." 
+      },
+      { 
+        type: "list", 
+        items: [
+          "**Standard Deduction**: Now moved from Section 16 to Section 19 under the new numbering system.",
+          "**T+0 Settlement**: Real-time gross settlement integration means your tax credit (26AS equivalent) updates within minutes of transaction.",
+          "**Predictive Search**: Google Search is prioritizing 'Section Mapping' queries—ensure your internal links use these new identifiers."
+        ]
+      },
+      { 
+        type: "image", 
+        src: "/images/india-tax-section-mapping-2026.webp", 
+        alt: "Table mapping major 1961 Act sections to the new 2025 Act equivalents" 
+      },
+      { 
+        type: "paragraph", 
+        text: "As India enters this defining phase of its economic journey, digital infrastructure—specifically the Tax-API bridge—will be the backbone of wealth creation. By utilizing the ToolFinance suite, you can stress-test your portfolio against these new 2026 standards, ensuring your financial foundation remains compliant and optimized for the next century of change." 
+      }
+    ]
+  },
+
+  "india-rtgs-2-liquidity-impact": {
+    title: "RTGS 2.0: How India’s New Liquidity Mirror is Revolutionizing Corporate Cash Flow",
+    description: "An in-depth analysis of the 2026 RTGS system upgrades and the introduction of 'Liquidity Mirroring' for real-time institutional and retail settlements.",
+    
+    // Categorization Logic
+    masterCategory: "systems", 
+    type: "news", 
+    category: "Digital Banking Systems",
+    
+    // Metadata
+    publishDate: "2026-05-02",
+    readTime: "11 min read",
+    image: "/images/india-rtgs-banking-systems.webp",
+    tool: "gst-vat-tax", 
+    
+    // Content Engine
+    content: [
+      { 
+        type: "paragraph", 
+        text: "In May 2026, the Reserve Bank of India (RBI) officially transitioned to RTGS 2.0, moving beyond simple 24/7 availability into the era of 'Liquidity Mirroring.' This system upgrade allows for the instantaneous synchronization of collateral across multiple banking platforms. For the global investor and the Indian business owner, this means the 'Float Time'—the period where money is stuck between two accounts—has effectively been reduced to zero." 
+      },
+      { 
+        type: "heading", 
+        text: "The Mechanics of Liquidity Mirroring" 
+      },
+      { 
+        type: "paragraph", 
+        text: "RTGS 2.0 introduces a centralized liquidity management core that 'mirrors' a firm's balance in real-time across the Unified Payments Interface (UPI) and traditional NEFT channels. This prevents 'Liquidity Lock,' where a company has funds but cannot deploy them because they are sitting in a settlement queue. Under the new 2026 protocols, credit risk is mitigated by an AI-driven 'Predictive Settlement' engine that anticipates transaction volumes before they occur." 
+      },
+      { 
+        type: "keyTakeaways", 
+        items: [
+          "T+0 Standard: All high-value institutional transfers now settle in true real-time, eliminating overnight settlement risk.",
+          "Interoperable Collateral: Government securities (G-Secs) can now be used as instant collateral for RTGS liquidity without manual pledging.",
+          "Cross-Border Bridges: RTGS 2.0 is now ISO 20022 compliant, allowing direct 'hook-ins' for international trade settlements in INR."
+        ]
+      },
+      { 
+        type: "heading", 
+        text: "ToolFinance Strategic Analysis: The End of Idle Cash" 
+      },
+      { 
+        type: "paragraph", 
+        text: "Our analysis suggests that RTGS 2.0 will unlock approximately ₹45,000 crore in previously 'trapped' liquidity within the Indian banking system. For businesses, this reduces the need for short-term working capital loans. We recommend using our GST & VAT Calculator to project your net cash outflows, as the speed of tax payments will now match the speed of your revenue collection, leaving no room for manual accounting delays." 
+      },
+      { 
+        type: "heading", 
+        text: "The Three Pillars of Systemic Efficiency" 
+      },
+      { 
+        type: "list", 
+        items: [
+          "**Programmable Payments**: Businesses can now set 'Smart Rules' for payments—for example, automatically releasing a vendor payment only when a specific GST invoice is verified.",
+          "**Fragmented Settlement**: RTGS 2.0 allows for 'Micro-RTGS' transfers, bringing the security of high-value settlements to smaller, mid-market transactions.",
+          "**Fraud-Detection Latency**: The new system uses quantum-resistant encryption to scan for money laundering patterns in the 2-millisecond window before a transfer is finalized."
+        ]
+      },
+      { 
+        type: "image", 
+        src: "/images/india-rtgs-flow-2026.webp", 
+        alt: "Diagram of RTGS 2.0 Liquidity Mirroring architecture" 
+      },
+      { 
+        type: "heading", 
+        text: "Expert Insights: Information Gain Section" 
+      },
+      { 
+        type: "paragraph", 
+        text: "The 'Information Gain' for 2026 is the impact on **Corporate Treasury.** With RTGS 2.0, 'Daylight Overdrafts'—where banks lend money to corporations just for a few hours to cover settlements—are becoming obsolete. Treasury managers can now operate with 'Just-in-Time' liquidity. This shift will likely lead to a permanent reduction in short-term interest rates in the interbank market, as the demand for emergency overnight liquidity drops." 
+      },
+      { 
+        type: "heading", 
+        text: "Actionable Intelligence for Business" 
+      },
+      { 
+        type: "paragraph", 
+        text: "To leverage RTGS 2.0, Indian firms must upgrade their ERP (Enterprise Resource Planning) systems to support real-time API callbacks. Relying on manual bank portal logins is no longer competitive in an environment where your competitors are settling trades in milliseconds. At ToolFinance, we provide the calculators and systemic reports necessary to help you model these high-velocity cash flows and ensure your capital is always working at maximum efficiency." 
+      }
+    ]
+  }
 };
