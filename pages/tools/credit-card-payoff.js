@@ -5,7 +5,7 @@ import ToolSEO from '../../components/layout/ToolSEO';
 import { allToolGuides } from '../../data/tool-guides/index';
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -13,6 +13,9 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function CreditCardPayoffCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/credit-card-payoff');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "credit-card-payoff");
@@ -39,7 +42,7 @@ export default function CreditCardPayoffCalculator() {
     
     // Safety Check: Payment vs Interest
     if (M <= firstMonthInterest) {
-      setError(`Your payment must be higher than ${formatCurrency(firstMonthInterest)} to cover the monthly interest.`);
+      setError(`Your payment must be higher than ${currency.symbol}${formatValue(firstMonthInterest.toFixed(2))} to cover the monthly interest.`);
       setResult(null);
       return;
     } else {
@@ -64,9 +67,9 @@ export default function CreditCardPayoffCalculator() {
 
     setResult({
       "Time to Freedom": `${years > 0 ? years + " years " : ""}${remainingMonths} months`,
-      "Total Interest Paid": totalInterest,
-      "Total Amount Paid": B + totalInterest,
-      "Monthly Interest Cost": firstMonthInterest,
+      "Monthly Interest Cost": `${currency.symbol}${formatValue(firstMonthInterest.toFixed(2))}`,
+      "Total Interest Paid": `${currency.symbol}${formatValue(totalInterest.toFixed(2))}`,
+      "Total Amount Paid": `${currency.symbol}${formatValue((B + totalInterest).toFixed(2))}`,
       "Debt Markup": `${((totalInterest / B) * 100).toFixed(0)}% additional cost`
     });
   };
@@ -96,11 +99,11 @@ export default function CreditCardPayoffCalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
-              <CalculatorInput label="Total Balance" value={balance} onChange={setBalance} icon={globalCurrency} />
+              <CalculatorInput label="Total Balance" value={balance} onChange={setBalance} icon={currency.symbol} />
               
               <div className="input-row">
                 <CalculatorInput label="Interest Rate (APR)" value={interestRate} onChange={setInterestRate} suffix="%" />
-                <CalculatorInput label="Monthly Payment" value={monthlyPayment} onChange={setMonthlyPayment} icon={globalCurrency} />
+                <CalculatorInput label="Monthly Payment" value={monthlyPayment} onChange={setMonthlyPayment} icon={currency.symbol} />
               </div>
 
               {error && (
@@ -123,10 +126,10 @@ export default function CreditCardPayoffCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Payoff Summary" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Payoff Summary" results={result} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
-                {error ? "Please increase your payment amount." : "Enter your balance to see your debt-free roadmap."}
+                {error ? `Please increase your payment amount.` : "Enter your balance to see your debt-free roadmap."}
               </div>
             )}
             <AdPlaceholder />

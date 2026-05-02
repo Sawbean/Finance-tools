@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function SimpleInterestCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/simple-interest');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "simple-interest");
@@ -24,27 +26,30 @@ export default function SimpleInterestCalculator() {
 
   // 2. CALCULATION LOGIC
   const calculateInterest = () => {
-    const P = parseFloat(principal) || 0;
-    const R = parseFloat(rate) || 0;
-    const T = parseFloat(time) || 0;
+  const P = parseFloat(principal) || 0;
+  const R = parseFloat(rate) || 0;
+  const T = parseFloat(time) || 0;
 
-    if (P <= 0 || R <= 0 || T <= 0) {
-      setResult(null);
-      return;
-    }
+  if (P <= 0 || R <= 0 || T <= 0) {
+    setResult(null);
+    return;
+  }
 
-    const actualTimeInYears = timeUnit === "months" ? T / 12 : T;
-    const interest = (P * R * actualTimeInYears) / 100;
-    const totalAmount = P + interest;
-    const monthlyInterest = interest / (actualTimeInYears * 12);
+  const actualTimeInYears = timeUnit === "months" ? T / 12 : T;
+  const interest = (P * R * actualTimeInYears) / 100;
+  const totalAmount = P + interest;
+  
+  // Calculate average monthly interest safely
+  const totalMonths = actualTimeInYears * 12;
+  const monthlyInterest = interest / totalMonths;
 
-    setResult({
-      "Initial Principal": P,
-      "Total Simple Interest": interest,
-      "Monthly Interest Equiv.": monthlyInterest,
-      "Total Maturity Value": totalAmount,
-    });
-  };
+  setResult({
+    "Initial Principal": `${currency.symbol}${formatValue(P)}`,
+    "Total Simple Interest": `${currency.symbol}${formatValue(interest)}`,
+    "Monthly Interest Equiv.": `${currency.symbol}${formatValue(monthlyInterest)}`,
+    "Total Maturity Value": `${currency.symbol}${formatValue(totalAmount)}`,
+  });
+};
 
   useEffect(() => {
     calculateInterest();
@@ -71,7 +76,7 @@ export default function SimpleInterestCalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
-              <CalculatorInput label="Principal Amount" value={principal} onChange={setPrincipal} icon={globalCurrency} />
+              <CalculatorInput label="Principal Amount" value={principal} onChange={setPrincipal} icon={currency.symbol} />
               
               <CalculatorInput label="Annual Interest Rate" value={rate} onChange={setRate} suffix="%" />
 
@@ -104,8 +109,7 @@ export default function SimpleInterestCalculator() {
             {result ? (
               <ResultBox
                 title="Interest Breakdown"
-                results={result}
-                formatCurrency={formatCurrency}
+                results={result}              
               />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
@@ -130,12 +134,13 @@ export default function SimpleInterestCalculator() {
                 <div>100</div>
               </div>
             </div>
-
-            
-
-            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-                Unlike <strong>Compound Interest</strong>, where interest is earned on both the principal and previous interest, <strong>Simple Interest</strong> is only calculated on the original Principal. This makes it ideal for short-term personal loans, bridge financing, and certain fixed-term investments.
-            </p>
+             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
+              Unlike <strong>Compound Interest</strong>, where interest is earned on both the principal and previous interest, 
+              <strong>Simple Interest</strong> is only calculated on the original Principal. 
+              For example, a {currency.symbol}{formatValue(1000)} loan at 10% will always cost 
+              you {currency.symbol}{formatValue(100)} in interest every year, no matter how long the term is. 
+              This makes it ideal for short-term personal loans and bridge financing.
+          </p>
         </div>
       </div>
     </>

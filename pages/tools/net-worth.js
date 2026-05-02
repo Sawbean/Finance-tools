@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function NetWorthCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/net-worth');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "net-worth");
@@ -40,9 +42,9 @@ export default function NetWorthCalculator() {
     const debtRatio = totalAssets > 0 ? (totalLiabilities / totalAssets) * 100 : 0;
 
     setResult({
-      "Total Assets": totalAssets,
-      "Total Liabilities": totalLiabilities,
-      "Current Net Worth": netWorth,
+      "Total Assets": `${currency.symbol}${formatValue(Math.round(totalAssets))}`,
+      "Total Liabilities": `${currency.symbol}${formatValue(Math.round(totalLiabilities))}`,
+      "Current Net Worth": `${netWorth < 0 ? '-' : ''}${currency.symbol}${formatValue(Math.abs(Math.round(netWorth)))}`,
       "Debt-to-Asset Ratio": `${debtRatio.toFixed(1)}%`,
     });
   };
@@ -74,18 +76,18 @@ export default function NetWorthCalculator() {
               <h3 style={{fontSize: '1rem', marginBottom: '15px', color: '#059669', display: 'flex', alignItems: 'center', gap: '8px'}}>
                 <span>🏠</span> Assets (What you OWN)
               </h3>
-              <CalculatorInput label="Cash & Bank Balance" value={cash} onChange={setCash} icon={globalCurrency} />
-              <CalculatorInput label="Investments (Stocks, Funds, Gold)" value={investments} onChange={setInvestments} icon={globalCurrency} />
-              <CalculatorInput label="Real Estate & Property" value={realEstate} onChange={setRealEstate} icon={globalCurrency} />
+              <CalculatorInput label="Cash & Bank Balance" value={cash} onChange={setCash} icon={currency.symbol} />
+              <CalculatorInput label="Investments (Stocks, Funds, Gold)" value={investments} onChange={setInvestments} icon={currency.symbol} />
+              <CalculatorInput label="Real Estate & Property" value={realEstate} onChange={setRealEstate} icon={currency.symbol} />
 
               <hr style={{margin: '25px 0', border: '0', borderTop: '1px solid #e2e8f0'}} />
 
               <h3 style={{fontSize: '1rem', marginBottom: '15px', color: '#dc2626', display: 'flex', alignItems: 'center', gap: '8px'}}>
                 <span>📉</span> Liabilities (What you OWE)
               </h3>
-              <CalculatorInput label="Home & Property Loans" value={mortgage} onChange={setMortgage} icon={globalCurrency} />
-              <CalculatorInput label="Personal & Education Loans" value={otherLoans} onChange={setOtherLoans} icon={globalCurrency} />
-              <CalculatorInput label="Credit Card & Consumer Debt" value={creditCardDebt} onChange={setCreditCardDebt} icon={globalCurrency} />
+              <CalculatorInput label="Home & Property Loans" value={mortgage} onChange={setMortgage} icon={currency.symbol} />
+              <CalculatorInput label="Personal & Education Loans" value={otherLoans} onChange={setOtherLoans} icon={currency.symbol} />
+              <CalculatorInput label="Credit Card & Consumer Debt" value={creditCardDebt} onChange={setCreditCardDebt} icon={currency.symbol} />
 
             </CalculatorForm>
 
@@ -99,7 +101,7 @@ export default function NetWorthCalculator() {
           <div className="result-side">
             {result ? (
               <>
-                <ResultBox title="Financial Snapshot" results={result} formatCurrency={formatCurrency} />
+                <ResultBox title="Financial Snapshot" results={result}/>
                 {result["Current Net Worth"] < 0 && (
                   <div style={{
                       marginTop: '15px', padding: '15px', background: '#fff1f2', 
@@ -122,8 +124,12 @@ export default function NetWorthCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
             <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>Why Track Your Net Worth?</h3>
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6'}}>
-                Net worth is the single most accurate metric for personal financial health. Unlike income, which only shows what you earn, net worth reveals what you actually <em>keep</em>. By tracking this number annually, you can ensure that your lifestyle isn't growing faster than your actual wealth.
-            </p>
+              Net worth is the single most accurate metric for personal financial health. 
+              For example, if you own a home worth {currency.symbol}{formatValue(300000)} but owe 
+              {currency.symbol}{formatValue(200000)} on the mortgage, your net worth from that 
+              asset is {currency.symbol}{formatValue(100000)}. By tracking this annually, you 
+              ensure your wealth is actually growing, not just your income.
+          </p>
             
 
 [Image of assets and liabilities balance sheet diagram]

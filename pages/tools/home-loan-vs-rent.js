@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function HomeLoanVsRentCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/home-loan-vs-rent');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "home-loan-vs-rent");
@@ -60,11 +62,11 @@ export default function HomeLoanVsRentCalculator() {
     const netHomeWealth = futureHomeValue - totalLoanCost;
 
     setResult({
-      "Monthly EMI": monthlyEMI,
-      "Total Interest Payable": totalLoanCost - P,
-      "Total Rent (Over Tenure)": totalRentCost,
-      "Future Property Value": futureHomeValue,
-      "Net Wealth (If Buying)": netHomeWealth,
+      "Monthly EMI": `${currency.symbol}${formatValue(Math.round(monthlyEMI))}`,
+      "Total Repayment (20Y)": `${currency.symbol}${formatValue(Math.round(totalLoanCost))}`,
+      "Total Rent (20Y)": `${currency.symbol}${formatValue(Math.round(totalRentCost))}`,
+      "Future Property Value": `${currency.symbol}${formatValue(Math.round(futureHomeValue))}`,
+      "Net Wealth Gain/Loss": `${currency.symbol}${formatValue(Math.round(netHomeWealth))}`,
     });
   };
 
@@ -95,14 +97,14 @@ export default function HomeLoanVsRentCalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
-              <CalculatorInput label="Property Price" value={homePrice} onChange={setHomePrice} icon={globalCurrency} />
+              <CalculatorInput label="Property Price" value={homePrice} onChange={setHomePrice} icon={currency.symbol} />
               
               <div className="input-row">
                 <CalculatorInput label="Loan Rate" value={loanRate} onChange={setLoanRate} suffix="%" />
                 <CalculatorInput label="Tenure" value={loanYears} onChange={setLoanYears} suffix="Yrs" />
               </div>
 
-              <CalculatorInput label="Current Monthly Rent" value={monthlyRent} onChange={setMonthlyRent} icon={globalCurrency} />
+              <CalculatorInput label="Current Monthly Rent" value={monthlyRent} onChange={setMonthlyRent} icon={currency.symbol} />
 
               <button 
                 type="button" 
@@ -139,7 +141,7 @@ export default function HomeLoanVsRentCalculator() {
           <div className="result-side">
             {result ? (
               <>
-                <ResultBox title="Financial Comparison" results={result} formatCurrency={formatCurrency} />
+                <ResultBox title="Financial Comparison" results={result}  />
                 <div style={{
                     marginTop: '20px', padding: '20px', borderRadius: '12px', 
                     textAlign: 'center', border: '2px dashed #e2e8f0',
@@ -165,9 +167,13 @@ export default function HomeLoanVsRentCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
             <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>Buy vs Rent: The Opportunity Cost</h3>
             <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.6'}}>
-                The "Rent vs Buy" decision isn't just about monthly payments. When you buy, you are forced to save through equity, but you also pay significant interest and maintenance. When you rent, you have lower monthly commitments, but you lose out on property appreciation. The true winner depends on the **Appreciation Rate** vs the **Interest Rate**.
-            </p>
-            
+                In your scenario, your initial rent of <strong>{currency.symbol}{formatValue(monthlyRent)}</strong> will grow to 
+                <strong> {currency.symbol}{formatValue(Math.round(monthlyRent * Math.pow(1 + rentIncrease/100, loanYears)))}</strong> 
+                by year {loanYears} if the {rentIncrease}% annual hike continues. Meanwhile, your EMI stays fixed at 
+                <strong> {currency.symbol}{formatValue(Math.round(monthlyEMI))}</strong>. The real question is whether the 
+                <strong> {currency.symbol}{formatValue(Math.round(totalLoanCost - homePrice))}</strong> you pay in interest is a 
+                fair price for owning an asset that could be worth <strong> {currency.symbol}{formatValue(Math.round(futureHomeValue))}</strong>.
+            </p>            
         </div>
       </div>
     </>

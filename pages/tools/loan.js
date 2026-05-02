@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link"; 
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,9 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function LoanCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/loan');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "loan");
@@ -43,10 +46,11 @@ export default function LoanCalculator() {
     }
 
     setResult({
-      "Principal Amount": P,
-      [`Total ${calculationMethod === 'simple' ? 'Simple' : 'Compound'} Interest`]: totalInterest,
-      "Total Repayment": totalPayable,
-      "Interest Impact": `${((totalInterest / P) * 100).toFixed(2)}% of Principal`
+      "Principal Amount": `${currency.symbol}${formatValue(Math.round(P))}`,
+      [`Total ${calculationMethod === 'simple' ? 'Simple' : 'Compound'} Interest`]: `${currency.symbol}${formatValue(Math.round(totalInterest))}`,
+      "Total Repayment": `${currency.symbol}${formatValue(Math.round(totalPayable))}`,
+      "Interest Impact": `${((totalInterest / P) * 100).toFixed(1)}% of Principal`,
+      "Monthly Equivalent": `${currency.symbol}${formatValue(Math.round(totalPayable / (T * 12)))}`
     });
   };
 
@@ -90,7 +94,7 @@ export default function LoanCalculator() {
           <div className="form-box">
             {/* onReset prop ensures only the component's default reset button is used */}
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
-              <CalculatorInput label="Principal Amount" value={amount} onChange={setAmount} icon={globalCurrency} />
+              <CalculatorInput label="Principal Amount" value={amount} onChange={setAmount} icon={currency.symbol} />
               
               <div className="input-row">
                 <CalculatorInput label="Annual Rate" value={rate} onChange={setRate} suffix="%" />
@@ -116,7 +120,7 @@ export default function LoanCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Repayment Summary" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Repayment Summary" results={result} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter loan details to view breakdown.
@@ -130,7 +134,11 @@ export default function LoanCalculator() {
             <h3 style={{color: '#0369a1', marginBottom: '10px'}}>💡 Simple vs. Compound Interest</h3>
             <p style={{fontSize: '0.9rem', color: '#0369a1', lineHeight: '1.6'}}>
                 <strong>Simple Interest</strong> is calculated only on the initial principal. 
-                <strong> Compound Interest</strong> is "interest on interest"—it is calculated on the principal plus any interest that has already accumulated.
+                <strong> Compound Interest</strong> is "interest on interest." For example, 
+                on a {currency.symbol}{formatValue(100000)} loan at 10% for 2 years, 
+                Simple Interest costs {currency.symbol}{formatValue(20000)}, while Compound 
+                Interest costs {currency.symbol}{formatValue(21000)}. Over long periods, 
+                this difference grows exponentially.
             </p>
             
         </div>

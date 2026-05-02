@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,9 +12,13 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function LumpsumCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/lumpsum');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "lumpsum");
+  const { globalCurrency } = useCurrency();
   // 1. STATE MANAGEMENT
   const [investment, setInvestment] = useState(100000);
   const [expectedReturn, setExpectedReturn] = useState(12);
@@ -36,10 +40,11 @@ export default function LumpsumCalculator() {
     const futureValue = P * Math.pow(1 + r / 100, n);
     const wealthGained = futureValue - P;
 
-    setResult({
-      "Total Investment": P,
-      "Wealth Gained": wealthGained,
-      "Estimated Future Value": futureValue,
+   setResult({
+      "Total Investment": `${currency.symbol}${formatValue(Math.round(P))}`,
+      "Wealth Gained": `${currency.symbol}${formatValue(Math.round(wealthGained))}`,
+      "Estimated Future Value": `${currency.symbol}${formatValue(Math.round(futureValue))}`,
+      "Multiple of Investment": `${(futureValue / P).toFixed(2)}x`
     });
   };
 
@@ -71,7 +76,7 @@ export default function LumpsumCalculator() {
                 label="Total Investment Amount" 
                 value={investment} 
                 onChange={setInvestment} 
-                icon={globalCurrency} 
+                icon={currency.symbol} 
               />
               
               <div className="input-row">
@@ -92,7 +97,6 @@ export default function LumpsumCalculator() {
               <ResultBox
                 title="Wealth Projection"
                 results={result}
-                formatCurrency={formatCurrency}
               />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
@@ -114,7 +118,7 @@ export default function LumpsumCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-                Where <strong>P</strong> is your principal, <strong>r</strong> is the annual rate of return, and <strong>n</strong> is the number of years. The power of compounding is most visible over long durations, where the "Wealth Gained" often exceeds the "Total Investment" by several multiples.
+                Where <strong>P</strong> is your principal, <strong>r</strong> is the annual rate of return, and <strong>n</strong> is the number of years. For example, at a 12% return, your {currency.symbol}{formatValue(investment)} would roughly double every 6 years. This is known as the <em>Rule of 72</em> (72 ÷ rate = years to double).
             </p>
         </div>
       </div>

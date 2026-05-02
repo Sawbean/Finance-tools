@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function FDCalculator() {
+  const { currency } = useCurrency();
+  const formatCurrency = (val) => new Intl.NumberFormat(currency.locale, { style: 'currency', currency: currency.code }).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/fd');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "fd");
@@ -41,10 +43,10 @@ export default function FDCalculator() {
     const postTaxMaturity = maturityAmount - taxDeduction;
 
     setResult({
-      "Principal Amount": P,
-      "Total Interest Earned": totalInterest,
-      "TDS Deduction": taxDeduction,
-      "Net Maturity Value": postTaxMaturity,
+      "Principal Amount": formatCurrency(P),
+      "Total Interest Earned": formatCurrency(Math.round(totalInterest)),
+      "TDS Deduction": formatCurrency(Math.round(taxDeduction)),
+      "Net Maturity Value": formatCurrency(Math.round(postTaxMaturity)),
       "Effective Annual Yield": `${(((Math.pow(1 + r / n, n)) - 1) * 100).toFixed(2)}%`
     });
   };
@@ -76,7 +78,7 @@ export default function FDCalculator() {
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
               
-              <CalculatorInput label="Investment Amount" value={principal} onChange={setPrincipal} icon={globalCurrency} />
+              <CalculatorInput label="Investment Amount" value={principal} onChange={setPrincipal} icon={currency.symbol} />
 
               <div className="input-row">
                 <CalculatorInput label="Annual Interest Rate" value={rate} onChange={setRate} suffix="%" />
@@ -130,7 +132,7 @@ export default function FDCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Maturity Breakdown" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Maturity Breakdown" results={result} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter deposit details to calculate your maturity value.
@@ -143,7 +145,10 @@ export default function FDCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
             <h3 style={{color: '#166534', marginBottom: '10px'}}>The Power of Quarterly Compounding</h3>
             <p style={{fontSize: '0.9rem', color: '#166534', lineHeight: '1.6'}}>
-                Most banks use <strong>quarterly compounding</strong>. This means they calculate interest every 3 months and add it back to your principal. By the end of the year, you've earned interest on your interest, making your "Effective Yield" higher than the advertised rate.
+                By choosing <strong>{compounding === "4" ? "Quarterly" : compounding === "12" ? "Monthly" : "Yearly"} compounding</strong>, 
+                your effective return is <strong>{(((Math.pow(1 + r / n, n)) - 1) * 100).toFixed(2)}%</strong>—which is higher than 
+                your base rate of {rate}%. Over {years} years, this compounding effect contributes 
+                significantly to your total earnings of <strong>{formatCurrency(totalInterest)}</strong>.
             </p>
             
         </div>

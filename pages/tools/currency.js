@@ -4,7 +4,7 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 // Import global utilities
-import { formatCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { allToolGuides } from '../../data/tool-guides/index';    
 export default function CurrencyConverter() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/currency');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "currency");
@@ -35,10 +37,10 @@ export default function CurrencyConverter() {
     const convertedAmount = A * R;
 
     setResult({
-      [`Amount in ${fromCurrency}`]: A,
-      "Exchange Rate Used": R,
-      "Total Converted Value": convertedAmount,
-      "Current Unit Value": `1 ${fromCurrency} = ${R} ${toCurrency}`
+      [`Initial Amount (${fromCurrency})`]: formatValue(A), // Use raw number with locale formatting
+      "Exchange Rate": `1 ${fromCurrency} = ${R} ${toCurrency}`,
+      "Total Converted Value": `${toCurrency} ${formatValue(convertedAmount.toFixed(2))}`,
+      "Note": "Rates are manual. Check official sources for live market data."
     });
   };
 
@@ -51,6 +53,17 @@ export default function CurrencyConverter() {
     setToCurrency(t);
     setRate(r);
   };
+
+  const handleSwap = () => {
+      const oldFrom = fromCurrency;
+      const oldTo = toCurrency;
+      setFromCurrency(oldTo);
+      setToCurrency(oldFrom);
+      // Calculate the inverse rate: 1 / current rate
+      if (rate > 0) {
+        setRate(parseFloat((1 / rate).toFixed(4)));
+      }
+    };
 
   const handleReset = () => {
     setAmount(100);
@@ -90,6 +103,7 @@ export default function CurrencyConverter() {
                     <input className="custom-code-input" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value.toUpperCase())} maxLength="3" />
                 </div>
               </div>
+              
 
               <div className="input-row" style={{alignItems: 'flex-end', marginTop: '15px'}}>
                 <div style={{flex: '2'}}>

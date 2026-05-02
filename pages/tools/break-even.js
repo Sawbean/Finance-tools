@@ -5,7 +5,7 @@ import ToolSEO from '../../components/layout/ToolSEO';
 import { allToolGuides } from '../../data/tool-guides/index';
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -13,6 +13,8 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function BreakEvenCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/break-even');
 
@@ -26,24 +28,31 @@ export default function BreakEvenCalculator() {
 
   // 2. CALCULATION LOGIC
   const calculateBreakEven = () => {
-    const FC = parseFloat(fixedCosts) || 0;
-    const VC = parseFloat(variableCost) || 0;
-    const SP = parseFloat(sellingPrice) || 0;
+  const FC = parseFloat(fixedCosts) || 0;
+  const VC = parseFloat(variableCost) || 0;
+  const SP = parseFloat(sellingPrice) || 0;
 
-    if (FC <= 0 || SP <= VC) {
-      setResult(null);
-      return;
-    }
+  if (SP > 0 && SP <= VC) {
+    setError("Selling price must be greater than variable cost to reach break-even.");
+    setResult(null);
+    return;
+  }
+
+  if (FC <= 0 || SP <= VC) {
+    setResult(null);
+    setError("");
+    return;
+  }
 
     const contributionMargin = SP - VC;
     const units = FC / contributionMargin;
     const breakEvenSales = units * SP;
 
     setResult({
-      "Break-Even Units": Math.ceil(units),
-      "Break-Even Sales Value": breakEvenSales,
-      "Unit Contribution Margin": contributionMargin,
-      "Margin of Safety (%)": "Enter target sales to calculate"
+      "Units to Break-Even": Math.ceil(units).toLocaleString(currency.locale),
+      "Sales Volume Needed": `${currency.symbol}${formatValue(breakEvenSales.toFixed(2))}`,
+      "Contribution Margin": `${((contributionMargin / SP) * 100).toFixed(1)}% per unit`,
+      "Profit per Unit": `${currency.symbol}${formatValue(contributionMargin.toFixed(2))}`
     });
   };
 
@@ -75,7 +84,7 @@ export default function BreakEvenCalculator() {
                 label="Total Fixed Costs (Rent, Salaries, etc.)" 
                 value={fixedCosts} 
                 onChange={setFixedCosts} 
-                icon={globalCurrency} 
+                icon={currency.symbol} 
               />
               
               <div className="input-row">
@@ -83,13 +92,13 @@ export default function BreakEvenCalculator() {
                     label="Variable Cost per Unit" 
                     value={variableCost} 
                     onChange={setVariableCost} 
-                    icon={globalCurrency} 
+                    icon={currency.symbol} 
                 />
                 <CalculatorInput 
                     label="Selling Price per Unit" 
                     value={sellingPrice} 
                     onChange={setSellingPrice} 
-                    icon={globalCurrency} 
+                    icon={currency.symbol} 
                 />
               </div>
               
@@ -110,7 +119,6 @@ export default function BreakEvenCalculator() {
               <ResultBox
                 title="Profitability Threshold"
                 results={result}
-                formatCurrency={formatCurrency}
               />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
@@ -126,12 +134,7 @@ export default function BreakEvenCalculator() {
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginBottom: '15px'}}>
                 To calculate the break-even point in units, we divide total fixed costs by the "Contribution Margin" (the profit made on each individual unit sold).
             </p>
-
-            
-
-[Image of break-even point graph showing fixed costs variable costs and total revenue]
-
-
+              [Image of break-even point graph showing fixed costs variable costs and total revenue]
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '1.2rem', color: 'var(--primary)', fontWeight: 'bold', margin: '20px 0' }}>
               <span>BEP (Units) = </span>
               <div style={{ textAlign: 'center' }}>
@@ -141,8 +144,8 @@ export default function BreakEvenCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-                <strong>Fixed Costs:</strong> Expenses that stay the same regardless of sales (e.g., rent).<br />
-                <strong>Variable Costs:</strong> Expenses that change based on production volume (e.g., raw materials).
+                <strong>Fixed Costs:</strong> Expenses that stay the same regardless of sales (e.g., Rent at {currency.symbol}{formatValue(2000)}/mo).<br />
+                <strong>Variable Costs:</strong> Expenses that change based on volume (e.g., Materials at {currency.symbol}{formatValue(50)} per unit).
             </p>
         </div>
       </div>

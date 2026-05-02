@@ -4,7 +4,7 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,9 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function FDRDCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/fd-rd-calculator');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "fd-rd-calculator");
@@ -43,12 +46,12 @@ export default function FDRDCalculator() {
       const interest = total - P;
 
       setResult({
-        "Total Principal": P,
-        "Interest Earned": interest,
-        "Maturity Amount": total,
-        "Growth %": `${((interest / P) * 100).toFixed(1)}%`
+        "Monthly Deposit": `${currency.symbol}${formatValue(M)}`,
+        "Total Invested": `${currency.symbol}${formatValue(totalInvested)}`,
+        "Interest Earned": `${currency.symbol}${formatValue(Math.round(interest))}`,
+        "Maturity Amount": `${currency.symbol}${formatValue(Math.round(total))}`
       });
-    } else {
+          } else {
       const M = parseFloat(rdMonthly) || 0;
       const R = parseFloat(rdRate) || 0;
       const Y = parseFloat(rdYears) || 0;
@@ -121,7 +124,7 @@ export default function FDRDCalculator() {
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
               {activeTab === "fd" ? (
                 <>
-                  <CalculatorInput label="Lumpsum Principal" value={fdPrincipal} onChange={setFdPrincipal} icon={globalCurrency} />
+                  <CalculatorInput label="Lumpsum Principal" value={fdPrincipal} onChange={setFdPrincipal} icon={currency.symbol} />
                   <div className="input-row">
                       <CalculatorInput label="Interest Rate" value={fdRate} onChange={setFdRate} suffix="%" />
                       <CalculatorInput label="Duration" value={fdYears} onChange={setFdYears} suffix="Years" />
@@ -129,7 +132,7 @@ export default function FDRDCalculator() {
                 </>
               ) : (
                 <>
-                  <CalculatorInput label="Monthly Deposit" value={rdMonthly} onChange={setRdMonthly} icon={globalCurrency} />
+                  <CalculatorInput label="Monthly Deposit" value={rdMonthly} onChange={setRdMonthly} icon={currency.symbol} />
                   <div className="input-row">
                       <CalculatorInput label="Interest Rate" value={rdRate} onChange={setRdRate} suffix="%" />
                       <CalculatorInput label="Duration" value={rdYears} onChange={setRdYears} suffix="Years" />
@@ -147,7 +150,7 @@ export default function FDRDCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title={`${activeTab.toUpperCase()} Maturity Summary`} results={result} formatCurrency={formatCurrency} />
+              <ResultBox title={`${activeTab.toUpperCase()} Maturity Summary`} results={result} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter details to calculate maturity roadmap.
@@ -160,7 +163,10 @@ export default function FDRDCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
             <h3 style={{color: '#166534', marginBottom: '10px'}}>Understanding Quarterly Compounding</h3>
             <p style={{fontSize: '0.9rem', color: '#166534', lineHeight: '1.6'}}>
-                Most global banks compound FD and RD interest every 3 months. This means you earn interest on your interest four times a year. This cycle significantly boosts your final maturity amount compared to simple interest calculation.
+                By choosing the <strong>{activeTab === "fd" ? "FD" : "RD"} route</strong>, you are targeting a maturity of 
+                <strong> {currency.symbol}{result ? formatValue(Math.round(result["Maturity Amount"])) : "---"}</strong>. 
+                Remember, in an RD, because you deposit money monthly, the "Total Invested" earns interest for different durations, 
+                making the final yield slightly lower than an FD of the same amount.
             </p>
             
         </div>

@@ -5,10 +5,10 @@ import Script from 'next/script';
 import Head from 'next/head';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
+import { CurrencyProvider } from '../context/CurrencyContext';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-
   const GA_MEASUREMENT_ID = "G-0GC10LBXEC";
 
   useEffect(() => {
@@ -26,27 +26,29 @@ function MyApp({ Component, pageProps }) {
   }, [router.events]);
 
   return (
-    <>
-      {/* Global Site Head */}
+    <CurrencyProvider>
       <Head>
+        {/* Basic SEO & Icons */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
-
+        
+        {/* Social & Verification */}
         <meta property="og:image" content="/og-image.png" />
         <meta name="google-site-verification" content="A-VDqo9ZfV4Gl-6RK3gYm8p-nySB2lvq584nwERC43E"/>
       </Head>
-      {/* Google AdSense Script */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
-          crossorigin="anonymous"
-          strategy="afterInteractive"
-        />
-      {/* Google Analytics */}
+
+      {/* 1. Google AdSense */}
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
+
+      {/* 2. Google Analytics */}
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -66,7 +68,7 @@ function MyApp({ Component, pageProps }) {
         }}
       />
 
-      {/* JSON-LD Structured Data */}
+      {/* 3. JSON-LD Structured Data for SEO */}
       <Script
         id="json-ld"
         type="application/ld+json"
@@ -86,14 +88,16 @@ function MyApp({ Component, pageProps }) {
         }}
       />
 
+      {/* 4. Site Layout */}
       <Header />
-
+      
       <main>
+        {/* The Component renders the specific page content once */}
         <Component {...pageProps} />
       </main>
 
       <Footer />
-    </>
+    </CurrencyProvider>
   );
 }
 

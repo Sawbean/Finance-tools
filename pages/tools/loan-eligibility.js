@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function LoanEligibilityCalculator() {
+  const { currency } = useCurrency();
+const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/loan-eligibility');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "loan-eligibility");
@@ -48,11 +50,11 @@ export default function LoanEligibilityCalculator() {
     const eligibleLoan = (availableEMI * (1 - Math.pow(1 + r, -n))) / r;
 
     setResult({
-      "Max Monthly EMI Capacity": totalMaxEMIAllowed,
-      "Available EMI for New Loan": availableEMI,
-      "Maximum Eligible Loan": eligibleLoan,
-      "Total Repayment (Principal + Interest)": (availableEMI * n),
-      "Debt-to-Income Ratio": `${((currentEMI / monthlyIncome) * 100).toFixed(1)}%`
+      "Max Monthly EMI Capacity": `${currency.symbol}${formatValue(Math.round(totalMaxEMIAllowed))}`,
+      "Available EMI for New Loan": `${currency.symbol}${formatValue(Math.round(availableEMI))}`,
+      "Maximum Eligible Loan": `${currency.symbol}${formatValue(Math.round(eligibleLoan))}`,
+      "Debt-to-Income (DTI) Ratio": `${((currentEMI / monthlyIncome) * 100).toFixed(1)}%`,
+      "Safety Margin Status": availableEMI > 0 ? "Eligible ✅" : "Over-leveraged ⚠️"
     });
   };
 
@@ -83,8 +85,8 @@ export default function LoanEligibilityCalculator() {
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
               
-              <CalculatorInput label="Monthly Net Salary (Take-home)" value={income} onChange={setIncome} icon={globalCurrency} />
-              <CalculatorInput label="Existing EMIs (Loans/Credit Cards)" value={existingEMI} onChange={setExistingEMI} icon={globalCurrency} />
+              <CalculatorInput label="Monthly Net Salary (Take-home)" value={income} onChange={setIncome} icon={currency.symbol} />
+              <CalculatorInput label="Existing EMIs (Loans/Credit Cards)" value={existingEMI} onChange={setExistingEMI} icon={currency.symbol} />
 
               <div className="input-row">
                 <CalculatorInput label="Interest Rate" value={interestRate} onChange={setInterestRate} suffix="%" />
@@ -129,7 +131,7 @@ export default function LoanEligibilityCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Eligibility Summary" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Eligibility Summary" results={result} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter your income details to see your borrowing limit.
@@ -141,8 +143,13 @@ export default function LoanEligibilityCalculator() {
 
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#eff6ff', borderRadius: '12px', border: '1px solid #bfdbfe'}}>
             <h3 style={{color: '#1e40af', marginBottom: '10px'}}>What is FOIR?</h3>
-            <p style={{fontSize: '0.95rem', color: '#1e40af', lineHeight: '1.6'}}>
-                Banks and lenders use <strong>FOIR (Fixed Obligation to Income Ratio)</strong> to ensure you can afford your lifestyle alongside your debt. If a bank sets a 50% FOIR, they assume half your income goes to essential living costs (food, rent, utilities), and only the remaining half is available for all loan repayments combined.
+              <p style={{fontSize: '0.95rem', color: '#1e40af', lineHeight: '1.6'}}>
+                Banks use <strong>FOIR</strong> to ensure you aren't "house poor." If you earn 
+                {currency.symbol}{formatValue(income)} and the bank uses a 50% FOIR, they 
+                limit your <em>total</em> debt payments (old loans + new loan) to 
+                {currency.symbol}{formatValue(income * 0.5)}. If you already pay 
+                {currency.symbol}{formatValue(existingEMI)} in EMIs, your eligibility 
+                decreases significantly.
             </p>
             
         </div>

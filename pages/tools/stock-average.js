@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,10 +12,11 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function StockAverageCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/stock-average');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "stock-average");
-
   // 1. STATE MANAGEMENT
   const [buy1Qty, setBuy1Qty] = useState(100);
   const [buy1Price, setBuy1Price] = useState(500);
@@ -43,9 +44,9 @@ export default function StockAverageCalculator() {
 
     setResult({
       "Total Quantity": totalQty,
-      "Total Investment": totalCost,
-      "Average Price per Share": avgPrice,
-      "Break-even Point": avgPrice.toFixed(2)
+      "Total Investment": `${currency.symbol}${formatValue(totalCost)}`,
+      "Average Price per Share": `${currency.symbol}${formatValue(avgPrice)}`,
+      "Break-even Point": `${currency.symbol}${formatValue(avgPrice)}`
     });
   };
 
@@ -80,7 +81,7 @@ export default function StockAverageCalculator() {
                 <h4 style={{marginBottom: '10px', color: '#475569'}}>First Purchase</h4>
                 <div className="input-row">
                     <CalculatorInput label="Quantity" value={buy1Qty} onChange={setBuy1Qty} placeholder="Ex: 100" />
-                    <CalculatorInput label="Purchase Price" value={buy1Price} onChange={setBuy1Price} icon={globalCurrency} />
+                    <CalculatorInput label="Purchase Price" value={buy1Price} onChange={setBuy1Price} icon={currency.symbol} />
                 </div>
               </div>
 
@@ -88,7 +89,7 @@ export default function StockAverageCalculator() {
                 <h4 style={{marginBottom: '10px', color: '#475569'}}>Second Purchase (Optional)</h4>
                 <div className="input-row">
                     <CalculatorInput label="Quantity" value={buy2Qty} onChange={setBuy2Qty} placeholder="Ex: 50" />
-                    <CalculatorInput label="Purchase Price" value={buy2Price} onChange={setBuy2Price} icon={globalCurrency} />
+                    <CalculatorInput label="Purchase Price" value={buy2Price} onChange={setBuy2Price} icon={currency.symbol} />
                 </div>
               </div>
             </CalculatorForm>
@@ -105,7 +106,6 @@ export default function StockAverageCalculator() {
               <ResultBox
                 title="Investment Summary"
                 results={result}
-                formatCurrency={formatCurrency}
               />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>

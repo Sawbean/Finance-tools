@@ -1,29 +1,30 @@
-// components/calculator/ResultBox.js
+import { useCurrency } from '../../context/CurrencyContext';
 
-export default function ResultBox({ title, results, formatCurrency }) {
-  // Helper to format result labels like 'Monthly EMI', 'Total Payment', etc.
+export default function ResultBox({ title, results }) {
+  const { currency } = useCurrency();
+
   const formatLabel = (key) => {
     return key
-      .replace(/([A-Z])/g, " $1") // insert space before uppercase letters
-      .replace(/^./, (str) => str.toUpperCase()) // capitalize first letter
+      .replace(/([A-Z])/g, " $1")
+      .replace(/^./, (str) => str.toUpperCase())
       .trim();
+  };
+
+  // Professional formatting based on selected currency
+  const formatValue = (val) => {
+    return new Intl.NumberFormat(currency.locale).format(val);
   };
 
   return (
     <div className="result-box">
       {title && <h2>{title}</h2>}
-
       <div className="result-grid">
         {Object.entries(results).map(([key, value]) => (
           <div key={key} className="result-item">
-
-            {/* Label with proper spacing and capitalization */}
             <span className="result-label">{formatLabel(key)}</span>
-
-            {/* Value formatted as currency if number */}
             <span className="result-value">
-              {typeof value === "number" && formatCurrency
-                ? `Rs. ${formatCurrency(value)}`
+              {typeof value === "number" 
+                ? `${currency.symbol} ${formatValue(value)}` 
                 : value}
             </span>
           </div>

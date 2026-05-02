@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function SavingsGoalCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/savings-goal');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "savings-goal");
@@ -49,12 +51,12 @@ export default function SavingsGoalCalculator() {
     }
 
     setResult({
-      "Inflation Adjusted Goal": inflationAdjustedGoal,
-      "Existing Savings Growth": futureValueOfCurrent,
-      "Monthly Saving Needed": monthlySaving,
-      "Weekly Micro-Goal": monthlySaving / 4.33,
-      "Total Interest Earned": inflationAdjustedGoal - (monthlySaving * n) - C,
-    });
+    "Inflation Adjusted Goal": `${currency.symbol}${formatValue(Math.round(inflationAdjustedGoal))}`,
+    "Existing Savings Growth": `${currency.symbol}${formatValue(Math.round(futureValueOfCurrent))}`,
+    "Monthly Saving Needed": `${currency.symbol}${formatValue(Math.ceil(monthlySaving))}`,
+    "Weekly Micro-Goal": `${currency.symbol}${formatValue(Math.ceil(monthlySaving / 4.33))}`,
+    "Total Interest Earned": `${currency.symbol}${formatValue(Math.round(inflationAdjustedGoal - (monthlySaving * n) - C))}`,
+  });
   };
 
   useEffect(() => {
@@ -84,10 +86,10 @@ export default function SavingsGoalCalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
-              <CalculatorInput label="Target Amount (Today's Value)" value={goal} onChange={setGoal} icon={globalCurrency} />
+              <CalculatorInput label="Target Amount (Today's Value)" value={goal} onChange={setGoal} icon={currency.symbol} />
               
               <div className="input-row">
-                <CalculatorInput label="Current Savings" value={currentSavings} onChange={setCurrentSavings} icon={globalCurrency} />
+                <CalculatorInput label="Current Savings" value={currentSavings} onChange={setCurrentSavings} icon={currency.symbol} />
                 <CalculatorInput label="Years to Reach" value={years} onChange={setYears} suffix="Years" />
               </div>
 
@@ -125,7 +127,7 @@ export default function SavingsGoalCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Your Savings Plan" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Your Savings Plan" results={result}/>
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter your target to see your roadmap.
@@ -138,7 +140,11 @@ export default function SavingsGoalCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
             <h3 style={{marginBottom: '15px'}}>Beat the "Silent Thief" (Inflation)</h3>
             <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#475569'}}>
-                Inflation reduces your <strong>purchasing power</strong> over time. A "Savings Goal" is only useful if it accounts for the fact that prices will rise. By investing your savings in assets that outpace inflation, you ensure your hard-earned money stays valuable.
+                Inflation reduces your <strong>purchasing power</strong> over time. For example, if inflation is 5%, 
+                an item costing {currency.symbol}{formatValue(100)} today will cost 
+                roughly {currency.symbol}{formatValue(163)} in 10 years. 
+                By investing your savings in assets that outpace inflation, you ensure your 
+                hard-earned money stays valuable.
             </p>
         </div>
       </div>

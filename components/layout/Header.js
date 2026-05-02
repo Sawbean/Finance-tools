@@ -129,7 +129,7 @@ export default function Header() {
                 <div className={`tools-submenu ${openCategory === "misc" ? "show" : ""}`}>
                   <Link href="/tools/credit-card-payoff" onClick={closeMenu}>Credit Card Payoff</Link>
                   <Link href="/tools/ppf-nps-calculator" onClick={closeMenu}>PPF & NPS Calculator</Link>
-                  <Link href="/tools/saving-goal" onClick={closeMenu}>Saving Goal Calculator</Link>
+                  <Link href="/tools/savings-goal" onClick={closeMenu}>Saving Goal Calculator</Link>
                   <Link href="/tools/income-tax" onClick={closeMenu}>Income Tax</Link>
                   <Link href="/tools/gst-vat-tax" onClick={closeMenu}>GST / VAT / Tax</Link>
                   <Link href="/tools/net-worth" onClick={closeMenu}>Net Worth Calculator</Link>

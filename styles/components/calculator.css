@@ -241,3 +241,23 @@
   color: #10b981; 
   font-weight: 800;
 }
+
+/* Responsive adjustments for calculator inputs */
+@media (max-width: 600px) {
+  .input-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px; /* Adds space between stacked inputs on mobile */
+  }
+
+  .custom-code-input {
+    width: 100% !important; /* Full width on mobile for easier tapping */
+    max-width: 120px; /* But keep it reasonable for a 3-letter code */
+    margin-top: 5px;
+  }
+  
+  /* Ensuring the labels stay aligned when stacked */
+  .input-label {
+    margin-bottom: 4px;
+  }
+}

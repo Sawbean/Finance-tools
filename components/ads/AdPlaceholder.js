@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { allFinanceArticles } from "../../data/articles/index";
+import { allToolGuides } from "../../data/tool-guides/index";
 
 export default function AdPlaceholder({
   className = "",

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,9 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function IncomeTaxCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/income-tax');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "income-tax");
@@ -44,11 +47,11 @@ export default function IncomeTaxCalculator() {
     }
 
     setResult({
-      "Annual Taxable Income": taxableIncome,
-      "Total Annual Tax": tax,
+      "Annual Taxable Income": `${currency.symbol}${formatValue(taxableIncome)}`,
+      "Total Annual Tax": `${currency.symbol}${formatValue(Math.round(tax))}`,
+      "Highest Tax Bracket": `${taxableIncome > (threshold + 1500000) ? '36%' : taxableIncome > (threshold + 500000) ? '30%' : '10-20%'}`,
       "Effective Tax Rate": `${((tax / grossIncome) * 100).toFixed(2)}%`,
-      "Monthly Take-Home": (grossIncome - tax) / 12,
-      "Annual Net Income": grossIncome - tax,
+      "Monthly Take-Home": `${currency.symbol}${formatValue(Math.round((grossIncome - tax) / 12))}`,
     });
   };
 
@@ -58,7 +61,7 @@ export default function IncomeTaxCalculator() {
 
   const handleReset = () => {
     setIncome(""); 
-    setDeductions(0); 
+    setDeductions(""); 
     setFilingStatus("single");
     setResult(null);
   };
@@ -77,7 +80,7 @@ export default function IncomeTaxCalculator() {
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
               
-              <CalculatorInput label="Total Annual Income" value={income} onChange={setIncome} icon={globalCurrency} />
+              <CalculatorInput label="Total Annual Income" value={income} onChange={setIncome} icon={currency.symbol} />
 
               <div style={{marginBottom: '20px'}}>
                 <label className="input-label">Filing Status</label>
@@ -121,7 +124,7 @@ export default function IncomeTaxCalculator() {
 
               {showAdvanced && (
                 <div style={{marginTop: '15px', padding: '15px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0'}}>
-                  <CalculatorInput label="Total Deductions" value={deductions} onChange={setDeductions} icon={globalCurrency} />
+                  <CalculatorInput label="Total Deductions" value={deductions} onChange={setDeductions} icon={currency.symbol} />
                   <p style={{fontSize: '0.75rem', color: '#64748b', marginTop: '8px'}}>
                     *Deductions like CIT, PF, or Insurance premiums reduce your taxable income.
                   </p>
@@ -138,7 +141,7 @@ export default function IncomeTaxCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Tax Summary" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Tax Summary" results={result} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter income details to see breakdown.
@@ -150,8 +153,8 @@ export default function IncomeTaxCalculator() {
 
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd'}}>
             <h3 style={{color: '#0369a1', marginBottom: '15px'}}>💡 Understanding Progressive Taxation</h3>
-            <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#0369a1'}}>
-                In a progressive tax system, your income is divided into "slabs." You only pay the higher tax rate on the portion of your income that falls into that specific slab.
+           <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#0369a1'}}>
+                In a progressive tax system, your income is divided into "slabs." For your income of <strong>{currency.symbol}{formatValue(income)}</strong>, the first <strong>{currency.symbol}{formatValue(filingStatus === 'single' ? 500000 : 600000)}</strong> is only taxed at 1% as a social security contribution. You only pay the 30% or 36% rates on the amounts <em>above</em> those high-income thresholds.
             </p>
             
         </div>

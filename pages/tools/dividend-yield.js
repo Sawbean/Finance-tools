@@ -3,7 +3,7 @@ import Link from "next/link";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 import { allToolGuides } from '../../data/tool-guides/index';  
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -11,6 +11,8 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function DividendYieldCalculator() {
+  const { currency } = useCurrency();
+  const formatCurrency = (val) => new Intl.NumberFormat(currency.locale, { style: 'currency', currency: currency.code }).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/dividend-yield');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "dividend-yield");
@@ -32,11 +34,11 @@ export default function DividendYieldCalculator() {
     const yieldPercentage = (D / P) * 100;
 
     setResult({
-      "Annual Dividend per Share": D,
-      "Current Share Price": P,
-      "Dividend Yield": `${yieldPercentage.toFixed(2)}%`,
-      "Payout Ratio Category": yieldPercentage > 8 ? "High Yield (Check Sustainability)" : "Standard Yield"
-    });
+        "Annual Dividend per Share": formatCurrency(D),
+        "Current Share Price": formatCurrency(P),
+        "Dividend Yield": `${yieldPercentage.toFixed(2)}%`,
+        "Risk Profile": yieldPercentage > 8 ? "⚠️ High Yield (Check Sustainability)" : "✅ Healthy Yield"
+      });
   };
 
   useEffect(() => {
@@ -66,14 +68,14 @@ export default function DividendYieldCalculator() {
                 label="Current Share Price" 
                 value={sharePrice} 
                 onChange={setSharePrice} 
-                icon={globalCurrency} 
+                icon={currency.symbol} 
               />
               
               <CalculatorInput 
                 label="Annual Dividend per Share" 
                 value={annualDividend} 
                 onChange={setAnnualDividend} 
-                icon={globalCurrency} 
+                icon={currency.symbol} 
               />
               
               <p style={{fontSize: '0.8rem', color: '#64748b', marginTop: '10px', fontStyle: 'italic'}}>
@@ -93,7 +95,6 @@ export default function DividendYieldCalculator() {
               <ResultBox
                 title="Yield Analysis"
                 results={result}
-                formatCurrency={formatCurrency}
               />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
@@ -119,7 +120,7 @@ export default function DividendYieldCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-                <strong>Important Note:</strong> A very high dividend yield (e.g., above 10%) might look attractive, but it can sometimes be a "dividend trap"—a sign that the share price has crashed or the company may soon cut its dividend payout.
+                <strong>Strategy Tip:</strong> Yield-focused investors often look for "Dividend Aristocrats"—companies that have consistently increased their payouts for over 25 years. While a high yield of <strong>{yieldPercentage.toFixed(2)}%</strong> is tempting, always cross-reference it with the <em>Payout Ratio</em> to ensure the company has enough earnings to cover these payments.
             </p>
         </div>
       </div>

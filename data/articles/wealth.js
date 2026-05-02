@@ -80,4 +80,130 @@ export const wealthArticles = {
     ]
 },
 
+"emerging-market-capital-compounding": {
+    "title": "The Alpha of Patience: A White-Paper on Capital Compounding in Emerging Economies",
+    "description": "An expert-level analysis of how high-growth emerging markets impact the velocity of wealth. Learn to navigate liquidity premiums and inflation-adjusted returns.",
+    "masterCategory": "wealth",
+    "type": "white-paper",
+    "category": "Strategic Finance",
+    "publishDate": "2026-05-02",
+    "readTime": "15 min read",
+    "image": "/images/emerging-markets-wealth-strategy.webp",
+    "tool": "compound-interest-calculator",
+    "content": [
+        {
+            "type": "paragraph",
+            "text": "In developed markets, wealth preservation is often a matter of tracking indices. However, in emerging economies like Nepal and India, the 'Velocity of Capital' is dictated by a unique intersection of high GDP growth and significant inflationary pressure. This white-paper explores the mathematical necessity of aggressive compounding to outpace currency debasement and capture the 'Emerging Market Risk Premium'."
+        },
+        {
+            "type": "heading",
+            "text": "The Liquidity Premium and The 16% Threshold"
+        },
+        {
+            "type": "keyTakeaways",
+            "items": [
+                "Real Return Gap: Traditional savings often yield 'negative real returns' when adjusted for true local inflation.",
+                "Equity Risk Premium: Emerging markets require a higher 'hurdle rate' to justify the volatility risk.",
+                "Liquidity Traps: Understanding the cost of 'exit slippage' in smaller capital markets."
+            ]
+        },
+        {
+            "type": "heading",
+            "text": "Technical Analysis: Hurdle Rates & Inflation Neutrality"
+        },
+        {
+            "type": "paragraph",
+            "text": "To achieve true wealth, an investor must calculate their **Hurdle Rate**—the minimum rate of return necessary to cover taxes, inflation, and risk. In a market where headline inflation sits at 6%, but the 'basket of goods' for a high-net-worth individual rises at 9%, any return below 10% is technically a wealth-destroying event. We define this as the **Inflation-Neutrality Point**."
+        },
+        {
+            "type": "list",
+            "items": [
+                "**Quantitative Easing (QE) Impact**: How global liquidity inflows affect local asset price inflation.",
+                "**Dividend Reinvestment (DRIP)**: The mathematical impact of reinvesting dividends in high-growth cycles to lower the cost basis.",
+                "**The Nepal-India Peg**: Strategic advantages of currency stability in cross-border capital allocation."
+            ]
+        },
+        {
+            "type": "image",
+            "src": "/images/inflation-vs-equity-returns-chart.webp",
+            "alt": "Chart comparing emerging market equity growth vs local inflation rates over 10 years"
+        },
+        {
+            "type": "heading",
+            "text": "Information Gain: The 'Volatility Harvesting' Insight"
+        },
+        {
+            "type": "paragraph",
+            "text": "ToolFinance Analysis: Unlike Western markets where low volatility is sought, the emerging market expert uses **Volatility Harvesting**. By utilizing a disciplined Systematic Investment Plan (SIP), an investor converts price swings into a lower average purchase price. Our research shows that in markets like the NEPSE or NSE, high volatility actually increases the internal rate of return (IRR) for long-term compounders compared to 'smooth' low-growth markets."
+        },
+        {
+            "type": "paragraph",
+            "text": "Mastering this requires precision. Use our Compound Interest Calculator to model your Hurdle Rate and ensure your portfolio is moving beyond mere preservation into true exponential growth."
+        }
+    ]
+},
+
+"death-of-fixed-deposits-opinion": {
+    "title": "Is the Safety of Fixed Deposits a Financial Illusion? A Modern Critique",
+    "description": "Opinion: Why relying on traditional banking products like FDs might be the biggest risk to your retirement in the 2025-2030 economic cycle.",
+    "masterCategory": "wealth",
+    "type": "opinion",
+    "category": "Market Analysis",
+    "publishDate": "2026-05-03",
+    "readTime": "8 min read",
+    "image": "/images/traditional-banking-vs-digital-assets.webp",
+    "tool": "fd-calculator",
+    "content": [
+        {
+            "type": "paragraph",
+            "text": "For decades, the Fixed Deposit (FD) has been the 'Gold Standard' of safety for South Asian households. But in an era of digital payment infrastructure like RTGS 2.0 and instantaneous global capital flow, the traditional FD is starting to look less like a shield and more like a gilded cage. We are witnessing the 'Great Yield Migration', and those who stay behind may find their purchasing power evaporated by 2030."
+        },
+        {
+            "type": "heading",
+            "text": "The Opportunity Cost of 'Guaranteed' Returns"
+        },
+        {
+            "type": "keyTakeaways",
+            "items": [
+                "The Yield Gap: FDs rarely outperform the broader market index over any 5-year rolling period.",
+                "Tax Inefficiency: Fixed interest is often taxed at the highest marginal rate, unlike capital gains.",
+                "Psychological Bias: The 'Illusion of Safety' prevents investors from building generational wealth."
+            ]
+        },
+        {
+            "type": "heading",
+            "text": "Opinion: The Institutional Yield Trap"
+        },
+        {
+            "type": "paragraph",
+            "text": "Banks use your FD capital to lend to corporations at significantly higher rates or invest in high-yield debt instruments. Essentially, the bank is 'arbitraging' your fear of the market. While they capture the **Credit Spread**, you are left with a return that barely skims the surface of the **Consumer Price Index (CPI)**."
+        },
+        {
+            "type": "list",
+            "items": [
+                "**Negative Real Yields**: When inflation (7%) exceeds FD rates (6.5%), you are paying the bank to hold your money.",
+                "**Liquidity Constraints**: The 'Premature Withdrawal Penalty' is a relic of 20th-century banking that punishes agility.",
+                "**Asset Reallocation**: The case for moving from 100% fixed-income to a 60/40 Equity-Debt split."
+            ]
+        },
+        {
+            "type": "image",
+            "src": "/images/fd-returns-vs-market-index.webp",
+            "alt": "Graphic comparing 10-year growth of 100k in an FD vs a Diversified Mutual Fund"
+        },
+        {
+            "type": "heading",
+            "text": "Information Gain: The 2026 Interest Rate Pivot"
+        },
+        {
+            "type": "paragraph",
+            "text": "ToolFinance Analysis: With the recent digital infrastructure upgrades, we predict a permanent compression of interest rate spreads. As banking becomes more competitive and transparent, the 'lazy money' in FDs will earn even less. The modern expert must look toward **Digital Assets** and **Direct Equity** to find the risk-adjusted returns previously reserved for institutional players."
+        },
+        {
+            "type": "paragraph",
+            "text": "Don't take my word for it—run the numbers yourself. Use our FD Calculator to see your post-tax, inflation-adjusted return. You might find that the 'safest' investment is actually your biggest risk."
+        }
+    ]
+}
+
 };

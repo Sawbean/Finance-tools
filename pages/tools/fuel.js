@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
-
+import { formatCurrency, globalCurrency } from "../../utils/formatters";  
+import { useCurrency } from "../../context/CurrencyContext";
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
@@ -13,6 +13,8 @@ import ToolSEO from '../../components/layout/ToolSEO';
 import { allToolGuides } from '../../data/tool-guides/index';
 
 export default function FuelCalculator() {
+   const { currency } = useCurrency();
+   const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/fuel');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "fuel");
@@ -44,10 +46,10 @@ export default function FuelCalculator() {
     setResult({
       "Total Trip Distance": `${effectiveDistance} KM`,
       "Fuel Required": `${fuelNeeded.toFixed(2)} Liters`,
-      "Fuel Expense": fuelCost,
-      "Tolls & Parking": extra,
-      "Grand Total": totalTripCost,
-      "Cost Per Person": costPerPerson
+      "Fuel Expense": `${currency.symbol}${formatValue(Math.round(fuelCost))}`,
+      "Tolls & Parking": `${currency.symbol}${formatValue(Math.round(extra))}`,
+      "Grand Total": `${currency.symbol}${formatValue(Math.round(totalTripCost))}`,
+      "Cost Per Person": `${currency.symbol}${formatValue(Math.round(costPerPerson))}`
     });
   };
 
@@ -102,12 +104,12 @@ export default function FuelCalculator() {
 
               <div className="input-row">
                 <CalculatorInput label="Avg. Mileage" value={mileage} onChange={setMileage} suffix="KM/L" />
-                <CalculatorInput label="Fuel Price" value={price} onChange={setPrice} icon={globalCurrency} />
+                <CalculatorInput label="Fuel Price" value={price} onChange={setPrice} icon={currency.symbol} />
               </div>
 
               <div className="input-row">
                 <CalculatorInput label="Passengers" value={passengers} onChange={setPassengers} icon="👤" />
-                <CalculatorInput label="Tolls / Parking" value={otherCosts} onChange={setOtherCosts} icon={globalCurrency} />
+                <CalculatorInput label="Tolls / Parking" value={otherCosts} onChange={setOtherCosts} icon={currency.symbol} />
               </div>
             </CalculatorForm>
 
@@ -120,7 +122,7 @@ export default function FuelCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Trip Budget Summary" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Trip Budget Summary" results={result}  />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter distance and mileage to start planning.
@@ -133,8 +135,13 @@ export default function FuelCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#ecfdf5', borderRadius: '12px', border: '1px solid #a7f3d0'}}>
             <h3 style={{color: '#065f46', marginBottom: '10px'}}>💡 Pro Tip: Optimize Your Journey</h3>
             <p style={{fontSize: '0.9rem', color: '#065f46', lineHeight: '1.6'}}>
-                Driving at a steady speed of 60-80 KM/H can improve fuel efficiency by up to 20%. Removing unnecessary weight and keeping tires properly inflated also reduces fuel consumption.
-            </p>
+                  For your {effectiveDistance} KM trip, splitting the cost between 
+                  <strong> {passengers} people</strong> saves everyone 
+                  <strong> {currency.symbol}{formatValue(Math.round(totalTripCost - costPerPerson))}</strong> 
+                  compared to driving alone. To further reduce your 
+                  <strong> {currency.symbol}{formatValue(Math.round(fuelCost))}</strong> fuel expense, 
+                  try maintaining a steady speed and avoiding rapid acceleration.
+              </p>
         </div>
       </div>
     </>

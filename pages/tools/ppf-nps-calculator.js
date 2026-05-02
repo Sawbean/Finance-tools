@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,9 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function PPFNPSCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/ppf-nps-calculator');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "ppf-nps");
@@ -48,10 +51,10 @@ export default function PPFNPSCalculator() {
     const totalTaxSaved = yearlyTaxSaved * Y;
 
     setResult({
-      "Total Investment": totalInvested,
-      "Wealth Gained": totalInterest,
-      "Maturity Amount": maturityValue,
-      "Total Tax Saved": totalTaxSaved,
+      "Total Investment": `${currency.symbol}${formatValue(Math.round(totalInvested))}`,
+      "Wealth Gained": `${currency.symbol}${formatValue(Math.round(totalInterest))}`,
+      "Maturity Amount": `${currency.symbol}${formatValue(Math.round(maturityValue))}`,
+      ...(taxSlab > 0 && { "Total Tax Saved": `${currency.symbol}${formatValue(Math.round(totalTaxSaved))}` }),
       "Profit Margin": `${((totalInterest / totalInvested) * 100).toFixed(0)}%`
     });
   };
@@ -81,7 +84,7 @@ export default function PPFNPSCalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
-              <CalculatorInput label="Monthly Contribution" value={monthlyInvest} onChange={setMonthlyInvest} icon={globalCurrency} />
+              <CalculatorInput label="Monthly Contribution" value={monthlyInvest} onChange={setMonthlyInvest} icon={currency.symbol} />
 
               <div className="input-row">
                 <CalculatorInput label="Expected Rate" value={rate} onChange={setRate} suffix="%" />
@@ -129,7 +132,7 @@ export default function PPFNPSCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Maturity Breakdown" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Maturity Breakdown" results={result}/>
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter contribution details to see your future wealth.
@@ -142,9 +145,12 @@ export default function PPFNPSCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#ecfdf5', borderRadius: '12px', border: '1px solid #10b981'}}>
             <h3 style={{color: '#065f46', marginBottom: '10px'}}>The Power of Long-Term Compounding</h3>
             <p style={{fontSize: '0.9rem', color: '#065f46', lineHeight: '1.6'}}>
-                When you invest consistently over 15+ years, your interest starts earning its own interest at an accelerated rate. In many long-term government or retirement schemes, the cumulative interest earned can eventually surpass the total amount you physically invested.
-            </p>
-            
+              When you invest consistently over 15+ years, your interest starts earning its own interest at an 
+              accelerated rate. For example, in a tax-advantaged account, saving {currency.symbol}{formatValue(monthlyInvest)} monthly 
+              doesn't just build wealth—it can also reduce your annual tax bill by {currency.symbol}{formatValue((monthlyInvest * 12) * (taxSlab/100))} depending 
+              on your local laws.
+          </p>
+                      
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,9 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function RetirementCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/retirement');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "retirement");
@@ -51,11 +54,11 @@ export default function RetirementCalculator() {
     const monthlyPension = (totalFund * 0.05) / 12;
 
     setResult({
-      "Estimated Retirement Fund": totalFund,
-      "Monthly Pension (Post-Retire)": monthlyPension,
-      "Buying Power (Today's Value)": inflationAdjustedValue,
-      "Total Amount Invested": (monthly * n) + corpus,
-      "Wealth Growth": totalFund - ((monthly * n) + corpus)
+      "Estimated Retirement Fund": `${currency.symbol}${formatValue(Math.round(totalFund))}`,
+      "Monthly Pension (Post-Retire)": `${currency.symbol}${formatValue(Math.round(monthlyPension))}`,
+      "Buying Power (Today's Value)": `${currency.symbol}${formatValue(Math.round(inflationAdjustedValue))}`,
+      "Total Amount Invested": `${currency.symbol}${formatValue(Math.round((monthly * n) + corpus))}`,
+      "Wealth Growth": `${currency.symbol}${formatValue(Math.round(totalFund - ((monthly * n) + corpus)))}`
     });
   };
 
@@ -90,7 +93,7 @@ export default function RetirementCalculator() {
                 <CalculatorInput label="Retirement Age" value={retireAge} onChange={setRetireAge} />
               </div>
 
-              <CalculatorInput label="Monthly Investment" value={monthlySaving} onChange={setMonthlySaving} icon={globalCurrency} />
+              <CalculatorInput label="Monthly Investment" value={monthlySaving} onChange={setMonthlySaving} icon={currency.symbol} />
               <CalculatorInput label="Expected Returns (%)" value={rate} onChange={setRate} suffix="%" />
 
               <button 
@@ -107,7 +110,7 @@ export default function RetirementCalculator() {
 
               {showAdvanced && (
                 <div style={{marginTop: '15px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-                  <CalculatorInput label="Current Savings" value={existingCorpus} onChange={setExistingCorpus} icon={globalCurrency} />
+                  <CalculatorInput label="Current Savings" value={existingCorpus} onChange={setExistingCorpus} icon={currency.symbol} />
                   <CalculatorInput label="Expected Inflation (%)" value={inflation} onChange={setInflation} suffix="%" />
                 </div>
               )}
@@ -123,7 +126,7 @@ export default function RetirementCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Retirement Summary" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Retirement Summary" results={result}/>
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter your details to see your roadmap.
@@ -137,7 +140,11 @@ export default function RetirementCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#fdf2f2', borderRadius: '12px', border: '1px solid #fee2e2'}}>
             <h3 style={{color: '#991b1b', marginBottom: '10px'}}>The 4% - 5% Safe Withdrawal Rule</h3>
             <p style={{fontSize: '0.9rem', color: '#991b1b', lineHeight: '1.6'}}>
-                Financial experts suggest that if you withdraw <strong>4% to 5%</strong> of your total fund every year, your money should theoretically last for 30+ years. This allows your remaining balance to keep growing even while you are "spending" it during retirement.
+                Financial experts suggest that if you withdraw <strong>4% to 5%</strong> of your total fund every year, 
+                your money should theoretically last for 30+ years. For instance, a fund of 
+                {currency.symbol}{formatValue(1000000)} could provide you with an annual income 
+                of {currency.symbol}{formatValue(40000)} to {currency.symbol}{formatValue(50000)} while 
+                the principal stays relatively intact.
             </p>
             
         </div>

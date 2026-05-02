@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function MortgageCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/mortgage');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "mortgage");
@@ -48,12 +50,12 @@ export default function MortgageCalculator() {
     const totalMonthly = monthlyPI + monthlyTax + monthlyIns;
 
     setResult({
-      "Total Loan Amount": principal,
+      "Total Loan Amount": `${currency.symbol}${formatValue(Math.round(principal))}`,
       "Down Payment (%)": `${downPaymentPercent.toFixed(1)}%`,
-      "Monthly P & I": monthlyPI,
-      "Property Tax & Ins": monthlyTax + monthlyIns,
-      "Total Monthly Payment": totalMonthly,
-      "Total Interest (Full Term)": (monthlyPI * N) - principal
+      "Monthly P & I": `${currency.symbol}${formatValue(Math.round(monthlyPI))}`,
+      "Property Tax & Ins": `${currency.symbol}${formatValue(Math.round(monthlyTax + monthlyIns))}`,
+      "Total Monthly Payment": `${currency.symbol}${formatValue(Math.round(totalMonthly))}`,
+      "Total Interest (Full Term)": `${currency.symbol}${formatValue(Math.round((monthlyPI * N) - principal))}`
     });
   };
 
@@ -81,10 +83,10 @@ export default function MortgageCalculator() {
             {/* Standardized: onReset prop handles the button, no extra button needed below */}
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
               
-              <CalculatorInput label="Home Purchase Price" value={homePrice} onChange={setHomePrice} icon={globalCurrency} />
+              <CalculatorInput label="Home Purchase Price" value={homePrice} onChange={setHomePrice} icon={currency.symbol} />
               
               <div className="input-row">
-                <CalculatorInput label="Down Payment" value={downPayment} onChange={setDownPayment} icon={globalCurrency} />
+                <CalculatorInput label="Down Payment" value={downPayment} onChange={setDownPayment} icon={currency.symbol} />
                 <div style={{flex: 1, padding: '35px 10px 0', fontSize: '0.9rem', color: '#64748b'}}>
                     <strong>{((downPayment/homePrice)*100 || 0).toFixed(1)}%</strong> of price
                 </div>
@@ -112,7 +114,7 @@ export default function MortgageCalculator() {
                 <div style={{marginTop: '15px', padding: '15px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0'}}>
                   <div className="input-row">
                     <CalculatorInput label="Property Tax (%)" value={propertyTax} onChange={setPropertyTax} suffix="%" />
-                    <CalculatorInput label="Annual Insurance" value={insurance} onChange={setInsurance} icon={globalCurrency} />
+                    <CalculatorInput label="Annual Insurance" value={insurance} onChange={setInsurance} icon={currency.symbol} />
                   </div>
                 </div>
               )}
@@ -128,7 +130,7 @@ export default function MortgageCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Payment Breakdown" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Payment Breakdown" results={result}/>
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter property details to see monthly costs.
@@ -142,7 +144,7 @@ export default function MortgageCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#fffbeb', borderRadius: '12px', border: '1px solid #fef3c7'}}>
             <h3 style={{color: '#92400e', marginBottom: '10px'}}>⚖️ What is PITI?</h3>
             <p style={{fontSize: '0.9rem', color: '#92400e', lineHeight: '1.6'}}>
-                PITI stands for <strong>Principal, Interest, Taxes, and Insurance</strong>. Most home buyers only look at the first two, but property taxes and homeowners insurance can add significantly to your monthly bill.
+                PITI stands for <strong>Principal, Interest, Taxes, and Insurance</strong>. Most buyers only look at the first two, but taxes and insurance are non-negotiable costs. For instance, on a {currency.symbol}{formatValue(5000000)} home, adding even 1% in annual property tax adds {currency.symbol}{formatValue(Math.round(5000000 * 0.01 / 12))} to your monthly bill. 
             </p>
         </div>
       </div>

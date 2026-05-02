@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function SIPCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/sip');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "sip");
@@ -51,9 +53,9 @@ export default function SIPCalculator() {
     }
 
     setResult({
-      "Amount Invested": totalInvested,
-      "Estimated Returns": totalValue - totalInvested,
-      "Total Wealth Created": totalValue,
+      "Amount Invested": `${currency.symbol}${formatValue(totalInvested)}`,
+      "Estimated Returns": `${currency.symbol}${formatValue(totalValue - totalInvested)}`,
+      "Total Wealth Created": `${currency.symbol}${formatValue(totalValue)}`,
       "Wealth Multiplier": `${(totalValue / totalInvested).toFixed(2)}x`
     });
   };
@@ -85,7 +87,7 @@ export default function SIPCalculator() {
           <div className="form-box">
             {/* Standardized: Use onReset prop, removed manual reset-btn div */}
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
-              <CalculatorInput label="Monthly Investment" value={monthlyInvestment} onChange={setMonthlyInvestment} icon={globalCurrency} />
+              <CalculatorInput label="Monthly Investment" value={monthlyInvestment} onChange={setMonthlyInvestment} icon={currency.symbol} />
               
               <div className="input-row">
                 <CalculatorInput label="Expected Returns" value={rate} onChange={setRate} suffix="%" />
@@ -125,7 +127,7 @@ export default function SIPCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Investment Summary" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Investment Summary" results={result}/>
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Adjust parameters to see your investment grow.
@@ -139,7 +141,10 @@ export default function SIPCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
             <h3 style={{marginBottom: '15px'}}>The Magic of Compounding</h3>
             <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#475569'}}>
-                A Systematic Investment Plan (SIP) allows you to invest small amounts regularly. Over time, you earn interest on your interest. This exponential growth is why the "Time Period" often matters more than the "Amount" you start with.
+                A Systematic Investment Plan (SIP) allows you to invest small amounts regularly. 
+                For example, investing just {currency.symbol}{formatValue(100)} every month can 
+                grow into a significant fund over 20 years. This exponential growth is why the 
+                "Time Period" often matters more than the "Amount" you start with.
             </p>
             
 

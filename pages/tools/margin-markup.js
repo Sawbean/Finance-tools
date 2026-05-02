@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext";
 import { allToolGuides } from '../../data/tool-guides/index';
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,6 +12,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function MarginMarkupCalculator() {
+  const { currency } = useCurrency();
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/margin-markup');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "margin-markup");
@@ -35,10 +37,10 @@ export default function MarginMarkupCalculator() {
     const markup = (profit / C) * 100;
 
     setResult({
-      "Gross Profit": profit,
+      "Gross Profit": `${currency.symbol}${formatValue(Math.round(profit))}`,
       "Profit Margin": `${margin.toFixed(2)}%`,
       "Markup Percentage": `${markup.toFixed(2)}%`,
-      "Cost to Price Ratio": `${((C / S) * 100).toFixed(1)}%`
+      "Cost-to-Price Ratio": `${((C / S) * 100).toFixed(1)}%`
     });
   };
 
@@ -70,14 +72,14 @@ export default function MarginMarkupCalculator() {
                 label="Cost of Item (COGS)" 
                 value={cost} 
                 onChange={setCost} 
-                icon={globalCurrency} 
+                icon={currency.symbol} 
               />
               
               <CalculatorInput 
                 label="Selling Price" 
                 value={sellingPrice} 
                 onChange={setSellingPrice} 
-                icon={globalCurrency} 
+                icon={currency.symbol} 
               />
               
               <p style={{fontSize: '0.8rem', color: '#64748b', marginTop: '10px', fontStyle: 'italic'}}>
@@ -97,7 +99,6 @@ export default function MarginMarkupCalculator() {
               <ResultBox
                 title="Profit Analysis"
                 results={result}
-                formatCurrency={formatCurrency}
               />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
@@ -130,8 +131,11 @@ export default function MarginMarkupCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#166534', lineHeight: '1.6'}}>
-                If you buy an item for $100 and sell it for $125, your <strong>markup is 25%</strong> but your <strong>margin is only 20%</strong>. This distinction is critical because business expenses are usually calculated as a percentage of total revenue (margin).
-            </p>
+              If you buy an item for {currency.symbol}{formatValue(100)} and sell it for {currency.symbol}{formatValue(125)}, 
+              your <strong>markup is 25%</strong> but your <strong>margin is only 20%</strong>. This distinction is 
+              critical because business expenses—like rent, salaries, and shipping—are usually calculated 
+              as a percentage of your <strong>total revenue</strong> (margin), not your cost.
+          </p>
         </div>
       </div>
     </>

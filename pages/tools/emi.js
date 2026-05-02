@@ -4,7 +4,7 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 import { allToolGuides } from '../../data/tool-guides/index';
 // Import global utilities
-import { formatCurrency, globalCurrency } from "../../utils/formatters"; 
+import { useCurrency } from "../../context/CurrencyContext"; 
 
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -12,9 +12,11 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function EMICalculator() {
+  const { currency } = useCurrency();
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/emi');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "emi");
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // 1. STATE MANAGEMENT
   const [principal, setPrincipal] = useState(500000);
   const [rate, setRate] = useState(10.5);
@@ -96,7 +98,7 @@ export default function EMICalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             <CalculatorForm onSubmit={(e) => e.preventDefault()}>
-              <CalculatorInput label="Loan Amount" value={principal} onChange={setPrincipal} icon={globalCurrency} />
+              <CalculatorInput label="Loan Amount" value={principal} onChange={setPrincipal} icon={currency.symbol} />
               
               <div className="input-row">
               {/* 1. Interest Rate Input */}
@@ -133,7 +135,7 @@ export default function EMICalculator() {
 
               {showAdvanced && (
                 <div className="advanced-fields">
-                  <CalculatorInput label="Extra Monthly Payment" value={extraPayment} onChange={setExtraPayment} icon={globalCurrency} />
+                  <CalculatorInput label="Extra Monthly Payment" value={extraPayment} onChange={setExtraPayment} icon={currency.symbol} />
                   <CalculatorInput label="Processing Fee (%)" value={processingFee} onChange={setProcessingFee} suffix="%" />
                 </div>
               )}
@@ -149,7 +151,7 @@ export default function EMICalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Loan Breakdown" results={result} formatCurrency={formatCurrency} />
+              <ResultBox title="Loan Breakdown" results={result} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter loan details to see results
@@ -185,8 +187,8 @@ export default function EMICalculator() {
                   {schedule.map((row, index) => (
                     <tr key={index}>
                       <td>{row.period}</td>
-                      <td>{formatCurrency(row.balance)}</td>
-                      <td>{formatCurrency(row.interestPaid)}</td>
+                      <td>{currency.symbol} {formatValue(row.balance)}</td>
+                      <td>{currency.symbol} {formatValue(row.interestPaid)}</td>
                     </tr>
                   ))}
                 </tbody>
