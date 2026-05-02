@@ -20,35 +20,56 @@ export default function DividendYieldCalculator() {
   const [sharePrice, setSharePrice] = useState(1000);
   const [annualDividend, setAnnualDividend] = useState(50);
   const [result, setResult] = useState(null);
-
+  const [error, setError] = useState("");
+  // 2. CALCULATION LOGIC
   // 2. CALCULATION LOGIC
   const calculateYield = () => {
     const P = parseFloat(sharePrice) || 0;
     const D = parseFloat(annualDividend) || 0;
 
-    if (P <= 0 || D < 0) {
+    // Guard against division by zero or invalid inputs during build/render
+    if (P <= 0) {
       setResult(null);
+      setError(sharePrice ? "Share price must be greater than zero." : "");
       return;
     }
 
-    const yieldPercentage = (D / P) * 100;
+    if (D < 0) {
+      setResult(null);
+      setError("Annual dividend cannot be negative.");
+      return;
+    }
+
+    // Clear error and calculate
+    setError("");
+    const currentYield = (D / P) * 100;
 
     setResult({
-        "Annual Dividend per Share": formatCurrency(D),
-        "Current Share Price": formatCurrency(P),
-        "Dividend Yield": `${yieldPercentage.toFixed(2)}%`,
-        "Risk Profile": yieldPercentage > 8 ? "⚠️ High Yield (Check Sustainability)" : "✅ Healthy Yield"
-      });
+      "Annual Dividend per Share": formatCurrency(D),
+      "Current Share Price": formatCurrency(P),
+      "Dividend Yield": `${currentYield.toFixed(2)}%`,
+      "Risk Profile": currentYield > 8 
+        ? "⚠️ High Yield (Check Sustainability)" 
+        : "✅ Healthy Yield"
+    });
   };
 
+  // 3. EFFECT WITH GUARD CLAUSE
   useEffect(() => {
-    calculateYield();
+    // Only run if we have valid inputs to prevent prerender "ReferenceError"
+    if (sharePrice && annualDividend) {
+      calculateYield();
+    } else {
+      setResult(null);
+    }
   }, [sharePrice, annualDividend]);
 
+  // 4. RESET HANDLER
   const handleReset = () => {
     setSharePrice("");
     setAnnualDividend("");
     setResult(null);
+    setError("");
   };
 
   return (
