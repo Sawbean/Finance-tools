@@ -141,7 +141,8 @@ export default function DividendYieldCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-                <strong>Strategy Tip:</strong> Yield-focused investors often look for "Dividend Aristocrats"—companies that have consistently increased their payouts for over 25 years. While a high yield of <strong>{yieldPercentage.toFixed(2)}%</strong> is tempting, always cross-reference it with the <em>Payout Ratio</em> to ensure the company has enough earnings to cover these payments.
+                <strong>Strategy Tip:</strong> Yield-focused investors often look for "Dividend Aristocrats"—companies that have consistently increased their payouts for over 25 years. While a high yield 
+                {result ? ` of ${result["Dividend Yield"]}` : ""} is tempting, always cross-reference it with the <em>Payout Ratio</em> to ensure the company has enough earnings to cover these payments.
             </p>
         </div>
       </div>
