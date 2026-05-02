@@ -118,15 +118,16 @@ export default function InflationCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-            <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>What is Purchasing Power?</h3>
-            <p style={{fontSize: '0.85rem', color: '#475569', marginTop: '5px', lineHeight: '1.4'}}>
-                To maintain your current standard of living in {years} years, you will need 
-                <strong> {result["Future Cost of Same Items"]}</strong> for every 
-                <strong> {currency.symbol}{formatValue(amount)}</strong> spent today. 
-            </p>
-                        
-        </div>
+        {result && (
+            <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
+                <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>What is Purchasing Power?</h3>
+                <p style={{fontSize: '0.85rem', color: '#475569', marginTop: '5px', lineHeight: '1.4'}}>
+                    To maintain your current standard of living in {years} years, you will need 
+                    <strong> {result["Future Cost of Same Items"]}</strong> for every 
+                    <strong> {currency.symbol}{formatValue(amount)}</strong> spent today. 
+                </p>
+            </div>
+          )}
       </div>
     </>
   );

@@ -164,18 +164,21 @@ export default function HomeLoanVsRentCalculator() {
           </div>
         </div>
 
+       {result && (
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
             <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>Buy vs Rent: The Opportunity Cost</h3>
             <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.6'}}>
                 In your scenario, your initial rent of <strong>{currency.symbol}{formatValue(monthlyRent)}</strong> will grow to 
+                {/* Note: I'm using a logic-check here for the rent growth to keep it build-safe */}
                 <strong> {currency.symbol}{formatValue(Math.round(monthlyRent * Math.pow(1 + rentIncrease/100, loanYears)))}</strong> 
                 by year {loanYears} if the {rentIncrease}% annual hike continues. Meanwhile, your EMI stays fixed at 
-                <strong> {currency.symbol}{formatValue(Math.round(monthlyEMI))}</strong>. The real question is whether the 
-                <strong> {currency.symbol}{formatValue(Math.round(totalLoanCost - homePrice))}</strong> you pay in interest is a 
-                fair price for owning an asset that could be worth <strong> {currency.symbol}{formatValue(Math.round(futureHomeValue))}</strong>.
+                <strong> {result["Monthly EMI"]}</strong>. The real question is whether the 
+                <strong> {result["Total Interest Payable"]}</strong> you pay in interest is a 
+                fair price for owning an asset that could be worth <strong> {result["Estimated Future Value"]}</strong>.
             </p>            
         </div>
-      </div>
+      )}
+            </div>
     </>
   );
 }

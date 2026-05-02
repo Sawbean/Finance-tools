@@ -132,17 +132,20 @@ export default function FuelCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#ecfdf5', borderRadius: '12px', border: '1px solid #a7f3d0'}}>
-            <h3 style={{color: '#065f46', marginBottom: '10px'}}>💡 Pro Tip: Optimize Your Journey</h3>
-            <p style={{fontSize: '0.9rem', color: '#065f46', lineHeight: '1.6'}}>
-                  For your {effectiveDistance} KM trip, splitting the cost between 
+        {result && (
+          <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#ecfdf5', borderRadius: '12px', border: '1px solid #a7f3d0'}}>
+              <h3 style={{color: '#065f46', marginBottom: '10px'}}>💡 Pro Tip: Optimize Your Journey</h3>
+              <p style={{fontSize: '0.9rem', color: '#065f46', lineHeight: '1.6'}}>
+                  {/* Use the state 'result' instead of local variables */}
+                  For your trip, splitting the cost between 
                   <strong> {passengers} people</strong> saves everyone 
-                  <strong> {currency.symbol}{formatValue(Math.round(totalTripCost - costPerPerson))}</strong> 
+                  <strong> {result["Savings per Person"]}</strong> 
                   compared to driving alone. To further reduce your 
-                  <strong> {currency.symbol}{formatValue(Math.round(fuelCost))}</strong> fuel expense, 
+                  <strong> {result["Total Fuel Cost"]}</strong> fuel expense, 
                   try maintaining a steady speed and avoiding rapid acceleration.
               </p>
-        </div>
+          </div>
+        )}
       </div>
     </>
   );

@@ -142,16 +142,17 @@ export default function FDCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
-            <h3 style={{color: '#166534', marginBottom: '10px'}}>The Power of Quarterly Compounding</h3>
-            <p style={{fontSize: '0.9rem', color: '#166534', lineHeight: '1.6'}}>
-                By choosing <strong>{compounding === "4" ? "Quarterly" : compounding === "12" ? "Monthly" : "Yearly"} compounding</strong>, 
-                your effective return is <strong>{(((Math.pow(1 + r / n, n)) - 1) * 100).toFixed(2)}%</strong>—which is higher than 
-                your base rate of {rate}%. Over {years} years, this compounding effect contributes 
-                significantly to your total earnings of <strong>{formatCurrency(totalInterest)}</strong>.
-            </p>
-            
-        </div>
+        {result && (
+          <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
+              <h3 style={{color: '#166534', marginBottom: '10px'}}>The Power of Compounding</h3>
+              <p style={{fontSize: '0.9rem', color: '#166534', lineHeight: '1.6'}}>
+                  By choosing <strong>{compounding === "4" ? "Quarterly" : compounding === "12" ? "Monthly" : "Yearly"} compounding</strong>, 
+                  your effective return is <strong>{result["Effective Annual Yield"]}</strong>—which is higher than 
+                  your base rate of {rate}%. Over {years} years, this compounding effect contributes 
+                  significantly to your total earnings of <strong>{result["Total Interest Earned"]}</strong>.
+              </p>
+          </div>
+        )}
       </div>
     </>
   );
