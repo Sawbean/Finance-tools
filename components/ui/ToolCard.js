@@ -6,7 +6,7 @@ export default function ToolCard({ tool }) {
 
   return (
     <Link href={tool.link}>
-      <div className="tool-card">
+      <div className="tool-card" >       
         {/* Use the short cardTitle if available, otherwise the SEO title */}
         {tool.cardTitle || tool.title}
       </div>

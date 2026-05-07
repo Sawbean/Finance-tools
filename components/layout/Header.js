@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, useEffect } from "react";
+import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -143,6 +144,7 @@ export default function Header() {
           </div>
 
           <Link href="/blog" className="nav-item" onClick={closeMenu}>Blog</Link>
+          <ThemeToggle />
         </nav>
 
         <button className={`menu-toggle ${menuOpen ? "active" : ""}`} onClick={toggleMenu}>

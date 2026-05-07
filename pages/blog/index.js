@@ -72,18 +72,18 @@ export default function BlogIndex() {
                 right: '20px', 
                 top: '50%',
                 transform: 'translateY(-50%)',
-                background: '#e2e8f0',
+                background: 'var(--border-soft)',
                 border: 'none',
                 padding: '6px 12px',
                 borderRadius: '20px',
                 fontSize: '11px',
                 cursor: 'pointer',
-                color: '#475569',
+                color: 'var(--text-main)',
                 fontWeight: '600',
                 transition: 'background 0.2s'
               }}
-              onMouseOver={(e) => e.currentTarget.style.background = '#cbd5e1'}
-              onMouseOut={(e) => e.currentTarget.style.background = '#e2e8f0'}
+              onMouseOver={(e) => e.currentTarget.style.background = 'var(--border-hover)'}
+              onMouseOut={(e) => e.currentTarget.style.background = 'var(--border-soft)'}
             >
               Clear ✕
             </button>
@@ -91,7 +91,7 @@ export default function BlogIndex() {
         </div>
 
         {searchQuery && (
-          <p className="search-stats" style={{ marginTop: '15px', fontSize: '14px', color: '#64748b' }}>
+          <p className="search-stats" style={{ marginTop: '15px', fontSize: '14px', color: 'var(--text-muted)' }}>
             Found <strong>{filteredPosts.length}</strong> results for "{searchQuery}"
           </p>
         )}
@@ -171,13 +171,13 @@ export default function BlogIndex() {
           {filteredPosts.length > 0 ? (
             filteredPosts.map(([slug, post]) => (
               <Link href={`/blog/${slug}`} key={slug} className="standard-post-row" style={{ display: 'flex', gap: '20px', textDecoration: 'none', color: 'inherit', marginBottom: '25px' }}>
-                <div style={{ width: '100px', height: '100px', background: '#eef2f6', borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}>
+                <div style={{ width: '100px', height: '100px', background: 'var(--bg-card)', borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}>
                    <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div>
-                  <span style={{ fontSize: '11px', fontWeight: '700', color: '#2ecc71', textTransform: 'uppercase' }}>Result Found</span>
+                  <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent-green)', textTransform: 'uppercase' }}>Result Found</span>
                   <h3 style={{ fontSize: '1.2rem', margin: '5px 0' }}>{post.title}</h3>
-                  <p style={{ fontSize: '14px', color: '#64748b' }}>{post.description?.substring(0, 120)}...</p>
+                  <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>{post.description?.substring(0, 120)}...</p>
                 </div>
               </Link>
             ))
@@ -204,9 +204,9 @@ export default function BlogIndex() {
                     <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div>
-                    <span style={{ fontSize: '11px', fontWeight: '700', color: '#2563eb', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{post.category || post.masterCategory || 'Library'}</span>
+                    <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent-blue)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{post.category || post.masterCategory || 'Library'}</span>
                     <h3 style={{ fontSize: '1.15rem', margin: '5px 0', lineHeight: '1.3' }}>{post.title}</h3>
-                    <p style={{ fontSize: '14px', color: '#64748b', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.description}</p>
+                    <p style={{ fontSize: '14px', color: 'var(--text-muted)', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.description}</p>
                   </div>
                 </Link>
               ));

@@ -1,12 +1,22 @@
 /* styles/Home.module.css */
+:root {
+  /* Light Mode Defaults */
+  --bg-main: #ffffff;
+  --bg-card: #f0f7ff;         /* That soft blue you like */
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --primary: #2563eb;
+  --border-soft: #e2e8f0;
+}
 
 .heroSection {
     /* Reduced vertical padding from 80px to 45px */
-    padding: 0px 10px 20px 10px;
+    padding: 15px 10px 15px 10px;
     text-align: center;
-    background: radial-gradient(circle at top, #f8fafc 0%, #ffffff 100%);
-    border-bottom: 1px solid #f1f5f9;
-    margin-top: -20px
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-soft);
+    margin-top: -20px;
+    width: 100%;
 }
 
 .heroContent {
@@ -15,12 +25,11 @@
 }
 
 .mainTitle {
+    color: var(--text-main);
     /* Slightly smaller font for better space management */
     font-size: 2.5rem; 
     font-weight: 800;
-    color: #1e293b;
     line-height: 1.1;
-    /* Reduced margin from 20px to 12px */
     margin-bottom: 10px;
     letter-spacing: -0.02em;
     margin-top: 0 !important; 
@@ -40,7 +49,7 @@
 .subText {
     /* Smaller font (1.1rem) to keep everything on fewer lines */
     font-size: 1.1rem;
-    color: #64748b;
+    color:var(--text-muted);
     line-height: 1.5;
     /* Reduced margin from 30px to 0 */
     margin-bottom: 0;
@@ -64,12 +73,18 @@
 
 /* This makes sure the heading stops 100px before the top of the screen */
 .article-h2 {
-  scroll-margin-top: 100px;
-  scroll-behavior: smooth; /* This makes the jump look like a smooth slide */
+  scroll-margin-top: 100px; /* This makes the jump look like a smooth slide */
 }
 
 /* Optional: Make the Table of Contents look even better */
 .table-of-contents ul li a:hover {
   text-decoration: underline;
   opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .intelligence-hub {
+    grid-template-columns: 1fr !important; /* Stack them vertically on mobile */
+    gap: 20px !important;
+  }
 }

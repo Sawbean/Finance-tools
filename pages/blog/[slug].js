@@ -83,18 +83,19 @@ export default function BlogPost() {
       <div key={index} className="article-note-box" style={{ 
         margin: '30px 0', 
         padding: '20px', 
-        background: '#fff7ed', // Light warm orange/yellow
-        border: '1px solid #ffedd5', 
+        background: 'var(--note-bg)',
+        border: '1px solid var(--note-border)', 
         borderRadius: '12px',
         display: 'flex',
         gap: '15px',
-        alignItems: 'center'
+        alignItems: 'center',
+        transition: 'all 0.3s ease'
       }}>
         <span style={{ fontSize: '20px' }}>⚠️</span>
         <p style={{ 
           margin: 0, 
           fontSize: '14px', 
-          color: '#9a3412', // Darker brownish-orange for readability
+          color: 'var(--note-text)', 
           lineHeight: '1.6',
           fontStyle: 'italic'
         }}>
@@ -233,8 +234,8 @@ export default function BlogPost() {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginBottom: '15px' }}>
         {/* This badge now shows the TYPE (News, Case Study, etc.) in a sleek dark theme */}
         <span className="article-badge" style={{ 
-          backgroundColor: '#1e293b', 
-          color: '#ffffff', 
+          backgroundColor: 'var(--bg-card)', 
+          color: 'var(--text-main)', 
           textTransform: 'uppercase', 
           fontSize: '11px', 
           letterSpacing: '1px' 
@@ -245,7 +246,7 @@ export default function BlogPost() {
         {/* We keep the VERIFIED text next to it for authority */}
         <span style={{ 
           fontSize: '12px', 
-          color: '#10b981', 
+          color: 'var(--accent-blue)', 
           fontWeight: 'bold', 
           display: 'flex', 
           alignItems: 'center', 
@@ -260,7 +261,7 @@ export default function BlogPost() {
         <div className="article-meta">
           <span>📅 Updated: {post.publishDate}</span> • <span>⏱️ {post.readTime} Read</span>
           <span className="type-badge">{post.type}</span>
-          <span style={{ marginLeft: '10px', padding: '4px 12px', background: '#eef2f6', borderRadius: '4px', fontSize: '12px', fontWeight: 'bold', color: '#334155' }}>
+          <span style={{ marginLeft: '10px', padding: '4px 12px', background: 'var(--soft-bg)', borderRadius: '4px', fontSize: '12px', fontWeight: 'bold', color: 'var(--text-main)' }}>
             {post.category}
           </span>
           <span>📅 {post.publishDate}</span> • <span>⏱️ {post.readTime}</span>
@@ -317,14 +318,14 @@ export default function BlogPost() {
           )}
 
           {post.faq && post.faq.length > 0 && (
-            <div className="article-faq-container" style={{ marginTop: '40px', borderTop: '2px solid #f1f5f9', paddingTop: '30px' }}>
+            <div className="article-faq-container" style={{ marginTop: '40px', borderTop: `2px solid var(--border-soft)`, paddingTop: '30px' }}>
               <h2 className="article-h2">Frequently Asked Questions</h2>
               {post.faq.map((item, idx) => (
-                <div key={idx} className="faq-card" style={{ background: '#f8fafc', padding: '20px', borderRadius: '12px', marginBottom: '20px', border: '1px solid #eef2f6' }}>
-                  <h4 style={{ color: '#1e293b', marginBottom: '10px' }}>
-                    <span style={{ color: currentTheme.color }}>Q:</span> {item.question}
+                <div key={idx} className="faq-card" style={{ background: 'var(--card-bg)', padding: '20px', borderRadius: '12px', marginBottom: '20px', border: '1px solid var(--border-soft)' }}>
+                  <h4 style={{ color: 'var(--text-main)', marginBottom: '10px' }}>
+                    <span style={{ color: 'var(--accent-blue)' }}>Q:</span> {item.question}
                   </h4>
-                  <p style={{ color: '#475569' }}>
+                  <p style={{ color: 'var(--text-muted)' }}>
                     {item.answer.includes('**') ? item.answer.split('**').map((part, i) => i % 2 === 1 ? <strong key={i}>{part}</strong> : part) : item.answer}
                   </p>
                 </div>
@@ -332,20 +333,20 @@ export default function BlogPost() {
             </div>
           )}
 
-          <div className="author-box" style={{ display: 'flex', gap: '20px', alignItems: 'center', background: '#fff', border: '1px solid #eef2f6', padding: '20px', borderRadius: '16px', marginTop: '40px', marginBottom: '0px', fontSize: '15px' }}>
+          <div className="author-box" style={{ display: 'flex', gap: '20px', alignItems: 'center', background: 'var(--card-bg)', border: '1px solid var(--border-soft)', padding: '20px', borderRadius: '16px', marginTop: '40px', marginBottom: '0px', fontSize: '15px' }}>
             <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: currentTheme.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 'bold' }}>
               TF
             </div>
             <div>
               <h5 style={{ margin: 0 }}>ToolFinance Editorial Team ✅</h5>
-              <p style={{ margin: '5px 0 0', fontSize: '13px', color: '#64748b' }}>
+              <p style={{ margin: '5px 0 0', fontSize: '13px', color: 'var(--text-muted)' }}>
                 Verified for 2026 Accuracy. Our financial guides are cross-referenced with current bank lending standards and math-verified by our internal calculation engine. 
               </p>
             </div>
           </div>
 
-          <div className="share-article-section" style={{ marginTop: '40px', paddingTop: '20px', fontSize: '15px', borderTop: '1px solid #f1f5f9' }}>
-            <p style={{ fontSize: '14px', fontWeight: '700', color: '#64748b', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Share this Analysis:</p>
+          <div className="share-article-section" style={{ marginTop: '40px', paddingTop: '20px', fontSize: '15px', borderTop: '1px solid var(--border-soft)' }}>
+            <p style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-muted)', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Share this Analysis:</p>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               {/* Twitter / X */}
               <a 
@@ -381,13 +382,13 @@ export default function BlogPost() {
           </div>
 
           {relatedPosts.length > 0 && (
-            <div className="related-section" style={{ marginTop: '40px', borderTop: '1px solid #eef2f6', paddingTop: '20px', paddingBottom: '10px', marginBottom: '0px' }}>
+            <div className="related-section" style={{ marginTop: '40px', borderTop: '1px solid var(--border-soft)', paddingTop: '20px', paddingBottom: '10px', marginBottom: '0px' }}>
               <h4 style={{ marginBottom: '15px' }}>Related Analysis</h4>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 {relatedPosts.map(([s, p]) => (
                   <Link href={`/blog/${s}`} key={s} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <div style={{ background: '#f8fafc', padding: '15px', borderRadius: '12px' }}>
-                      <span style={{ fontSize: '10px', color: currentTheme.color, fontWeight: 'bold' }}>{p.category}</span>
+                    <div style={{ background: 'var(--card-bg)', padding: '15px', borderRadius: '12px' }}>
+                      <span style={{ fontSize: '10px', color: 'var(--accent-blue)', fontWeight: 'bold' }}>{p.category}</span>
                       <h5 style={{ margin: '5px 0' }}>{p.title}</h5>
                     </div>
                   </Link>

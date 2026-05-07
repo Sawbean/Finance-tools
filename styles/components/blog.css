@@ -2,6 +2,15 @@
    1. GLOBAL BLOG HUB & DIRECTORY (INDEX PAGE)
    Styles for the main "Knowledge Center" layout and the 6 cards.
 ============================================================= */
+:root {
+  /* Brand Accent Colors - Optimized for both Light/Dark */
+  --accent-slate: #64748b;
+  --accent-green: #10b981;
+  --accent-blue: #3b82f6;
+  --accent-red: #ef4444;
+  --accent-purple: #6366f1;
+  --accent-yellow: #f59e0b;
+}
 
 .blog-hub-container {
   max-width: 1200px;
@@ -42,12 +51,14 @@
   align-items: center;
   gap: 20px;
   padding: 30px;
-  background: #ffffff;
+  background: var(--bg-card);
   border-radius: 20px;
   text-decoration: none;
   transition: all 0.3s ease;
-  border: 1px solid #eef2f6;
+  border: 1px solid var(--border-soft);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  overflow: hidden; 
+  position: relative;
 }
 
 .master-card:hover {
@@ -57,23 +68,24 @@
 
 .card-icon { 
   font-size: 35px; 
-  background: #f8fafc; 
+  background: var(--bg-card); 
   width: 70px; 
   height: 70px; 
   display: flex; 
   align-items: center; 
   justify-content: center; 
   border-radius: 15px; 
+  border: 1px solid var(--border-soft); /* Adds definition in Dark Mode */
+  flex-shrink: 0; /* Prevents icon from squishing on mobile */
 }
 
 /* MASTER CATEGORY BORDER COLORS */
-.slate { border-left: 6px solid #64748b; }
-.emerald { border-left: 6px solid #10b981; }
-.ocean { border-left: 6px solid #0ea5e9; }
-.ruby { border-left: 6px solid #ef4444; }
-.royal { border-left: 6px solid #8b5cf6; }
-.gold { border-left: 6px solid #f59e0b; }
-
+.slate { border-left: 6px solid var(--accent-slate) !important; }
+.emerald { border-left: 6px solid var(--accent-green) !important; }
+.ocean { border-left: 6px solid var(--accent-blue) !important; }
+.ruby { border-left: 6px solid var(--accent-red) !important; }
+.royal { border-left: 6px solid var(--accent-purple) !important; }
+.gold { border-left: 6px solid var(--accent-yellow) !important; }
 
 /* SEARCH BAR STYLING */
 .search-container {
@@ -93,7 +105,7 @@
 }
 
 .main-search-input:focus {
-  border-color: #2ecc71;
+  border-color: var(--accent-green);
   box-shadow: 0 10px 25px rgba(46, 204, 113, 0.1);
 }
 
@@ -222,7 +234,7 @@
 .article-body { 
   font-size: 1.15rem; 
   line-height: 1.75; 
-  color: #374151; 
+  color: var(--text-main); 
   overflow: visible !important;
 }
 
@@ -231,7 +243,7 @@
 .article-h2 { 
   font-size: 1.8rem; 
   margin: 45px 0 20px; 
-  color: #111827; 
+  color: var(--text-main); 
   font-weight: 700; 
 }
 
@@ -244,10 +256,10 @@
 .article-list li {
   margin-bottom: 12px;
   line-height: 1.6;
-  color: #4b5563;
+  color: var(--text-muted);
 }
 .article-list li strong {
-  color: #111827;
+  color: var(--text-main);
   font-weight: 700;
 }
 
@@ -255,7 +267,7 @@
 .table-responsive { 
   overflow-x: auto; 
   margin: 30px 0; 
-  border: 1px solid #e5e7eb; 
+  border: 1px solid var(--border-soft); 
   border-radius: 8px; 
 }
 .pro-table { width: 100%; border-collapse: collapse; background: white; }
@@ -280,25 +292,25 @@
 
 /* FORMULA BOX - FIXING OVERLAP */
 .formula-box { 
-  background-color: #0f172a !important; 
+  background-color: var(--bg-card) !important; 
   padding: 35px !important;
   border-radius: 16px !important;
   text-align: center !important;
   margin: 60px 0 !important; 
-  border-left: 6px solid #10b981 !important;
+  border-left: 6px solid var(--accent-green) !important;
   display: block !important;
   clear: both !important; /* Forces separation from Ads */
 }
 .formula-code { 
   font-family: 'Consolas', 'Monaco', monospace !important;
   font-size: 1.25rem !important;
-  color: #34d399 !important; 
+  color: var(--accent-green) !important; 
   line-height: 1.6 !important;
   word-break: break-all !important; 
   display: block !important;
 }
 .formula-caption-text {
-  color: #94a3b8 !important; 
+  color: var(--text-muted) !important; 
   font-size: 14px !important;
   margin-top: 15px !important;
   display: block !important;
@@ -307,8 +319,8 @@
 
 /* AD / TOOL CARDS - FIXING OVERLAP */
 .ad-placeholder-wrapper, .inline-tool-box, .inline-tool-card {
-  background: #f1f5f9 !important; 
-  border: 1px solid #e2e8f0 !important; 
+  background: var(--bg-card) !important; 
+  border: 1px solid var(--border-soft) !important; 
   padding: 30px !important; 
   border-radius: 16px !important;
   margin: 60px 0 !important; 
@@ -320,8 +332,8 @@
 }
 
 .inline-tool-btn, .tool-card-btn { 
-  background: #2563eb !important; 
-  color: white !important; 
+  background: var(--primary) !important; 
+  color: var(--text-main) !important; 
   padding: 12px 28px !important; 
   border-radius: 8px !important; 
   font-weight: 600 !important; 
@@ -342,14 +354,14 @@
 }
 
 .sidebar-card {
-  background: #f8fafc;
+  background: var(--bg-card);
   padding: 25px;
   border-radius: 16px;
-  border: 1px solid #eef2f6;
+  border: 1px solid var(--border-soft);
 }
 
 .sidebar-card h4 { margin-bottom: 10px; font-size: 16px; }
-.sidebar-card p { font-size: 13px; color: #64748b; line-height: 1.5; }
+.sidebar-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
 
 /* CATEGORY BADGES */
 .article-badge {
@@ -370,7 +382,7 @@
 /* SPECIAL ALERTS (SCAMS/WARNINGS) */
 .scam-alert-box {
   background: #fff1f2;
-  border-left: 5px solid #ef4444;
+  border-left: 5px solid var(--accent-red);
   padding: 20px;
   margin: 30px 0;
   color: #991b1b;
@@ -379,11 +391,12 @@
 
 /* RELATED ARTICLES SECTION */
 .related-section {
-  background: #ffffff;
+  background: var(--bg-card);
   padding: 30px;
   border-radius: 16px;
-  border: 1px solid #eef2f6;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
+  transition: background 0.3s ease, border 0.3s ease;
 }
 
 .related-section h5 {
@@ -503,12 +516,16 @@
 .featured-text-content { padding: 25px; }
 
 .featured-tag { 
-    font-size: 11px; font-weight: 800; color: #2563eb; 
+    font-size: 11px; font-weight: 800; color: var(--primary);  
     text-transform: uppercase; letter-spacing: 1px; 
 }
 
 .read-analysis-btn { margin-top: 15px; font-weight: bold; color: #1e293b; }
 
+.read-analysis-btn:hover {
+    text-decoration: underline;
+    transform: translateX(5px); /* Smooth slide effect on your Dell laptop */
+}
 .pulse-row-item {
     background: #f8fafc;
     padding: 15px;

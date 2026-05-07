@@ -13,3 +13,10 @@
 @import "./components/ui-elements.css";
 
 
+html {
+  scroll-behavior: smooth;
+}
+
+#calculators {
+  scroll-margin-top: 100px; 
+}

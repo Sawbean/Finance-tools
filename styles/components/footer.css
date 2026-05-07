@@ -33,11 +33,12 @@
 
 /* Ads & Placeholders */
 .adsense-placeholder, .ad-placeholder {
+  color: 'var(--text-muted)';
   margin: 25px auto;
   padding: 16px;
   text-align: center;
-  border: 1px dashed #ccc;
-  background: #fafafa;
+  border: '2px dashed var(--border-soft)';
+  background: 'var(--soft-bg)';
   border-radius: 10px;
 }
 

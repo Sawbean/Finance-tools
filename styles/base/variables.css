@@ -7,16 +7,44 @@
   box-sizing: border-box;
 }
 
+/* =============================================================
+   DYNAMIC THEME VARIABLES
+   Works for both Light and Dark modes
+============================================================= */
+
 :root {
+  /* 1. Brand Colors (Usually stay the same) */
   --primary: rgba(11, 31, 74, 0.95);
+  --accent-blue: #2563eb;
+  --hover-bg: #e6f0ff;
+
+  /* 2. Dynamic Colors (Light Mode Values) */
   --soft-bg: #f4f6fb;
   --card-bg: #ffffff;
   --border-soft: #e6e6e6;
-  --hover-bg: #e6f0ff;
-  --accent-blue: #2563eb;
-  --text-main: #1a1a1a;
+  --text-main: #1a1a1a;   /* Dark text for light bg */
   --text-muted: #555;
   --text-light: #9aa3b2;
+  --note-bg: rgba(255, 247, 237, 1); /* Light orange for Light Mode */
+  --note-text: #9a3412;
+  --note-border: #ffedd5;
+}
+
+/* 3. Dark Mode Overrides */
+[class='dark'] {
+  --soft-bg: #0f172a;     /* Deep navy background */
+  --card-bg: #1e293b;     /* Lighter navy for cards */
+  --border-soft: #334155; /* Muted border for dark mode */
+  --text-main: #f1f5f9;   /* Near white text for dark bg */
+  --text-muted: #94a3b8;  /* Light grey for secondary text */
+  --text-light: #64748b;  /* Dimmer grey */
+  
+  --hover-bg: #1e293b;    /* Darker hover state */
+  /* Optional: make the primary slightly brighter in dark mode for contrast */
+  --primary: #3b82f6; 
+  --note-bg: rgba(154, 52, 18, 0.2); /* Transparent dark orange for Dark Mode */
+  --note-text: #fdba74;              /* Brighter peach text for readability */
+  --note-border: rgba(154, 52, 18, 0.3);
 }
 
 body {

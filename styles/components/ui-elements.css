@@ -1,7 +1,20 @@
 /* =============================================================
    6. HOMEPAGE & TOOLS GRID
 ============================================================= */
-.home-section-title { text-align: center; font-size: 1.8rem; margin-bottom: 10px; }
+:root {
+  /* Premium Blue for Light Mode */
+  --title-color: #163ec0; 
+}
+
+.home-section-title {
+  text-align: center;
+  color: var(--title-color);
+  font-size: 1.8rem;    /* Kept the larger size for better visibility */
+  margin-top: 20px;     /* Increased space above the heading */
+  margin-bottom: 10px;
+  font-weight: 800;     /* Added for a more professional look */
+  width: 100%;          /* Ensures centering works across the full width */
+}
 
 .home-section-desc {
   text-align: center;
@@ -19,20 +32,22 @@
 
 .tool-card {
   padding: 26px;
-  background: linear-gradient(135deg, #e6f0ff, #ffffff);
+  background: var(--bg-card);
   border-radius: 14px;
-  border: 1px solid #dbe3f2;
+  border: 1px solid var(--border-soft);
   text-align: center;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .tool-card a { color: var(--primary); }
 
 .tool-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.1);
+  background: var(--bg-card);
 }
 
 /* ===============================
@@ -49,7 +64,7 @@
   font-size: 16px;
   color: var(--primary);
   background: var(--card-bg);
-  border: 1px solid #dbe3f2; /* Matches your Table of Contents border */
+  border: 1px solid var(--border-soft); /* Matches your Table of Contents border */
   border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -58,7 +73,7 @@
 
 .read-guide-card:hover {
   transform: translateY(-5px);
-  background: #fdfdff; /* Very subtle color shift */
+  background: var(--bg-card); /* Very subtle color shift */
   border-color: var(--accent-blue); /* Highlights the border on hover */
   color: var(--accent-blue);
   box-shadow: 0 12px 24px rgba(11, 31, 74, 0.08);
@@ -75,8 +90,3 @@
   margin-left: 10px; /* Moves the arrow slightly to the right */
 }
 
-.home-section-title {
-  margin-top: 30px;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-}

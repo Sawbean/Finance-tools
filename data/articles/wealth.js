@@ -204,6 +204,95 @@ export const wealthArticles = {
             "text": "Don't take my word for it—run the numbers yourself. Use our FD Calculator to see your post-tax, inflation-adjusted return. You might find that the 'safest' investment is actually your biggest risk."
         }
     ]
-}
+},
 
+"asset-location-tax-alpha-2026": {
+    "title": "Asset Location: The 'Tax Alpha' Strategy for Elite Wealth Management",
+    "description": "Learn why where you hold your assets is just as important as what you buy. An expert look at maximizing post-tax returns in 2026.",
+    "masterCategory": "wealth",
+    "type": "white-paper",
+    "category": "Tax Strategy",
+    "publishDate": "2026-05-13",
+    "readTime": "12 min read",
+    "image": "/images/asset-location-strategy.webp",
+    "tool": "lumpsum-calc",
+    "content": [
+      { 
+        "type": "paragraph", 
+        "text": "Most investors focus on Asset Allocation—the mix of stocks and bonds in their portfolio. However, sophisticated wealth management in 2026 relies on **Asset Location**. This is the practice of placing specific types of investments into accounts with different tax treatments (Taxable vs. Tax-Deferred) to maximize the 'Tax Alpha'—the extra return generated simply by reducing the government's share." 
+      },
+      { "type": "heading", "text": "The Tax Efficiency Spectrum" },
+      { 
+        "type": "paragraph", 
+        "text": "Not all investments are taxed equally. High-dividend stocks and actively managed funds generate annual tax bills, whereas growth stocks and index funds are more 'tax-efficient.' By locating 'tax-drag' assets in retirement accounts and 'growth' assets in taxable accounts, an investor can increase their terminal wealth by up to 15% over 20 years without taking any extra market risk." 
+      },
+      { "type": "keyTakeaways", "items": [
+        "Tax-Inefficient Assets: High-yield bonds and REITs should live in tax-advantaged accounts.",
+        "Tax-Efficient Assets: Stocks held for over a year benefit from lower long-term capital gains rates in taxable brokerage accounts.",
+        "Rebalancing: Automating rebalancing across different account types is the key to maintaining your target risk profile."
+      ]},
+      { "type": "heading", "text": "Strategic Placement Table" },
+      { 
+        "type": "table", 
+        "headers": ["Investment Type", "Tax Efficiency", "Recommended Account"],
+        "rows": [
+          ["Municipal Bonds", "High (Tax-Free)", "Taxable Brokerage"],
+          ["REITs / High Yield", "Low (Taxed as Income)", "Tax-Deferred (401k/IRA)"],
+          ["ETFs / Index Funds", "Moderate", "Taxable Brokerage"]
+        ]
+      },
+      { "type": "heading", "text": "ToolFinance Analysis: Information Gain" },
+      { 
+        "type": "paragraph", 
+        "text": "Our unique 2026 insight: **The Global Minimum Tax Shift**. With many jurisdictions implementing new wealth reporting standards, Asset Location is no longer just about choosing between a Roth or a Traditional IRA. It’s about managing global tax liability across different digital jurisdictions. The 'Green Premium' bonds we discussed previously often carry specific tax incentives that make them ideal for taxable accounts." 
+      },
+      { 
+        "type": "paragraph", 
+        "text": "Want to see how much more you could have in 20 years by optimizing your returns? Use our Lumpsum Calculator to compare your current growth projections." 
+      }
+    ]
+},
+
+"perpetual-wealth-engine-guide": {
+    "title": "The Perpetual Wealth Engine: Mastering the Sustainable Withdrawal Rate",
+    "description": "How to build a portfolio that pays you forever. A 2026 update on the 4% rule and the math of infinite liquidity.",
+    "masterCategory": "wealth",
+    "type": "guide",
+    "category": "Retirement Planning",
+    "publishDate": "2026-05-14",
+    "readTime": "10 min read",
+    "image": "/images/perpetual-wealth-engine.webp",
+    "tool": "margin-calculator",
+    "content": [
+      { 
+        "type": "paragraph", 
+        "text": "The ultimate goal of wealth management is to reach 'Escape Velocity'—the point where your investments generate more income than your lifestyle costs. This is the **Perpetual Wealth Engine**. While the '4% Rule' has been the gold standard for decades, the volatile global markets of 2026 require a more dynamic approach to withdrawal rates." 
+      },
+      { "type": "heading", "text": "The Safe Withdrawal Rate (SWR) Evolution" },
+      { 
+        "type": "paragraph", 
+        "text": "In a world of RTGS 2.0 and instant liquidity, a fixed 4% withdrawal can be dangerous during a market crash (the 'Sequence of Returns Risk'). Modern wealth managers now use **Dynamic Spending Floors and Ceilings**. You withdraw more when markets are up and tighten the belt when they are down, ensuring the principal capital remains untouched for future generations." 
+      },
+      { "type": "keyTakeaways", "items": [
+        "The 4% Rule: A starting point, but needs adjustment based on current inflation and yield.",
+        "Sequence of Returns Risk: A market crash in the first 2 years of retirement is more dangerous than one in the 20th year.",
+        "The Cash Buffer: Keeping 2 years of expenses in high-yield liquid assets prevents you from selling stocks at a loss."
+      ]},
+      { "type": "heading", "text": "Building the Engine: The Three Buckets" },
+      { "type": "list", "items": [
+        "**The Cash Bucket (0-2 years)**: Instant liquidity for daily life (Savings/MMFs).",
+        "**The Income Bucket (3-7 years)**: Bonds and Dividend stocks to provide steady flow.",
+        "**The Growth Bucket (7+ years)**: Aggressive equities and digital assets to outpace inflation."
+      ]},
+      { "type": "heading", "text": "ToolFinance Analysis: Information Gain" },
+      { 
+        "type": "paragraph", 
+        "text": "Our expert analysis for 2026 suggests the rise of **Collateralized Lifestyle Lending**. Instead of selling your assets (and triggering a tax event), ultra-wealthy individuals are now using their portfolios as collateral for low-interest digital loans to fund their lives. This keeps the 'Engine' growing while providing the cash needed. This is the 'Buy, Borrow, Die' strategy adapted for the digital economy." 
+      },
+      { 
+        "type": "paragraph", 
+        "text": "To calculate the margin of safety for your own 'Perpetual Engine,' use our Margin Calculator to see how much leverage your portfolio can safely handle." 
+      }
+    ]
+}
 };

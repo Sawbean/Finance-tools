@@ -1,5 +1,5 @@
 {
-  "name": "nepal-finance-tools",
+  "name": "tooolfinance",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "next": "^16.1.6",
+    "next-themes": "^0.4.6",
+    "nprogress": "^0.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   }

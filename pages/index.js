@@ -20,6 +20,11 @@ export default function Home() {
     .sort((a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate))
     .slice(0, 3);
 
+  const featuredTools = [
+  tools.find(t => t.link === "/tools/emi"),
+  tools.find(t => t.link === "/tools/sip")
+].filter(Boolean);
+
   return (
     <div className="container" style={{ paddingTop: '0px' }}>
       <Head>
@@ -27,32 +32,33 @@ export default function Home() {
         <meta name="description" content="Accurate financial calculators for EMI, SIP, Loans, and Taxes. Stay updated with our expert financial guides." />
       </Head>
       {/* --- HERO SECTION --- */}
-      <section className={styles.heroSection} style={{ marginTop: '0px', paddingBottom: '10px' }}> {/* Reduced padding at the bottom */}
-        <div className={styles.heroContent}>
-          <h1 className={styles.mainTitle} style={{ marginTop: '0px' }}>
-            Master Your Money with <span className={styles.textGradient}>Precision</span>
-          </h1>
-          <p className={styles.subText} style={{ marginBottom: '0px' }}> {/* Removed bottom margin */}
-            ToolFinance provides <strong>simple and accurate</strong> financial calculators and expert educational content. 
-            Plan loans, track investments, and make smarter economic decisions today.
-          </p>
-        </div>
-      </section>
+      <section className={styles.heroSection} style={{ borderRadius: '24px 24px 0 0', background: 'var(--bg-card)', borderBottom: 'none', }}>
+  <div className={styles.heroContent}>
+    <h1 className={styles.mainTitle}>
+      Master Your Money with <span className={styles.textGradient}>Precision</span>
+    </h1>
+    <p className={styles.subText}>
+      ToolFinance provides <strong>simple and accurate</strong> financial calculators and expert educational content. 
+      Plan loans, track investments, and make smarter economic decisions today.
+    </p>
+  </div>
+</section>
 
       {/* --- MAIN TOOLS SECTION --- */}
       <div id="calculators" style={{ paddingTop: '0px' }}>
-        
-        {/* Featured Section */}
-        <div className="home-section-title" style={{ marginTop: '0px', background: '#f8fafc', padding: '20px', borderRadius: '16px', marginBottom: '10px', border: '1px solid #e2e8f0' }}>
-          <h2 style={{ marginTop: 0 }}>Most Popular This Week</h2>
-          <div className="tools-grid">
-              <ToolCard key="emi" tool={{ title: "Personal Loan EMI", link: "/tools/emi" }} />
-              <ToolCard key="sip" tool={{ title: "SIP Growth Calculator", link: "/tools/sip" }} />
-          </div>
-        </div>
+         <h2 className="home-section-title">🔥 Most Popular This Week</h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', textAlign: 'center', marginBottom: '20px' }}>
+              Quickly access our most used financial tools.
+            </p>
 
+            {/* NO SECTION BOX HERE */}
+            <div className="tools-grid" style={{ marginBottom: '60px' }}>
+              {featuredTools.map((tool) => (
+                <ToolCard key={tool.id} tool={tool} />
+              ))}
+            </div>
        <h2 className="home-section-title">Personal Loan & Mortgage EMI Calculators</h2>
-         <p style={{ color: '#64748b', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center' }}>
+         <p style={{ color: 'var(--text-muted)', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center' }}>
            Plan your debt efficiently with our accurate calculators for home, car, and personal loans.
          </p>
         <div className="tools-grid">
@@ -62,7 +68,7 @@ export default function Home() {
         </div>
 
         <h2 className="home-section-title">Investment Planning & Savings Growth Tools</h2>
-        <p style={{ color: '#64748b', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
            Calculate future wealth and visualize your long-term financial goals with SIP, FD, and compound interest planners.
         </p>
         <div className="tools-grid">
@@ -72,7 +78,7 @@ export default function Home() {
         </div>
 
         <h2 className="home-section-title">Essential Business & Stock Market Calculators</h2>
-        <p style={{ color: '#64748b', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
             Analyze business profitability, margins, and stock market averages to make data-driven investment decisions.
         </p>
         <div className="tools-grid">
@@ -82,7 +88,7 @@ export default function Home() {
         </div>
 
         <h2 className="home-section-title">Income Tax, GST & Financial Utility Tools</h2>
-        <p style={{ color: '#64748b', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
           Stay compliant and simplify your daily finances with quick tools for tax estimation, GST, and currency conversion.
         </p>
         <div className="tools-grid">
@@ -96,23 +102,23 @@ export default function Home() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '10px', margin: '20px 0', textAlign: 'center' }}>
           <div>
             <h3 style={{ color: 'var(--primary)', margin: 0 }}>25+</h3>
-            <p style={{ fontSize: '14px', color: '#64748b' }}>Precision Tools</p>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Precision Tools</p>
           </div>
           <div>
             <h3 style={{ color: 'var(--primary)', margin: 0 }}>100%</h3>
-            <p style={{ fontSize: '14px', color: '#64748b' }}>Free to Use</p>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Free to Use</p>
           </div>
           <div>
             <h3 style={{ color: 'var(--primary)', margin: 0 }}>Secure</h3>
-            <p style={{ fontSize: '14px', color: '#64748b' }}>No Data Collection</p>
+            <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>No Data Collection</p>
           </div>
         </div>  
 
       {/* --- LATEST BLOGS SECTION --- */}
-      <section className="home-blog-footer" style={{ marginTop: '20px', paddingTop: '10px', borderTop: '1px solid #eee', paddingBottom: '0px', marginBottom: '0px' }}>
+      <section className="home-blog-footer" style={{ marginTop: '20px', paddingTop: '10px', borderTop: '1px solid var(--border-soft)', paddingBottom: '0px', marginBottom: '0px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
           <h2 style={{ margin: 0, fontSize: '1.5rem' }}>Latest Financial Insights</h2>
-          <Link href="/blog" style={{ color: '#27ae60', fontWeight: '600', textDecoration: 'none' }}>View All Articles →</Link>
+          <Link href="/blog" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>View All Articles →</Link>
         </div>
         
         <div className="mini-blog-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
@@ -120,24 +126,24 @@ export default function Home() {
             <Link href={`/blog/${slug}`} key={slug} className="minimal-blog-link" style={{ textDecoration: 'none' }}>
               <div style={{ 
                 padding: '20px', 
-                background: '#f9fafb', 
+                background: 'var(--bg-card)', 
                 borderRadius: '12px', 
-                border: '1px solid #f3f4f6', 
+                border: '1px solid var(--border-soft)', 
                 transition: '0.2s', 
                 height: '100%' 
               }}>
                 {/* 1. Category Label with Fallback */}
-                <span style={{ color: '#27ae60', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>
+                <span style={{ color: 'var(--primary)', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>
                   {post.category || post.masterCategory || "Finance"}
                 </span>
 
                 {/* 2. Title */}
-                <h4 style={{ margin: '10px 0', color: '#111827', fontSize: '1.1rem', lineHeight: '1.4' }}>
+                <h4 style={{ margin: '10px 0', color: 'var(--text-main)', fontSize: '1.1rem', lineHeight: '1.4' }}>
                   {post.title}
                 </h4>
 
                 {/* 3. Date and Read Time with Fallback */}
-                <div style={{ color: '#9ca3af', fontSize: '12px' }}>
+                <div style={{ color: 'var(--text-muted)', fontSize: '12px' }}>
                   {post.publishDate} • {post.readTime || "5 min read"}
                 </div>
               </div>
@@ -147,9 +153,9 @@ export default function Home() {
       </section>
 
       {/* --- BOTTOM CTA --- */}
-      <section style={{ textAlign: 'center', padding: '30px 20px', background: '#111827', borderRadius: '20px', color: 'white', marginTop: '10px',}}>
+      <section style={{ textAlign: 'center', padding: '30px 20px', background: '#1e293b', borderRadius: '20px', color: 'white', marginTop: '10px',}}>
         <h2 className="text-gradient" style={{ fontSize: '2rem' }}>Ready to Plan Your Future?</h2>
-        <p style={{ color: '#9ca3af', marginBottom: '10px' }}>Simple tools for complex financial decisions.</p>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '10px' }}>Simple tools for complex financial decisions.</p>
         <Link href="/tools/emi" className="btn-primary">Calculate My EMI Now</Link>
       </section>
     </div>

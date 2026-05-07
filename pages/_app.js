@@ -6,6 +6,9 @@ import Head from 'next/head';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import { CurrencyProvider } from '../context/CurrencyContext';
+import { ThemeProvider } from 'next-themes'
+
+
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -26,17 +29,42 @@ function MyApp({ Component, pageProps }) {
   }, [router.events]);
 
   return (
+    <ThemeProvider attribute="class">
     <CurrencyProvider>
       <Head>
-        {/* Basic SEO & Icons */}
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
-        
-        {/* Social & Verification */}
+        <meta name="theme-color" content="#2563eb" />
+        {/* 1. Technical Basics - Vital for SEO */}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>ToolFinance | 24+ Free Finance Calculators & Economic Insights</title>
+        <meta name="description" content="Calculate EMI, SIP, Income Tax (2025), Inflation, and more with ToolFinance. Expert financial tools designed for Nepal and India." />
+
+        {/* 2. Icons & Manifest - Your PWA Setup */}
+{/* Google Search uses this - Pointing to your new 48x48 file */}
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+
+<link rel="manifest" href="/site.webmanifest" />
+
+{/* These stay the same so your browser tab icon doesn't change */}
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+
+{/* Important: Update this one too! Google often uses this for mobile search */}
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+
+        {/* 3. Open Graph - How it looks when shared on Social Media */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="ToolFinance | Smart Financial Calculators" />
+        <meta property="og:description" content="Free tools for EMI, GST, Inflation, and Investment planning." />
         <meta property="og:image" content="/og-image.png" />
+        <meta property="og:url" content="https://finance-tools-mu.vercel.app/" />
+
+        {/* 4. Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="ToolFinance | Smart Financial Calculators" />
+        <meta name="twitter:image" content="/og-image.png" />
+
+        {/* 5. Verification */}
         <meta name="google-site-verification" content="A-VDqo9ZfV4Gl-6RK3gYm8p-nySB2lvq584nwERC43E"/>
       </Head>
 
@@ -98,6 +126,7 @@ function MyApp({ Component, pageProps }) {
 
       <Footer />
     </CurrencyProvider>
+    </ThemeProvider>
   );
 }
 
