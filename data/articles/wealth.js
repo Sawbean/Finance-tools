@@ -341,5 +341,81 @@ export const wealthArticles = {
         "text": "Ready to project your 10-year growth in this new economy? Use our Lumpsum Calculator to see how these yields compound over time." 
       }
     ]
+},
+
+"family-office-framework-2026": {
+    "title": "The Family Office Framework: Applying Institutional Wealth Strategies to Private Portfolios",
+    "description": "You don't need a billion dollars to invest like a billionaire. Discover the 'Core-and-Satellite' architecture used by the world's most successful family offices in 2026.",
+    "masterCategory": "wealth",
+    "type": "white-paper",
+    "category": "Wealth Management",
+    "publishDate": "2026-05-26",
+    "readTime": "19 min read",
+    "image": "/images/family-office-strategy.webp", 
+    "tool": "lumpsum-calc",
+    "content": [
+      { 
+        "type": "paragraph", 
+        "text": "In 2026, the gap between institutional and retail investing has collapsed. The strategies once reserved for 'Family Offices'—private firms managing the wealth of the ultra-rich—are now accessible to anyone using <a href='/blog/ai-super-apps-finance-2026'>Autonomous Finance Super-Apps</a>. The secret isn't picking the 'perfect stock'; it is the structural discipline of the **Core-and-Satellite model**." 
+      },
+      { "type": "heading", "text": "The Core-and-Satellite Architecture" },
+      { 
+        "type": "paragraph", 
+        "text": "A robust wealth foundation is split into two parts. The **Core** (70-80%) consists of low-cost, tax-efficient 'Forever Assets' like tokenized index funds and <a href='/blog/sovereign-green-bonds-2026'>Sovereign Green Bonds</a>. The **Satellite** (20-30%) is where you seek 'Alpha' through high-conviction bets in DePIN infrastructure or emerging market tech corridors. This ensures your baseline is protected while your upside remains uncapped." 
+      },
+      { "type": "keyTakeaways", "items": [
+        "**Direct Indexing**: Using AI to buy individual stocks in an index to harvest specific tax losses, a move that can add 1-2% in 'Tax Alpha' annually.",
+        "**Alternative Yield**: Allocating to 'Private Credit' tokens that provide fixed monthly returns independent of stock market volatility.",
+        "**Risk Parity**: Dynamically adjusting your exposure based on market 'VIX' levels rather than static percentages."
+      ]},
+      { "type": "heading", "text": "ToolFinance Analysis: The 'Information Gain' on Liquidity Tiers" },
+      { 
+        "type": "paragraph", 
+        "text": "The expert insight for 2026 wealth is **'Tiered Liquidity.'** Traditional advisors tell you to keep 6 months of cash. Family offices keep **3 Tiers**: 1 month in pure cash, 6 months in 'Liquid Credit' tokens, and 2 years in 'Laddered Yield' assets. This ensures that even during a <a href='/blog/global-reserve-transition-2026'>Reserve Currency Transition</a>, you never have to sell your 'Core' assets at a loss to pay for a lifestyle emergency." 
+      },
+      { "type": "heading", "text": "Visualize Your Compounding" },
+      { 
+        "type": "paragraph", 
+        "text": "The difference between a 7% and a 9% return over 20 years is often millions of dollars. Use our Lumpsum Calculator to see how 'Tiered Liquidity' and 'Tax Alpha' can drastically change your terminal wealth value." 
+      }
+    ]
+},
+
+"wealth-velocity-trap-2026": {
+    "title": "The Wealth Velocity Trap: Why Your 'Safe' Portfolio is Actually Dying",
+    "description": "In a tokenized economy, standing still is the same as falling behind. Explore why 'Static Investing' is the biggest risk to your financial freedom in 2026.",
+    "masterCategory": "wealth",
+    "type": "opinion",
+    "category": "Wealth Management",
+    "publishDate": "2026-05-27",
+    "readTime": "15 min read",
+    "image": "/images/wealth-velocity-trap.webp", 
+    "tool": "inflation-guide",
+    "content": [
+      { 
+        "type": "paragraph", 
+        "text": "We have been taught that 'Time in the Market' beats 'Timing the Market.' While true, this advice has led to a dangerous side effect in 2026: **Portfolio Stagnation.** If your wealth isn't moving at a higher 'Velocity' than the current rate of <a href='/blog/inflation-101'>inflation</a> and currency debasement, you aren't actually growing; you are merely managing your own decline." 
+      },
+      { "type": "heading", "text": "The Cost of Inactivity" },
+      { 
+        "type": "paragraph", 
+        "text": "The 'Safe' assets of 2010—like legacy bank FDs or 10-year treasuries—now often provide a 'Negative Real Yield' once you factor in the 2026 cost of living. To maintain **Wealth Velocity**, you must look toward assets with 'Built-in Escalators,' such as tokenized real estate with inflation-linked rents or technology stocks that capture the productivity gains of the AI Agent economy." 
+      },
+      { "type": "keyTakeaways", "items": [
+        "**The Velocity Ratio**: A new metric measuring how many times your capital 'turns over' into higher-yielding opportunities per year.",
+        "**Arbitrage over Accumulation**: Why finding 1% spreads in <a href='/blog/digital-inheritance-protocol-2026'>stablecoin yields</a> is often safer and more profitable than betting on a 10% stock market move.",
+        "**Dynamic Rebalancing**: Moving away from 'Buy and Hold' toward 'Buy and Monitor'—using AI to shift capital into the highest-performing sectors daily."
+      ]},
+      { "type": "heading", "text": "ToolFinance Analysis: The Power of 'Active-Passive' Wealth" },
+      { 
+        "type": "paragraph", 
+        "text": "The unique 'Information Gain' for this year is the **'Active-Passive Hybrid.'** You don't need to be a day-trader. Instead, you use 'Passive' index-based core holdings but apply 'Active' management to your yields. For example, instead of letting your dividends sit as cash, you immediately route them into <a href='/blog/depin-passive-income-2026'>DePIN protocols</a>. This ensures your money is always 'at work,' maximizing the velocity of every dollar you own." 
+      },
+      { "type": "heading", "text": "Calculate the Real Drag" },
+      { 
+        "type": "paragraph", 
+        "text": "Don't let hidden costs eat your legacy. Use our Inflation Guide to calculate the real-world purchasing power of your current portfolio and see if you're truly beating the 'Wealth Velocity Trap.'" 
+      }
+    ]
 }
 };

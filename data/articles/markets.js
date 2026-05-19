@@ -286,5 +286,81 @@ export const marketsArticles = {
         "text": "Consistent investing in stable, green-aligned assets is a proven strategy for wealth preservation. Start planning your consistent investment journey with our SIP calculator today." 
       }
     ]
+},
+
+"ai-energy-supercycle-2026": {
+    "title": "The 2026 Supercycle: Mapping the Capital Flow into AI Infrastructure and Energy",
+    "description": "Beyond the software hype. Discover why the real 2026 market winners are the 'Picks and Shovels'—the energy grids and semiconductor hubs powering the global AI buildout.",
+    "masterCategory": "markets",
+    "type": "white-paper",
+    "category": "Market Analysis",
+    "publishDate": "2026-05-24",
+    "readTime": "17 min read",
+    "image": "/images/ai-energy-supercycle.webp", 
+    "tool": "stock-average-calc",
+    "content": [
+      { 
+        "type": "paragraph", 
+        "text": "As of May 2026, the global equity markets have shifted their focus from 'AI mentions' to 'AI monetization.' The dominant theme is no longer just large-language models, but the massive physical infrastructure required to run them. This has triggered a **Dual Supercycle** in two specific sectors: specialized semiconductors and high-capacity energy grids." 
+      },
+      { "type": "heading", "text": "The 'Picks and Shovels' of North Asia" },
+      { 
+        "type": "paragraph", 
+        "text": "Emerging markets, particularly South Korea and Taiwan, have become the mission-critical hubs of this cycle. With AI-related demand contributing to nearly 70% of EPS growth forecasts for 2026, these 'Picks and Shovels' economies are seeing record capital inflows. However, the bottleneck has shifted from chips to **Liquidity**. This is where <a href='/blog/rtgs-2-liquidity-mirroring'>RTGS 2.0 systems</a> are becoming essential for institutional investors to move capital into these fast-moving tech corridors." 
+      },
+      { "type": "keyTakeaways", "items": [
+        "**Energy Resilience**: AI data centers now account for a significant portion of global electricity demand, driving a premium into 'Green Energy' utilities.",
+        "**Capex Monetization**: Markets are now rewarding companies that show clear cash-flow margin expansion from AI adoption, rather than just hype.",
+        "**The EM Beta**: Emerging markets are trading at attractive P/E ratios (around 12x), offering a value-hedge against overextended US tech valuations."
+      ]},
+      { "type": "heading", "text": "ToolFinance Analysis: The Correlation Decay" },
+      { 
+        "type": "paragraph", 
+        "text": "Our expert 'Information Gain' for this quarter is the **Energy-Equity Peg**. In 2026, we are seeing a decoupling where tech stocks are starting to trade more like 'Commodity Proxies.' Because compute power requires massive energy, a tech company's valuation is now intrinsically tied to its energy security. This is why <a href='/blog/sovereign-green-bonds-2026'>Sovereign Green Bonds</a> are becoming a strategic hedge for equity investors—they represent the literal fuel for the next leg of the bull market." 
+      },
+      { "type": "heading", "text": "Strategy: Averaging into Volatility" },
+      { 
+        "type": "paragraph", 
+        "text": "With geopolitical risks creating sharp, short-term dips in semiconductor stocks, 'Market Timing' is becoming a losing game. Use our Stock Average Calculator to maintain a disciplined entry strategy during these high-velocity cycles." 
+      }
+    ]
+},
+
+"global-reserve-transition-2026": {
+    "title": "The Dollar’s Slow Grind: Navigating the 2026 Reserve Currency Transition",
+    "description": "Is the dollar's status actually faltering? A realistic analysis of fiscal deficits, Fed policy shifts, and why the 'Successor Gap' is keeping the USD alive.",
+    "masterCategory": "markets",
+    "type": "opinion",
+    "category": "Global Macro",
+    "publishDate": "2026-05-25",
+    "readTime": "14 min read",
+    "image": "/images/global-reserve-shift.webp", 
+    "tool": "currency-converter",
+    "content": [
+      { 
+        "type": "paragraph", 
+        "text": "May 2026 marks a historic turning point for the Federal Reserve. As Chair Jerome Powell completes his term, the market is bracing for a potential shift toward aggressive interest rate cuts. While many headlines scream about 'The End of the Dollar,' the reality is a **Slow Grind Lower** rather than a disorderly collapse. The primary reason? The 'Successor Gap'—no other currency currently meets the global requirements for deep liquidity and legal transparency." 
+      },
+      { "type": "heading", "text": "Fiscal Deficits vs. Global Demand" },
+      { 
+        "type": "paragraph", 
+        "text": "The US dollar continues to benefit from its entrenched role in trade settlement, even as rising fiscal deficits place pressure on long-term confidence. However, we are seeing a shift toward **Diversification at the Margins**. Central banks are increasingly looking at gold and <a href='/blog/cbdc-privacy-bridge-2026'>CBDC frameworks</a> as a way to reduce their reliance on the traditional SWIFT system." 
+      },
+      { "type": "keyTakeaways", "items": [
+        "**The Powell Succession**: The market's primary risk is the politicization of the Fed, which could erode the dollar's 'Guardian' status.",
+        "**Settlement Infrastructure**: Reserve currencies are chosen for functionality, not popularity. Currently, the Euro and Yuan still face significant capital control hurdles.",
+        "**Deflationary Buffers**: If US tariffs are scaled back, lower inflation could give the Fed room to cut rates, further weakening the USD against EM currencies."
+      ]},
+      { "type": "heading", "text": "ToolFinance Analysis: The Settlement Mirage" },
+      { 
+        "type": "paragraph", 
+        "text": "The 'Information Gain' here is the **Settlement Mirage**. Most people track the dollar's value via the DXY index, but the real metric to watch is **Cross-Border Settlement Volume**. Even if the dollar's *value* drops, its *utility* remains high because of its role in pricing oil and tech. To hedge against this 'Slow Grind,' investors should look at assets that are 'Currency Agnostic,' such as tokenized real-world assets (RWAs) discussed in our <a href='/blog/sustainable-wealth-blueprint-2026'>2026 Blueprint</a>." 
+      },
+      { "type": "heading", "text": "Monitor Your Purchasing Power" },
+      { 
+        "type": "paragraph", 
+        "text": "In a transitioning market, your local currency's purchasing power can change overnight. Keep a pulse on global valuations with our Currency Converter to ensure your international exposure is balanced." 
+      }
+    ]
 }
 };
