@@ -1,4 +1,4 @@
-import { useState } from "react"; 
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { allFinanceArticles } from "../../data/articles/index";
@@ -7,7 +7,11 @@ import { allToolGuides } from "../../data/tool-guides/index";
 export default function BlogIndex() {
   // 1. Search State
   const [searchQuery, setSearchQuery] = useState("");
+ const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   // 2. Define the 6 Master Categories 
   const categories = [
     { id: 'foundation', name: 'Financial Foundation', icon: '🎓', color: 'slate', desc: 'Basics & Economics' },
@@ -36,12 +40,23 @@ export default function BlogIndex() {
       // 2. The "Every Word" Check: Ensure all typed words match the content
       return searchTerms.every(term => searchContent.includes(term));
     });
-
+ if (!mounted) {
+    return (
+      <div 
+        className="blog-hub-container" 
+        style={{ 
+          minHeight: '100vh', 
+          backgroundColor: '#f4f6fb', /* Soft light grey/blue fallback background */
+          opacity: 0 
+        }} 
+      />
+    );
+  }
   
  
 
   return (
-    <div className="blog-hub-container">
+    <div className={`blog-hub-container ${mounted ? "theme-ready" : "theme-loading"}`}>
       <Head>
         <title>Financial & Economic Library | Global Authority</title>
       </Head>
@@ -155,8 +170,8 @@ export default function BlogIndex() {
                          <img src={post.image} alt={post.title} />
                       </div>
                       <div>
-                        <h4>{post.title}</h4>
-                        <span className="pulse-date">{post.publishDate}</span>
+                        <h4 style={{ color: 'var(--text-main)', margin: 0 }}>{post.title}</h4>
+                        <span className="pulse-date" style={{ color: 'var(--text-muted)', fontSize: '12px' }}>{post.publishDate}</span>
                       </div>
                     </Link>
                   ))}
@@ -190,23 +205,35 @@ export default function BlogIndex() {
         </section>
       )}
 
-      {/* --- SECTION 4: RESEARCH ARCHIVE (Smart Filtered) --- */}
+        {/* --- SECTION 4: RESEARCH ARCHIVE --- */}
         <section style={{ marginTop: '40px', paddingBottom: '20px' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '800', marginBottom: '15px', borderBottom: '2px solid #eef2f6', paddingBottom: '10px' }}>Research Archive</h2>
+          <h2 className="home-section-title">Research Archive</h2>
           <div className="blog-grid">
             {(() => {
               const featSlug = postsArray.find(([_, p]) => ['guide', 'case-study', 'white-paper'].includes(p.type))?.[0];
               const pulseSlugs = postsArray.filter(([_, p]) => p.type === 'news' || p.type === 'opinion').slice(0, 4).map(([s]) => s);
 
               return postsArray.filter(([slug]) => slug !== featSlug && !pulseSlugs.includes(slug)).slice(0, 9).map(([slug, post]) => (
-                <Link href={`/blog/${slug}`} key={slug} className="standard-post-row" style={{ display: 'flex', gap: '20px', textDecoration: 'none', color: 'inherit', marginBottom: '25px', alignItems: 'center' }}>
-                  <div style={{ width: '100px', height: '100px', background: '#eef2f6', borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}>
-                    <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <Link href={`/blog/${slug}`} key={slug} className="standard-post-row">
+                  
+                  {/* USES THE NEW CLASS NAME */}
+                  <div className="post-thumb-container">
+                    <img src={post.image} alt={post.title} />
                   </div>
+
                   <div>
-                    <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent-blue)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{post.category || post.masterCategory || 'Library'}</span>
-                    <h3 style={{ fontSize: '1.15rem', margin: '5px 0', lineHeight: '1.3' }}>{post.title}</h3>
-                    <p style={{ fontSize: '14px', color: 'var(--text-muted)', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{post.description}</p>
+                    <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--accent-blue)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      {post.category || post.masterCategory || 'Library'}
+                    </span>
+                    
+                    {/* USES TEXT-MAIN FOR DARK MODE VISIBILITY */}
+                    <h3 style={{ color: 'var(--text-main)', fontSize: '1.15rem', margin: '5px 0', lineHeight: '1.3' }}>
+                      {post.title}
+                    </h3>
+                    
+                    <p style={{ fontSize: '14px', color: 'var(--text-muted)', display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                      {post.description}
+                    </p>
                   </div>
                 </Link>
               ));

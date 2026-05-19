@@ -1,14 +1,29 @@
 /* =============================================================
    10. FOOTER & MISC COMPONENTS
 ============================================================= */
+
 .site-footer {
-  background: var(--primary);
-  color: #ffffff;
+  background: var(--bg-footer-main);
+  color: var(--footer-text);
   margin-top: 0px;
-  padding: 30px 20px 20px;
+  padding: 60px 20px 0px;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
-  
+  /* Thin subtle border for light mode, glow for dark */
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease;
+}
+
+html.dark .site-footer {
+  border-top: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.footer-brand {
+  color: var(--footer-heading) !important; 
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .footer-container {
@@ -19,86 +34,117 @@
   gap: 30px;
 }
 
-.footer-column h4 { color: #f0e68c; margin-bottom: 15px; }
-.footer-column a { display: block; margin-bottom: 5px; font-size: 14px; opacity: 0.9; color: #ffffff; }
-
-.footer-bottom {
-  text-align: center;
-  padding: 18px 0;
-  background: #071a40;
-  font-size: 13px;
-  margin-top: 15px;
-  border-radius: 0 0 14px 14px;
+/* Description text under the logo */
+.footer-column p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 10px;
+  color: var(--footer-text);
 }
 
-/* Ads & Placeholders */
+.footer-column h4 { 
+  color: var(--footer-heading) !important; 
+  margin-bottom: 18px; 
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.footer-column a { 
+  display: block; 
+  margin-bottom: 8px; 
+  font-size: 14px; 
+  color: var(--footer-text); 
+  text-decoration: none; 
+  font-weight: 500; 
+  transition: all 0.2s ease;
+}
+
+.footer-column a:hover {
+  color: var(--bg-footer-bottom);
+  transform: translateX(3px);
+}
+
+/* Copyright Bar */
+.footer-bottom {
+  text-align: center;
+  padding: 25px 0;
+  background: var(--bg-footer-bottom);
+  font-size: 13px;
+  margin-top: 40px;
+  border-radius: 0 0 14px 14px;
+  color: #ffffff !important;
+  border-top-left-radius: 24px; 
+  border-top-right-radius: 24px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+/* =============================================================
+   ADS & PROMOTIONAL COMPONENTS (Keep these!)
+============================================================= */
 .adsense-placeholder, .ad-placeholder {
-  color: 'var(--text-muted)';
+  color: var(--text-muted);
   margin: 25px auto;
   padding: 16px;
   text-align: center;
-  border: '2px dashed var(--border-soft)';
-  background: 'var(--soft-bg)';
+  border: 2px dashed var(--border-soft);
+  background: var(--card-bg);
   border-radius: 10px;
+  font-size: 12px;
 }
 
 .cta-block {
   width: 100%;
   min-height: 90px;
-  border: 1px dashed #2a3441;
+  border: 1px dashed var(--border-soft);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 25px 0;
   font-weight: 600;
+  background: var(--card-bg);
 }
 
-/* --- Professional Mobile Centering --- */
+/* =============================================================
+   PROFESSIONAL MOBILE CENTERING
+============================================================= */
 @media (max-width: 768px) {
   .site-footer {
-    text-align: center; /* Centers all inline text */
+    text-align: center;
   }
 
   .footer-container {
     display: flex;
-    flex-direction: column; /* Stack columns vertically */
-    align-items: center;    /* Center columns horizontally */
-    width: 100%;             /* Consistent 40px gap between sections */
-    padding: 0%;
-    gap: 0px;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
   }
 
   .footer-column {
     display: flex;
     flex-direction: column;
-    align-items: center;    /* Centers the h4 and the ul list */
+    align-items: center;
+    max-width: 300px;
   }
 
   .footer-column h4 {
-    /* Reduce heading margin from 15px to 8px for a tighter look */
-    margin-top: 10px;
-    margin-bottom: 8px; 
+    margin-top: 5px;
+    margin-bottom: 12px; 
   }
 
   .footer-column p {
-    margin: 0 auto;         /* Centers the "Free, accurate..." description */
-    margin-bottom: 10px;
+    margin-bottom: 15px;
   }
 
-  .footer-column ul {
-    width: 100%;
-    padding: 0;
-  }
-
-  .footer-column ul li {
-    /* Keep links close together */
-    margin-bottom: 4px; 
-  }
-
-  /* Ensures the links themselves are clickable across the center */
   .footer-column a {
     text-align: center;
-    padding: 5px 0;
+    padding: 4px 0;
   }
 }

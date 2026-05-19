@@ -9,50 +9,85 @@
 
 /* =============================================================
    DYNAMIC THEME VARIABLES
-   Works for both Light and Dark modes
 ============================================================= */
 
 :root {
-  /* 1. Brand Colors (Usually stay the same) */
-  --primary: rgba(11, 31, 74, 0.95);
+  /* 1. Brand Colors */
+  --primary: #0b1f4a;
   --accent-blue: #2563eb;
+  --accent-green: #16a34a;
   --hover-bg: #e6f0ff;
 
-  /* 2. Dynamic Colors (Light Mode Values) */
+  /* 2. Dynamic Colors (Light Mode) */
   --soft-bg: #f4f6fb;
   --card-bg: #ffffff;
   --border-soft: #e6e6e6;
-  --text-main: #1a1a1a;   /* Dark text for light bg */
-  --text-muted: #555;
+  --text-main: #1a1a1a; 
+  --text-muted: #4b5563; 
   --text-light: #9aa3b2;
-  --note-bg: rgba(255, 247, 237, 1); /* Light orange for Light Mode */
+
+ /* 3. Surface & Section Colors (Light Mode) */
+  --bg-cta: #1e293b; 
+  --bg-footer-main: #f8fafc;    /* Very light slate - looks cleaner than the grey you had */
+  --bg-footer-bottom: #059669;  /* A slightly deeper, professional Emerald green */
+  --footer-text: #475569;       /* Slate blue-grey - very easy to read */
+  --footer-heading: #0f172a;    /* Dark Navy for the brand and titles */
+
+  /* 4. Notes & Alerts */
+  --note-bg: #fff7ed;
   --note-text: #9a3412;
   --note-border: #ffedd5;
 }
 
-/* 3. Dark Mode Overrides */
+/* 3. Dark Mode Overrides - FIXED FOR READABILITY */
 [class='dark'] {
-  --soft-bg: #0f172a;     /* Deep navy background */
-  --card-bg: #1e293b;     /* Lighter navy for cards */
-  --border-soft: #334155; /* Muted border for dark mode */
-  --text-main: #f1f5f9;   /* Near white text for dark bg */
-  --text-muted: #94a3b8;  /* Light grey for secondary text */
-  --text-light: #64748b;  /* Dimmer grey */
+  /* BACKGROUNDS: Creating depth by making soft-bg darker than cards */
+  --soft-bg: #020617;     /* Pure Dark Navy */
+  --card-bg: #1e293b;     /* Slate Navy */
+  --border-soft: #334155; 
   
-  --hover-bg: #1e293b;    /* Darker hover state */
-  /* Optional: make the primary slightly brighter in dark mode for contrast */
-  --primary: #3b82f6; 
-  --note-bg: rgba(154, 52, 18, 0.2); /* Transparent dark orange for Dark Mode */
-  --note-text: #fdba74;              /* Brighter peach text for readability */
-  --note-border: rgba(154, 52, 18, 0.3);
+  /* TEXT: Pushing contrast so it's not "Gray" */
+  --text-main: #ffffff;   /* Pure White (Titles) */
+  --text-muted: #cbd5e1;  /* High-Contrast Silver (Descriptions) */
+  --text-light: #94a3b8;  /* Readable Slate (Dates) */
+  
+  /* INTERACTIVE: Hover must be different from Card Background */
+  --hover-bg: #334155;    /* Lighter than card, making links/rows pop */
+  
+  /* HEADINGS: Bright blue for visibility */
+  --primary: #60a5fa; 
+/* SECTIONS (Dark Mode) */
+  --bg-cta: #1e293b; 
+  
+  /* Midnight Navy - This is slightly lighter than your #020617 body, 
+     creating a nice 'lifted' effect for the footer */
+  --bg-footer-main: #0a0f16;    
+  
+  --bg-footer-bottom: #064e3b;  /* Deep Forest Green - matches your 'Green Bonds' theme */
+  
+  --footer-text: #94a3b8;       /* Clean slate gray for links */
+  --footer-heading: #10b981;    /* Vibrant Emerald Green for "ToolFinance" and Headers */
+  
+  --primary: #60a5fa;           /* Bright blue for other headings */
+  
+  --accent-green: #4ade80;
+  --accent-blue: #93c5fd;
+
+  --note-bg: rgba(254, 215, 170, 0.1); 
+  --note-text: #fdba74;
+  --note-border: rgba(254, 215, 170, 0.2);
 }
 
+/* =============================================================
+   BASE BODY STYLES
+============================================================= */
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--soft-bg);
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--soft-bg);
   color: var(--text-main);
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 body.menu-open {
@@ -63,4 +98,35 @@ a {
   text-decoration: none;
   color: inherit;
   transition: 0.25s ease;
+}
+
+/* --- Refined Hover Logic --- */
+
+/* Remove global underlines from all links by default */
+html.dark a, 
+[data-theme='dark'] a {
+    text-decoration: none !important;
+}
+
+/* Only apply underline to text-based links inside paragraphs or lists */
+html.dark p a, 
+html.dark li a,
+html.dark .read-analysis-btn {
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+/* Clean Hover: Color change instead of underline */
+html.dark p a:hover, 
+html.dark li a:hover {
+    color: #3b82f6 !important;
+    text-decoration: underline; /* Keep it only for text links for accessibility */
+}
+
+/* CRITICAL: Remove underlines from Images and Icons */
+html.dark a img, 
+html.dark a .icon-wrapper, 
+html.dark .master-card:hover {
+    text-decoration: none !important;
+    outline: none !important;
 }

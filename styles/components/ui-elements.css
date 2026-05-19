@@ -6,6 +6,18 @@
   --title-color: #163ec0; 
 }
 
+[class='dark'] {
+  --title-color: #60a5fa; /* Brighter, readable blue for Dark Mode */
+}
+
+/* Apply it to your headings */
+h1, h2, h3 {
+  color: var(--text-main);
+}
+.home-section-title {
+  color: var(--title-color);
+}
+
 .home-section-title {
   text-align: center;
   color: var(--title-color);

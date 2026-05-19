@@ -19,7 +19,18 @@
   padding-bottom: 0px !important; 
   margin-bottom: 0px !important;
 }
-
+.blog-hub-container.theme-loading {
+  background-color: var(--soft-bg);
+  color: #1e293b !important;
+}
+.blog-hub-container.theme-ready {
+  background-color: var(--soft-bg);
+  color: #1e293b;
+}
+html.dark .blog-hub-container,
+[data-theme='dark'] .blog-hub-container {
+  color: #f8fafc !important; /* Forces your crisp text color instantly */
+}
 .hub-header { 
   text-align: center; 
   margin-bottom: 50px; 
@@ -59,6 +70,17 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   overflow: hidden; 
   position: relative;
+}
+html.dark .master-card,
+[data-theme='dark'] .master-card {
+  background: #0f172a !important; /* 👈 Replace this with your exact dark card HEX color */
+  border-color: #1e293b !important; /* 👈 Replace this with your exact dark border HEX color */
+}
+html.dark .master-card h3,
+html.dark .master-card p,
+[data-theme='dark'] .master-card h3,
+[data-theme='dark'] .master-card p {
+  color: #ffffff !important;
 }
 
 .master-card:hover {
@@ -182,7 +204,7 @@
   font-size: clamp(2rem, 5vw, 2.8rem); 
   font-weight: 800; 
   line-height: 1.15; 
-  color: #111827; 
+  color: var(--text-main); 
   margin-bottom: 15px; 
 }
 
@@ -239,6 +261,18 @@
 }
 
 .article-p { margin-bottom: 25px; }
+/* This targets any link inside your article paragraphs */
+.article-p a {
+  color: #2563eb !important; /* A nice professional blue */
+  text-decoration: underline !important;
+  font-weight: 700;
+  transition: opacity 0.2s;
+}
+
+.article-p a:hover {
+  opacity: 0.8;
+  color: #1d4ed8;
+}
 
 .article-h2 { 
   font-size: 1.8rem; 
@@ -292,7 +326,7 @@
 
 /* FORMULA BOX - FIXING OVERLAP */
 .formula-box { 
-  background-color: var(--bg-card) !important; 
+  background-color: var(--card-bg) !important; 
   padding: 35px !important;
   border-radius: 16px !important;
   text-align: center !important;
@@ -319,7 +353,7 @@
 
 /* AD / TOOL CARDS - FIXING OVERLAP */
 .ad-placeholder-wrapper, .inline-tool-box, .inline-tool-card {
-  background: var(--bg-card) !important; 
+  background: var(--card-bg) !important; 
   border: 1px solid var(--border-soft) !important; 
   padding: 30px !important; 
   border-radius: 16px !important;
@@ -354,7 +388,7 @@
 }
 
 .sidebar-card {
-  background: var(--bg-card);
+  background: var(--card-bg);
   padding: 25px;
   border-radius: 16px;
   border: 1px solid var(--border-soft);
@@ -391,7 +425,7 @@
 
 /* RELATED ARTICLES SECTION */
 .related-section {
-  background: var(--bg-card);
+  background: var(--card-bg);
   padding: 30px;
   border-radius: 16px;
   border: 1px solid var(--border-soft);
@@ -494,17 +528,18 @@
     font-size: 1.8rem;
     font-weight: 800;
     margin-bottom: 25px;
-    border-bottom: 3px solid #1e293b;
+    border-bottom: 3px solid var(--border-soft);
     width: fit-content;
     padding-bottom: 5px;
+    color: var(--text-main) !important;
 }
 
 .featured-analysis-card {
-    background: #fff;
+    background: var(--card-bg);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    border: 1px solid #eef2f6;
+    border: 1px solid var(--border-soft);
     transition: transform 0.3s ease;
 }
 
@@ -520,22 +555,44 @@
     text-transform: uppercase; letter-spacing: 1px; 
 }
 
-.read-analysis-btn { margin-top: 15px; font-weight: bold; color: #1e293b; }
-
+.read-analysis-btn { margin-top: 15px; font-weight: bold; color: #2563eb; }
+html.dark .read-analysis-btn,
+[data-theme='dark'] .read-analysis-btn {
+  color: #60a5fa !important; /* A bright, beautifully accessible dark-mode blue */
+}
 .read-analysis-btn:hover {
     text-decoration: underline;
     transform: translateX(5px); /* Smooth slide effect on your Dell laptop */
 }
 .pulse-row-item {
-    background: #f8fafc;
+    background: var(--soft-bg);
     padding: 15px;
     border-radius: 12px;
-    border: 1px solid #eef2f6;
+    border: 1px solid var(--border-soft);
     display: flex;
     gap: 15px;
     align-items: center;
     text-decoration: none;
     color: inherit;
+}
+
+/* components/blog.css */
+.pulse-row-item h4 {
+  color: var(--text-main);
+  transition: color 0.2s;
+}
+
+.pulse-row-item:hover h4 {
+  color: var(--primary);
+}
+
+.pulse-date {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.standard-post-row p {
+  color: var(--text-muted);
 }
 
 .pulse-thumb {
@@ -592,6 +649,226 @@
     body, html {
     overflow-x: hidden;
   }
+}
+
+/* Standard Row for Research Archive & Search Results */
+.standard-post-row {
+  display: flex;
+  gap: 20px;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 25px;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.standard-post-row:hover {
+  transform: translateX(5px); /* Subtle high-end feel */
+}
+
+/* This is the class you were asking about! */
+.post-thumb-container {
+  width: 100px;
+  height: 100px;
+  background: var(--card-bg); /* Switched from #eef2f6 to variable */
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.post-thumb-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html.dark, [data-theme='dark'] {
+  /* 1. Force critical fallback variables instantly if they are lagging */
+  --text-main: #f8fafc !important;
+  --text-muted: #94a3b8 !important;
+  --border-soft: #1e293b !important;
+}
+
+/* 2. Fix the Heading Titles (e.g., Strategic Analysis, Market Pulse, Research Archive) */
+html.dark h1, html.dark h2, html.dark h3, html.dark h4,
+[data-theme='dark'] h1, [data-theme='dark'] h2, [data-theme='dark'] h3 {
+  color: #ffffff !important;
+}
+
+/* 3. Fix Underlying Lines & Section Borders */
+html.dark hr, 
+html.dark .section-line,
+[data-theme='dark'] .section-line {
+  border-color: #1e293b !important;
+  background-color: #1e293b !important;
+}
+
+/* 4. Fix Small Category Badges & Metadata (e.g., TAX STRATEGY, GLOBAL SYSTEMS) */
+html.dark .card-category,
+html.dark .post-meta,
+html.dark .category-tag,
+[data-theme='dark'] .card-category {
+  color: #3b82f6 !important; /* Premium bright blue for category visibility */
+}
+
+/* 5. Fix Article Excerpts / Descriptions */
+html.dark .master-card p,
+html.dark .research-archive p,
+html.dark .blog-hub-container p,
+[data-theme='dark'] p {
+  color: #cbd5e1 !important; /* Soft legible white/gray for descriptions */
+}
+
+/* 6. FIX THE HIDDEN LINK BUTTON ("Read Full Analysis →") */
+html.dark .read-more-btn,
+html.dark .analysis-link,
+html.dark a[class*="read-"],
+html.dark a[class*="link"],
+[data-theme='dark'] .blog-hub-container a {
+  color: #60a5fa !important; /* Bright accessible blue-gray link text */
+  text-decoration: none;
+}
+
+html.dark .read-more-btn:hover,
+[data-theme='dark'] a[class*="read-"]:hover {
+  color: #3b82f6 !important;
+  text-decoration: underline;
+}
+
+/* 7. Fix Icon SVG Wrappers (Ensures background icons stay readable) */
+html.dark .icon-wrapper,
+[data-theme='dark'] .icon-container {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark .icon-wrapper img,
+html.dark .icon-wrapper svg {
+  filter: brightness(1.2) !important; /* Pop up asset icons inside containers */
+}
+
+html.dark .master-card div[class*="icon"],
+[data-theme='dark'] .master-card div[class*="icon"] {
+  background-color: #ffffff !important; /* Forces the white circle/square back */
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important; /* Matches your smooth card styling */
+  padding: 8px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+html.dark .blog-hub-container span[class*="category"],
+html.dark .blog-hub-container p[class*="category"],
+[data-theme='dark'] .blog-hub-container [class*="category"] {
+  color: #3b82f6 !important; /* Premium branding blue */
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+html.dark, 
+[data-theme='dark'], 
+body.dark {
+  /* 1. Force the core global styling tokens to switch instantly */
+  --text-main: #f1f5f9 !important;  /* Crisp off-white text */
+  --text-muted: #94a3b8 !important; /* Soft legible gray text */
+  --border-soft: #1e293b !important; /* Dark slate structural borders */
+  --bg-card: #0f172a !important;     /* Deep navy blue container background */
+}
+
+/* 2. Target ALL text headers inside article bodies and main components */
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
+[data-theme='dark'] h1, [data-theme='dark'] h2, [data-theme='dark'] h3, [data-theme='dark'] h4 {
+  color: #ffffff !important;
+}
+
+/* 3. Target ALL standalone paragraphs, list items, spans, and strong text markers */
+html.dark p, html.dark li, html.dark span, html.dark strong, html.dark b,
+[data-theme='dark'] p, [data-theme='dark'] li, [data-theme='dark'] span, [data-theme='dark'] strong {
+  color: #e2e8f0 !important; /* Ensures readable body and description texts */
+}
+
+/* 4. Target ALL structural layout lines, horizontal breaks, and dividing rules */
+html.dark hr, 
+html.dark div[class*="line"], 
+html.dark div[class*="border"],
+[data-theme='dark'] hr {
+  border-color: #1e293b !important;
+  background-color: #1e293b !important;
+}
+
+/* 5. Target ALL anchor links, read more markers, and action items inside your main body wrapper */
+html.dark main a, 
+html.dark article a, 
+html.dark div[class*="btn"], 
+html.dark div[class*="link"],
+[data-theme='dark'] main a {
+  color: #60a5fa !important; /* Forces your brand links to remain visible and bright */
+}
+
+html.dark main a:hover, 
+html.dark article a:hover,
+[data-theme='dark'] main a:hover {
+  color: #3b82f6 !important;
+  text-decoration: underline !important;
+}
+
+/* 6. Fix the 6 Master Category Icon boxes to keep their clean backgrounds */
+html.dark div[class*="icon-wrapper"],
+html.dark div[class*="icon-container"],
+html.dark .category-icon,
+[data-theme='dark'] div[class*="icon"] {
+  background-color: #ffffff !important; /* Keeps the neat white badge circle or square */
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* ==========================================================
+   ARTICLE PAGE COMPONENTS (Table of Contents & Takeaways)
+   ========================================================== */
+
+/* 1. The Containers */
+html.dark .table-of-contents,
+html.dark .takeaways-box,
+[data-theme='dark'] .table-of-contents,
+[data-theme='dark'] .takeaways-box {
+    background-color: #1e293b !important; /* Deep slate */
+    border: 1px solid #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* 2. The Headings (Jump to Section / Key Takeaways) */
+html.dark .table-of-contents h4,
+html.dark .takeaways-box h4,
+[data-theme='dark'] .table-of-contents h4,
+[data-theme='dark'] .takeaways-box h4 {
+    color: #3b82f6 !important; /* ToolFinance Blue */
+}
+
+/* 3. The List Items / Links */
+html.dark .table-of-contents a,
+html.dark .takeaways-box li,
+[data-theme='dark'] .table-of-contents a {
+    color: #cbd5e1 !important;
+}
+
+/* 4. Sidebar Cards (Recommended Tool) */
+html.dark .sidebar-card, 
+html.dark .sidebar-box {
+    background: #0f172a !important;
+    border: 1px solid #1e293b !important;
+}
+
+html.dark .sidebar-card h4,
+html.dark .sidebar-card p {
+    color: #ffffff !important;
+}
+
+/* Fix Sidebar Link */
+html.dark .sidebar-card a {
+    color: #60a5fa !important;
+    text-decoration: none !important;
 }
 
 

@@ -32,10 +32,10 @@ export default function Home() {
         <meta name="description" content="Accurate financial calculators for EMI, SIP, Loans, and Taxes. Stay updated with our expert financial guides." />
       </Head>
       {/* --- HERO SECTION --- */}
-      <section className={styles.heroSection} style={{ borderRadius: '24px 24px 0 0', background: 'var(--bg-card)', borderBottom: 'none', }}>
+      <section className={styles.heroSection} style={{ background: 'var(--card-bg)', borderBottom: 'none' }}>
   <div className={styles.heroContent}>
     <h1 className={styles.mainTitle}>
-      Master Your Money with <span className={styles.textGradient}>Precision</span>
+       <span className={styles.textGradient}>Master Your Money with Precision</span>
     </h1>
     <p className={styles.subText}>
       ToolFinance provides <strong>simple and accurate</strong> financial calculators and expert educational content. 
@@ -125,6 +125,8 @@ export default function Home() {
           {latestBlogs.map(([slug, post]) => (
             <Link href={`/blog/${slug}`} key={slug} className="minimal-blog-link" style={{ textDecoration: 'none' }}>
               <div style={{ 
+                background: 'var(--card-bg)', 
+                border: '1px solid var(--border-soft)',
                 padding: '20px', 
                 background: 'var(--bg-card)', 
                 borderRadius: '12px', 
@@ -132,17 +134,12 @@ export default function Home() {
                 transition: '0.2s', 
                 height: '100%' 
               }}>
-                {/* 1. Category Label with Fallback */}
                 <span style={{ color: 'var(--primary)', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>
-                  {post.category || post.masterCategory || "Finance"}
+                  {post.category || "Finance"}
                 </span>
-
-                {/* 2. Title */}
-                <h4 style={{ margin: '10px 0', color: 'var(--text-main)', fontSize: '1.1rem', lineHeight: '1.4' }}>
+                <h4 style={{ margin: '10px 0', color: 'var(--text-main)', fontSize: '1.1rem' }}>
                   {post.title}
                 </h4>
-
-                {/* 3. Date and Read Time with Fallback */}
                 <div style={{ color: 'var(--text-muted)', fontSize: '12px' }}>
                   {post.publishDate} • {post.readTime || "5 min read"}
                 </div>
@@ -153,11 +150,18 @@ export default function Home() {
       </section>
 
       {/* --- BOTTOM CTA --- */}
-      <section style={{ textAlign: 'center', padding: '30px 20px', background: '#1e293b', borderRadius: '20px', color: 'white', marginTop: '10px',}}>
-        <h2 className="text-gradient" style={{ fontSize: '2rem' }}>Ready to Plan Your Future?</h2>
-        <p style={{ color: 'var(--text-muted)', marginBottom: '10px' }}>Simple tools for complex financial decisions.</p>
-        <Link href="/tools/emi" className="btn-primary">Calculate My EMI Now</Link>
-      </section>
+      <section style={{ 
+  textAlign: 'center', 
+  padding: '40px 20px', 
+  background: 'var(--bg-cta)', 
+  borderRadius: '20px', 
+  color: 'var(--text-main)', 
+  marginTop: '20px'
+}}>
+  <h2 className="text-gradient" style={{ fontSize: '2rem' }}>Ready to Plan Your Future?</h2>
+  <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>Simple tools for complex financial decisions.</p>
+  <Link href="/tools/emi" className="btn-primary">Calculate My EMI Now</Link>
+</section>
     </div>
   );
 }
