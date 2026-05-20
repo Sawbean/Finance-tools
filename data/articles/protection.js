@@ -104,5 +104,47 @@ export const protectionArticles = {
       }
     ]
 },
-    
+ 
+"aca-subsidy-cliff-2026": {
+    "title": "The ACA Subsidy Cliff: How to Protect Your Net Worth as 5 Million Lose Coverage",
+    "description": "On May 19, 2026, new data confirmed a worst-case scenario: 5 million Americans are dropping health coverage as subsidies expire. Learn the 'Plan B' strategies to shield your wealth from medical bankruptcy.",
+    "masterCategory": "protection",
+    "type": "white-paper",
+    "category": "Wealth Protection",
+    "publishDate": "2026-05-20",
+    "readTime": "20 min read",
+    "image": "/images/aca-coverage-loss-2026.webp", 
+    "tool": "net-worth-guide",
+    "content": [
+      { 
+        "type": "paragraph", 
+        "text": "The single biggest threat to financial independence in 2026 isn't a stock market crash—it's a healthcare gap. Following the January 1 expiration of the enhanced Premium Tax Credits (PTCs), a KFF report released on May 19 confirms that **ACA enrollment is plummeting from 22.5 million to 17.5 million**. For the 5 million people opting out, the financial risk is catastrophic. Without a 'Safety Net' strategy, a single ER visit can wipe out a decade of <a href='/blog/capital-compounding-emerging-markets'>capital compounding</a>." 
+      },
+      { "type": "heading", "text": "The Math of the '114% Premium Spike'" },
+      { 
+        "type": "paragraph", 
+        "text": "The expiration of the American Rescue Plan subsidies means that for many low-to-middle income households, net premiums have more than doubled—rising from an average of $888 to $1,904 per year. More alarmingly, the average deductible has surged by over **$1,000**, making 'Silver' and 'Bronze' plans feel like no insurance at all. This is the 'Subsidy Cliff' that is forcing millions of gig workers and early retirees to gamble on their health." 
+      },
+      { "type": "keyTakeaways", "items": [
+        "**The Uninsured Trap**: 4.8 million people are projected to become completely uninsured, risking total asset seizure in the event of major medical litigation.",
+        "**Deductible Shock**: The $1,000 average increase in deductibles requires an immediate adjustment to your 'Tiered Liquidity' emergency fund.",
+        "**Network Contagion**: As enrollment drops, many 'Safety-Net' hospitals are facing funding cuts, potentially reducing the quality of care in rural areas."
+      ]},
+      { "type": "heading", "text": "ToolFinance Analysis: Designing a 'Healthcare Bridge'" },
+      { 
+        "type": "paragraph", 
+        "text": "The expert 'Information Gain' for 2026 is **'Plan B Diversification.'** If you are part of the 5 million losing coverage, you cannot afford to stay 'Naked' in the market. We recommend a **Three-Pillar Bridge**: 1) High-Deductible Health Plans (HDHP) paired with a maxed-out HSA for tax-free growth, 2) Direct Primary Care (DPC) memberships for routine costs, and 3) 'Stop-Loss' catastrophic coverage to prevent <a href='/blog/digital-inheritance-protocol-2026'>estate depletion</a>. Protection is about mitigating the 'Left-Tail Risk'—the low-probability, high-impact events that kill wealth." 
+      },
+      { "type": "list", "items": [
+        "**HSA Optimization**: Why your Health Savings Account is now your most important 'Tax Alpha' tool in a high-cost environment.",
+        "**Short-Term Transition Plans**: Navigating the 90-day 'Reconsideration Period' for those procedural terminations in expansion states.",
+        "**The Freelancer Pivot**: How gig workers are using professional associations to group-buy coverage and bypass the individual subsidy cliff."
+      ]},
+      { "type": "heading", "text": "Audit Your Safety Net" },
+      { 
+        "type": "paragraph", 
+        "text": "Is your current health plan still an asset, or has it become a liability? Use our Net Worth Guide to stress-test your portfolio against a potential $50,000 medical shock and see if your 'Protection' layer is truly solid." 
+      }
+    ]
+}
 };
