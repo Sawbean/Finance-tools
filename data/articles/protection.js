@@ -146,5 +146,48 @@ export const protectionArticles = {
         "text": "Is your current health plan still an asset, or has it become a liability? Use our Net Worth Guide to stress-test your portfolio against a potential $50,000 medical shock and see if your 'Protection' layer is truly solid." 
       }
     ]
+},
+
+"brazil-desenrola-reset-2026": {
+    "title": "Desenrola 2.0: Navigating the 90% Debt Discounts in Brazil’s 2026 Credit Reset",
+    "description": "With 82 million people in default, Brazil has launched its most aggressive debt relief program yet. Learn how to qualify for 90% discounts, the 1.99% interest cap, and using FGTS to clear your name.",
+    "masterCategory": "protection",
+    "type": "white-paper",
+    "category": "Debt Management",
+    "publishDate": "2026-05-21",
+    "readTime": "18 min read",
+    "image": "/images/brazil-desenrola-2026.webp", 
+    "tool": "net-worth-guide",
+    "content": [
+      { 
+        "type": "paragraph", 
+        "text": "Brazil is currently facing a 'perfect storm' of high interest rates and the digitalization of debt. On May 4, 2026, the government officially opened the **Novo Desenrola Brasil**, a revamped debt renegotiation portal. With the Central Bank reporting that family debt has reached **49.9% of total income**—the highest in historical series—this program isn't just a benefit; it's a structural necessity to prevent a total freeze in consumer spending." 
+      },
+      { "type": "heading", "text": "The 2026 Rules: Who Can 'Desenrolar'?" },
+      { 
+        "type": "paragraph", 
+        "text": "The 2026 iteration is significantly broader than the 2023 version. The new **Desenrola Famílias** category now covers households earning up to **five minimum wages** (approx. R$ 8,105). Eligible debts include those contracted until January 31, 2026, that have been overdue for at least 90 days. For the first time, the government is allowing users to utilize up to **20% of their FGTS balance** (or R$ 1,000, whichever is higher) to settle these balances instantly." 
+      },
+      { "type": "keyTakeaways", "items": [
+        "**90% Haircuts**: Creditors are offering massive write-offs to clear 'zombie debt' from their books, with some settlements reaching 10 cents on the real.",
+        "**Interest Rate Cap**: Refinanced installments are legally capped at **1.99% per month**, providing a massive relief from the 14.5% Selic-driven market rates.",
+        "**Instant Cleanse**: Once the first installment of a renegotiated plan is paid, the 'negative' status must be removed from Serasa and SPC databases within 5 business days."
+      ]},
+      { "type": "heading", "text": "ToolFinance Analysis: The Selic Pressure Cooker" },
+      { 
+        "type": "paragraph", 
+        "text": "The expert 'Information Gain' for May 2026 is the **'Selic Paradox.'** While the government is helping citizens 'Desenrolar' (unroll) their debt, the Central Bank has just raised the 2026 interest rate forecast to **13.25%**. This means while old debt is being cleared, the cost of *new* credit remains prohibitively expensive. For wealth builders, the strategy is clear: Use Desenrola to kill high-interest credit card debt (averaging 400% APR), but pivot immediately to <a href='/blog/automated-cashflow-architecture-2026'>cash-based operations</a> to avoid falling back into the cycle." 
+      },
+      { "type": "list", "items": [
+        "**The 4-Year Runway**: Agreements can now be stretched over 48 months, allowing families to lower their monthly 'Debt-to-Income' ratio significantly.",
+        "**Digital Betting Impact**: A rising portion of the 82 million defaulters cite 'online betting' as a primary driver of liquidity loss—a new risk factor for 2026.",
+        "**Business Relief**: The 'Desenrola Empreendedor' segment offers similar relief for micro-businesses struggling with post-pandemic legacy loans."
+      ]},
+      { "type": "heading", "text": "Protect Your Credit Score" },
+      { 
+        "type": "paragraph", 
+        "text": "A clean name is the foundation of financial leverage in Brazil. If you are among the 82 million, this May window is your best chance to reset your score. Use our Net Worth Guide to track how clearing these liabilities will instantly boost your family's 'Investment Capacity' for the remainder of 2026." 
+      }
+    ]
 }
 };
