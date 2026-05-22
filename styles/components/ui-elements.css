@@ -131,3 +131,10 @@ h1, h2, h3 {
   justify-content: center;
 }
 
+.adsbygoogle {
+  display: block;
+  min-height: 250px; /* Ensures the white space doesn't collapse */
+  background: var(--card-bg);
+  border-radius: 12px;
+}
+
