@@ -5,14 +5,13 @@ import { allFinanceArticles } from "../../data/articles/index";
 import { allToolGuides } from "../../data/tool-guides/index";
 
 export default function BlogIndex() {
-  // 1. Search State
+  
   const [searchQuery, setSearchQuery] = useState("");
  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-  // 2. Define the 6 Master Categories 
   const categories = [
     { id: 'foundation', name: 'Financial Foundation', icon: '🎓', color: 'slate', desc: 'Basics & Economics' },
     { id: 'wealth', name: 'Wealth Management', icon: '💵', color: 'emerald', desc: 'Personal Finance' },
@@ -22,16 +21,32 @@ export default function BlogIndex() {
     { id: 'systems', name: 'Systems & News', icon: '🏛️', color: 'gold', desc: 'Taxes & Banking' }
   ];
 
-  // 3. Merge and Sort Data
+  // Merge and Sort Data
   const allPosts = { ...allFinanceArticles, ...allToolGuides };
   const postsArray = Object.entries(allPosts).sort(
     (a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate)
   );
+  const blogHubSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Financial & Economic Library",
+    "description": "Your global gateway to financial intelligence and economic trends.",
+    "url": "https://finance-tools-mu.vercel.app/blog",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": postsArray.slice(0, 15).map(([slug, post], index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `https://finance-tools-mu.vercel.app/blog/${slug}`,
+        "name": post.title
+      }))
+    }
+  }; 
 
- // 4. Pro-Grade Search Filtering Logic
+ //  Pro-Grade Search Filtering Logic
     const filteredPosts = postsArray.filter(([slug, post]) => {
       if (!post || !post.title) return false;
-      
+    
       // 1. Prepare data and clean the search query
       const catName = categories.find(c => c.id === post.masterCategory)?.name || "";
       const searchContent = `${post.title} ${post.description} ${post.category} ${catName} ${slug}`.toLowerCase();
@@ -52,14 +67,15 @@ export default function BlogIndex() {
       />
     );
   }
-  
- 
-
   return (
     <div className={`blog-hub-container ${mounted ? "theme-ready" : "theme-loading"}`}>
-      <Head>
-        <title>Financial & Economic Library | Global Authority</title>
-      </Head>
+    <Head>
+      <title>Financial & Economic Library | Global Authority</title>
+      <script 
+        type="application/ld+json" 
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogHubSchema) }} 
+      />
+    </Head>
 
       {/* --- SECTION 1: HUB HEADER --- */}
       <header className="hub-header">

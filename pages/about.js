@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 
 export default function About() {
@@ -5,6 +6,25 @@ export default function About() {
   const h2Style = { fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' };
 
   return (
+     <> 
+      <Head>
+        <title>About Us | ToolFinance Mission & Vision</title>
+        <meta name="description" content="Learn about ToolFinance, an independent financial intelligence platform providing high-precision calculators and expert strategic analysis." />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ 
+          "@context": "https://schema.org", 
+          "@type": "AboutPage", 
+          "mainEntity": { 
+            "@type": "Organization", 
+            "name": "ToolFinance", 
+            "url": "https://finance-tools-mu.vercel.app/", 
+            "logo": "https://finance-tools-mu.vercel.app/images/finlogo.png", 
+            "description": "Independent financial intelligence platform specializing in precision calculators and economic research.", 
+            "founder": { "@type": "Organization", "name": "ToolFinance Editorial Team" }, 
+            "areaServed": "Global", 
+            "knowsAbout": ["Personal Finance", "Financial Planning", "Economic Analysis", "Loan Calculators"] 
+          } 
+        }) }} />
+      </Head>
     <div className="container" style={{ maxWidth: '850px', margin: '60px auto', padding: '0 20px', color: '#334155', lineHeight: '1.7' }}>
       <header style={{ marginBottom: '50px' }}>
         <h1 style={{ fontSize: '3rem', fontWeight: '900', color: '#1e293b', marginBottom: '10px' }}>The ToolFinance Mission</h1>
@@ -44,5 +64,6 @@ export default function About() {
         <Link href="/contact" style={{ display: 'inline-block', background: '#2563eb', color: '#fff', padding: '12px 24px', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}>Collaborate With Us</Link>
       </section>
     </div>
+    </>
   );
 }

@@ -3,8 +3,6 @@ import Link from "next/link";
 import ToolCard from "../components/ui/ToolCard";
 import { tools } from "../data/tools";
 import styles from "../styles/Home.module.css";
-// CHANGED: Pointing to the new file name
-// import { financeArticles } from "../data/financeArticles"; 
 import { allFinanceArticles as financeArticles } from "../data/articles/index";
 import { allToolGuides } from "../data/tool-guides/index";
 
@@ -25,11 +23,41 @@ export default function Home() {
   tools.find(t => t.link === "/tools/sip")
 ].filter(Boolean);
 
+const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://finance-tools-mu.vercel.app/#organization",
+        "name": "ToolFinance",
+        "url": "https://finance-tools-mu.vercel.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://finance-tools-mu.vercel.app/images/finlogo.png"
+        },
+        "description": "Smart financial calculators and investment guides for modern economic planning."
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://finance-tools-mu.vercel.app/#website",
+        "url": "https://finance-tools-mu.vercel.app/",
+        "name": "ToolFinance",
+        "publisher": { "@id": "https://finance-tools-mu.vercel.app/#organization" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://finance-tools-mu.vercel.app/blog?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  };
+
   return (
     <div className="container" style={{ paddingTop: '0px' }}>
       <Head>
         <title>ToolFinance | Smart Financial Calculators & Investment Guides</title>
         <meta name="description" content="Accurate financial calculators for EMI, SIP, Loans, and Taxes. Stay updated with our expert financial guides." />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </Head>
       {/* --- HERO SECTION --- */}
       <section className={styles.heroSection} style={{ background: 'var(--card-bg)', borderBottom: 'none' }}>

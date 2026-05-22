@@ -126,6 +126,13 @@ body {
     font-size: 13px;
   }
   .tools-submenu a:hover { color: white; background: var(--nav-hover); }
+
+  .mobile-toggle-wrapper span {
+    display: none; /* Hide the "Theme Mode" text on desktop */
+  }
+  .mobile-toggle-wrapper {
+    display: contents; /* Makes it act like it's not there on desktop */
+  }
 }
 
 .tools-item:hover .category-title .chevron {
@@ -237,6 +244,30 @@ body {
   .nav-item:active, .tools-submenu a:active, .category-title:active {
     background: rgba(255, 255, 255, 0.05) !important;
   }
+
+  .mobile-toggle-wrapper {
+    margin-top: auto; /* Pushes it to the bottom of the screen */
+    padding: 30px 25px;
+    background: #05122b !important; /* Matches your mobile-sub-bg */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    bottom: 0;
+  }
+
+  .mobile-toggle-wrapper span {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  /* Hide the toggle from the main header on mobile so it only shows in the menu */
+  .site-header .nav-links > :not(.mobile-toggle-wrapper) ThemeToggle {
+     display: none;
+  }
+
 }
 
 

@@ -144,7 +144,10 @@ export default function Header() {
           </div>
 
           <Link href="/blog" className="nav-item" onClick={closeMenu}>Blog</Link>
-          <ThemeToggle />
+          <div className="mobile-toggle-wrapper">
+            <span>Theme Mode</span>
+            <ThemeToggle />
+          </div>
         </nav>
 
         <button className={`menu-toggle ${menuOpen ? "active" : ""}`} onClick={toggleMenu}>

@@ -17,12 +17,34 @@ export default function CategoryPage() {
   const cat = themes[id];
   const allPosts = { ...allFinanceArticles, ...allToolGuides };
   const filtered = Object.entries(allPosts).filter(([_, p]) => p && p.masterCategory === id).sort((a, b) => new Date(b[1].publishDate) - new Date(a[1].publishDate));
-
+   const categorySchema = cat ? {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `${cat.name} | ToolFinance Library`,
+    "description": cat.desc,
+    "url": `https://finance-tools-mu.vercel.app/blog/category/${id}`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": filtered.map(([slug, post], index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "url": `https://finance-tools-mu.vercel.app/blog/${slug}`,
+        "name": post.title
+      }))
+    }
+  } : null;
   if (!cat) return <div style={{textAlign: 'center', padding: '50px'}}>Loading {id}...</div>;
 
   return (
     <div className="blog-hub-container">
-      <Head><title>{cat.name} | ToolFinance</title></Head>
+      <Head><title>{cat.name} | ToolFinance</title>
+      {categorySchema && (
+          <script 
+            type="application/ld+json" 
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(categorySchema) }} 
+          />
+        )}
+      </Head>
       <nav className="article-breadcrumb"><Link href="/blog">Library</Link> / <span>{cat.name}</span></nav>
      <header style={{ marginBottom: '60px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '0 20px'}}>
         <h1 style={{ fontSize: '3rem', fontWeight: '900' }}>{cat.name}</h1>

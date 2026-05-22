@@ -173,6 +173,8 @@ html.dark .master-card p,
   margin-top: 20px;
   padding-bottom: 0px !important; 
   margin-bottom: 0px !important;
+  align-items: flex-start !important;
+
 }
 
 /* BREADCRUMBS NAVIGATION */
@@ -258,6 +260,8 @@ html.dark .master-card p,
   line-height: 1.75; 
   color: var(--text-main); 
   overflow: visible !important;
+  height: fit-content !important;
+  align-self: flex-start !important;
 }
 
 .article-p { margin-bottom: 25px; }
@@ -382,10 +386,14 @@ html.dark .master-card p,
 ============================================================= */
 
 .article-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  width: 100% !important;
+    display: flex !important; /* Change from block to flex */
+    flex-direction: column !important;
+    gap: 20px;
+    height: fit-content !important; /* Prevents stretching */
+    justify-content: flex-start !important;
 }
+
 
 .sidebar-card {
   background: var(--card-bg);
@@ -423,27 +431,91 @@ html.dark .master-card p,
   border-radius: 8px;
 }
 
-/* RELATED ARTICLES SECTION */
+/* --- RELATED ANALYSIS SECTION --- */
+
 .related-section {
-  background: var(--card-bg);
-  padding: 30px;
-  border-radius: 16px;
-  border: 1px solid var(--border-soft);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); 
-  transition: background 0.3s ease, border 0.3s ease;
+    margin-top: 40px;
+    border-top: 1px solid var(--border-soft);
+    background: var(--card-bg);
+    padding: 25px; /* Slightly reduced padding for a tighter look */
+    border-radius: 16px;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Softer shadow */
 }
 
-.related-section h5 {
-  font-size: 1rem;
-  line-height: 1.4;
-  color: #111827;
-  transition: color 0.2s;
+/* Kills the gap at the top */
+.related-section h4 {
+    margin-top: 0 !important;
+    margin-bottom: 15px !important; 
+    font-size: 1.25rem;
+    color: var(--text-main);
 }
 
-.related-section a:hover h5 {
-  color: #2563eb;
+.related-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 0 !important;
 }
 
+/* The Card Styling */
+.related-card {
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    height: 100%;
+    border: 1px solid transparent; /* Prevents jumping on hover */
+    transition: all 0.2s ease;
+}
+
+/* Sub-title text (e.g., Systems & News) */
+.related-category {
+    font-size: 12px; 
+    color: var(--accent-blue, #2563eb);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px; 
+    line-height: 1;
+}
+
+/* The Article Title */
+.related-title {
+    margin: 0 !important;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    color: var(--text-main);
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+/* --- THE HOVER ACTION --- */
+/* This makes the whole card feel interactive */
+.related-card-link {
+    text-decoration: none !important;
+}
+
+.related-card-link:hover .related-card {
+    background: #f8fafc;
+    border-color: var(--border-soft);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.related-card-link:hover .related-title {
+    color: #2563eb;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 650px) {
+    .related-grid {
+        grid-template-columns: 1fr;
+    }
+    .related-section {
+        padding: 15px;
+    }
+}
 
 /* =============================================================
    5. UTILITY & RESPONSIVE DESIGN

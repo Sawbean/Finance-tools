@@ -102,3 +102,32 @@ h1, h2, h3 {
   margin-left: 10px; /* Moves the arrow slightly to the right */
 }
 
+.ad-container-pro {
+  width: 100%;
+  max-width: 100%;
+  margin: 15px 0;
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-soft, #e2e8f0);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.ad-slot-250 {
+  min-height: 100px; /* Gives it a small presence while loading */
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa; /* Light gray so you see the area while ad loads */
+}
+
+.ad-action-bar {
+  padding: 12px 20px;
+  background: #f8fafc;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

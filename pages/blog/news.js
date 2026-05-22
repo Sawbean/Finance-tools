@@ -14,6 +14,17 @@ export default function NewsFeed() {
     <div className="blog-hub-container">
       <Head>
         <title>Market Pulse & News Feed | Global Intelligence</title>
+        <meta name="description" content="Real-time updates, expert opinions, and financial news on the global economy from ToolFinance." />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "itemListElement": newsPosts.map((item, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "url": `https://finance-tools-mu.vercel.app/blog/${item[0]}`,
+            "name": item[1].title
+          }))
+        }) }} />
       </Head>
 
       <nav className="article-breadcrumb">

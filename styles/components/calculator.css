@@ -24,7 +24,16 @@
   gap: 15px; /* Tight, consistent gap between all sidebar elements */
   position: sticky;
   top: 20px;
+  align-self: start;
+  justify-content: flex-start !important;
+  height: auto !important;
 }
+
+.sidebar-ad {
+  width: 100%;
+  height: auto;
+}
+
 
 .form-box {
   background: #ffffff;
@@ -151,6 +160,7 @@
   align-items: stretch;
 }
 
+
 .calc-btn {
   flex: 3; /* Significantly wider */
   background: #2563eb;
@@ -260,4 +270,35 @@
   .input-label {
     margin-bottom: 4px;
   }
+}
+
+/* Paste this at the bottom of calculator.css */
+
+/* Prevent the columns from stretching to match each other */
+.calculator-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px; 
+    gap: 30px;
+    align-items: flex-start !important; 
+}
+
+/* Specific target for generic grids that might be used as containers */
+div[style*="grid-template-columns"] {
+    align-items: flex-start !important;
+}
+
+/* Ensure the form-box and left columns only take as much space as needed */
+.form-box {
+    height: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start !important;
+}
+
+/* Responsive fix for calculators */
+@media (max-width: 768px) {
+    .calculator-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
 }

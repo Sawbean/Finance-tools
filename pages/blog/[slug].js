@@ -239,7 +239,7 @@ export default function BlogPost() {
       <meta name="twitter:title" content={post.title} />
       <meta name="twitter:description" content={post.excerpt} />
       <meta name="twitter:image" content={post.image ? (post.image.startsWith('http') ? post.image : `${siteDomain}${post.image}`) : `${siteDomain}/default-share-image.jpg`}/>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", "headline": post.title, "description": post.excerpt || post.title, "image": post.image ? `${siteDomain}${post.image}` : `${siteDomain}/og-image.png`, "datePublished": post.publishDate || new Date().toISOString(), "author": { "@type": "Organization", "name": "ToolFinance", "url": siteDomain }, "publisher": { "@type": "Organization", "name": "ToolFinance", "logo": { "@type": "ImageObject", "url": `${siteDomain}/favicon-32x32.png` } }, "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteDomain}/blog/${slug}` } }) }} />
+     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": [{ "@type": "BlogPosting", "headline": post.title, "description": post.excerpt || post.title, "image": post.image ? (post.image.startsWith('http') ? post.image : `${siteDomain}${post.image}`) : `${siteDomain}/og-image.png`, "datePublished": post.publishDate || new Date().toISOString(), "author": { "@type": "Organization", "name": "ToolFinance", "url": siteDomain }, "publisher": { "@type": "Organization", "name": "ToolFinance", "logo": { "@type": "ImageObject", "url": `${siteDomain}/favicon-32x32.png` } }, "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteDomain}/blog/${slug}` } }, post.faq && post.faq.length > 0 ? { "@type": "FAQPage", "mainEntity": post.faq.map(item => ({ "@type": "Question", "name": item.question, "acceptedAnswer": { "@type": "Answer", "text": item.answer.replace(/\*\*/g, '') } })) } : null].filter(Boolean) }) }} />
     </Head>
 
     <div style={{ position: 'fixed', top: 0, left: 0, width: `${readingProgress}%`, height: '4px', background: currentTheme.color, zIndex: 1000, transition: 'width 0.2s ease'}} />
@@ -300,7 +300,7 @@ export default function BlogPost() {
         </div>
       )}
 
-      <div className="article-layout-container" style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '30px', maxWidth: '1200px', margin: '0 auto', alignItems: 'stretch', paddingBottom: '40px'}}>
+      <div className="article-layout-container" style={{ display: 'grid', gridTemplateColumns: '1fr 300px', gap: '30px', maxWidth: '1200px', margin: '0 auto', alignItems: 'flex-start', paddingBottom: '40px'}}>
         <article className="article-body">
           {headings.length > 0 && (
             <div className="table-of-contents" style={{padding: '20px', borderRadius: '12px', marginBottom: '30px' }}>
@@ -323,12 +323,10 @@ export default function BlogPost() {
               {/* MID-CONTENT AD: Excellent for UI/UX and Traffic. 
                   Injected after the 2nd block if it's a Finance Article */}
               {isFinanceArticle && index === 1 && post.tool && (
-                <div style={{ margin: '40px 0' }}>
                   <AdPlaceholder 
                     toolLink={`/tools/${post.tool}`} 
                     ctaText={`Calculated Insight: Use the ${post.tool.replace("-", " ").toUpperCase()} →`} 
                   />
-                </div>
               )}
             </React.Fragment>
           ))}
@@ -408,14 +406,14 @@ export default function BlogPost() {
           </div>
 
           {relatedPosts.length > 0 && (
-            <div className="related-section" style={{ marginTop: '40px', borderTop: '1px solid var(--border-soft)', paddingTop: '20px', paddingBottom: '10px', marginBottom: '0px' }}>
-              <h4 style={{ marginBottom: '15px' }}>Related Analysis</h4>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+            <div className="related-section">
+              <h4>Related Analysis</h4>
+              <div className="related-grid">
                 {relatedPosts.map(([s, p]) => (
-                  <Link href={`/blog/${s}`} key={s} style={{ textDecoration: 'none', color: 'inherit' }}>
-                    <div style={{ background: 'var(--card-bg)', padding: '15px', borderRadius: '12px' }}>
-                      <span style={{ fontSize: '10px', color: 'var(--accent-blue)', fontWeight: 'bold' }}>{p.category}</span>
-                      <h5 style={{ margin: '5px 0' }}>{p.title}</h5>
+                  <Link href={`/blog/${s}`} key={s} className="related-card-link">
+                    <div className="related-card">
+                      <span className="related-category">{p.category}</span>
+                      <h5 className="related-title">{p.title}</h5>
                     </div>
                   </Link>
                 ))}

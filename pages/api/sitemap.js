@@ -92,11 +92,12 @@ ${allPages
     }
 
     return `  <url>
-    <loc>${SITE_URL}${page.url}</loc>
-    <lastmod>${page.lastmod}</lastmod>
-    <changefreq>${freq}</changefreq>
-    <priority>${priority}</priority>
-  </url>`;
+                <loc>${SITE_URL}${page.url}</loc>
+                <lastmod>${page.lastmod}</lastmod>
+                <changefreq>${freq}</changefreq>
+                <priority>${priority}</priority>
+                ${page.image ? `<image:image><image:loc>${SITE_URL}${page.image}</image:loc></image:image>` : ''}
+              </url>`;
   })
   .join("\n")}
 </urlset>`;

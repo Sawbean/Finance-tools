@@ -46,7 +46,14 @@ export default function CalculatorForm({
           )
         )}
       </form>
-      {adComponent && <div className="calculator-ad">{adComponent}</div>}
+      {adComponent && (
+        <div 
+          className="calculator-ad" 
+          style={{ alignSelf: 'flex-start', width: '100%' }}
+        >
+          {adComponent}
+        </div>
+      )}
     </>
   );
 }

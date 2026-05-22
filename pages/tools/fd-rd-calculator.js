@@ -46,12 +46,12 @@ export default function FDRDCalculator() {
       const interest = total - P;
 
       setResult({
-        "Monthly Deposit": `${currency.symbol}${formatValue(M)}`,
-        "Total Invested": `${currency.symbol}${formatValue(totalInvested)}`,
+        "Principal Amount": `${currency.symbol}${formatValue(P)}`, // Fixed: Using P instead of M
+        "Total Invested": `${currency.symbol}${formatValue(P)}`,  // Fixed: In FD, Invested = Principal
         "Interest Earned": `${currency.symbol}${formatValue(Math.round(interest))}`,
         "Maturity Amount": `${currency.symbol}${formatValue(Math.round(total))}`
       });
-          } else {
+    } else {
       const M = parseFloat(rdMonthly) || 0;
       const R = parseFloat(rdRate) || 0;
       const Y = parseFloat(rdYears) || 0;
@@ -59,15 +59,16 @@ export default function FDRDCalculator() {
 
       const n = 4; // Quarterly Compounding
       const i = R / 400;
+      // RD Maturity Formula (Quarterly Compounding)
       const total = M * ((Math.pow(1 + i, 4 * Y) - 1) / (1 - Math.pow(1 + i, -1/3)));
       const totalInvested = M * (Y * 12);
       const interest = total - totalInvested;
 
       setResult({
-        "Monthly Deposit": M,
-        "Total Invested": totalInvested,
-        "Interest Earned": interest,
-        "Maturity Amount": total
+        "Monthly Deposit": `${currency.symbol}${formatValue(M)}`,
+        "Total Invested": `${currency.symbol}${formatValue(totalInvested)}`,
+        "Interest Earned": `${currency.symbol}${formatValue(Math.round(interest))}`,
+        "Maturity Amount": `${currency.symbol}${formatValue(Math.round(total))}`
       });
     }
   };

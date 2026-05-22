@@ -22,3 +22,10 @@ p {
   margin-bottom: 16px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+#calculators {
+  scroll-margin-top: 100px; 
+}
