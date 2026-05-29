@@ -20,6 +20,7 @@ export default function FDRDCalculator() {
   const guideData = Object.values(allToolGuides).find(g => g.tool === "fd-rd-calculator");
   // 1. STATE MANAGEMENT
   const [activeTab, setActiveTab] = useState("fd");
+  const [error, setError] = useState("");
   
   // FD States
   const [fdPrincipal, setFdPrincipal] = useState(100000);
@@ -35,27 +36,39 @@ export default function FDRDCalculator() {
 
   // 2. CALCULATION LOGIC
   const calculateResult = () => {
+    setError("");
+
     if (activeTab === "fd") {
       const P = parseFloat(fdPrincipal) || 0;
       const R = parseFloat(fdRate) || 0;
       const Y = parseFloat(fdYears) || 0;
-      if (P <= 0 || R <= 0 || Y <= 0) return;
+
+      if (P <= 0 || R <= 0 || Y <= 0) {
+        setResult(null);
+        if (fdPrincipal || fdRate || fdYears) setError("Please enter valid investment details.");
+        return;
+      }
 
       const n = 4; // Quarterly Compounding
       const total = P * Math.pow(1 + R / (100 * n), n * Y);
       const interest = total - P;
 
       setResult({
-        "Principal Amount": `${currency.symbol}${formatValue(P)}`, // Fixed: Using P instead of M
-        "Total Invested": `${currency.symbol}${formatValue(P)}`,  // Fixed: In FD, Invested = Principal
-        "Interest Earned": `${currency.symbol}${formatValue(Math.round(interest))}`,
-        "Maturity Amount": `${currency.symbol}${formatValue(Math.round(total))}`
+        "Principal Amount": P,
+        "Total Invested": P,
+        "Interest Earned": Math.round(interest),
+        "Maturity Amount": Math.round(total)
       });
     } else {
       const M = parseFloat(rdMonthly) || 0;
       const R = parseFloat(rdRate) || 0;
       const Y = parseFloat(rdYears) || 0;
-      if (M <= 0 || R <= 0 || Y <= 0) return;
+
+      if (M <= 0 || R <= 0 || Y <= 0) {
+        setResult(null);
+        if (rdMonthly || rdRate || rdYears) setError("Please enter valid deposit details.");
+        return;
+      }
 
       const n = 4; // Quarterly Compounding
       const i = R / 400;
@@ -65,10 +78,10 @@ export default function FDRDCalculator() {
       const interest = total - totalInvested;
 
       setResult({
-        "Monthly Deposit": `${currency.symbol}${formatValue(M)}`,
-        "Total Invested": `${currency.symbol}${formatValue(totalInvested)}`,
-        "Interest Earned": `${currency.symbol}${formatValue(Math.round(interest))}`,
-        "Maturity Amount": `${currency.symbol}${formatValue(Math.round(total))}`
+        "Monthly Deposit": M,
+        "Total Invested": totalInvested,
+        "Interest Earned": Math.round(interest),
+        "Maturity Amount": Math.round(total)
       });
     }
   };
@@ -78,13 +91,17 @@ export default function FDRDCalculator() {
   }, [activeTab, fdPrincipal, fdRate, fdYears, rdMonthly, rdRate, rdYears]);
 
   const handleReset = () => {
-    if (activeTab === "fd") {
-      setFdPrincipal(""); setFdRate(""); setFdYears("");
-    } else {
-      setRdMonthly(""); setRdRate(""); setRdYears("");
-    }
-    setResult(null);
-  };
+      setError("");
+      if (activeTab === "fd") {
+        setFdPrincipal(100000);
+        setFdRate(8.5);
+        setFdYears(5);
+      } else {
+        setRdMonthly(5000);
+        setRdRate(7.5);
+        setRdYears(3);
+      }
+    };
 
   return (
     <>
@@ -99,7 +116,8 @@ export default function FDRDCalculator() {
         {/* Standardized Tab Switcher */}
         <div style={{display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '30px'}}>
             <button 
-                onClick={() => {setActiveTab("fd"); setResult(null);}}
+                type="button"
+                onClick={() => {setActiveTab("fd"); setError("");}}
                 style={{
                   padding: '10px 25px', borderRadius: '30px', border: 'none', cursor: 'pointer', 
                   fontWeight: 'bold', background: activeTab === 'fd' ? 'var(--primary)' : '#e2e8f0', 
@@ -109,7 +127,8 @@ export default function FDRDCalculator() {
                 🏢 Fixed Deposit (FD)
             </button>
             <button 
-                onClick={() => {setActiveTab("rd"); setResult(null);}}
+                type="button"
+                onClick={() => {setActiveTab("rd"); setError("");}}
                 style={{
                   padding: '10px 25px', borderRadius: '30px', border: 'none', cursor: 'pointer', 
                   fontWeight: 'bold', background: activeTab === 'rd' ? 'var(--primary)' : '#e2e8f0', 
@@ -122,7 +141,8 @@ export default function FDRDCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            {/* Added error prop here */}
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               {activeTab === "fd" ? (
                 <>
                   <CalculatorInput label="Lumpsum Principal" value={fdPrincipal} onChange={setFdPrincipal} icon={currency.symbol} />
@@ -162,14 +182,13 @@ export default function FDRDCalculator() {
         </div>
 
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
-            <h3 style={{color: '#166534', marginBottom: '10px'}}>Understanding Quarterly Compounding</h3>
-            <p style={{fontSize: '0.9rem', color: '#166534', lineHeight: '1.6'}}>
-                By choosing the <strong>{activeTab === "fd" ? "FD" : "RD"} route</strong>, you are targeting a maturity of 
-                <strong> {currency.symbol}{result ? formatValue(Math.round(result["Maturity Amount"])) : "---"}</strong>. 
-                Remember, in an RD, because you deposit money monthly, the "Total Invested" earns interest for different durations, 
-                making the final yield slightly lower than an FD of the same amount.
+            <h3 style={{color: '#166534', marginBottom: '10px'}}>💡 Strategic Financial Insight</h3>
+            <p style={{fontSize: '0.9rem', color: '#14532d', lineHeight: '1.6'}}>
+              By choosing the <strong>{activeTab === "fd" ? "FD" : "RD"} route</strong>, you are targeting a maturity amount of 
+              <strong> {result ? `${currency.symbol}${formatValue(result["Maturity Amount"])}` : "---"}</strong>. 
+              <br /><br />
+              Commercial bank deposits typically employ <strong>quarterly compounding</strong>. In a standard Fixed Deposit, your entire principal accumulates interest simultaneously from day one. Conversely, with a Recurring Deposit, your contributions roll in monthly; thus, later deposits compound over shorter horizons, yielding slightly less overall growth than a single up-front lump sum.
             </p>
-            
         </div>
       </div>
       <style jsx>{`
@@ -177,7 +196,6 @@ export default function FDRDCalculator() {
           .tool-intro h1 { font-size: 1.8rem !important; }
           .container { padding: 15px; }
           
-          /* This finds the button container and stacks them on mobile */
           div[style*="display: flex"][style*="justify-content: center"] {
             flex-direction: column !important;
             padding: 0 20px;

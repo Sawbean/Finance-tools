@@ -13,7 +13,7 @@ import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { allToolGuides } from '../../data/tool-guides/index';    
 export default function CurrencyConverter() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+  const [error, setError] = useState("");
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/currency');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "currency");
@@ -26,6 +26,7 @@ export default function CurrencyConverter() {
 
   // 2. CALCULATION LOGIC
   const calculateConversion = () => {
+    setError("");
     const A = parseFloat(amount) || 0;
     const R = parseFloat(rate) || 0;
 
@@ -37,9 +38,9 @@ export default function CurrencyConverter() {
     const convertedAmount = A * R;
 
     setResult({
-      [`Initial Amount (${fromCurrency})`]: formatValue(A), // Use raw number with locale formatting
+      [`Amount in ${fromCurrency}`]: A, // Send as raw number
       "Exchange Rate": `1 ${fromCurrency} = ${R} ${toCurrency}`,
-      "Total Converted Value": `${toCurrency} ${formatValue(convertedAmount.toFixed(2))}`,
+      [`Total Value (${toCurrency})`]: convertedAmount.toFixed(2), // Keep as string for precision
       "Note": "Rates are manual. Check official sources for live market data."
     });
   };
@@ -66,6 +67,7 @@ export default function CurrencyConverter() {
     };
 
   const handleReset = () => {
+    setError("");
     setAmount(100);
     setFromCurrency("USD");
     setToCurrency("NPR");
@@ -93,26 +95,39 @@ export default function CurrencyConverter() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
+              {/* Row 1: Amount and From Code */}
               <div className="input-row" style={{alignItems: 'flex-end'}}>
-                <div style={{flex: '2'}}>
-                    <CalculatorInput label={`Amount (${fromCurrency})`} value={amount} onChange={setAmount} placeholder="100" />
-                </div>
-                <div style={{flex: '1'}}>
-                    <label className="input-label" style={{fontSize: '0.8rem'}}>From Code</label>
-                    <input className="custom-code-input" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value.toUpperCase())} maxLength="3" />
-                </div>
+                  <div style={{flex: '2'}}>
+                      <CalculatorInput label={`Amount (${fromCurrency})`} value={amount} onChange={setAmount} placeholder="100" />
+                  </div>
+                  <div style={{flex: '1'}}>
+                      <label className="input-label" style={{fontSize: '0.8rem'}}>From Code</label>
+                      <input className="custom-code-input" value={fromCurrency} onChange={(e) => setFromCurrency(e.target.value.toUpperCase())} maxLength="3" />
+                  </div>
               </div>
-              
 
-              <div className="input-row" style={{alignItems: 'flex-end', marginTop: '15px'}}>
-                <div style={{flex: '2'}}>
-                    <CalculatorInput label="Exchange Rate" value={rate} onChange={setRate} placeholder="1.60" step="0.0001" />
-                </div>
-                <div style={{flex: '1'}}>
-                    <label className="input-label" style={{fontSize: '0.8rem'}}>To Code</label>
-                    <input className="custom-code-input" value={toCurrency} onChange={(e) => setToCurrency(e.target.value.toUpperCase())} maxLength="3" />
-                </div>
+              {/* Swap Button: Centered between rows */}
+              <div style={{ textAlign: 'center', margin: '15px 0' }}>
+                <button 
+                  type="button" 
+                  onClick={handleSwap}
+                  className="preset-chip" 
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontWeight: '600', border: '1px solid var(--primary)' }}
+                >
+                  🔄 Swap Direction
+                </button>
+              </div>
+
+              {/* Row 2: Rate and To Code */}
+              <div className="input-row" style={{alignItems: 'flex-end'}}>
+                  <div style={{flex: '2'}}>
+                      <CalculatorInput label="Exchange Rate" value={rate} onChange={setRate} placeholder="1.60" step="0.0001" />
+                  </div>
+                  <div style={{flex: '1'}}>
+                      <label className="input-label" style={{fontSize: '0.8rem'}}>To Code</label>
+                      <input className="custom-code-input" value={toCurrency} onChange={(e) => setToCurrency(e.target.value.toUpperCase())} maxLength="3" />
+                  </div>
               </div>
 
               <p style={{fontSize: '0.75rem', color: '#64748b', textAlign: 'center', marginTop: '15px', fontStyle: 'italic'}}>
@@ -129,11 +144,7 @@ export default function CurrencyConverter() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox
-                title="Conversion Summary"
-                results={result}
-                formatCurrency={(val) => typeof val === 'number' ? val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : val}
-              />
+              <ResultBox title="Conversion Summary" results={result} />
             ) : (
               <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
                 Enter amount and current rate to calculate conversion.

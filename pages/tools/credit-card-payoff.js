@@ -14,7 +14,6 @@ import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function CreditCardPayoffCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
 
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/credit-card-payoff');
@@ -28,25 +27,29 @@ export default function CreditCardPayoffCalculator() {
   const [error, setError] = useState("");
 
   const calculatePayoff = () => {
+    setError(""); // Always clear first
     const B = parseFloat(balance) || 0;
     const R = parseFloat(interestRate) || 0;
     const M = parseFloat(monthlyPayment) || 0;
 
-    if (B <= 0 || R <= 0 || M <= 0) {
-      setResult(null);
-      return;
+    if (B <= 0) {
+        setResult(null);
+        return;
     }
 
     const monthlyRate = R / (12 * 100);
     const firstMonthInterest = B * monthlyRate;
     
-    // Safety Check: Payment vs Interest
-    if (M <= firstMonthInterest) {
-      setError(`Your payment must be higher than ${currency.symbol}${formatValue(firstMonthInterest.toFixed(2))} to cover the monthly interest.`);
+    // Updated Safety Check: Use .toLocaleString for the error message
+    if (M > 0 && M <= firstMonthInterest) {
+      setError(`Payment must be higher than ${currency.symbol}${Math.ceil(firstMonthInterest).toLocaleString(currency.locale)} to cover monthly interest.`);
       setResult(null);
       return;
-    } else {
-      setError("");
+    }
+
+    if (M <= 0 || R <= 0) {
+        setResult(null);
+        return;
     }
 
     let months = 0;
@@ -67,9 +70,9 @@ export default function CreditCardPayoffCalculator() {
 
     setResult({
       "Time to Freedom": `${years > 0 ? years + " years " : ""}${remainingMonths} months`,
-      "Monthly Interest Cost": `${currency.symbol}${formatValue(firstMonthInterest.toFixed(2))}`,
-      "Total Interest Paid": `${currency.symbol}${formatValue(totalInterest.toFixed(2))}`,
-      "Total Amount Paid": `${currency.symbol}${formatValue((B + totalInterest).toFixed(2))}`,
+      "Monthly Interest Cost": Math.round(firstMonthInterest), // Raw number
+      "Total Interest Paid": Math.round(totalInterest),       // Raw number
+      "Total Amount Paid": Math.round(B + totalInterest),      // Raw number
       "Debt Markup": `${((totalInterest / B) * 100).toFixed(0)}% additional cost`
     });
   };
@@ -79,6 +82,7 @@ export default function CreditCardPayoffCalculator() {
   }, [balance, interestRate, monthlyPayment]);
 
   const handleReset = () => {
+    setError("");
     setBalance(""); 
     setInterestRate(36); 
     setMonthlyPayment(""); 
@@ -98,23 +102,14 @@ export default function CreditCardPayoffCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Total Balance" value={balance} onChange={setBalance} icon={currency.symbol} />
               
               <div className="input-row">
                 <CalculatorInput label="Interest Rate (APR)" value={interestRate} onChange={setInterestRate} suffix="%" />
+                
                 <CalculatorInput label="Monthly Payment" value={monthlyPayment} onChange={setMonthlyPayment} icon={currency.symbol} />
               </div>
-
-              {error && (
-                <div style={{
-                    color: '#dc2626', background: '#fef2f2', padding: '12px', 
-                    borderRadius: '8px', fontSize: '0.8rem', marginTop: '15px', 
-                    border: '1px solid #fecaca', fontWeight: '500'
-                }}>
-                  ⚠️ {error}
-                </div>
-              )}
             </CalculatorForm>
 
             <div style={{marginTop: '25px'}}>
@@ -139,7 +134,9 @@ export default function CreditCardPayoffCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#fff7ed', borderRadius: '12px', border: '1px solid #ffedd5'}}>
             <h3 style={{color: '#9a3412', marginBottom: '10px'}}>The "Minimum Payment" Trap</h3>
             <p style={{fontSize: '0.95rem', color: '#9a3412', lineHeight: '1.6'}}>
-                Financial institutions often set the minimum payment at a very low percentage of your balance. This strategy is designed to maximize interest revenue over a longer period. By paying even a small amount above the minimum, you compound your progress and save significantly on total interest.
+              For instance, if you owe <strong>{currency.symbol}{Number(1000).toLocaleString(currency.locale)}</strong> and only pay the minimum, you might end up paying back double that amount over several years. 
+              <br /><br />
+              Financial institutions often set the minimum payment at a very low percentage of your balance. This strategy is designed to maximize their interest revenue by keeping you in debt for a longer period. By paying even a small amount above the minimum, you "break the cycle," compound your progress, and save significantly on total interest costs.
             </p>
             
         </div>

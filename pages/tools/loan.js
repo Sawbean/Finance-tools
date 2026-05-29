@@ -10,10 +10,11 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function LoanCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
 
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/loan');
@@ -25,6 +26,7 @@ export default function LoanCalculator() {
   const [durationType, setDurationType] = useState("years");
   const [calculationMethod, setCalculationMethod] = useState("simple"); 
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateLoan = () => {
@@ -32,7 +34,12 @@ export default function LoanCalculator() {
     const R = parseFloat(rate) || 0;
     const D = parseFloat(duration) || 0;
 
-    if (P <= 0 || R <= 0 || D <= 0) return;
+    if (P <= 0 || R < 0 || D <= 0) {
+      setResult(null);
+      setError(P <= 0 ? "Principal must be greater than zero." : R < 0 ? "Interest rate cannot be negative." : "Duration must be positive.");
+      return;
+    }
+    setError("");
 
     const T = durationType === "years" ? D : D / 12;
     let totalPayable, totalInterest;
@@ -46,11 +53,11 @@ export default function LoanCalculator() {
     }
 
     setResult({
-      "Principal Amount": `${currency.symbol}${formatValue(Math.round(P))}`,
-      [`Total ${calculationMethod === 'simple' ? 'Simple' : 'Compound'} Interest`]: `${currency.symbol}${formatValue(Math.round(totalInterest))}`,
-      "Total Repayment": `${currency.symbol}${formatValue(Math.round(totalPayable))}`,
+      "Principal Amount": Math.round(P), // Pass raw number
+      [`Total ${calculationMethod === 'simple' ? 'Simple' : 'Compound'} Interest`]: Math.round(totalInterest), // Pass raw number
+      "Total Repayment": Math.round(totalPayable), // Pass raw number
       "Interest Impact": `${((totalInterest / P) * 100).toFixed(1)}% of Principal`,
-      "Monthly Equivalent": `${currency.symbol}${formatValue(Math.round(totalPayable / (T * 12)))}`
+      "Monthly Equivalent": Math.round(totalPayable / (T * 12)) // Pass raw number
     });
   };
 
@@ -64,6 +71,7 @@ export default function LoanCalculator() {
     setRate(""); 
     setDuration("");
     setResult(null);
+    setError("");
   };
 
   return (
@@ -93,7 +101,7 @@ export default function LoanCalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             {/* onReset prop ensures only the component's default reset button is used */}
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Principal Amount" value={amount} onChange={setAmount} icon={currency.symbol} />
               
               <div className="input-row">
@@ -133,14 +141,17 @@ export default function LoanCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd'}}>
             <h3 style={{color: '#0369a1', marginBottom: '10px'}}>💡 Simple vs. Compound Interest</h3>
             <p style={{fontSize: '0.9rem', color: '#0369a1', lineHeight: '1.6'}}>
-                <strong>Simple Interest</strong> is calculated only on the initial principal. 
-                <strong> Compound Interest</strong> is "interest on interest." For example, 
-                on a {currency.symbol}{formatValue(100000)} loan at 10% for 2 years, 
-                Simple Interest costs {currency.symbol}{formatValue(20000)}, while Compound 
-                Interest costs {currency.symbol}{formatValue(21000)}. Over long periods, 
-                this difference grows exponentially.
+              <strong>Simple Interest</strong> is calculated only on the initial principal. 
+              <strong> Compound Interest</strong> is "interest on interest." 
+              
+
+[Image of compound interest growth over time]
+
+              For example, on a <strong>{formatCurrency(100000)}</strong> loan at 10% for 2 years, 
+              Simple Interest costs <strong>{formatCurrency(20000)}</strong>, while Compound 
+              Interest costs <strong>{formatCurrency(21000)}</strong>. 
             </p>
-            
+                      
         </div>
       </div>
     </>

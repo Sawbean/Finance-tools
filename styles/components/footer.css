@@ -1,7 +1,16 @@
 /* =============================================================
    10. FOOTER & MISC COMPONENTS
 ============================================================= */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
+/* Push the footer to the bottom */
+main {
+  flex: 1;
+}
 .site-footer {
   background: var(--bg-footer-main);
   color: var(--footer-text);
@@ -71,11 +80,9 @@ html.dark .site-footer {
   padding: 25px 0;
   background: var(--bg-footer-bottom);
   font-size: 13px;
-  margin-top: 40px;
+  margin-top: 20px;
   border-radius: 0 0 14px 14px;
   color: #ffffff !important;
-  border-top-left-radius: 24px; 
-  border-top-right-radius: 24px;
 }
 
 .footer-bottom p {

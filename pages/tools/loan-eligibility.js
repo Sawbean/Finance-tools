@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function LoanEligibilityCalculator() {
   const { currency } = useCurrency();
-const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/loan-eligibility');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "loan-eligibility");
@@ -24,6 +24,7 @@ const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   const [foir, setFoir] = useState(50); 
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   const calculateEligibility = () => {
     const monthlyIncome = parseFloat(income) || 0;
@@ -34,25 +35,23 @@ const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
 
     if (monthlyIncome <= 0 || rate <= 0 || years <= 0) {
         setResult(null);
+        setError(income <= 0 ? "Income must be greater than zero." : "");
         return;
     }
+    setError("");
 
-    // Max total EMI allowed (Income * FOIR)
     const totalMaxEMIAllowed = monthlyIncome * ratio;
-    
-    // Monthly capacity left for the NEW loan
     const availableEMI = Math.max(0, totalMaxEMIAllowed - currentEMI);
-
     const n = years * 12;
     const r = rate / (12 * 100);
 
     // Present Value formula to find max loan amount
-    const eligibleLoan = (availableEMI * (1 - Math.pow(1 + r, -n))) / r;
+    const eligibleLoan = r > 0 ? (availableEMI * (1 - Math.pow(1 + r, -n))) / r : 0;
 
     setResult({
-      "Max Monthly EMI Capacity": `${currency.symbol}${formatValue(Math.round(totalMaxEMIAllowed))}`,
-      "Available EMI for New Loan": `${currency.symbol}${formatValue(Math.round(availableEMI))}`,
-      "Maximum Eligible Loan": `${currency.symbol}${formatValue(Math.round(eligibleLoan))}`,
+      "Max Monthly EMI Capacity": totalMaxEMIAllowed, // Raw number
+      "Available EMI for New Loan": availableEMI,     // Raw number
+      "Maximum Eligible Loan": Math.round(eligibleLoan), // Raw number
       "Debt-to-Income (DTI) Ratio": `${((currentEMI / monthlyIncome) * 100).toFixed(1)}%`,
       "Safety Margin Status": availableEMI > 0 ? "Eligible ✅" : "Over-leveraged ⚠️"
     });
@@ -69,6 +68,7 @@ const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
     setLoanTerm(20); 
     setFoir(50);
     setResult(null);
+    setError("");
   };
 
   return (
@@ -83,7 +83,7 @@ const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
               <CalculatorInput label="Monthly Net Salary (Take-home)" value={income} onChange={setIncome} icon={currency.symbol} />
               <CalculatorInput label="Existing EMIs (Loans/Credit Cards)" value={existingEMI} onChange={setExistingEMI} icon={currency.symbol} />
@@ -145,11 +145,9 @@ const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
             <h3 style={{color: '#1e40af', marginBottom: '10px'}}>What is FOIR?</h3>
               <p style={{fontSize: '0.95rem', color: '#1e40af', lineHeight: '1.6'}}>
                 Banks use <strong>FOIR</strong> to ensure you aren't "house poor." If you earn 
-                {currency.symbol}{formatValue(income)} and the bank uses a 50% FOIR, they 
-                limit your <em>total</em> debt payments (old loans + new loan) to 
-                {currency.symbol}{formatValue(income * 0.5)}. If you already pay 
-                {currency.symbol}{formatValue(existingEMI)} in EMIs, your eligibility 
-                decreases significantly.
+                {formatCurrency(income || 0)} and the bank uses a 50% FOIR, they limit your total debt payments 
+                (old loans + new loan) to {formatCurrency((income || 0) * 0.5)}. If you already pay 
+                {formatCurrency(existingEMI || 0)} in EMIs, your eligibility decreases significantly.
             </p>
             
         </div>

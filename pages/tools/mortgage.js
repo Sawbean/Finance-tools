@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function MortgageCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/mortgage');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "mortgage");
@@ -27,6 +27,7 @@ export default function MortgageCalculator() {
   const [insurance, setInsurance] = useState(15000);   
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateMortgage = () => {
@@ -38,8 +39,12 @@ export default function MortgageCalculator() {
     const principal = P_Home - DP;
     const downPaymentPercent = (DP / P_Home) * 100;
 
-    if (principal <= 0 || R <= 0 || Y <= 0) return;
-
+    if (principal <= 0 || R <= 0 || Y <= 0) {
+      setResult(null);
+      setError(principal <= 0 ? "Down payment cannot exceed home price." : "Please enter valid interest and term values.");
+      return;
+    }
+    setError("");
     const N = Y * 12;
     const monthlyRate = R / (12 * 100);
     
@@ -50,12 +55,12 @@ export default function MortgageCalculator() {
     const totalMonthly = monthlyPI + monthlyTax + monthlyIns;
 
     setResult({
-      "Total Loan Amount": `${currency.symbol}${formatValue(Math.round(principal))}`,
-      "Down Payment (%)": `${downPaymentPercent.toFixed(1)}%`,
-      "Monthly P & I": `${currency.symbol}${formatValue(Math.round(monthlyPI))}`,
-      "Property Tax & Ins": `${currency.symbol}${formatValue(Math.round(monthlyTax + monthlyIns))}`,
-      "Total Monthly Payment": `${currency.symbol}${formatValue(Math.round(totalMonthly))}`,
-      "Total Interest (Full Term)": `${currency.symbol}${formatValue(Math.round((monthlyPI * N) - principal))}`
+      "Total Loan Amount": Math.round(principal),
+      "Down Payment (%)": `${((DP / P_Home) * 100).toFixed(1)}%`,
+      "Monthly P & I": Math.round(monthlyPI),
+      "Property Tax & Ins": Math.round(monthlyTax + monthlyIns),
+      "Total Monthly Payment": Math.round(monthlyPI + monthlyTax + monthlyIns),
+      "Total Interest (Full Term)": Math.round((monthlyPI * N) - principal)
     });
   };
 
@@ -65,7 +70,10 @@ export default function MortgageCalculator() {
 
   const handleReset = () => {
     setHomePrice(""); setDownPayment(""); setRate(""); setYears("");
+    setPropertyTax(""); 
+    setInsurance("");
     setResult(null);
+    setError("");
   };
 
   return (
@@ -81,7 +89,7 @@ export default function MortgageCalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             {/* Standardized: onReset prop handles the button, no extra button needed below */}
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
               <CalculatorInput label="Home Purchase Price" value={homePrice} onChange={setHomePrice} icon={currency.symbol} />
               
@@ -144,7 +152,9 @@ export default function MortgageCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#fffbeb', borderRadius: '12px', border: '1px solid #fef3c7'}}>
             <h3 style={{color: '#92400e', marginBottom: '10px'}}>⚖️ What is PITI?</h3>
             <p style={{fontSize: '0.9rem', color: '#92400e', lineHeight: '1.6'}}>
-                PITI stands for <strong>Principal, Interest, Taxes, and Insurance</strong>. Most buyers only look at the first two, but taxes and insurance are non-negotiable costs. For instance, on a {currency.symbol}{formatValue(5000000)} home, adding even 1% in annual property tax adds {currency.symbol}{formatValue(Math.round(5000000 * 0.01 / 12))} to your monthly bill. 
+                PITI stands for <strong>Principal, Interest, Taxes, and Insurance</strong>. 
+                For instance, on a {formatCurrency(5000000)} home, adding 1% in annual property tax 
+                adds {formatCurrency(Math.round(5000000 * 0.01 / 12))} to your monthly bill.
             </p>
         </div>
       </div>

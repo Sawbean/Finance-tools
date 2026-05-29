@@ -10,10 +10,15 @@ export default function Header() {
   const dropdownRef = useRef(null);
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-    if (!menuOpen) {
+    const nextOpen = !menuOpen;
+    setMenuOpen(nextOpen);
+    
+    if (nextOpen) {
+      document.body.style.overflow = 'hidden'; // Stop background scroll
       setToolsOpen(false);
       setOpenCategory(null);
+    } else {
+      document.body.style.overflow = 'unset'; // Restore scroll
     }
   };
 
@@ -44,6 +49,7 @@ export default function Header() {
     setToolsOpen(false);
     setOpenCategory(null);
     document.body.classList.remove("menu-open");
+    document.body.style.overflow = 'unset'; // Restore scroll
   };
 
   useEffect(() => {

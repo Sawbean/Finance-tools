@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function SimpleInterestCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/simple-interest');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "simple-interest");
@@ -23,6 +23,7 @@ export default function SimpleInterestCalculator() {
   const [time, setTime] = useState(1);
   const [timeUnit, setTimeUnit] = useState("years");
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateInterest = () => {
@@ -32,8 +33,10 @@ export default function SimpleInterestCalculator() {
 
   if (P <= 0 || R <= 0 || T <= 0) {
     setResult(null);
+    setError("All values must be positive numbers.");
     return;
   }
+  setError("");
 
   const actualTimeInYears = timeUnit === "months" ? T / 12 : T;
   const interest = (P * R * actualTimeInYears) / 100;
@@ -41,14 +44,14 @@ export default function SimpleInterestCalculator() {
   
   // Calculate average monthly interest safely
   const totalMonths = actualTimeInYears * 12;
-  const monthlyInterest = interest / totalMonths;
+  const monthlyInterest = interest / (totalMonths || 1);
 
   setResult({
-    "Initial Principal": `${currency.symbol}${formatValue(P)}`,
-    "Total Simple Interest": `${currency.symbol}${formatValue(interest)}`,
-    "Monthly Interest Equiv.": `${currency.symbol}${formatValue(monthlyInterest)}`,
-    "Total Maturity Value": `${currency.symbol}${formatValue(totalAmount)}`,
-  });
+      "Initial Principal": P,
+      "Total Simple Interest": interest,
+      "Monthly Interest Equiv.": monthlyInterest,
+      "Total Maturity Value": totalAmount,
+    });
 };
 
   useEffect(() => {
@@ -61,6 +64,7 @@ export default function SimpleInterestCalculator() {
     setTime(1);
     setTimeUnit("years");
     setResult(null);
+    setError("");
   };
 
   return (
@@ -75,7 +79,7 @@ export default function SimpleInterestCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Principal Amount" value={principal} onChange={setPrincipal} icon={currency.symbol} />
               
               <CalculatorInput label="Annual Interest Rate" value={rate} onChange={setRate} suffix="%" />
@@ -137,8 +141,8 @@ export default function SimpleInterestCalculator() {
              <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
               Unlike <strong>Compound Interest</strong>, where interest is earned on both the principal and previous interest, 
               <strong>Simple Interest</strong> is only calculated on the original Principal. 
-              For example, a {currency.symbol}{formatValue(1000)} loan at 10% will always cost 
-              you {currency.symbol}{formatValue(100)} in interest every year, no matter how long the term is. 
+              For example, a {currency.symbol}{formatCurrency(1000)} loan at 10% will always cost 
+              you {currency.symbol}{formatCurrency(100)} in interest every year, no matter how long the term is. 
               This makes it ideal for short-term personal loans and bridge financing.
           </p>
         </div>

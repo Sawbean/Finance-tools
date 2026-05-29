@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { allToolGuides } from '../../data/tool-guides/index';
-// Import global utilities
 import { useCurrency } from "../../context/CurrencyContext"; 
-
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
@@ -26,28 +24,35 @@ export default function FDCalculator() {
   const [taxRate, setTaxRate] = useState(5); 
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateFD = () => {
+    setError("");
     const P = parseFloat(principal) || 0;
     const r = (parseFloat(rate) || 0) / 100;
     const t = parseFloat(years) || 0;
     const n = parseFloat(compounding) || 1;
     const tax = (parseFloat(taxRate) || 0) / 100;
 
-    if (P <= 0 || r <= 0 || t <= 0) return;
+    if (P <= 0 || r <= 0 || t <= 0) {
+      setResult(null);
+      if (principal || rate || years) setError("Please enter valid investment details.");
+      return;
+    }
 
     const maturityAmount = P * Math.pow(1 + r / n, n * t);
     const totalInterest = maturityAmount - P;
     const taxDeduction = totalInterest * tax;
     const postTaxMaturity = maturityAmount - taxDeduction;
+    const effectiveYield = (Math.pow(1 + r / n, n) - 1) * 100;
 
     setResult({
-      "Principal Amount": formatCurrency(P),
-      "Total Interest Earned": formatCurrency(Math.round(totalInterest)),
-      "TDS Deduction": formatCurrency(Math.round(taxDeduction)),
-      "Net Maturity Value": formatCurrency(Math.round(postTaxMaturity)),
-      "Effective Annual Yield": `${(((Math.pow(1 + r / n, n)) - 1) * 100).toFixed(2)}%`
+      "Principal Amount": P,
+      "Total Interest Earned": Math.round(totalInterest),
+      "TDS Deduction": Math.round(taxDeduction),
+      "Net Maturity Value": Math.round(postTaxMaturity),
+      "Effective Annual Yield": `${effectiveYield.toFixed(2)}%`
     });
   };
 
@@ -56,6 +61,7 @@ export default function FDCalculator() {
   }, [principal, rate, years, compounding, taxRate]);
 
   const handleReset = () => {
+    setError("");
     setPrincipal(""); 
     setRate(""); 
     setYears(""); 
@@ -76,7 +82,8 @@ export default function FDCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            {/* Added error prop for validation feedback */}
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
               <CalculatorInput label="Investment Amount" value={principal} onChange={setPrincipal} icon={currency.symbol} />
 
@@ -122,7 +129,6 @@ export default function FDCalculator() {
               )}
             </CalculatorForm>
 
-            {/* Guide Button inside the form box */}
             <div style={{marginTop: '25px'}}>
                 <Link href="/blog/fd-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
                     📖 FD Mastery: How to get the highest returns on your savings
@@ -146,10 +152,12 @@ export default function FDCalculator() {
           <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
               <h3 style={{color: '#166534', marginBottom: '10px'}}>The Power of Compounding</h3>
               <p style={{fontSize: '0.9rem', color: '#166534', lineHeight: '1.6'}}>
-                  By choosing <strong>{compounding === "4" ? "Quarterly" : compounding === "12" ? "Monthly" : "Yearly"} compounding</strong>, 
+                  By choosing <strong>{compounding == "4" ? "Quarterly" : compounding == "12" ? "Monthly" : "Yearly"} compounding</strong>, 
                   your effective return is <strong>{result["Effective Annual Yield"]}</strong>—which is higher than 
-                  your base rate of {rate}%. Over {years} years, this compounding effect contributes 
-                  significantly to your total earnings of <strong>{result["Total Interest Earned"]}</strong>.
+                  your base rate of {rate}%. 
+                  <br /><br />
+                  Over {years} years, this compounding effect contributes 
+                  significantly to your total earnings of <strong>{formatCurrency(result["Total Interest Earned"])}</strong>.
               </p>
           </div>
         )}

@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function PPFNPSCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
 
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/ppf-nps-calculator');
@@ -25,6 +25,7 @@ export default function PPFNPSCalculator() {
   const [taxSlab, setTaxSlab] = useState(0); 
   const [showTax, setShowTax] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateWealth = () => {
@@ -35,8 +36,10 @@ export default function PPFNPSCalculator() {
 
     if (P <= 0 || R <= 0 || Y <= 0) {
       setResult(null);
+      setError("Please enter valid values for all fields.");
       return;
     }
+    setError("");
 
     const totalMonths = Y * 12;
     const monthlyRate = R / (12 * 100);
@@ -51,10 +54,10 @@ export default function PPFNPSCalculator() {
     const totalTaxSaved = yearlyTaxSaved * Y;
 
     setResult({
-      "Total Investment": `${currency.symbol}${formatValue(Math.round(totalInvested))}`,
-      "Wealth Gained": `${currency.symbol}${formatValue(Math.round(totalInterest))}`,
-      "Maturity Amount": `${currency.symbol}${formatValue(Math.round(maturityValue))}`,
-      ...(taxSlab > 0 && { "Total Tax Saved": `${currency.symbol}${formatValue(Math.round(totalTaxSaved))}` }),
+      "Total Investment": Math.round(totalInvested),
+      "Wealth Gained": Math.round(totalInterest),
+      "Maturity Amount": Math.round(maturityValue),
+      ...(taxSlab > 0 && { "Total Tax Saved": Math.round(totalTaxSaved) }),
       "Profit Margin": `${((totalInterest / totalInvested) * 100).toFixed(0)}%`
     });
   };
@@ -69,6 +72,7 @@ export default function PPFNPSCalculator() {
     setYears(15); 
     setTaxSlab(0); 
     setResult(null);
+    setError("");
   };
 
   return (
@@ -83,7 +87,7 @@ export default function PPFNPSCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Monthly Contribution" value={monthlyInvest} onChange={setMonthlyInvest} icon={currency.symbol} />
 
               <div className="input-row">
@@ -146,8 +150,8 @@ export default function PPFNPSCalculator() {
             <h3 style={{color: '#065f46', marginBottom: '10px'}}>The Power of Long-Term Compounding</h3>
             <p style={{fontSize: '0.9rem', color: '#065f46', lineHeight: '1.6'}}>
               When you invest consistently over 15+ years, your interest starts earning its own interest at an 
-              accelerated rate. For example, in a tax-advantaged account, saving {currency.symbol}{formatValue(monthlyInvest)} monthly 
-              doesn't just build wealth—it can also reduce your annual tax bill by {currency.symbol}{formatValue((monthlyInvest * 12) * (taxSlab/100))} depending 
+              accelerated rate. For example, in a tax-advantaged account, saving {currency.symbol}{formatCurrency(monthlyInvest)} monthly 
+              doesn't just build wealth—it can also reduce your annual tax bill by {currency.symbol}{formatCurrency((monthlyInvest * 12) * (taxSlab/100))} depending 
               on your local laws.
           </p>
                       

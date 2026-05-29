@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function RetirementCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
 
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/retirement');
@@ -27,6 +27,7 @@ export default function RetirementCalculator() {
   const [inflation, setInflation] = useState(6);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateRetirement = () => {
@@ -39,8 +40,10 @@ export default function RetirementCalculator() {
 
     if (retire <= age || age <= 0) {
       setResult(null);
+      setError("Retirement age must be greater than current age.");
       return;
-    };
+    }
+    setError("");
 
     const yearsToInvest = retire - age;
     const n = yearsToInvest * 12;
@@ -54,11 +57,11 @@ export default function RetirementCalculator() {
     const monthlyPension = (totalFund * 0.05) / 12;
 
     setResult({
-      "Estimated Retirement Fund": `${currency.symbol}${formatValue(Math.round(totalFund))}`,
-      "Monthly Pension (Post-Retire)": `${currency.symbol}${formatValue(Math.round(monthlyPension))}`,
-      "Buying Power (Today's Value)": `${currency.symbol}${formatValue(Math.round(inflationAdjustedValue))}`,
-      "Total Amount Invested": `${currency.symbol}${formatValue(Math.round((monthly * n) + corpus))}`,
-      "Wealth Growth": `${currency.symbol}${formatValue(Math.round(totalFund - ((monthly * n) + corpus)))}`
+      "Estimated Retirement Fund": Math.round(totalFund),
+      "Monthly Pension (Post-Retire)": Math.round(monthlyPension),
+      "Buying Power (Today's Value)": Math.round(inflationAdjustedValue),
+      "Total Amount Invested": Math.round((monthly * n) + corpus),
+      "Wealth Growth": Math.round(totalFund - ((monthly * n) + corpus))
     });
   };
 
@@ -72,6 +75,7 @@ export default function RetirementCalculator() {
     setMonthlySaving(""); 
     setExistingCorpus(0); 
     setResult(null);
+    setError("");
   };
 
   return (
@@ -86,7 +90,7 @@ export default function RetirementCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
               <div className="input-row">
                 <CalculatorInput label="Current Age" value={currentAge} onChange={setCurrentAge} />
@@ -142,8 +146,8 @@ export default function RetirementCalculator() {
             <p style={{fontSize: '0.9rem', color: '#991b1b', lineHeight: '1.6'}}>
                 Financial experts suggest that if you withdraw <strong>4% to 5%</strong> of your total fund every year, 
                 your money should theoretically last for 30+ years. For instance, a fund of 
-                {currency.symbol}{formatValue(1000000)} could provide you with an annual income 
-                of {currency.symbol}{formatValue(40000)} to {currency.symbol}{formatValue(50000)} while 
+                {currency.symbol}{formatCurrency(1000000)} could provide you with an annual income 
+                of {currency.symbol}{formatCurrency(40000)} to {currency.symbol}{formatCurrency(50000)} while 
                 the principal stays relatively intact.
             </p>
             

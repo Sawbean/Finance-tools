@@ -10,9 +10,9 @@ import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
+
 export default function DividendYieldCalculator() {
   const { currency } = useCurrency();
-  const formatCurrency = (val) => new Intl.NumberFormat(currency.locale, { style: 'currency', currency: currency.code }).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/dividend-yield');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "dividend-yield");
@@ -21,7 +21,6 @@ export default function DividendYieldCalculator() {
   const [annualDividend, setAnnualDividend] = useState(50);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
-  // 2. CALCULATION LOGIC
   // 2. CALCULATION LOGIC
   const calculateYield = () => {
     const P = parseFloat(sharePrice) || 0;
@@ -45,8 +44,8 @@ export default function DividendYieldCalculator() {
     const currentYield = (D / P) * 100;
 
     setResult({
-      "Annual Dividend per Share": formatCurrency(D),
-      "Current Share Price": formatCurrency(P),
+      "Annual Dividend per Share": D, // Raw number
+      "Current Share Price": P,       // Raw number
       "Dividend Yield": `${currentYield.toFixed(2)}%`,
       "Risk Profile": currentYield > 8 
         ? "⚠️ High Yield (Check Sustainability)" 
@@ -84,7 +83,7 @@ export default function DividendYieldCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput 
                 label="Current Share Price" 
                 value={sharePrice} 

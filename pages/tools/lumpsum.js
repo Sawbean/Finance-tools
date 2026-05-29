@@ -10,20 +10,20 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function LumpsumCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
 
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/lumpsum');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "lumpsum");
-  const { globalCurrency } = useCurrency();
   // 1. STATE MANAGEMENT
   const [investment, setInvestment] = useState(100000);
   const [expectedReturn, setExpectedReturn] = useState(12);
   const [years, setYears] = useState(10);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateLumpsum = () => {
@@ -33,17 +33,19 @@ export default function LumpsumCalculator() {
 
     if (P <= 0 || r < 0 || n <= 0) {
       setResult(null);
+      setError(P <= 0 ? "Investment amount must be greater than zero." : r < 0 ? "Expected return rate cannot be negative." : "Time period must be positive.");
       return;
     }
+    setError("");
 
     // Future Value formula: FV = P * (1 + r/100)^n
     const futureValue = P * Math.pow(1 + r / 100, n);
     const wealthGained = futureValue - P;
 
    setResult({
-      "Total Investment": `${currency.symbol}${formatValue(Math.round(P))}`,
-      "Wealth Gained": `${currency.symbol}${formatValue(Math.round(wealthGained))}`,
-      "Estimated Future Value": `${currency.symbol}${formatValue(Math.round(futureValue))}`,
+      "Total Investment": Math.round(P),
+      "Wealth Gained": Math.round(wealthGained),
+      "Estimated Future Value": Math.round(futureValue),
       "Multiple of Investment": `${(futureValue / P).toFixed(2)}x`
     });
   };
@@ -57,6 +59,7 @@ export default function LumpsumCalculator() {
     setExpectedReturn(12);
     setYears(10);
     setResult(null);
+    setError("");
   };
 
   return (
@@ -71,7 +74,7 @@ export default function LumpsumCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput 
                 label="Total Investment Amount" 
                 value={investment} 
@@ -103,6 +106,11 @@ export default function LumpsumCalculator() {
                 Enter investment details to see your projected wealth growth.
               </div>
             )}
+            {error && (
+              <div className="error-message" style={{color: 'var(--error)', textAlign: 'center', marginTop: '10px'}}>
+                {error}
+              </div>
+            )}
             <AdPlaceholder />
           </div>
         </div>
@@ -118,7 +126,7 @@ export default function LumpsumCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-                Where <strong>P</strong> is your principal, <strong>r</strong> is the annual rate of return, and <strong>n</strong> is the number of years. For example, at a 12% return, your {currency.symbol}{formatValue(investment)} would roughly double every 6 years. This is known as the <em>Rule of 72</em> (72 ÷ rate = years to double).
+                For example, at a 12% return, your {formatCurrency(investment || 0)} would roughly double every 6 years. 
             </p>
         </div>
       </div>

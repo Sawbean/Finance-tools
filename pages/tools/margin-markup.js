@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function MarginMarkupCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/margin-markup');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "margin-markup");
@@ -21,25 +21,33 @@ export default function MarginMarkupCalculator() {
   const [cost, setCost] = useState(100);
   const [sellingPrice, setSellingPrice] = useState(125);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateMetrics = () => {
     const C = parseFloat(cost) || 0;
     const S = parseFloat(sellingPrice) || 0;
 
-    if (C <= 0 || S <= 0 || S <= C) {
+    if (C <= 0 || S <= 0) {
       setResult(null);
+      setError("Cost and Selling Price must be greater than zero.");
       return;
     }
+    if (S <= C) {
+      setResult(null);
+      setError("Selling price must be higher than cost to calculate profit.");
+      return;
+    }
+    setError("");
 
     const profit = S - C;
     const margin = (profit / S) * 100;
     const markup = (profit / C) * 100;
 
-    setResult({
-      "Gross Profit": `${currency.symbol}${formatValue(Math.round(profit))}`,
-      "Profit Margin": `${margin.toFixed(2)}%`,
-      "Markup Percentage": `${markup.toFixed(2)}%`,
+   setResult({
+      "Gross Profit": profit, // Raw number
+      "Profit Margin": `${((profit / S) * 100).toFixed(2)}%`,
+      "Markup Percentage": `${((profit / C) * 100).toFixed(2)}%`,
       "Cost-to-Price Ratio": `${((C / S) * 100).toFixed(1)}%`
     });
   };
@@ -52,6 +60,7 @@ export default function MarginMarkupCalculator() {
     setCost("");
     setSellingPrice("");
     setResult(null);
+    setError("");
   };
 
   return (
@@ -67,7 +76,7 @@ export default function MarginMarkupCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput 
                 label="Cost of Item (COGS)" 
                 value={cost} 
@@ -131,11 +140,9 @@ export default function MarginMarkupCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#166534', lineHeight: '1.6'}}>
-              If you buy an item for {currency.symbol}{formatValue(100)} and sell it for {currency.symbol}{formatValue(125)}, 
-              your <strong>markup is 25%</strong> but your <strong>margin is only 20%</strong>. This distinction is 
-              critical because business expenses—like rent, salaries, and shipping—are usually calculated 
-              as a percentage of your <strong>total revenue</strong> (margin), not your cost.
-          </p>
+              If you buy an item for {formatCurrency(100)} and sell it for {formatCurrency(125)}, 
+              your <strong>markup is 25%</strong> but your <strong>margin is only 20%</strong>. 
+            </p>
         </div>
       </div>
     </>

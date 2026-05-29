@@ -14,7 +14,8 @@ import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function CompoundInterestCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+  const [error, setError] = useState("");
+  const [result, setResult] = useState(null);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/compound-interest');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "compound-interest");   
@@ -23,16 +24,21 @@ export default function CompoundInterestCalculator() {
   const [rate, setRate] = useState(10);
   const [years, setYears] = useState(5);
   const [frequency, setFrequency] = useState(12); // Compounding periods per year
-  const [result, setResult] = useState(null);
 
   // 2. CALCULATION LOGIC
   const calculateCompoundInterest = () => {
+    setError("");
     const P = parseFloat(principal) || 0;
     const r = (parseFloat(rate) || 0) / 100;
     const t = parseFloat(years) || 0;
     const n = parseInt(frequency);
 
     if (P <= 0 || r <= 0 || t <= 0) return;
+    if (r < 0 || t < 0) {
+    setError("Rate and Duration must be positive numbers.");
+    setResult(null);
+    return;
+  }
 
     // Formula: A = P(1 + r/n)^(nt)
     const amount = P * Math.pow((1 + (r / n)), (n * t));
@@ -40,9 +46,9 @@ export default function CompoundInterestCalculator() {
     const apy = (Math.pow((1 + (r / n)), n) - 1) * 100;
 
     setResult({
-      "Initial Principal": `${currency.symbol}${formatValue(P)}`,
-      "Total Interest Earned": `${currency.symbol}${formatValue(totalInterest.toFixed(2))}`,
-      "Final Balance": `${currency.symbol}${formatValue(amount.toFixed(2))}`,
+      "Initial Principal": Math.round(P), 
+      "Total Interest Earned": Math.round(totalInterest), 
+      "Final Balance": Math.round(amount), 
       "Effective Annual Yield (APY)": `${apy.toFixed(2)}%`,
       "Wealth Multiplier": `${(amount / P).toFixed(2)}x initial deposit`
     });
@@ -74,7 +80,7 @@ export default function CompoundInterestCalculator() {
         <div className="calculator-grid">
           <div className="form-box">
             {/* onReset prop handles the logic; manual reset buttons removed */}
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Initial Deposit" value={principal} onChange={setPrincipal} icon={currency.symbol} />
               
               <div className="input-row">
@@ -124,7 +130,7 @@ export default function CompoundInterestCalculator() {
             <h3 style={{color: '#9a3412', marginBottom: '10px'}}>💡 Why Frequency Matters</h3>
             <p style={{fontSize: '0.9rem', color: '#9a3412', lineHeight: '1.6'}}>
                 The more frequently interest is compounded, the faster your money grows. 
-                For example, a {currency.symbol}{formatValue(1000)} deposit grows much faster 
+                For example, a {currency.symbol}{Number(1000).toLocaleString(currency.locale)} deposit grows much faster 
                 with monthly compounding than with annual compounding!
             </p>
             

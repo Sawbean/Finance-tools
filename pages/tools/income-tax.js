@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function IncomeTaxCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
 
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/income-tax');
@@ -23,14 +23,20 @@ export default function IncomeTaxCalculator() {
   const [filingStatus, setFilingStatus] = useState("single");
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   const calculateTax = () => {
+
     const grossIncome = parseFloat(income) || 0;
     const totalDeductions = parseFloat(deductions) || 0;
     const taxableIncome = Math.max(0, grossIncome - totalDeductions);
 
-    if (grossIncome <= 0) return;
-
+    if (grossIncome <= 0) {
+      setResult(null);
+      setError(income ? "Income must be greater than zero." : "");
+      return;
+    }
+    setError("");
     let tax = 0;
     const threshold = filingStatus === "single" ? 500000 : 600000;
 
@@ -47,11 +53,11 @@ export default function IncomeTaxCalculator() {
     }
 
     setResult({
-      "Annual Taxable Income": `${currency.symbol}${formatValue(taxableIncome)}`,
-      "Total Annual Tax": `${currency.symbol}${formatValue(Math.round(tax))}`,
-      "Highest Tax Bracket": `${taxableIncome > (threshold + 1500000) ? '36%' : taxableIncome > (threshold + 500000) ? '30%' : '10-20%'}`,
+      "Annual Taxable Income": taxableIncome, // Raw Number
+      "Total Annual Tax": Math.round(tax),    // Raw Number
+      "Highest Tax Bracket": taxableIncome > (threshold + 1500000) ? '36%' : taxableIncome > (threshold + 500000) ? '30%' : '10-20%',
       "Effective Tax Rate": `${((tax / grossIncome) * 100).toFixed(2)}%`,
-      "Monthly Take-Home": `${currency.symbol}${formatValue(Math.round((grossIncome - tax) / 12))}`,
+      "Monthly Take-Home": Math.round((grossIncome - tax) / 12), // Raw Number
     });
   };
 
@@ -64,6 +70,7 @@ export default function IncomeTaxCalculator() {
     setDeductions(""); 
     setFilingStatus("single");
     setResult(null);
+    setError("");
   };
 
   return (
@@ -78,7 +85,7 @@ export default function IncomeTaxCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
               <CalculatorInput label="Total Annual Income" value={income} onChange={setIncome} icon={currency.symbol} />
 
@@ -154,8 +161,8 @@ export default function IncomeTaxCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd'}}>
             <h3 style={{color: '#0369a1', marginBottom: '15px'}}>💡 Understanding Progressive Taxation</h3>
            <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#0369a1'}}>
-                In a progressive tax system, your income is divided into "slabs." For your income of <strong>{currency.symbol}{formatValue(income)}</strong>, the first <strong>{currency.symbol}{formatValue(filingStatus === 'single' ? 500000 : 600000)}</strong> is only taxed at 1% as a social security contribution. You only pay the 30% or 36% rates on the amounts <em>above</em> those high-income thresholds.
-            </p>
+            In a progressive tax system, your income is divided into "slabs." For your income of <strong>{formatCurrency(income)}</strong>, the first <strong>{formatCurrency(filingStatus === 'single' ? 500000 : 600000)}</strong> is only taxed at 1% as a social security contribution. You only pay the 30% or 36% rates on the amounts <em>above</em> those high-income thresholds.
+           </p>
             
         </div>
       </div>

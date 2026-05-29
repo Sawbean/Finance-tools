@@ -1,4 +1,5 @@
 import { useCurrency } from '../../context/CurrencyContext';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function ResultBox({ title, results }) {
   const { currency } = useCurrency();
@@ -12,7 +13,11 @@ export default function ResultBox({ title, results }) {
 
   // Professional formatting based on selected currency
   const formatValue = (val) => {
-    return new Intl.NumberFormat(currency.locale).format(val);
+    return new Intl.NumberFormat(currency.locale, {
+      style: 'currency',
+      currency: currency.code,
+      maximumFractionDigits: 2
+    }).format(val);
   };
 
   return (
@@ -24,7 +29,7 @@ export default function ResultBox({ title, results }) {
             <span className="result-label">{formatLabel(key)}</span>
             <span className="result-value">
               {typeof value === "number" 
-                ? `${currency.symbol} ${formatValue(value)}` 
+                ? formatValue(value) 
                 : value}
             </span>
           </div>

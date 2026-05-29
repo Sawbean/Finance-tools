@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function StockAverageCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/stock-average');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "stock-average");
@@ -25,6 +25,7 @@ export default function StockAverageCalculator() {
   const [buy2Price, setBuy2Price] = useState(400);
 
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateAverage = () => {
@@ -35,18 +36,21 @@ export default function StockAverageCalculator() {
 
     if (q1 <= 0 || p1 <= 0) {
       setResult(null);
+      setError("Please enter valid positive values for the first purchase.");
       return;
     }
+    setError("");
 
     const totalQty = q1 + q2;
     const totalCost = (q1 * p1) + (q2 * p2);
-    const avgPrice = totalCost / totalQty;
+    const avgPrice = totalQty > 0 ? (totalCost / totalQty) : 0;
+
 
     setResult({
       "Total Quantity": totalQty,
-      "Total Investment": `${currency.symbol}${formatValue(totalCost)}`,
-      "Average Price per Share": `${currency.symbol}${formatValue(avgPrice)}`,
-      "Break-even Point": `${currency.symbol}${formatValue(avgPrice)}`
+      "Total Investment": totalCost,
+      "Average Price per Share": avgPrice,
+      "Break-even Point": avgPrice
     });
   };
 
@@ -60,6 +64,7 @@ export default function StockAverageCalculator() {
     setBuy2Qty("");
     setBuy2Price("");
     setResult(null);
+    setError("");
   };
 
   return (
@@ -75,7 +80,7 @@ export default function StockAverageCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
               <div style={{marginBottom: '20px', paddingBottom: '15px', borderBottom: '1px dashed #e2e8f0'}}>
                 <h4 style={{marginBottom: '10px', color: '#475569'}}>First Purchase</h4>

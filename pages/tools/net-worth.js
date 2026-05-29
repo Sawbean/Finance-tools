@@ -10,10 +10,10 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
+import { formatCurrency } from "../../utils/formatters";
 
 export default function NetWorthCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/net-worth');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "net-worth");
@@ -21,6 +21,7 @@ export default function NetWorthCalculator() {
   const [cash, setCash] = useState(50000);
   const [investments, setInvestments] = useState(500000);
   const [realEstate, setRealEstate] = useState(0);
+  const [error, setError] = useState("");
   
   const [mortgage, setMortgage] = useState(0);
   const [otherLoans, setOtherLoans] = useState(0);
@@ -29,9 +30,10 @@ export default function NetWorthCalculator() {
   const [result, setResult] = useState(null);
 
   // 2. CALCULATION LOGIC
-  const calculateNetWorth = () => {
+ const calculateNetWorth = () => {
     const totalAssets = (parseFloat(cash) || 0) + (parseFloat(investments) || 0) + (parseFloat(realEstate) || 0);
     const totalLiabilities = (parseFloat(mortgage) || 0) + (parseFloat(otherLoans) || 0) + (parseFloat(creditCardDebt) || 0);
+    const netWorth = totalAssets - totalLiabilities;
     
     if (totalAssets === 0 && totalLiabilities === 0) {
       setResult(null);
@@ -42,10 +44,10 @@ export default function NetWorthCalculator() {
     const debtRatio = totalAssets > 0 ? (totalLiabilities / totalAssets) * 100 : 0;
 
     setResult({
-      "Total Assets": `${currency.symbol}${formatValue(Math.round(totalAssets))}`,
-      "Total Liabilities": `${currency.symbol}${formatValue(Math.round(totalLiabilities))}`,
-      "Current Net Worth": `${netWorth < 0 ? '-' : ''}${currency.symbol}${formatValue(Math.abs(Math.round(netWorth)))}`,
-      "Debt-to-Asset Ratio": `${debtRatio.toFixed(1)}%`,
+      "Total Assets": totalAssets, 
+      "Total Liabilities": totalLiabilities,
+      "Current Net Worth": netWorth,
+      "Debt-to-Asset Ratio": `${totalAssets > 0 ? ((totalLiabilities / totalAssets) * 100).toFixed(1) : 0}%`
     });
   };
 
@@ -57,6 +59,7 @@ export default function NetWorthCalculator() {
     setCash(""); setInvestments(""); setRealEstate("");
     setMortgage(""); setOtherLoans(""); setCreditCardDebt("");
     setResult(null);
+    setError("");
   };
 
   return (
@@ -71,7 +74,7 @@ export default function NetWorthCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
               <h3 style={{fontSize: '1rem', marginBottom: '15px', color: '#059669', display: 'flex', alignItems: 'center', gap: '8px'}}>
                 <span>🏠</span> Assets (What you OWN)
@@ -125,9 +128,9 @@ export default function NetWorthCalculator() {
             <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>Why Track Your Net Worth?</h3>
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6'}}>
               Net worth is the single most accurate metric for personal financial health. 
-              For example, if you own a home worth {currency.symbol}{formatValue(300000)} but owe 
-              {currency.symbol}{formatValue(200000)} on the mortgage, your net worth from that 
-              asset is {currency.symbol}{formatValue(100000)}. By tracking this annually, you 
+              For example, if you own a home worth {currency.symbol}{formatCurrency(300000)} but owe 
+              {currency.symbol}{formatCurrency(200000)} on the mortgage, your net worth from that 
+              asset is {currency.symbol}{formatCurrency(100000)}. By tracking this annually, you 
               ensure your wealth is actually growing, not just your income.
           </p>
             

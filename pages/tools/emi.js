@@ -12,6 +12,17 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function EMICalculator() {
+const [error, setError] = useState("");
+
+const handleReset = () => {
+    setPrincipal(500000);
+    setRate(10.5);
+    setDuration(5);
+    setDurationType("years");
+    setExtraPayment("");
+    setProcessingFee("");
+    setError("");
+};
   const { currency } = useCurrency();
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/emi');
@@ -28,16 +39,23 @@ export default function EMICalculator() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [extraPayment, setExtraPayment] = useState("");
   const [processingFee, setProcessingFee] = useState("");
+  
 
   // 2. CALCULATION LOGIC
   const calculateEMI = () => {
+    setError("");
     const P = parseFloat(principal) || 0;
     const R = parseFloat(rate) || 0;
     const D = parseFloat(duration) || 0;
     const feeP = parseFloat(processingFee) || 0;
     const extra = parseFloat(extraPayment) || 0;
 
-    if (P <= 0 || R <= 0 || D <= 0) return;
+    if (P <= 0 || R <= 0 || D <= 0) {
+        setResult(null);
+        setSchedule([]);
+        if (principal || rate || duration) setError("Please enter valid loan details.");
+        return;
+    }
 
     const n = durationType === "years" ? D * 12 : D;
     const r = R / (12 * 100);
@@ -97,7 +115,7 @@ export default function EMICalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Loan Amount" value={principal} onChange={setPrincipal} icon={currency.symbol} />
               
               <div className="input-row">
@@ -164,10 +182,17 @@ export default function EMICalculator() {
         {/* Insight Card to explain Amortization */}
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd'}}>
             <h3 style={{color: '#0369a1', marginBottom: '10px'}}>💡 Why do extra payments matter?</h3>
+            
             <p style={{fontSize: '0.9rem', color: '#0369a1', lineHeight: '1.6'}}>
                 When you pay even a small "Extra Monthly Payment," that money goes 100% toward your <strong>Principal</strong>, not the interest. This significantly reduces the total interest you pay and helps you become debt-free much faster.
             </p>
-            
+
+            <p style={{fontSize: '0.9rem', color: '#0369a1', lineHeight: '1.6', marginTop: '15px', borderTop: '1px solid #bae6fd', paddingTop: '15px'}}>
+                <strong>Strategy Insight:</strong> By taking a loan of <strong>{currency.symbol}{formatValue(principal)}</strong>, your total commitment (including interest) is 
+                <strong> {result ? formatValue(Math.round(result["Total Amount Payable"])) : "---"}</strong>. 
+                <br /><br />
+                Standard EMIs are designed so you pay mostly interest in the early years. By adding an extra amount, you "break the cycle" of compounding interest. This isn't just a payment; it's a guaranteed return equal to your loan's interest rate.
+            </p>
         </div>
 
         {/* Amortization Schedule Table */}

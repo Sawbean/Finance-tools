@@ -24,14 +24,17 @@ export default function GSTVATTaxCalculator() {
   const [taxRate, setTaxRate] = useState(13); 
   const [taxMode, setTaxMode] = useState("exclusive"); // 'exclusive' or 'inclusive'
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateTax = () => {
+    setError("");
     const A = parseFloat(amount) || 0;
     const R = parseFloat(taxRate) || 0;
 
     if (A <= 0 || R < 0) {
       setResult(null);
+      if (amount || taxRate) setError("Please enter valid figures.");
       return;
     }
 
@@ -50,9 +53,9 @@ export default function GSTVATTaxCalculator() {
     }
 
     setResult({
-      "Net Amount (Pre-Tax)": `${currency.symbol}${formatValue(Math.round(netAmount * 100) / 100)}`,
-      [`Tax Amount (${R}%)`]: `${currency.symbol}${formatValue(Math.round(taxAmount * 100) / 100)}`,
-      "Total Gross Amount": `${currency.symbol}${formatValue(Math.round(totalAmount * 100) / 100)}`,
+      "Net Amount (Pre-Tax)": netAmount,
+      [`Tax Amount (${R}%)`]: taxAmount,
+      "Total Gross Amount": totalAmount,
     });
   };
 
@@ -61,6 +64,7 @@ export default function GSTVATTaxCalculator() {
   }, [amount, taxRate, taxMode]);
 
   const handleReset = () => {
+    setError("");
     setAmount("");
     setTaxRate(13);
     setTaxMode("exclusive");
@@ -95,7 +99,7 @@ export default function GSTVATTaxCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
               <CalculatorInput 
                 label={taxMode === "exclusive" ? "Net Price (Pre-Tax)" : "Gross Price (With Tax)"} 
@@ -150,10 +154,12 @@ export default function GSTVATTaxCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-                For your {currency.symbol}{formatValue(amount)} amount, the {taxMode} calculation 
-                ensures the government's {taxRate}% share is accurately separated. At a {taxRate}% 
-                rate, every {currency.symbol}100 of base price equals {currency.symbol}{taxRate} 
-                in tax, making the total {currency.symbol}{100 + parseFloat(taxRate)}.
+                For your {formatCurrency(amount)}, the {taxMode} calculation ensures the 
+                {taxRate}% share is accurately separated. 
+                <br /><br />
+                At a {taxRate}% rate, every {currency.symbol}100 of base price equals 
+                {currency.symbol}{taxRate} in tax, making the total 
+                {currency.symbol}{100 + parseFloat(taxRate)}.
             </p>
         </div>
       </div>

@@ -4,6 +4,7 @@ export default function CalculatorForm({
   onSubmit,
   onReset,
   children,
+  error,
   adComponent = null,
   hideDefaultButton = false,
   hideDefaultReset = false,
@@ -28,6 +29,22 @@ export default function CalculatorForm({
             <option value="GBP">GBP (£)</option>
           </select>
         </div>
+        {error && (
+          <div style={{ 
+            padding: '12px', 
+            marginBottom: '20px', 
+            background: '#fff1f2', 
+            border: '1px solid #fda4af', 
+            borderRadius: '10px', 
+            color: '#be123c', 
+            fontSize: '0.85rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <span>⚠️</span> {error}
+          </div>
+        )}
 
         {children}
 

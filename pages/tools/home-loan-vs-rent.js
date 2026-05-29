@@ -13,7 +13,6 @@ import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function HomeLoanVsRentCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/home-loan-vs-rent');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "home-loan-vs-rent");
@@ -26,6 +25,7 @@ export default function HomeLoanVsRentCalculator() {
   const [rentIncrease, setRentIncrease] = useState(8);
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
 
   // 2. CALCULATION LOGIC
   const calculateComparison = () => {
@@ -38,14 +38,17 @@ export default function HomeLoanVsRentCalculator() {
 
     if (P <= 0 || R <= 0 || Y <= 0) {
       setResult(null);
+      setError(homePrice <= 0 ? "Property price must be greater than zero." : "");
       return;
     }
+    setError("");
 
     // EMI Calculation
     const N = Y * 12;
     const monthlyRate = R / (12 * 100);
     const monthlyEMI = (P * monthlyRate * Math.pow(1 + monthlyRate, N)) / (Math.pow(1 + monthlyRate, N) - 1);
     const totalLoanCost = monthlyEMI * N;
+    const totalInterest = totalLoanCost - P;
 
     // Rent Calculation (Compound Growth)
     let totalRentCost = 0;
@@ -57,16 +60,15 @@ export default function HomeLoanVsRentCalculator() {
 
     // Future Value of Home
     const futureHomeValue = P * Math.pow(1 + appRate, Y);
-
-    // Final Net Gain for Buying (Future Value - Total Paid)
     const netHomeWealth = futureHomeValue - totalLoanCost;
 
     setResult({
-      "Monthly EMI": `${currency.symbol}${formatValue(Math.round(monthlyEMI))}`,
-      "Total Repayment (20Y)": `${currency.symbol}${formatValue(Math.round(totalLoanCost))}`,
-      "Total Rent (20Y)": `${currency.symbol}${formatValue(Math.round(totalRentCost))}`,
-      "Future Property Value": `${currency.symbol}${formatValue(Math.round(futureHomeValue))}`,
-      "Net Wealth Gain/Loss": `${currency.symbol}${formatValue(Math.round(netHomeWealth))}`,
+      "Monthly EMI": monthlyEMI,
+      "Total Loan Cost": totalLoanCost,
+      "Total Interest Payable": totalInterest,
+      "Total Rent (20Y)": totalRentCost,
+      "Estimated Future Value": futureHomeValue,
+      "Net Wealth (If Buying)": netHomeWealth,
     });
   };
 
@@ -96,7 +98,7 @@ export default function HomeLoanVsRentCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Property Price" value={homePrice} onChange={setHomePrice} icon={currency.symbol} />
               
               <div className="input-row">
@@ -168,14 +170,15 @@ export default function HomeLoanVsRentCalculator() {
         <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
             <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>Buy vs Rent: The Opportunity Cost</h3>
             <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.6'}}>
-                In your scenario, your initial rent of <strong>{currency.symbol}{formatValue(monthlyRent)}</strong> will grow to 
-                {/* Note: I'm using a logic-check here for the rent growth to keep it build-safe */}
-                <strong> {currency.symbol}{formatValue(Math.round(monthlyRent * Math.pow(1 + rentIncrease/100, loanYears)))}</strong> 
-                by year {loanYears} if the {rentIncrease}% annual hike continues. Meanwhile, your EMI stays fixed at 
-                <strong> {result["Monthly EMI"]}</strong>. The real question is whether the 
-                <strong> {result["Total Interest Payable"]}</strong> you pay in interest is a 
-                fair price for owning an asset that could be worth <strong> {result["Estimated Future Value"]}</strong>.
-            </p>            
+                In your scenario, your initial rent of <strong>{formatCurrency(monthlyRent)}</strong> will grow to 
+                <strong> {formatCurrency(Math.round(monthlyRent * Math.pow(1 + rentIncrease/100, loanYears)))}</strong> 
+                by year {loanYears} if the {rentIncrease}% annual hike continues. 
+                <br /><br />
+                Meanwhile, your EMI stays fixed at <strong>{formatCurrency(result["Monthly EMI"])}</strong>. 
+                The real question is whether the <strong>{formatCurrency(result["Total Interest Payable"])}</strong> 
+                you pay in interest is a fair price for owning an asset that could be worth 
+                <strong> {formatCurrency(result["Estimated Future Value"])}</strong>.
+            </p>           
         </div>
       )}
             </div>

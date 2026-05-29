@@ -167,11 +167,10 @@ body {
     top: 70px;
     left: -100%;
     width: 100%;
-    height: calc(100vh - 70px);
+    height: calc(100svh - 70px);
     background: #0b1f4a !important; /* Force the deep blue */
     display: flex;
     flex-direction: column;
-    padding: 0; /* Remove padding to avoid gaps */
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
     align-items: stretch;
@@ -246,21 +245,28 @@ body {
   }
 
   .mobile-toggle-wrapper {
+    flex-shrink: 0;
+    height: 70px;
     margin-top: auto; /* Pushes it to the bottom of the screen */
-    padding: 30px 25px;
+    padding: 0 25px;
     background: #05122b !important; /* Matches your mobile-sub-bg */
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    position: sticky;
-    bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   .mobile-toggle-wrapper span {
     color: white;
     font-size: 16px;
     font-weight: 500;
+  }
+
+  .mobile-toggle-wrapper button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* Hide the toggle from the main header on mobile so it only shows in the menu */

@@ -14,11 +14,11 @@ import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function BreakEvenCalculator() {
   const { currency } = useCurrency();
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/break-even');
 
   const guideData = Object.values(allToolGuides).find(g => g.tool === "break-even");
+  const [error, setError] = useState("");
 
   // 1. STATE MANAGEMENT
   const [fixedCosts, setFixedCosts] = useState(50000);
@@ -28,6 +28,7 @@ export default function BreakEvenCalculator() {
 
   // 2. CALCULATION LOGIC
   const calculateBreakEven = () => {
+  setError("");
   const FC = parseFloat(fixedCosts) || 0;
   const VC = parseFloat(variableCost) || 0;
   const SP = parseFloat(sellingPrice) || 0;
@@ -49,10 +50,10 @@ export default function BreakEvenCalculator() {
     const breakEvenSales = units * SP;
 
     setResult({
-      "Units to Break-Even": Math.ceil(units).toLocaleString(currency.locale),
-      "Sales Volume Needed": `${currency.symbol}${formatValue(breakEvenSales.toFixed(2))}`,
+      "Units to Break-Even": Math.ceil(units), // Sending as a number
+      "Sales Volume Needed": Math.round(breakEvenSales), // Sending as a number
       "Contribution Margin": `${((contributionMargin / SP) * 100).toFixed(1)}% per unit`,
-      "Profit per Unit": `${currency.symbol}${formatValue(contributionMargin.toFixed(2))}`
+      "Profit per Unit": Math.round(contributionMargin) // Sending as a number
     });
   };
 
@@ -65,6 +66,7 @@ export default function BreakEvenCalculator() {
     setVariableCost("");
     setSellingPrice("");
     setResult(null);
+    setError("");
   };
 
   return (
@@ -79,7 +81,7 @@ export default function BreakEvenCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()}>
+            <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput 
                 label="Total Fixed Costs (Rent, Salaries, etc.)" 
                 value={fixedCosts} 
@@ -144,8 +146,8 @@ export default function BreakEvenCalculator() {
             </div>
 
             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-                <strong>Fixed Costs:</strong> Expenses that stay the same regardless of sales (e.g., Rent at {currency.symbol}{formatValue(2000)}/mo).<br />
-                <strong>Variable Costs:</strong> Expenses that change based on volume (e.g., Materials at {currency.symbol}{formatValue(50)} per unit).
+                <strong>Fixed Costs:</strong> Expenses that stay the same regardless of sales (e.g., Rent at {currency.symbol}{Number(2000).toLocaleString(currency.locale)}/mo).<br />
+                <strong>Variable Costs:</strong> Expenses that change based on volume (e.g., Materials at {currency.symbol}{Number(50).toLocaleString(currency.locale)} per unit).
             </p>
         </div>
       </div>
