@@ -40,7 +40,7 @@ export default function NetWorthCalculator() {
       return;
     }
 
-    const netWorth = totalAssets - totalLiabilities;
+    const calculatedNetWorth = totalAssets - totalLiabilities;
     const debtRatio = totalAssets > 0 ? (totalLiabilities / totalAssets) * 100 : 0;
 
     setResult({
