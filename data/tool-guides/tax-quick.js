@@ -712,7 +712,7 @@ export const taxGuides = {
       },
       {
         type: "image",
-        src: "/images/placeholder-forex-tug-of-war.jpg",
+        src: "/images/placeholder-forex-tug-of-war.webp",
         text: "Visualizing the tug-of-war between demand and supply in the forex market."
       },
       {
@@ -796,7 +796,7 @@ export const taxGuides = {
       },
       {
         type: "image",
-        src: "/images/placeholder-dollar-vs-sp500.jpg",
+        src: "/images/placeholder-dollar-vs-sp500.webp",
         text: "Chart showing the declining value of a dollar vs. the growth of the S&P 500 over 30 years."
       },
       {

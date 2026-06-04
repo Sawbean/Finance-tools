@@ -266,16 +266,24 @@ html.dark .master-card p,
 
 .article-p { margin-bottom: 25px; }
 /* This targets any link inside your article paragraphs */
-.article-p a {
-  color: #2563eb !important; /* A nice professional blue */
-  text-decoration: underline !important;
-  font-weight: 700;
-  transition: opacity 0.2s;
-}
+
 
 .article-p a:hover {
   opacity: 0.8;
   color: #1d4ed8;
+}
+
+.article-body a {
+  color: #2563eb !important;
+  font-weight: 700;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+
+.article-body a:hover {
+  opacity: 0.8;
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
 .article-h2 { 

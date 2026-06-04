@@ -18,6 +18,8 @@ import AdPlaceholder from "../../components/ads/AdPlaceholder";
 console.log("ALL GUIDES KEYS:", Object.keys(allToolGuides));
 // 💡 HELPER: Combine them into one library for the slug to search
 const allContent = { ...allFinanceArticles, ...allToolGuides };
+const safeArray = (data) => (Array.isArray(data) ? data : []);
+
 
 export default function BlogPost() {
   const [readingProgress, setReadingProgress] = useState(0);
@@ -77,7 +79,7 @@ export default function BlogPost() {
     );
   }
 
-  const headings = post.content ? post.content.filter(block => block.type === "heading") : [];
+  const headings = post.content ? safeArray(post.content).filter(block => block.type === "heading") : [];
 
   // 2. MASTER THEMING
   const masterThemes = {
@@ -136,13 +138,13 @@ export default function BlogPost() {
         />
       </div>
     );
-      case "list": return (
+    case "list":
+      return (
         <ul key={index} className="article-list">
-          {block.items.map((item, i) => (
-            <li 
-              key={i} 
-              // This allows you to use <a> links and **bold** tags directly in your list strings
-              dangerouslySetInnerHTML={{ __html: item }} 
+          {safeArray(block.items).map((item, i) => (
+            <li
+              key={i}
+              dangerouslySetInnerHTML={{ __html: item }}
             />
           ))}
         </ul>
@@ -166,20 +168,53 @@ export default function BlogPost() {
       case "keyTakeaways": return (
         <div key={index} className="takeaways-box" style={{borderRadius: '12px', marginBottom: '30px'}}>
           <h4 style={{ color: currentTheme.color }}>⚡ Key Takeaways</h4>
-          <ul>{block.items.map((item, i) => <li key={i}>{item}</li>)}</ul>
+         <ul>
+          {(block.items || []).map((item, i) => (
+            <li
+              key={i}
+              dangerouslySetInnerHTML={{
+                __html: item
+                  .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+              }}
+            />
+          ))}
+        </ul>
         </div>
       );
+         case "table":
+                  {
+                    const headers = Array.isArray(block.headers)
+                      ? block.headers
+                      : Array.isArray(block.columns)
+                      ? block.columns
+                      : [];
 
-      case "table": return (
-        <div key={index} className="table-responsive">
-          <table className="pro-table">
-            <thead><tr>{block.headers.map((h, i) => <th key={i}>{h}</th>)}</tr></thead>
-            <tbody>{block.rows.map((row, ri) => (
-              <tr key={ri}>{row.map((cell, ci) => <td key={ci}>{cell}</td>)}</tr>
-            ))}</tbody>
-          </table>
-        </div>
-      );
+                    return (
+                      <div key={index} className="table-responsive">
+                        <table className="pro-table">
+
+                          <thead>
+                            <tr>
+                              {headers.map((h, i) => (
+                                <th key={i}>{h}</th>
+                              ))}
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            {(Array.isArray(block.rows) ? block.rows : []).map((row, ri) => (
+                              <tr key={ri}>
+                                {(Array.isArray(row) ? row : []).map((cell, ci) => (
+                                  <td key={ci}>{cell}</td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+
+                        </table>
+                      </div>
+                    );
+                  }
 
       case "formula": return (
       <div key={index} className="formula-card" style={{ 
@@ -213,7 +248,84 @@ export default function BlogPost() {
       </div>
     );
 
-      default: return null;
+    case "definitionBox":
+  return (
+    <div key={index} className="definition-box">
+      <h4>{block.title}</h4>
+      <p>{block.text || ""}</p>
+    </div>
+  );
+
+  case "stepBreakdown":
+  return (
+    <div key={index} className="step-box">
+      <h4>{block.title}</h4>
+      <ol>
+        {safeArray(block.steps).map((step, i) => (
+          <li key={i}>{step}</li>
+        ))}
+      </ol>
+    </div>
+  );
+
+  case "dataInsight":
+  return (
+    <div key={index} className="data-insight">
+      <h4>{block.title}</h4>
+      <p>{block.text || ""}</p>
+    </div>
+  );
+   
+          case "chart":
+          return (
+            <div key={index} className="chart-block">
+              <h4>{block.title}</h4>
+              <pre>{block.data}</pre>
+            </div>
+          );
+
+        case "comparisonTable":
+        return (
+          <table key={index}>
+            <thead>
+              <tr>
+                {safeArray(block.headers).map((h, i) => (
+                  <th key={i}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+
+            <tbody>
+            {safeArray(block.rows).map((r, ri) => (
+              <tr key={ri}>
+                {(Array.isArray(r) ? r : []).map((c, ci) => (
+                  <td key={ci}>{c}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+          </table>
+        );
+
+  case "inlineImage":
+  return (
+    <div key={index}>
+      <img
+        src={block.src || "/images/default.webp"}
+         alt={block.alt || "finance insight image"}
+        loading="lazy"
+      />
+      <p>{block.caption || ""}</p>
+    </div>
+  );
+
+  default:
+  return (
+    <div key={index} className="unknown-block">
+      {block.title && <h4>{block.title}</h4>}
+      <p>{block.text || ""}</p>
+    </div>
+  );
     }
   };
 
@@ -306,7 +418,7 @@ export default function BlogPost() {
             <div className="table-of-contents" style={{padding: '20px', borderRadius: '12px', marginBottom: '30px' }}>
               <h4 style={{ margin: '0 0 10px 0' }}>Jump to Section:</h4>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {headings.map((h, i) => (
+                {(Array.isArray(headings) ? headings : []).map((h, i) => (
                   <li key={i} style={{ marginBottom: '8px' }}>
                     <a href={`#section-${post.content.indexOf(h)}`} style={{ color: currentTheme.color, textDecoration: 'none', fontSize: '14px' }}>
                       {h.text}
@@ -316,7 +428,7 @@ export default function BlogPost() {
               </ul>
             </div>
           )}
-          {post.content && post.content.map((block, index) => (
+          {post.content && (Array.isArray(post.content) ? post.content : []).map((block, index) => (
             <React.Fragment key={index}>
               {renderBlock(block, index)}
               
@@ -344,7 +456,7 @@ export default function BlogPost() {
           {post.faq && post.faq.length > 0 && (
             <div className="article-faq-container" style={{ marginTop: '40px', borderTop: `2px solid var(--border-soft)`, paddingTop: '30px' }}>
               <h2 className="article-h2">Frequently Asked Questions</h2>
-              {post.faq.map((item, idx) => (
+              {(Array.isArray(post.faq) ? post.faq : []).map((item, idx) => (
                 <div key={idx} className="faq-card" style={{ background: 'var(--card-bg)', padding: '20px', borderRadius: '12px', marginBottom: '20px', border: '1px solid var(--border-soft)' }}>
                   <h4 style={{ color: 'var(--text-main)', marginBottom: '10px' }}>
                     <span style={{ color: 'var(--accent-blue)' }}>Q:</span> {item.question}

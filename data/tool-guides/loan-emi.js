@@ -57,7 +57,7 @@ export const loanGuides = {
       },
       {
         type: "image",
-        src: "/images/emi-prepayment-impact.jpg",
+        src: "/images/emi-prepayment-impact.webp",
         alt: "Chart showing interest savings with prepayments"
       },
       {
