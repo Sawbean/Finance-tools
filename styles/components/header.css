@@ -173,6 +173,7 @@ body {
     display: flex;
     flex-direction: column;
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-bottom: 0px;
     overflow-y: auto;
     align-items: stretch;
     -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
