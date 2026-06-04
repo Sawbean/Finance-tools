@@ -13,14 +13,30 @@ export default function Header() {
     const nextOpen = !menuOpen;
     setMenuOpen(nextOpen);
     
+    // Just handle the menu/tool state here
     if (nextOpen) {
-      document.body.style.overflow = 'hidden'; // Stop background scroll
       setToolsOpen(false);
       setOpenCategory(null);
-    } else {
-      document.body.style.overflow = 'unset'; // Restore scroll
     }
   };
+
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100vh';
+      document.body.style.width = '100%'; // Prevents jumping
+    } else {
+      document.body.style.overflow = 'unset';
+      document.body.style.height = 'auto';
+      document.body.style.width = 'auto';
+    }
+    
+    // Cleanup function: ensures body is restored if the component unmounts
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.style.height = 'auto';
+    };
+  }, [menuOpen]);
 
   const toggleTools = (e) => {
     e.preventDefault();
@@ -45,12 +61,12 @@ export default function Header() {
   };
 
   const closeMenu = () => {
-    setMenuOpen(false);
-    setToolsOpen(false);
-    setOpenCategory(null);
-    document.body.classList.remove("menu-open");
-    document.body.style.overflow = 'unset'; // Restore scroll
-  };
+  setMenuOpen(false);
+  setToolsOpen(false);
+  setOpenCategory(null);
+  document.body.style.overflow = 'unset';
+  document.body.style.height = 'auto';
+};
 
   useEffect(() => {
     const handleClickOutside = (event) => {

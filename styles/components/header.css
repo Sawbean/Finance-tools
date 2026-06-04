@@ -167,13 +167,20 @@ body {
     top: 70px;
     left: -100%;
     width: 100%;
-    height: calc(100svh - 70px);
+    height: 100svh;
+    padding-bottom: 70px; /* Space for the bottom toggle */
     background: #0b1f4a !important; /* Force the deep blue */
     display: flex;
     flex-direction: column;
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
     align-items: stretch;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    overscroll-behavior-y: contain; /* Prevent scroll chaining to body */
+  }
+
+  body {
+    overscroll-behavior: none;
   }
 
   .nav-links.open { left: 0; }
@@ -254,7 +261,7 @@ body {
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-bottom: calc(15px + env(safe-area-inset-bottom, 0px));
   }
 
   .mobile-toggle-wrapper span {
