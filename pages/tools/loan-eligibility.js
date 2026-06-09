@@ -17,6 +17,7 @@ export default function LoanEligibilityCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/loan-eligibility');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "loan-eligibility");
+  
   const [income, setIncome] = useState(100000);
   const [existingEMI, setExistingEMI] = useState(0);
   const [interestRate, setInterestRate] = useState(9.5);
@@ -49,9 +50,9 @@ export default function LoanEligibilityCalculator() {
     const eligibleLoan = r > 0 ? (availableEMI * (1 - Math.pow(1 + r, -n))) / r : 0;
 
     setResult({
-      "Max Monthly EMI Capacity": totalMaxEMIAllowed, // Raw number
-      "Available EMI for New Loan": availableEMI,     // Raw number
-      "Maximum Eligible Loan": Math.round(eligibleLoan), // Raw number
+      "Max Monthly EMI Capacity": totalMaxEMIAllowed,
+      "Available EMI for New Loan": availableEMI,
+      "Maximum Eligible Loan": Math.round(eligibleLoan),
       "Debt-to-Income (DTI) Ratio": `${((currentEMI / monthlyIncome) * 100).toFixed(1)}%`,
       "Safety Margin Status": availableEMI > 0 ? "Eligible ✅" : "Over-leveraged ⚠️"
     });
@@ -76,9 +77,9 @@ export default function LoanEligibilityCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>🏦 Loan Eligibility Calculator</h1>
-            <p style={{color: '#666'}}>Find out exactly how much a financial institution is likely to lend you.</p>
+        <div className="tool-intro">
+            <h1>🏦 Loan Eligibility Calculator</h1>
+            <p>Find out exactly how much a financial institution is likely to lend you.</p>
         </div>
 
         <div className="calculator-grid">
@@ -95,35 +96,31 @@ export default function LoanEligibilityCalculator() {
 
               <button 
                 type="button" 
+                className="advanced-toggle-btn"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                style={{
-                  marginTop: '10px', width: '100%', padding: '10px', 
-                  background: 'transparent', border: '1px dashed #cbd5e1', 
-                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
-                }}
               >
                 {showAdvanced ? "▲ Hide Bank Criteria" : "▼ Adjust Bank Criteria (FOIR)"}
               </button>
 
               {showAdvanced && (
-                <div style={{marginTop: '15px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-                  <label className="input-label" style={{display: 'block', marginBottom: '10px'}}>
+                <div className="advanced-fields-box">
+                  <label className="input-label">
                     Bank's FOIR Margin: <strong>{foir}%</strong>
                   </label>
                   <input 
                     type="range" min="30" max="70" step="5" value={foir} 
                     onChange={(e) => setFoir(e.target.value)}
-                    style={{width: '100%', accentColor: 'var(--primary)', cursor: 'pointer'}}
+                    className="range-input"
                   />
-                  <p style={{fontSize: '0.75rem', color: '#64748b', marginTop: '10px'}}>
+                  <p className="helper-text">
                     *FOIR is the percentage of income allowed for debt. 50% is a global standard for conservative lending.
                   </p>
                 </div>
               )}
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/loan-eligibility-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/loan-eligibility-guide" className="read-guide-card">
                     📖 Guide: 5 Ways to Increase Your Loan Eligibility
                 </Link>
             </div>
@@ -133,7 +130,7 @@ export default function LoanEligibilityCalculator() {
             {result ? (
               <ResultBox title="Eligibility Summary" results={result} />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter your income details to see your borrowing limit.
               </div>
             )}
@@ -141,15 +138,14 @@ export default function LoanEligibilityCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#eff6ff', borderRadius: '12px', border: '1px solid #bfdbfe'}}>
-            <h3 style={{color: '#1e40af', marginBottom: '10px'}}>What is FOIR?</h3>
-              <p style={{fontSize: '0.95rem', color: '#1e40af', lineHeight: '1.6'}}>
+        <div className="info-card foir-info-card">
+            <h3>What is FOIR?</h3>
+              <p>
                 Banks use <strong>FOIR</strong> to ensure you aren't "house poor." If you earn 
                 {formatCurrency(income || 0)} and the bank uses a 50% FOIR, they limit your total debt payments 
                 (old loans + new loan) to {formatCurrency((income || 0) * 0.5)}. If you already pay 
                 {formatCurrency(existingEMI || 0)} in EMIs, your eligibility decreases significantly.
-            </p>
-            
+              </p>
         </div>
       </div>
     </>

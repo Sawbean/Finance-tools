@@ -3,6 +3,7 @@ import Link from "next/link";
 import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 import { allToolGuides } from '../../data/tool-guides/index';
+import Image from "next/image";
 
 // Import global utilities
 import { useCurrency } from "../../context/CurrencyContext"; 
@@ -25,7 +26,6 @@ export default function BreakEvenCalculator() {
   const [variableCost, setVariableCost] = useState(300);
   const [sellingPrice, setSellingPrice] = useState(800);
   const [result, setResult] = useState(null);
-
   // 2. CALCULATION LOGIC
   const calculateBreakEven = () => {
   setError("");
@@ -74,9 +74,9 @@ export default function BreakEvenCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>⚖️ Break-Even Analysis</h1>
-            <p style={{color: '#666'}}>Find out exactly how many units you need to sell to cover all your costs.</p>
+        <div className="tool-intro" >
+            <h1>⚖️ Break-Even Analysis</h1>
+            <p>Find out exactly how many units you need to sell to cover all your costs.</p>
         </div>
 
         <div className="calculator-grid">
@@ -104,15 +104,15 @@ export default function BreakEvenCalculator() {
                 />
               </div>
               
-              <p style={{fontSize: '0.8rem', color: '#64748b', marginTop: '10px', fontStyle: 'italic'}}>
+              <p className="helper">
                 *Note: Selling price must be higher than the variable cost per unit.
               </p>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/break-even-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
-                    📖 Business Strategy: How to lower your break-even point?
-                </Link>
+            <div>
+              <Link href="/blog/break-even-guide" className="read-guide-card">
+                📖 Business Strategy: How to lower your break-even point?
+              </Link>
             </div>
           </div>
 
@@ -123,7 +123,7 @@ export default function BreakEvenCalculator() {
                 results={result}
               />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter your costs and pricing to see the break-even point.
               </div>
             )}
@@ -131,21 +131,26 @@ export default function BreakEvenCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-            <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>The Break-Even Formula</h3>
-            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginBottom: '15px'}}>
-                To calculate the break-even point in units, we divide total fixed costs by the "Contribution Margin" (the profit made on each individual unit sold).
+        <div className="info-card">
+            <h3>The Break-Even Formula</h3>
+            <p>
+              To calculate the break-even point in units, we divide total fixed costs by the "Contribution Margin" (the profit made on each individual unit sold).
             </p>
-              [Image of break-even point graph showing fixed costs variable costs and total revenue]
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '1.2rem', color: 'var(--primary)', fontWeight: 'bold', margin: '20px 0' }}>
+
+            {/* Graph showing fixed costs, variable costs, and total revenue intersection */}
+            <div className="info-image-container">
+              <img src="/images/path-to-graph.webp" alt="Break-Even Analysis Graph showing revenue and cost intersection" loading="lazy" />
+            </div>
+
+            <div className="formula-box">
               <span>BEP (Units) = </span>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ borderBottom: '2px solid var(--primary)', padding: '0 10px' }}>Total Fixed Costs</div>
+              <div className="fraction">
+                <div className="numerator">Total Fixed Costs</div>
                 <div>Price per Unit - Variable Cost per Unit</div>
               </div>
             </div>
 
-            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
+            <p className="info-text">
                 <strong>Fixed Costs:</strong> Expenses that stay the same regardless of sales (e.g., Rent at {currency.symbol}{Number(2000).toLocaleString(currency.locale)}/mo).<br />
                 <strong>Variable Costs:</strong> Expenses that change based on volume (e.g., Materials at {currency.symbol}{Number(50).toLocaleString(currency.locale)} per unit).
             </p>

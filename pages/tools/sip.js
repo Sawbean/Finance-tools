@@ -9,7 +9,7 @@ import CalculatorInput from "../../components/calculator/CalculatorInput";
 import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 import { tools } from '../../data/tools';
-import ToolSEO from '../../components/layout/ToolSEO';
+import ToolSEO from "../../components/layout/ToolSEO";
 import { formatCurrency } from "../../utils/formatters";
 
 export default function SIPCalculator() {
@@ -17,6 +17,7 @@ export default function SIPCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/sip');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "sip");
+  
   // 1. STATE MANAGEMENT
   const [monthlyInvestment, setMonthlyInvestment] = useState(5000);
   const [rate, setRate] = useState(12);
@@ -25,6 +26,7 @@ export default function SIPCalculator() {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  
   // 2. CALCULATION LOGIC
   const calculateSIP = () => {
     const P = parseFloat(monthlyInvestment) || 0;
@@ -69,7 +71,6 @@ export default function SIPCalculator() {
     calculateSIP();
   }, [monthlyInvestment, rate, years, stepUp]);
 
-  // Handle the default reset logic
   const handleReset = () => {
     setMonthlyInvestment("");
     setRate("");
@@ -84,14 +85,13 @@ export default function SIPCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>📈 SIP Wealth Calculator</h1>
-            <p style={{color: '#666'}}>Plan your financial freedom with the power of compounding.</p>
+        <div className="tool-intro sip-intro">
+            <h1>📈 SIP Wealth Calculator</h1>
+            <p>Plan your financial freedom with the power of compounding.</p>
         </div>
 
         <div className="calculator-grid">
           <div className="form-box">
-            {/* Standardized: Use onReset prop, removed manual reset-btn div */}
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Monthly Investment" value={monthlyInvestment} onChange={setMonthlyInvestment} icon={currency.symbol} />
               
@@ -100,32 +100,26 @@ export default function SIPCalculator() {
                 <CalculatorInput label="Time Period" value={years} onChange={setYears} suffix="Years" />
               </div>
 
-              {/* Styled Step-up Toggle */}
               <button 
                 type="button" 
+                className="sip-toggle"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                style={{
-                  marginTop: '10px', width: '100%', padding: '10px', 
-                  background: 'transparent', border: '1px dashed #cbd5e1', 
-                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
-                }}
               >
                 {showAdvanced ? "▲ Hide Step-Up" : "▼ Add Annual Step-Up (%)"}
               </button>
 
               {showAdvanced && (
-                <div style={{marginTop: '15px', padding: '15px', background: '#f0fdf4', borderRadius: '10px', border: '1px solid #dcfce7'}}>
+                <div className="step-up-box">
                   <CalculatorInput label="Annual Increase (%)" value={stepUp} onChange={setStepUp} suffix="%" />
-                  <p style={{fontSize: '0.75rem', color: '#166534', marginTop: '8px'}}>
+                  <p className="step-up-helper">
                     💡 <strong>Step-up SIP:</strong> Increasing your investment yearly drastically boosts long-term wealth.
                   </p>
                 </div>
               )}
             </CalculatorForm>
 
-            {/* Consistant Guide Button location (Inside form-box area) */}
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/sip-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/sip-calculator-guide" className="read-guide-card">
                     📖 SIP Guide: How to Choose the Right Mutual Fund
                 </Link>
             </div>
@@ -135,7 +129,7 @@ export default function SIPCalculator() {
             {result ? (
               <ResultBox title="Investment Summary" results={result}/>
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Adjust parameters to see your investment grow.
               </div>
             )}
@@ -143,14 +137,13 @@ export default function SIPCalculator() {
           </div>
         </div>
 
-        {/* Consistant Insight Card */}
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-            <h3 style={{marginBottom: '15px'}}>The Magic of Compounding</h3>
-            <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#475569'}}>
-                A Systematic Investment Plan (SIP) allows you to invest small amounts regularly. 
-                For example, investing just {currency.symbol}{formatCurrency(100)} every month can 
-                grow into a significant fund over 20 years. This exponential growth is why the 
-                "Time Period" often matters more than the "Amount" you start with.
+        <div className="info-card sip-info-card">
+            <h3>The Magic of Compounding</h3>
+            <p>
+              A Systematic Investment Plan (SIP) allows you to invest small amounts regularly. 
+              For example, investing just {currency.symbol}{formatCurrency(100)} every month can 
+              grow into a significant fund over 20 years. This exponential growth is why the 
+              "Time Period" often matters more than the "Amount" you start with.
             </p>
             
 

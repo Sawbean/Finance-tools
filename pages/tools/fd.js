@@ -12,6 +12,7 @@ import ToolSEO from '../../components/layout/ToolSEO';
 export default function FDCalculator() {
   const { currency } = useCurrency();
   const formatCurrency = (val) => new Intl.NumberFormat(currency.locale, { style: 'currency', currency: currency.code }).format(val);
+  
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/fd');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "fd");
@@ -72,19 +73,17 @@ export default function FDCalculator() {
 
   return (
     <>
-     <ToolSEO tool={toolData} guideData={guideData} />
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>🏦 FD Calculator</h1>
-            <p style={{color: '#666'}}>Plan your savings with guaranteed bank deposit returns.</p>
+        <div className="tool-intro">
+            <h1>🏦 FD Calculator</h1>
+            <p>Plan your savings with guaranteed bank deposit returns.</p>
         </div>
 
         <div className="calculator-grid">
           <div className="form-box">
-            {/* Added error prop for validation feedback */}
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
-              
               <CalculatorInput label="Investment Amount" value={principal} onChange={setPrincipal} icon={currency.symbol} />
 
               <div className="input-row">
@@ -92,29 +91,21 @@ export default function FDCalculator() {
                 <CalculatorInput label="Duration" value={years} onChange={setYears} suffix="Years" />
               </div>
 
-              {/* Standardized Advanced Toggle */}
               <button 
                 type="button" 
+                className="advanced-toggle-btn"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                style={{
-                  marginTop: '10px', width: '100%', padding: '10px', 
-                  background: 'transparent', border: '1px dashed #cbd5e1', 
-                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
-                }}
               >
                 {showAdvanced ? "▲ Hide Settings" : "▼ Compounding & Tax (TDS)"}
               </button>
 
               {showAdvanced && (
-                <div style={{marginTop: '15px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
+                <div className="advanced-fields-box">
                   <div className="input-row">
-                    <div style={{flex: 1}}>
+                    <div className="input-group">
                       <label className="input-label">Compounding</label>
                       <select 
-                        style={{
-                          width: '100%', padding: '12px', borderRadius: '8px', 
-                          border: '1px solid #d1d5db', background: '#fff', marginTop: '5px'
-                        }}
+                        className="compounding-select"
                         value={compounding} 
                         onChange={(e) => setCompounding(e.target.value)}
                       >
@@ -129,8 +120,8 @@ export default function FDCalculator() {
               )}
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/fd-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/fd-calculator-guide" className="read-guide-card">
                     📖 FD Mastery: How to get the highest returns on your savings
                 </Link>
             </div>
@@ -140,7 +131,7 @@ export default function FDCalculator() {
             {result ? (
               <ResultBox title="Maturity Breakdown" results={result} />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter deposit details to calculate your maturity value.
               </div>
             )}
@@ -149,9 +140,9 @@ export default function FDCalculator() {
         </div>
 
         {result && (
-          <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
-              <h3 style={{color: '#166534', marginBottom: '10px'}}>The Power of Compounding</h3>
-              <p style={{fontSize: '0.9rem', color: '#166534', lineHeight: '1.6'}}>
+          <div className="info-card fd-insight-card">
+              <h3>The Power of Compounding</h3>
+              <p className="info-text">
                   By choosing <strong>{compounding == "4" ? "Quarterly" : compounding == "12" ? "Monthly" : "Yearly"} compounding</strong>, 
                   your effective return is <strong>{result["Effective Annual Yield"]}</strong>—which is higher than 
                   your base rate of {rate}%. 

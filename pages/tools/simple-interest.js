@@ -17,6 +17,7 @@ export default function SimpleInterestCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/simple-interest');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "simple-interest");
+  
   // 1. STATE MANAGEMENT
   const [principal, setPrincipal] = useState(100000);
   const [rate, setRate] = useState(12);
@@ -27,32 +28,32 @@ export default function SimpleInterestCalculator() {
 
   // 2. CALCULATION LOGIC
   const calculateInterest = () => {
-  const P = parseFloat(principal) || 0;
-  const R = parseFloat(rate) || 0;
-  const T = parseFloat(time) || 0;
+    const P = parseFloat(principal) || 0;
+    const R = parseFloat(rate) || 0;
+    const T = parseFloat(time) || 0;
 
-  if (P <= 0 || R <= 0 || T <= 0) {
-    setResult(null);
-    setError("All values must be positive numbers.");
-    return;
-  }
-  setError("");
+    if (P <= 0 || R <= 0 || T <= 0) {
+      setResult(null);
+      setError("All values must be positive numbers.");
+      return;
+    }
+    setError("");
 
-  const actualTimeInYears = timeUnit === "months" ? T / 12 : T;
-  const interest = (P * R * actualTimeInYears) / 100;
-  const totalAmount = P + interest;
-  
-  // Calculate average monthly interest safely
-  const totalMonths = actualTimeInYears * 12;
-  const monthlyInterest = interest / (totalMonths || 1);
+    const actualTimeInYears = timeUnit === "months" ? T / 12 : T;
+    const interest = (P * R * actualTimeInYears) / 100;
+    const totalAmount = P + interest;
+    
+    // Calculate average monthly interest safely
+    const totalMonths = actualTimeInYears * 12;
+    const monthlyInterest = interest / (totalMonths || 1);
 
-  setResult({
+    setResult({
       "Initial Principal": P,
       "Total Simple Interest": interest,
       "Monthly Interest Equiv.": monthlyInterest,
       "Total Maturity Value": totalAmount,
     });
-};
+  };
 
   useEffect(() => {
     calculateInterest();
@@ -72,9 +73,9 @@ export default function SimpleInterestCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💰 Simple Interest</h1>
-            <p style={{color: '#666'}}>Calculate interest earned or payable on a fixed principal amount.</p>
+        <div className="tool-intro si-intro">
+            <h1>💰 Simple Interest</h1>
+            <p>Calculate interest earned or payable on a fixed principal amount.</p>
         </div>
 
         <div className="calculator-grid">
@@ -84,16 +85,16 @@ export default function SimpleInterestCalculator() {
               
               <CalculatorInput label="Annual Interest Rate" value={rate} onChange={setRate} suffix="%" />
 
-              <div className="input-row" style={{alignItems: 'flex-end'}}>
-                <div style={{flex: '2'}}>
+              <div className="input-row si-time-row">
+                <div className="si-time-input">
                     <CalculatorInput label={`Time Period (${timeUnit})`} value={time} onChange={setTime} />
                 </div>
-                <div style={{flex: '1', marginBottom: '15px'}}>
-                    <label className="input-label" style={{fontSize: '0.8rem'}}>Unit</label>
+                <div className="si-unit-input">
+                    <label className="input-label">Unit</label>
                     <select 
                         value={timeUnit} 
                         onChange={(e) => setTimeUnit(e.target.value)}
-                        style={{width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer'}}
+                        className="si-select"
                     >
                         <option value="years">Years</option>
                         <option value="months">Months</option>
@@ -102,8 +103,8 @@ export default function SimpleInterestCalculator() {
               </div>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/simple-interest-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/simple-interest-guide" className="read-guide-card">
                     📖 Roadmap: When is simple interest more beneficial than compound?
                 </Link>
             </div>
@@ -116,7 +117,7 @@ export default function SimpleInterestCalculator() {
                 results={result}              
               />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter amount and time to see the calculation breakdown.
               </div>
             )}
@@ -124,27 +125,27 @@ export default function SimpleInterestCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-            <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>The Simple Interest Formula</h3>
-            <p style={{fontSize: '0.95rem', color: '#475569', marginBottom: '15px'}}>
-                Simple interest is calculated using the standard formula:
-            </p>
+        <div className="info-card si-info-card">
+            <h3>The Simple Interest Formula</h3>
+            <p>Simple interest is calculated using the standard formula:</p>
             
-            {/* CSS-based Fraction to replace problematic LaTeX */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '1.2rem', color: 'var(--primary)', fontWeight: 'bold', margin: '20px 0' }}>
+            <div className="si-formula-box">
               <span>SI = </span>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ borderBottom: '2px solid var(--primary)', padding: '0 10px' }}>P × R × T</div>
-                <div>100</div>
+              <div className="fraction">
+                <div className="numerator">P × R × T</div>
+                <div className="denominator">100</div>
               </div>
             </div>
-             <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
-              Unlike <strong>Compound Interest</strong>, where interest is earned on both the principal and previous interest, 
-              <strong>Simple Interest</strong> is only calculated on the original Principal. 
-              For example, a {currency.symbol}{formatCurrency(1000)} loan at 10% will always cost 
-              you {currency.symbol}{formatCurrency(100)} in interest every year, no matter how long the term is. 
-              This makes it ideal for short-term personal loans and bridge financing.
-          </p>
+
+            
+
+             <p>
+                Unlike <strong>Compound Interest</strong>, where interest is earned on both the principal and previous interest, 
+                <strong>Simple Interest</strong> is only calculated on the original Principal. 
+                For example, a {currency.symbol}{formatCurrency(1000)} loan at 10% will always cost 
+                you {currency.symbol}{formatCurrency(100)} in interest every year, no matter how long the term is. 
+                This makes it ideal for short-term personal loans and bridge financing.
+            </p>
         </div>
       </div>
     </>

@@ -1,10 +1,11 @@
 // utils/formatters.js
-
-export const formatCurrency = (num) => {
-  return new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 0,
-  }).format(Math.round(num));
+export const formatCurrency = (amount, currency) => {
+  return new Intl.NumberFormat(currency.locale, {
+    style: 'currency',
+    currency: currency.code,
+    minimumFractionDigits: 2, // Ensures 9.60
+    maximumFractionDigits: 2  // Ensures 9.60
+  }).format(amount);
 };
 
-// Change 'currencyIcon' to 'globalCurrency'
 export const globalCurrency = "$";

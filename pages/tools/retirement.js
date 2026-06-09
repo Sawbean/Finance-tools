@@ -18,6 +18,7 @@ export default function RetirementCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/retirement');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "retirement");
+  
   // 1. STATE MANAGEMENT
   const [currentAge, setCurrentAge] = useState(25);
   const [retireAge, setRetireAge] = useState(60);
@@ -83,9 +84,9 @@ export default function RetirementCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>👵 Retirement Planner</h1>
-            <p style={{color: '#666'}}>Will you have enough for the lifestyle you want? Let's find out.</p>
+        <div className="tool-intro retirement-intro">
+            <h1>👵 Retirement Planner</h1>
+            <p>Will you have enough for the lifestyle you want? Let's find out.</p>
         </div>
 
         <div className="calculator-grid">
@@ -102,27 +103,22 @@ export default function RetirementCalculator() {
 
               <button 
                 type="button" 
+                className="advanced-toggle"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                style={{
-                  marginTop: '10px', width: '100%', padding: '10px', 
-                  background: 'transparent', border: '1px dashed #cbd5e1', 
-                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
-                }}
               >
                 {showAdvanced ? "▲ Hide Advanced Settings" : "▼ Include Existing Wealth & Inflation"}
               </button>
 
               {showAdvanced && (
-                <div style={{marginTop: '15px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
+                <div className="advanced-options">
                   <CalculatorInput label="Current Savings" value={existingCorpus} onChange={setExistingCorpus} icon={currency.symbol} />
                   <CalculatorInput label="Expected Inflation (%)" value={inflation} onChange={setInflation} suffix="%" />
                 </div>
               )}
             </CalculatorForm>
 
-            {/* Standardized Guide Card location */}
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/retirement-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/retirement-guide" className="read-guide-card">
                     📖 Roadmap: How to build a multi-million dollar retirement fund
                 </Link>
             </div>
@@ -132,7 +128,7 @@ export default function RetirementCalculator() {
             {result ? (
               <ResultBox title="Retirement Summary" results={result}/>
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter your details to see your roadmap.
               </div>
             )}
@@ -140,17 +136,15 @@ export default function RetirementCalculator() {
           </div>
         </div>
 
-        {/* Insight Card */}
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#fdf2f2', borderRadius: '12px', border: '1px solid #fee2e2'}}>
-            <h3 style={{color: '#991b1b', marginBottom: '10px'}}>The 4% - 5% Safe Withdrawal Rule</h3>
-            <p style={{fontSize: '0.9rem', color: '#991b1b', lineHeight: '1.6'}}>
-                Financial experts suggest that if you withdraw <strong>4% to 5%</strong> of your total fund every year, 
-                your money should theoretically last for 30+ years. For instance, a fund of 
-                {currency.symbol}{formatCurrency(1000000)} could provide you with an annual income 
-                of {currency.symbol}{formatCurrency(40000)} to {currency.symbol}{formatCurrency(50000)} while 
-                the principal stays relatively intact.
+        <div className="info-card retirement-info-card">
+            <h3>The 4% - 5% Safe Withdrawal Rule</h3>
+            <p>
+              Financial experts suggest that if you withdraw <strong>4% to 5%</strong> of your total fund every year, 
+              your money should theoretically last for 30+ years.  For instance, a fund of 
+              {currency.symbol}{formatCurrency(1000000)} could provide you with an annual income 
+              of {currency.symbol}{formatCurrency(40000)} to {currency.symbol}{formatCurrency(50000)} while 
+              the principal stays relatively intact.
             </p>
-            
         </div>
       </div>
     </>

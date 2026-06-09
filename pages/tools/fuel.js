@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
-// Import global utilities
-import { globalCurrency } from "../../utils/formatters";  
 import { useCurrency } from "../../context/CurrencyContext";
 import CalculatorForm from "../../components/calculator/CalculatorForm";
 import CalculatorInput from "../../components/calculator/CalculatorInput";
@@ -13,11 +10,13 @@ import ToolSEO from '../../components/layout/ToolSEO';
 import { allToolGuides } from '../../data/tool-guides/index';
 
 export default function FuelCalculator() {
-   const { currency } = useCurrency();
-   const formatCurrency = (val) => new Intl.NumberFormat(currency.locale, { style: 'currency', currency: currency.code, maximumFractionDigits: 0 }).format(val);
+  const { currency } = useCurrency();
+  const formatCurrency = (val) => new Intl.NumberFormat(currency.locale, { style: 'currency', currency: currency.code, maximumFractionDigits: 0 }).format(val);
+  
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/fuel');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "fuel");
+  
   // 1. STATE MANAGEMENT
   const [distance, setDistance] = useState(150);
   const [mileage, setMileage] = useState(15);
@@ -50,14 +49,14 @@ export default function FuelCalculator() {
     const costPerPerson = totalTripCost / Pax;
     const savingsPerPerson = totalTripCost - costPerPerson;
 
-   setResult({
+    setResult({
       "Total Trip Distance": `${effectiveDistance} KM`,
       "Fuel Required": `${fuelNeeded.toFixed(2)} Liters`,
-      "Fuel Expense": Math.round(fuelCost), // Raw number
-      "Tolls & Parking": Math.round(extra), // Raw number
-      "Grand Total": Math.round(totalTripCost), // Raw number
-      "Cost Per Person": Math.round(costPerPerson), // Raw number
-      "_savings": Math.round(savingsPerPerson) // Hidden key for info-card
+      "Fuel Expense": Math.round(fuelCost),
+      "Tolls & Parking": Math.round(extra),
+      "Grand Total": Math.round(totalTripCost),
+      "Cost Per Person": Math.round(costPerPerson),
+      "_savings": Math.round(savingsPerPerson)
     });
   };
 
@@ -65,7 +64,6 @@ export default function FuelCalculator() {
     calculateFuel();
   }, [distance, mileage, price, passengers, otherCosts, isRoundTrip]);
 
-  // Clean Reset Function
   const handleReset = () => {
     setError("");
     setDistance(""); 
@@ -82,29 +80,21 @@ export default function FuelCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>⛽ Fuel & Trip Calculator</h1>
-            <p style={{color: '#666'}}>Plan your journey and split the bill with ease.</p>
+        <div className="tool-intro">
+            <h1>⛽ Fuel & Trip Calculator</h1>
+            <p>Plan your journey and split the bill with ease.</p>
         </div>
 
         <div className="calculator-grid">
           <div className="form-box">
-            {/* The reset button is handled inside this component now */}
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
-              
               <div className="input-row">
                 <CalculatorInput label="Distance (One Way)" value={distance} onChange={setDistance} suffix="KM" />
-                <div className="toggle-container" style={{flex: 1, paddingTop: '28px'}}>
+                <div className="toggle-wrapper">
                     <button 
                         type="button" 
+                        className={`trip-toggle-btn ${isRoundTrip ? 'active' : ''}`}
                         onClick={() => setIsRoundTrip(!isRoundTrip)}
-                        style={{
-                            width: '100%', padding: '12px', borderRadius: '10px', 
-                            border: `2px solid ${isRoundTrip ? 'var(--primary)' : '#e2e8f0'}`,
-                            background: isRoundTrip ? 'var(--primary)' : '#fff',
-                            color: isRoundTrip ? '#fff' : '#475569',
-                            fontWeight: 'bold', transition: '0.3s', cursor: 'pointer'
-                        }}
                     >
                         {isRoundTrip ? "🔄 Round Trip" : "➡️ One Way"}
                     </button>
@@ -122,8 +112,8 @@ export default function FuelCalculator() {
               </div>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/fuel-mileage-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/fuel-mileage-guide" className="read-guide-card">
                     📖 Mileage Guide: 10 Ways to Increase Vehicle Mileage
                 </Link>
             </div>
@@ -131,9 +121,9 @@ export default function FuelCalculator() {
 
           <div className="result-side">
             {result ? (
-              <ResultBox title="Trip Budget Summary" results={result}  />
+              <ResultBox title="Trip Budget Summary" results={result} />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter distance and mileage to start planning.
               </div>
             )}
@@ -142,12 +132,12 @@ export default function FuelCalculator() {
         </div>
 
         {result && (
-          <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#ecfdf5', borderRadius: '12px', border: '1px solid #a7f3d0'}}>
-              <h3 style={{color: '#065f46', marginBottom: '10px'}}>💡 Pro Tip: Optimize Your Journey</h3>
-             <p style={{fontSize: '0.9rem', color: '#065f46', lineHeight: '1.6'}}>
+          <div className="info-card fuel-insight-card">
+              <h3>💡 Pro Tip: Optimize Your Journey</h3>
+              <p className="info-text">
                   For your trip, splitting the cost between 
                   <strong> {passengers} {passengers > 1 ? 'people' : 'person'}</strong> saves everyone 
-                  <strong> {result["_savings"] ? formatCurrency(result["_savings"]) : "---"}</strong> 
+                  <strong> {result["_savings"] ? formatCurrency(result["_savings"]) : "---"}</strong>. 
                   <br /><br />
                   To further reduce your 
                   <strong> {formatCurrency(result["Fuel Expense"])}</strong> fuel expense, 

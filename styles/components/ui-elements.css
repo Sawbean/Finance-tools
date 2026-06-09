@@ -67,16 +67,19 @@ h1, h2, h3 {
 ================================ */
 
 .read-guide-card {
+  /* Keep your layout here */
   display: block;
   margin: 30px auto 10px;
   padding: 18px 25px;
-  max-width: 450px; /* Slightly wider for better balance */
+  max-width: 450px;
   text-align: center;
   font-weight: 600;
   font-size: 16px;
+  
+  /* Use your dynamic variables */
   color: var(--primary);
-  background: var(--card-bg);
-  border: 1px solid var(--border-soft); /* Matches your Table of Contents border */
+  background: var(--soft-bg);
+  border: 1px solid var(--border-visible); /* Use your new visible border variable */
   border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
@@ -85,10 +88,10 @@ h1, h2, h3 {
 
 .read-guide-card:hover {
   transform: translateY(-5px);
-  background: var(--bg-card); /* Very subtle color shift */
-  border-color: var(--accent-blue); /* Highlights the border on hover */
+  background: var(--hover-bg); /* Use your dynamic hover variable */
+  border-color: var(--accent-blue);
   color: var(--accent-blue);
-  box-shadow: 0 12px 24px rgba(11, 31, 74, 0.08);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); /* Adjusted for dark mode compatibility */
 }
 
 /* Optional: Add a subtle arrow effect on hover */

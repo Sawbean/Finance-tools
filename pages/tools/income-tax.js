@@ -18,6 +18,7 @@ export default function IncomeTaxCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/income-tax');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "income-tax");
+  
   const [income, setIncome] = useState(800000);
   const [deductions, setDeductions] = useState(0);
   const [filingStatus, setFilingStatus] = useState("single");
@@ -26,7 +27,6 @@ export default function IncomeTaxCalculator() {
   const [error, setError] = useState("");
 
   const calculateTax = () => {
-
     const grossIncome = parseFloat(income) || 0;
     const totalDeductions = parseFloat(deductions) || 0;
     const taxableIncome = Math.max(0, grossIncome - totalDeductions);
@@ -53,11 +53,11 @@ export default function IncomeTaxCalculator() {
     }
 
     setResult({
-      "Annual Taxable Income": taxableIncome, // Raw Number
-      "Total Annual Tax": Math.round(tax),    // Raw Number
+      "Annual Taxable Income": taxableIncome,
+      "Total Annual Tax": Math.round(tax),
       "Highest Tax Bracket": taxableIncome > (threshold + 1500000) ? '36%' : taxableIncome > (threshold + 500000) ? '30%' : '10-20%',
       "Effective Tax Rate": `${((tax / grossIncome) * 100).toFixed(2)}%`,
-      "Monthly Take-Home": Math.round((grossIncome - tax) / 12), // Raw Number
+      "Monthly Take-Home": Math.round((grossIncome - tax) / 12),
     });
   };
 
@@ -78,9 +78,9 @@ export default function IncomeTaxCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💼 Income Tax Calculator</h1>
-            <p style={{color: '#666'}}>Understand your tax burden and net salary with the latest tax slabs.</p>
+        <div className="tool-intro">
+            <h1>💼 Income Tax Calculator</h1>
+            <p>Understand your tax burden and net salary with the latest tax slabs.</p>
         </div>
 
         <div className="calculator-grid">
@@ -89,58 +89,42 @@ export default function IncomeTaxCalculator() {
               
               <CalculatorInput label="Total Annual Income" value={income} onChange={setIncome} icon={currency.symbol} />
 
-              <div style={{marginBottom: '20px'}}>
+              <div className="status-selector">
                 <label className="input-label">Filing Status</label>
-                <div style={{display: 'flex', gap: '10px', marginTop: '5px'}}>
+                <div className="status-buttons">
                   <button 
                     type="button" 
+                    className={`status-btn ${filingStatus === 'single' ? 'active' : ''}`}
                     onClick={() => setFilingStatus("single")}
-                    style={{
-                        flex: 1, padding: '12px', borderRadius: '10px', cursor: 'pointer', 
-                        border: filingStatus === 'single' ? '2px solid var(--primary)' : '1px solid #d1d5db', 
-                        background: filingStatus === 'single' ? '#eff6ff' : '#fff', 
-                        color: filingStatus === 'single' ? 'var(--primary)' : '#64748b',
-                        fontWeight: 'bold', transition: '0.3s'
-                    }}
                   >Single</button>
                   <button 
                     type="button" 
+                    className={`status-btn ${filingStatus === 'married' ? 'active' : ''}`}
                     onClick={() => setFilingStatus("married")}
-                    style={{
-                        flex: 1, padding: '12px', borderRadius: '10px', cursor: 'pointer', 
-                        border: filingStatus === 'married' ? '2px solid var(--primary)' : '1px solid #d1d5db', 
-                        background: filingStatus === 'married' ? '#eff6ff' : '#fff', 
-                        color: filingStatus === 'married' ? 'var(--primary)' : '#64748b',
-                        fontWeight: 'bold', transition: '0.3s'
-                    }}
                   >Married</button>
                 </div>
               </div>
 
               <button 
                 type="button" 
+                className="advanced-toggle-btn"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                style={{
-                  marginTop: '10px', width: '100%', padding: '10px', 
-                  background: 'transparent', border: '1px dashed #cbd5e1', 
-                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
-                }}
               >
                 {showAdvanced ? "▲ Hide Deductions" : "▼ Add Tax Deductions (CIT, PF, Insurance)"}
               </button>
 
               {showAdvanced && (
-                <div style={{marginTop: '15px', padding: '15px', background: '#f8fafc', borderRadius: '10px', border: '1px solid #e2e8f0'}}>
+                <div className="advanced-fields-box">
                   <CalculatorInput label="Total Deductions" value={deductions} onChange={setDeductions} icon={currency.symbol} />
-                  <p style={{fontSize: '0.75rem', color: '#64748b', marginTop: '8px'}}>
+                  <p className="helper-text">
                     *Deductions like CIT, PF, or Insurance premiums reduce your taxable income.
                   </p>
                 </div>
               )}
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/income-tax-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/income-tax-guide" className="read-guide-card">
                     📖 Tax Guide: How to Legally Reduce Your Income Tax
                 </Link>
             </div>
@@ -150,7 +134,7 @@ export default function IncomeTaxCalculator() {
             {result ? (
               <ResultBox title="Tax Summary" results={result} />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter income details to see breakdown.
               </div>
             )}
@@ -158,13 +142,13 @@ export default function IncomeTaxCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd'}}>
-            <h3 style={{color: '#0369a1', marginBottom: '15px'}}>💡 Understanding Progressive Taxation</h3>
-           <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#0369a1'}}>
-            In a progressive tax system, your income is divided into "slabs." For your income of <strong>{formatCurrency(income)}</strong>, the first <strong>{formatCurrency(filingStatus === 'single' ? 500000 : 600000)}</strong> is only taxed at 1% as a social security contribution. You only pay the 30% or 36% rates on the amounts <em>above</em> those high-income thresholds.
-           </p>
-            
+        <div className="info-card tax-info-card">
+            <h3>💡 Understanding Progressive Taxation</h3>
+            <p>
+             In a progressive tax system, your income is divided into "slabs." For your income of <strong>{formatCurrency(income)}</strong>, the first <strong>{formatCurrency(filingStatus === 'single' ? 500000 : 600000)}</strong> is only taxed at 1% as a social security contribution. You only pay the 30% or 36% rates on the amounts <em>above</em> those high-income thresholds.
+            </p>
         </div>
+        
       </div>
     </>
   );

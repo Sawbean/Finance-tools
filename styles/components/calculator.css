@@ -1,5 +1,5 @@
 /* =============================================================
-   7. CALCULATOR SYSTEM (PREMIUM UPGRADE - FINAL POLISH)
+   7. CALCULATOR SYSTEM (FULL INTEGRATION - FINAL VERSION)
 ============================================================= */
 
 /* Main Grid Layout */
@@ -8,297 +8,195 @@
   grid-template-columns: 1fr;
   gap: 30px;
   margin: 20px 0;
-  align-items: start;
+  align-items: flex-start !important;
 }
 
 @media (min-width: 992px) {
-  .calculator-grid {
-    grid-template-columns: 1.2fr 0.8fr;
-  }
+  .calculator-grid { grid-template-columns: 1.2fr 0.8fr; }
 }
 
-/* Sidebar behavior for Results, Ads & Guide Link */
+@media (max-width: 768px) {
+  .calculator-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+
+/* Sidebar behavior */
 .result-side {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Tight, consistent gap between all sidebar elements */
+  gap: 15px;
   position: sticky;
   top: 20px;
-  align-self: start;
+  align-self: flex-start;
   justify-content: flex-start !important;
   height: auto !important;
 }
 
-.sidebar-ad {
-  width: 100%;
-  height: auto;
+.sidebar-ad { width: 100%; height: auto; margin: 0; }
+
+/* Box Styling */
+.form-box {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid var(--border-visible);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  height: auto !important;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start !important;
 }
 
-
-.form-box {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+.info-card, .schedule-table {
+  background: var(--card-bg);
+  border: 1px solid var(--border-visible);
+  border-radius: 12px;
+  padding: 20px;
 }
 
 /* Input Styling */
-.input-label {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: #4b5563;
-  margin-bottom: 6px;
-}
-
-.input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
+.input-label { display: block; font-size: 14px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; }
+.input-wrapper { position: relative; display: flex; align-items: center; width: 100%; }
 .input-wrapper input {
   width: 100%;
   padding: 12px 16px;
   border-radius: 10px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-visible);
+  background: var(--soft-bg);
+  color: var(--text-main);
   font-size: 16px;
   transition: all 0.2s ease;
 }
+.input-wrapper input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1); outline: none; }
 
-.input-wrapper input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-  outline: none;
-}
+/* Custom Code Input (Specifically for your tool requirements) */
+.custom-code-input { width: 100% !important; max-width: 120px; margin-top: 5px; }
 
-/* Grouping inputs */
-.input-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 15px;
-  margin-bottom: 15px; /* Reduced to pull toggle closer */
-}
-@media (min-width: 480px) {
-  .input-row {
-    grid-template-columns: 1fr 1fr; /* Side-by-side for tablet/desktop */
-  }
-}
+.input-row { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 15px; }
+@media (min-width: 480px) { .input-row { grid-template-columns: 1fr 1fr; } }
 
-/* Advanced Options Toggle (Tightened Spacing) */
-.advanced-toggle-container {
-  margin-top: -5px; /* Nudges it closer to Interest/Tenure */
-  margin-bottom: 12px;
-}
-
-.advanced-btn {
-  background: none;
-  border: none;
-  color: #2563eb;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 4px 0;
-  font-size: 13.5px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.advanced-btn:hover {
-  text-decoration: underline;
-}
-
-.advanced-fields {
-  background: #f8fafc;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  border: 1px solid #e2e8f0;
-}
-
-.advanced-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-  margin-top: 12px;
-}
+/* Advanced Options */
+.advanced-toggle-container { margin-top: -5px; margin-bottom: 12px; }
+.advanced-btn { background: none; border: none; color: var(--primary); font-weight: 600; cursor: pointer; padding: 4px 0; font-size: 13.5px; display: flex; align-items: center; gap: 5px; }
+.advanced-fields { background: var(--soft-bg); padding: 20px; border-radius: 12px; margin-bottom: 15px; border: 1px solid var(--border-soft); }
+.advanced-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 12px; }
 
 /* Premium Result Box */
-.result-box {
-  background: #0f172a; 
-  color: white;
-  padding: 25px;
-  border-radius: 16px;
-}
+.result-box { background: var(--card-bg); border: 1px solid var(--border-visible); color: var(--text-main); padding: 25px; border-radius: 12px; }
+.result-box h2 { color: var(--text-main); font-size: 1.1rem; margin-bottom: 15px; border-bottom: 1px solid var(--border-soft); padding-bottom: 10px; }
+.result-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border-visible); }
+.result-label { font-size: 14px; color: var(--text-muted); }
+.result-value { font-size: 1.15rem; font-weight: 700; color: var(--accent-green); }
+.result-item:first-of-type .result-value { font-size: 1.5rem; color: var(--accent-green); font-weight: 800; }
+.result-box-empty { background: var(--soft-bg); color: var(--text-muted); text-align: center; padding: 20px; border-radius: 12px; border: 1px solid var(--border-soft); }
 
-.result-box h2 {
-  color: white;
-  font-size: 1.1rem;
-  margin-bottom: 15px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  padding-bottom: 10px;
-}
+/* Buttons */
+.calculator-buttons { display: flex; gap: 10px; margin-top: 15px; align-items: stretch; }
+.calc-btn { flex: 3; background: var(--primary); color: #ffffff; padding: 15px; border-radius: 10px; font-size: 16px; border: none; cursor: pointer; font-weight: 700; box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2); }
+.reset-btn { flex: 1; background: var(--soft-bg); color: var(--text-muted); padding: 15px; border-radius: 10px; font-size: 14px; border: 1px solid var(--border-soft); cursor: pointer; font-weight: 600; }
 
-.result-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-.result-label { font-size: 14px; opacity: 0.8; }
-.result-value { font-size: 1.15rem; font-weight: 700; color: #38bdf8; }
-
-/* --- THE BUTTONS (3:1 RATIO) --- */
-.calculator-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-  align-items: stretch;
-}
+/* Guide Links */
+.sidebar-guide-link { display: block; text-align: center; background: var(--soft-bg); color: var(--primary); padding: 16px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px; border: 1px dashed var(--border-soft); transition: all 0.2s ease; }
+.sidebar-guide-link:hover { background: var(--border-soft); border-style: solid; color: var(--primary); }
 
 
-.calc-btn {
-  flex: 3; /* Significantly wider */
-  background: #2563eb;
-  color: white;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  font-weight: 700;
-  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
-}
-
-.reset-btn {
-  flex: 1; /* Smaller */
-  background: #ffffff;
-  color: #64748b;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 14px;
-  border: 1px solid #cbd5e1;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-/* --- SIDEBAR GUIDE LINK (NEW DESIGN) --- */
-.sidebar-guide-link {
-  display: block;
-  text-align: center;
-  background: #f1f5f9;
-  color: #2563eb;
-  padding: 16px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  border: 1px dashed #cbd5e1;
-  transition: all 0.2s ease;
-}
-
-.sidebar-guide-link:hover {
-  background: #e2e8f0;
-  border-style: solid;
-  color: #1d4ed8;
-}
-
-/* Sidebar Ad placeholder alignment */
-.sidebar-ad {
-  width: 100%;
-  margin: 0;
-}
-
-/* --- 1. ICON & SUFFIX POSITIONING (The "Rs." and "%" fix) --- */
-.input-icon, .input-suffix {
-  position: absolute;
-  color: #94a3b8;
-  font-weight: 600;
-  pointer-events: none;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-}
-
-.input-icon { left: 14px; }
-.input-suffix { right: 14px; }
-
-/* Padding so text doesn't overlap the icons */
+/* Icons & Responsive Fixes */
+.input-icon, .input-suffix { position: absolute; color: var(--text-muted); font-weight: 600; pointer-events: none; top: 50%; transform: translateY(-50%); z-index: 2; }
+.input-icon { left: 14px; } .input-suffix { right: 14px; }
 .input-wrapper input.has-icon { padding-left: 40px !important; }
-/* This targets the input when a suffix span exists after it */
 .input-wrapper input:has(+ .input-suffix) { padding-right: 45px !important; }
 
-/* --- 2. MOBILE RESPONSIVENESS (The "Redmi Fix") --- */
+@media (max-width: 480px) { .input-row { grid-template-columns: 1fr !important; gap: 15px; } .form-box { padding: 20px; } }
+@media (max-width: 600px) { .input-row { flex-direction: column !important; align-items: flex-start !important; gap: 10px; } .input-label { margin-bottom: 4px; } }
+
+/* Tables and Info Text */
+.schedule-table th { background: var(--soft-bg); color: var(--text-muted); padding: 12px; }
+.schedule-table td { color: var(--text-main); padding: 12px; border-bottom: 1px solid var(--border-soft); }
+.info-card h3 { color: var(--primary); margin-bottom: 10px; }
+.info-card p { color: var(--text-muted); }
+
+/* 1. Currency Select */
+.currency-select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid var(--border-soft);
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: 12px;
+}
+
+/* 2. Error Box */
+.error-box {
+  padding: 12px;
+  margin-bottom: 20px;
+  background: var(--error-bg); /* Define this in your variables.css: #fff1f2 (light), #4c0519 (dark) */
+  border: 1px solid var(--error-border); /* #fda4af (light), #9f1239 (dark) */
+  border-radius: 10px;
+  color: var(--error-text); /* #be123c (light), #fda4af (dark) */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.tool-intro { text-align: center; margin-bottom: 30px; }
+.tool-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.tool-intro p { color: var(--text-muted); }
+.note-text { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; font-style: italic; }
+
+.formula-box { display: flex; align-items: center; justify-content: center; gap: 15px; font-size: 1.1rem; color: var(--primary); font-weight: bold; margin: 30px auto; padding: 25px; background: var(--soft-bg); border-radius: 12px; max-width: 600px; border-inline: 6px solid var(--accent-green); text-align: center; }
+.fraction { text-align: center; display: inline-block; }
+.numerator { border-bottom: 2px solid var(--primary); padding: 0 5px; margin-bottom: 2px; }
+.helper { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 15px; font-style: italic; }
+
+.info-text { 
+  font-size: 0.95rem; 
+  color: var(--text-muted); 
+  line-height: 1.6; 
+  margin-top: 15px; 
+}
+
+.dark .result-box { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
+
+/* 1. Currency Dropdown */
+.currency-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--soft-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-visible);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.currency-select:hover { border-color: var(--primary); }
+
+.info-image-container { 
+  margin: 20px auto; /* 'auto' left/right centers the container */
+  border-radius: 8px; 
+  overflow: hidden; 
+  border: 1px solid var(--border-soft); 
+  aspect-ratio: 4 / 3; 
+  background: var(--soft-bg); 
+  max-width: 400px; /* Limits the image size so it doesn't get too big */
+  width: 100%;      /* Ensures it stays responsive on mobile */
+}
+
+.info-image-container img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  display: block; 
+}
+
 @media (max-width: 480px) {
-  .input-row {
-    grid-template-columns: 1fr !important; /* Forces 1 column on phones */
-    gap: 15px;
-  }
-  
-  .form-box {
-    padding: 20px; /* More breathing room on small screens */
+  .info-image-container {
+    max-width: 300px; /* Even smaller for tiny screens */
   }
 }
 
-/* --- 3. RESULT HIGHLIGHTING (The "Green Money" fix) --- */
-/* Makes the first result (Monthly EMI / Maturity Amount) look premium */
-.result-item:first-of-type .result-value {
-  font-size: 1.5rem;
-  color: #10b981; 
-  font-weight: 800;
-}
+/* Container for the dropdown to match other inputs */
+.input-field-group { margin-top: 15px; }
 
-/* Responsive adjustments for calculator inputs */
-@media (max-width: 600px) {
-  .input-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 10px; /* Adds space between stacked inputs on mobile */
-  }
 
-  .custom-code-input {
-    width: 100% !important; /* Full width on mobile for easier tapping */
-    max-width: 120px; /* But keep it reasonable for a 3-letter code */
-    margin-top: 5px;
-  }
-  
-  /* Ensuring the labels stay aligned when stacked */
-  .input-label {
-    margin-bottom: 4px;
-  }
-}
 
-/* Paste this at the bottom of calculator.css */
 
-/* Prevent the columns from stretching to match each other */
-.calculator-grid {
-    display: grid;
-    grid-template-columns: 1fr 350px; 
-    gap: 30px;
-    align-items: flex-start !important; 
-}
-
-/* Specific target for generic grids that might be used as containers */
-div[style*="grid-template-columns"] {
-    align-items: flex-start !important;
-}
-
-/* Ensure the form-box and left columns only take as much space as needed */
-.form-box {
-    height: auto !important;
-    display: flex;
-    flex-direction: column;
-    align-self: flex-start !important;
-}
-
-/* Responsive fix for calculators */
-@media (max-width: 768px) {
-    .calculator-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-}
+/* The specific "Note" styling for the payoff calculator */

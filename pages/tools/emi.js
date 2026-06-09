@@ -12,22 +12,9 @@ import ResultBox from "../../components/calculator/ResultBox";
 import AdPlaceholder from "../../components/ads/AdPlaceholder";
 
 export default function EMICalculator() {
-const [error, setError] = useState("");
-
-const handleReset = () => {
-    setPrincipal(500000);
-    setRate(10.5);
-    setDuration(5);
-    setDurationType("years");
-    setExtraPayment("");
-    setProcessingFee("");
-    setError("");
-};
+  const [error, setError] = useState("");
   const { currency } = useCurrency();
-  // Automatically find the data for THIS tool
-  const toolData = tools.find(t => t.link === '/tools/emi');
-  const guideData = Object.values(allToolGuides).find(g => g.tool === "emi");
-  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+  
   // 1. STATE MANAGEMENT
   const [principal, setPrincipal] = useState(500000);
   const [rate, setRate] = useState(10.5);
@@ -35,11 +22,25 @@ const handleReset = () => {
   const [durationType, setDurationType] = useState("years");
   const [result, setResult] = useState(null);
   const [schedule, setSchedule] = useState([]);
-
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [extraPayment, setExtraPayment] = useState("");
   const [processingFee, setProcessingFee] = useState("");
-  
+
+  const toolData = tools.find(t => t.link === '/tools/emi');
+  const guideData = Object.values(allToolGuides).find(g => g.tool === "emi");
+  const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
+
+  const handleReset = () => {
+    setPrincipal(500000);
+    setRate(10.5);
+    setDuration(5);
+    setDurationType("years");
+    setExtraPayment("");
+    setProcessingFee("");
+    setError("");
+    setResult(null);
+    setSchedule([]);
+  };
 
   // 2. CALCULATION LOGIC
   const calculateEMI = () => {
@@ -105,12 +106,12 @@ const handleReset = () => {
 
   return (
     <>
-       <ToolSEO tool={toolData} guideData={guideData} />
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>📊 Advanced EMI Calculator</h1>
-            <p style={{color: '#666'}}>Calculate repayments and see how extra payments save you money.</p>
+        <div className="tool-intro">
+            <h1>📊 Advanced EMI Calculator</h1>
+            <p>Calculate repayments and see how extra payments save you money.</p>
         </div>
 
         <div className="calculator-grid">
@@ -119,31 +120,19 @@ const handleReset = () => {
               <CalculatorInput label="Loan Amount" value={principal} onChange={setPrincipal} icon={currency.symbol} />
               
               <div className="input-row">
-              {/* 1. Interest Rate Input */}
-              <CalculatorInput 
-                label="Interest Rate" 
-                value={rate} 
-                onChange={setRate} 
-                suffix="%"/>
-                {/* 2. Duration Input with Select Menu */}
-              <div className="calculator-input-group">
-                <label className="input-label">Duration</label>
-                <div className="input-wrapper" style={{ display: 'flex', gap: '5px' }}>
-                  <input 
-                    type="number" 
-                    style={{ width: '65%' }} 
-                    value={duration} 
-                    onChange={(e) => setDuration(e.target.value)}/>                  
-                  <select 
-                    style={{ width: '35%', padding: '10px', borderRadius: '10px', border: '1px solid #d1d5db' }} 
-                    value={durationType} 
-                    onChange={(e) => setDurationType(e.target.value)}>                 
-                    <option value="years">Yrs</option>
-                    <option value="months">Mo</option>
-                  </select>
+                <CalculatorInput label="Interest Rate" value={rate} onChange={setRate} suffix="%"/>
+                
+                <div className="calculator-input-group">
+                  <label className="input-label">Duration</label>
+                  <div className="input-wrapper emi-duration-wrapper">
+                    <input type="number" value={duration} onChange={(e) => setDuration(e.target.value)}/>                  
+                    <select value={durationType} onChange={(e) => setDurationType(e.target.value)}>                
+                      <option value="years">Yrs</option>
+                      <option value="months">Mo</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-            </div>
 
               <div className="advanced-toggle-container">
                 <button type="button" className="advanced-btn" onClick={() => setShowAdvanced(!showAdvanced)}>
@@ -159,9 +148,8 @@ const handleReset = () => {
               )}
             </CalculatorForm>
 
-            {/* Standardized Guide Card beneath form */}
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/emi-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/emi-calculator-guide" className="read-guide-card">
                     📖 Loan Planning Guide: How to pay off your loan 5 years early
                 </Link>
             </div>
@@ -171,7 +159,7 @@ const handleReset = () => {
             {result ? (
               <ResultBox title="Loan Breakdown" results={result} />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter loan details to see results
               </div>
             )}
@@ -179,15 +167,12 @@ const handleReset = () => {
           </div>
         </div>
 
-        {/* Insight Card to explain Amortization */}
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd'}}>
-            <h3 style={{color: '#0369a1', marginBottom: '10px'}}>💡 Why do extra payments matter?</h3>
-            
-            <p style={{fontSize: '0.9rem', color: '#0369a1', lineHeight: '1.6'}}>
+        <div className="info-card emi-insight-card">
+            <h3>💡 Why do extra payments matter?</h3>
+            <p className="info-text">
                 When you pay even a small "Extra Monthly Payment," that money goes 100% toward your <strong>Principal</strong>, not the interest. This significantly reduces the total interest you pay and helps you become debt-free much faster.
             </p>
-
-            <p style={{fontSize: '0.9rem', color: '#0369a1', lineHeight: '1.6', marginTop: '15px', borderTop: '1px solid #bae6fd', paddingTop: '15px'}}>
+            <p className="info-text secondary-insight">
                 <strong>Strategy Insight:</strong> By taking a loan of <strong>{currency.symbol}{formatValue(principal)}</strong>, your total commitment (including interest) is 
                 <strong> {result ? formatValue(Math.round(result["Total Amount Payable"])) : "---"}</strong>. 
                 <br /><br />
@@ -195,11 +180,10 @@ const handleReset = () => {
             </p>
         </div>
 
-        {/* Amortization Schedule Table */}
         {schedule.length > 0 && (
-          <div className="schedule-container" style={{marginTop: '40px'}}>
-            <h2 style={{marginBottom: '20px', textAlign: 'center'}}>📅 Yearly Repayment Schedule</h2>
-            <div style={{overflowX: 'auto'}}>
+          <div className="schedule-container">
+            <h2 className="schedule-title">📅 Yearly Repayment Schedule</h2>
+            <div className="table-responsive">
               <table className="schedule-table">
                 <thead>
                   <tr>
@@ -222,16 +206,6 @@ const handleReset = () => {
           </div>
         )}
       </div>
-
-      <style jsx>{`
-        .schedule-table {
-          width: 100%; border-collapse: collapse; margin-top: 10px; background: #fff;
-          border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-        }
-        .schedule-table th, .schedule-table td { padding: 15px; text-align: left; border-bottom: 1px solid #f1f5f9; }
-        .schedule-table th { background: #f8fafc; color: #64748b; font-weight: 600; }
-        .schedule-table tr:last-child { font-weight: bold; background: #f0fdf4; }
-      `}</style>
     </>
   );
 }

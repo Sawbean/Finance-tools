@@ -95,9 +95,9 @@ export default function CreditCardPayoffCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💳 Credit Card Payoff</h1>
-            <p style={{color: '#666'}}>Stop the interest drain. See exactly when you'll be debt-free.</p>
+        <div className="tool-intro">
+            <h1>💳 Credit Card Payoff</h1>
+            <p>Stop the interest drain. See exactly when you'll be debt-free.</p>
         </div>
 
         <div className="calculator-grid">
@@ -107,13 +107,12 @@ export default function CreditCardPayoffCalculator() {
               
               <div className="input-row">
                 <CalculatorInput label="Interest Rate (APR)" value={interestRate} onChange={setInterestRate} suffix="%" />
-                
                 <CalculatorInput label="Monthly Payment" value={monthlyPayment} onChange={setMonthlyPayment} icon={currency.symbol} />
               </div>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/credit-card-payoff-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/credit-card-payoff-guide" className="read-guide-card">
                     📖 Strategy: Snowball vs. Avalanche — Which clears debt faster?
                 </Link>
             </div>
@@ -123,7 +122,7 @@ export default function CreditCardPayoffCalculator() {
             {result ? (
               <ResultBox title="Payoff Summary" results={result} />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 {error ? `Please increase your payment amount.` : "Enter your balance to see your debt-free roadmap."}
               </div>
             )}
@@ -131,14 +130,13 @@ export default function CreditCardPayoffCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#fff7ed', borderRadius: '12px', border: '1px solid #ffedd5'}}>
-            <h3 style={{color: '#9a3412', marginBottom: '10px'}}>The "Minimum Payment" Trap</h3>
-            <p style={{fontSize: '0.95rem', color: '#9a3412', lineHeight: '1.6'}}>
+        <div className="info-card payoff-info">
+            <h3>The "Minimum Payment" Trap</h3>
+            <p>
               For instance, if you owe <strong>{currency.symbol}{Number(1000).toLocaleString(currency.locale)}</strong> and only pay the minimum, you might end up paying back double that amount over several years. 
               <br /><br />
               Financial institutions often set the minimum payment at a very low percentage of your balance. This strategy is designed to maximize their interest revenue by keeping you in debt for a longer period. By paying even a small amount above the minimum, you "break the cycle," compound your progress, and save significantly on total interest costs.
             </p>
-            
         </div>
       </div>
     </>

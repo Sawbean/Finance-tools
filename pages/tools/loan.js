@@ -15,10 +15,10 @@ import { formatCurrency } from "../../utils/formatters";
 export default function LoanCalculator() {
   const { currency } = useCurrency();
 
-
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/loan');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "loan");
+  
   // 1. STATE MANAGEMENT
   const [amount, setAmount] = useState(100000);
   const [rate, setRate] = useState(12);
@@ -53,11 +53,11 @@ export default function LoanCalculator() {
     }
 
     setResult({
-      "Principal Amount": Math.round(P), // Pass raw number
-      [`Total ${calculationMethod === 'simple' ? 'Simple' : 'Compound'} Interest`]: Math.round(totalInterest), // Pass raw number
-      "Total Repayment": Math.round(totalPayable), // Pass raw number
+      "Principal Amount": Math.round(P),
+      [`Total ${calculationMethod === 'simple' ? 'Simple' : 'Compound'} Interest`]: Math.round(totalInterest),
+      "Total Repayment": Math.round(totalPayable),
       "Interest Impact": `${((totalInterest / P) * 100).toFixed(1)}% of Principal`,
-      "Monthly Equivalent": Math.round(totalPayable / (T * 12)) // Pass raw number
+      "Monthly Equivalent": Math.round(totalPayable / (T * 12))
     });
   };
 
@@ -65,7 +65,6 @@ export default function LoanCalculator() {
     calculateLoan();
   }, [amount, rate, duration, durationType, calculationMethod]);
 
-  // Clean Reset Handler passed to the component
   const handleReset = () => {
     setAmount(""); 
     setRate(""); 
@@ -79,38 +78,36 @@ export default function LoanCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>🏛️ Loan Calculator</h1>
-            <p style={{color: '#666'}}>Calculate your debt obligation with precision.</p>
+        <div className="tool-intro">
+            <h1>🏛️ Loan Calculator</h1>
+            <p>Calculate your debt obligation with precision.</p>
         </div>
 
-        {/* METHOD TOGGLE */}
-        <div style={{display: 'flex', justifyContent: 'center', marginBottom: '35px'}}>
-            <div style={{background: '#f1f5f9', padding: '6px', borderRadius: '50px', display: 'inline-flex', border: '1px solid #e2e8f0'}}>
+        <div className="method-toggle">
+            <div className="toggle-group">
                 <button 
+                    className={`toggle-btn ${calculationMethod === 'simple' ? 'active' : ''}`}
                     onClick={() => setCalculationMethod("simple")}
-                    style={{padding: '10px 25px', borderRadius: '50px', border: 'none', cursor: 'pointer', transition: '0.3s', background: calculationMethod === 'simple' ? 'var(--primary)' : 'transparent', color: calculationMethod === 'simple' ? '#fff' : '#64748b', fontWeight: 'bold'}}
                 >Simple Interest</button>
                 <button 
+                    className={`toggle-btn ${calculationMethod === 'compound' ? 'active' : ''}`}
                     onClick={() => setCalculationMethod("compound")}
-                    style={{padding: '10px 25px', borderRadius: '50px', border: 'none', cursor: 'pointer', transition: '0.3s', background: calculationMethod === 'compound' ? 'var(--primary)' : 'transparent', color: calculationMethod === 'compound' ? '#fff' : '#64748b', fontWeight: 'bold'}}
                 >Compound Interest</button>
             </div>
         </div>
 
         <div className="calculator-grid">
           <div className="form-box">
-            {/* onReset prop ensures only the component's default reset button is used */}
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               <CalculatorInput label="Principal Amount" value={amount} onChange={setAmount} icon={currency.symbol} />
               
               <div className="input-row">
                 <CalculatorInput label="Annual Rate" value={rate} onChange={setRate} suffix="%" />
-                <div style={{flex: 1}}>
+                <div className="input-group">
                     <label className="input-label">Tenure</label>
-                    <div style={{display: 'flex', gap: '5px'}}>
-                        <input type="number" className="input-wrapper" style={{width: '60%'}} value={duration} onChange={(e) => setDuration(e.target.value)} />
-                        <select className="input-wrapper" style={{width: '40%'}} value={durationType} onChange={(e) => setDurationType(e.target.value)}>
+                    <div className="duration-row">
+                        <input type="number" className="input-wrapper" value={duration} onChange={(e) => setDuration(e.target.value)} />
+                        <select className="input-wrapper" value={durationType} onChange={(e) => setDurationType(e.target.value)}>
                             <option value="years">Yrs</option>
                             <option value="months">Mo</option>
                         </select>
@@ -119,8 +116,8 @@ export default function LoanCalculator() {
               </div>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/loan-types-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/loan-types-guide" className="read-guide-card">
                     📖 Loan Guide: Understanding interest rates
                 </Link>
             </div>
@@ -130,7 +127,7 @@ export default function LoanCalculator() {
             {result ? (
               <ResultBox title="Repayment Summary" results={result} />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter loan details to view breakdown.
               </div>
             )}
@@ -138,22 +135,22 @@ export default function LoanCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0f9ff', borderRadius: '12px', border: '1px solid #bae6fd'}}>
-            <h3 style={{color: '#0369a1', marginBottom: '10px'}}>💡 Simple vs. Compound Interest</h3>
-            <p style={{fontSize: '0.9rem', color: '#0369a1', lineHeight: '1.6'}}>
-              <strong>Simple Interest</strong> is calculated only on the initial principal. 
-              <strong> Compound Interest</strong> is "interest on interest." 
-              
+        <div className="info-card loan-info-card">
+            <h3>💡 Simple vs. Compound Interest</h3>
+            <p>
+             <strong>Simple Interest</strong> is calculated only on the initial principal. 
+             <strong> Compound Interest</strong> is "interest on interest." 
+             
 
 [Image of compound interest growth over time]
 
-              For example, on a <strong>{formatCurrency(100000)}</strong> loan at 10% for 2 years, 
-              Simple Interest costs <strong>{formatCurrency(20000)}</strong>, while Compound 
-              Interest costs <strong>{formatCurrency(21000)}</strong>. 
+             For example, on a <strong>{formatCurrency(100000)}</strong> loan at 10% for 2 years, 
+             Simple Interest costs <strong>{formatCurrency(20000)}</strong>, while Compound 
+             Interest costs <strong>{formatCurrency(21000)}</strong>. 
             </p>
-                      
         </div>
       </div>
     </>
   );
 }
+

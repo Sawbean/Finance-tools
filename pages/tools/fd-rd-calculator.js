@@ -108,32 +108,23 @@ export default function FDRDCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💰 FD & RD Planner</h1>
-            <p style={{color: '#666'}}>Compare guaranteed returns to grow your wealth safely.</p>
+        <div className="tool-intro">
+            <h1>💰 FD & RD Planner</h1>
+            <p>Compare guaranteed returns to grow your wealth safely.</p>
         </div>
 
-        {/* Standardized Tab Switcher */}
-        <div style={{display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '30px'}}>
+        <div className="tab-switcher-container">
             <button 
                 type="button"
+                className={`tab-btn ${activeTab === 'fd' ? 'active' : ''}`}
                 onClick={() => {setActiveTab("fd"); setError("");}}
-                style={{
-                  padding: '10px 25px', borderRadius: '30px', border: 'none', cursor: 'pointer', 
-                  fontWeight: 'bold', background: activeTab === 'fd' ? 'var(--primary)' : '#e2e8f0', 
-                  color: activeTab === 'fd' ? '#fff' : '#475569', transition: '0.3s'
-                }}
             >
                 🏢 Fixed Deposit (FD)
             </button>
             <button 
                 type="button"
+                className={`tab-btn ${activeTab === 'rd' ? 'active' : ''}`}
                 onClick={() => {setActiveTab("rd"); setError("");}}
-                style={{
-                  padding: '10px 25px', borderRadius: '30px', border: 'none', cursor: 'pointer', 
-                  fontWeight: 'bold', background: activeTab === 'rd' ? 'var(--primary)' : '#e2e8f0', 
-                  color: activeTab === 'rd' ? '#fff' : '#475569', transition: '0.3s'
-                }}
             >
                 🔄 Recurring Deposit (RD)
             </button>
@@ -141,7 +132,6 @@ export default function FDRDCalculator() {
 
         <div className="calculator-grid">
           <div className="form-box">
-            {/* Added error prop here */}
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               {activeTab === "fd" ? (
                 <>
@@ -162,8 +152,8 @@ export default function FDRDCalculator() {
               )}
             </CalculatorForm>
             
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/fd-rd-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/fd-rd-guide" className="read-guide-card">
                     📖 Comparison: FD vs RD — Which strategy fits your goal?
                 </Link>
             </div>
@@ -173,7 +163,7 @@ export default function FDRDCalculator() {
             {result ? (
               <ResultBox title={`${activeTab.toUpperCase()} Maturity Summary`} results={result} />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter details to calculate maturity roadmap.
               </div>
             )}
@@ -181,27 +171,17 @@ export default function FDRDCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #dcfce7'}}>
-            <h3 style={{color: '#166534', marginBottom: '10px'}}>💡 Strategic Financial Insight</h3>
-            <p style={{fontSize: '0.9rem', color: '#14532d', lineHeight: '1.6'}}>
+        <div className="info-card fd-rd-info">
+            <h3>💡 Strategic Financial Insight</h3>
+            <p className="info-text">
               By choosing the <strong>{activeTab === "fd" ? "FD" : "RD"} route</strong>, you are targeting a maturity amount of 
               <strong> {result ? `${currency.symbol}${formatValue(result["Maturity Amount"])}` : "---"}</strong>. 
-              <br /><br />
+            </p>
+            <p className="info-text">
               Commercial bank deposits typically employ <strong>quarterly compounding</strong>. In a standard Fixed Deposit, your entire principal accumulates interest simultaneously from day one. Conversely, with a Recurring Deposit, your contributions roll in monthly; thus, later deposits compound over shorter horizons, yielding slightly less overall growth than a single up-front lump sum.
             </p>
         </div>
       </div>
-      <style jsx>{`
-        @media (max-width: 480px) {
-          .tool-intro h1 { font-size: 1.8rem !important; }
-          .container { padding: 15px; }
-          
-          div[style*="display: flex"][style*="justify-content: center"] {
-            flex-direction: column !important;
-            padding: 0 20px;
-          }
-        }
-      `}</style>
     </>
   );
 }

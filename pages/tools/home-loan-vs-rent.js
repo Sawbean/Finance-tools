@@ -17,6 +17,7 @@ export default function HomeLoanVsRentCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/home-loan-vs-rent');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "home-loan-vs-rent");
+  
   // 1. STATE MANAGEMENT
   const [homePrice, setHomePrice] = useState(15000000); 
   const [loanRate, setLoanRate] = useState(11);
@@ -89,12 +90,12 @@ export default function HomeLoanVsRentCalculator() {
 
   return (
     <>
-     <ToolSEO tool={toolData} guideData={guideData} />
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>🏡 Home Loan vs Rent</h1>
-            <p style={{color: '#666'}}>Compare the financial impact of owning versus renting over your loan tenure.</p>
+        <div className="tool-intro">
+            <h1>🏡 Home Loan vs Rent</h1>
+            <p>Compare the financial impact of owning versus renting over your loan tenure.</p>
         </div>
 
         <div className="calculator-grid">
@@ -111,31 +112,27 @@ export default function HomeLoanVsRentCalculator() {
 
               <button 
                 type="button" 
+                className="advanced-toggle-btn"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                style={{
-                  marginTop: '10px', width: '100%', padding: '10px', 
-                  background: 'transparent', border: '1px dashed #cbd5e1', 
-                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
-                }}
               >
                 {showAdvanced ? "▲ Hide Market Projections" : "▼ Include Appreciation & Rent Growth"}
               </button>
 
               {showAdvanced && (
-                <div style={{marginTop: '15px', padding: '20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
+                <div className="advanced-fields-box">
                   <div className="input-row">
                     <CalculatorInput label="Home Appreciation" value={propertyAppreciation} onChange={setPropertyAppreciation} suffix="%/yr" />
                     <CalculatorInput label="Annual Rent Hike" value={rentIncrease} onChange={setRentIncrease} suffix="%/yr" />
                   </div>
-                  <p style={{fontSize: '0.75rem', color: '#64748b', marginTop: '10px'}}>
+                  <p className="helper-text">
                     *Market appreciation varies by location; 5-8% is often used for long-term estimates.
                   </p>
                 </div>
               )}
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/home-loan-vs-rent-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/home-loan-vs-rent-guide" className="read-guide-card">
                     📖 Guide: Is real estate still a strong investment in 2026?
                 </Link>
             </div>
@@ -144,14 +141,10 @@ export default function HomeLoanVsRentCalculator() {
           <div className="result-side">
             {result ? (
               <>
-                <ResultBox title="Financial Comparison" results={result}  />
-                <div style={{
-                    marginTop: '20px', padding: '20px', borderRadius: '12px', 
-                    textAlign: 'center', border: '2px dashed #e2e8f0',
-                    background: result["Net Wealth (If Buying)"] > 0 ? '#f0fdf4' : '#fff7ed'
-                }}>
-                    <h4 style={{color: result["Net Wealth (If Buying)"] > 0 ? '#166534' : '#9a3412'}}>💡 Quick Verdict</h4>
-                    <p style={{fontSize: '0.85rem', marginTop: '5px', color: '#475569'}}>
+                <ResultBox title="Financial Comparison" results={result} />
+                <div className={`verdict-box ${result["Net Wealth (If Buying)"] > 0 ? 'positive' : 'negative'}`}>
+                    <h4>💡 Quick Verdict</h4>
+                    <p>
                         {result["Net Wealth (If Buying)"] > 0 
                         ? "Buying creates significant long-term wealth in this scenario as appreciation outpaces interest costs." 
                         : "Renting may be more beneficial here, especially if you invest the difference between rent and EMI."}
@@ -159,7 +152,7 @@ export default function HomeLoanVsRentCalculator() {
                 </div>
               </>
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter details to compare buying vs. renting.
               </div>
             )}
@@ -167,10 +160,10 @@ export default function HomeLoanVsRentCalculator() {
           </div>
         </div>
 
-       {result && (
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-            <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>Buy vs Rent: The Opportunity Cost</h3>
-            <p style={{fontSize: '0.9rem', color: '#475569', lineHeight: '1.6'}}>
+        {result && (
+          <div className="info-card loan-rent-insight">
+            <h3>Buy vs Rent: The Opportunity Cost</h3>
+            <p>
                 In your scenario, your initial rent of <strong>{formatCurrency(monthlyRent)}</strong> will grow to 
                 <strong> {formatCurrency(Math.round(monthlyRent * Math.pow(1 + rentIncrease/100, loanYears)))}</strong> 
                 by year {loanYears} if the {rentIncrease}% annual hike continues. 
@@ -179,10 +172,10 @@ export default function HomeLoanVsRentCalculator() {
                 The real question is whether the <strong>{formatCurrency(result["Total Interest Payable"])}</strong> 
                 you pay in interest is a fair price for owning an asset that could be worth 
                 <strong> {formatCurrency(result["Estimated Future Value"])}</strong>.
-            </p>           
-        </div>
-      )}
-            </div>
+            </p>          
+          </div>
+        )}
+      </div>
     </>
   );
 }

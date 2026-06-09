@@ -43,10 +43,10 @@ export default function InflationCalculator() {
     const purchasingPower = A / Math.pow(1 + I / 100, Y);
 
     setResult({
-      "Future Cost of Same Items": Math.round(futureCost), // Raw number
-      "Future Purchasing Power": Math.round(purchasingPower), // Raw number
-      "Value Lost to Inflation": Math.round(A - purchasingPower), // Raw number
-      "Total Price Surge": `${((futureCost / A - 1) * 100).toFixed(1)}%` // String
+      "Future Cost of Same Items": Math.round(futureCost),
+      "Future Purchasing Power": Math.round(purchasingPower),
+      "Value Lost to Inflation": Math.round(A - purchasingPower),
+      "Total Price Surge": `${((futureCost / A - 1) * 100).toFixed(1)}%`
     });
   };
 
@@ -67,9 +67,9 @@ export default function InflationCalculator() {
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💸 Inflation Impact</h1>
-            <p style={{color: '#666'}}>Understand how the "Silent Tax" of inflation reduces the value of your money over time.</p>
+        <div className="tool-intro">
+            <h1>💸 Inflation Impact</h1>
+            <p>Understand how the "Silent Tax" of inflation reduces the value of your money over time.</p>
         </div>
 
         <div className="calculator-grid">
@@ -88,8 +88,8 @@ export default function InflationCalculator() {
               </div>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/inflation-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/inflation-guide" className="read-guide-card">
                     📖 Strategy: How to beat inflation with SIPs and Equity
                 </Link>
             </div>
@@ -99,19 +99,16 @@ export default function InflationCalculator() {
             {result ? (
               <>
                 <ResultBox title="Impact Analysis" results={result} />
-                <div style={{
-                    marginTop: '20px', padding: '20px', background: '#fff7ed', 
-                    borderRadius: '12px', border: '1px solid #fed7aa', textAlign: 'center'
-                }}>
-                    <h4 style={{color: '#9a3412'}}>💡 Reality Check</h4>
-                    <p style={{fontSize: '0.85rem', color: '#475569', marginTop: '5px', lineHeight: '1.4'}}>
+                <div className="reality-check-box">
+                    <h4>💡 Reality Check</h4>
+                    <p>
                         To maintain your current standard of living in {years} years, you will need 
                         <strong> {formatCurrency(Math.round(result["Future Cost of Same Items"]))}</strong> for every {formatCurrency(amount || 0)} spent today. 
                     </p>
                 </div>
               </>
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter values to see the impact on your money.
               </div>
             )}
@@ -120,14 +117,14 @@ export default function InflationCalculator() {
         </div>
 
         {result && (
-            <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-                <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>What is Purchasing Power?</h3>
-                <p style={{fontSize: '0.85rem', color: '#475569', lineHeight: '1.4'}}>
+            <div className="info-card inflation-info">
+                <h3>What is Purchasing Power?</h3>
+                <p>
                     To maintain your current standard of living in {years} years, you will need 
                     <strong> {formatCurrency(Math.round(result["Future Cost of Same Items"]))}</strong> for every {formatCurrency(amount || 0)} spent today. 
                 </p>
             </div>
-          )}
+        )}
       </div>
     </>
   );

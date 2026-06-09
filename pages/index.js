@@ -179,13 +179,13 @@ const structuredData = {
 
       {/* --- BOTTOM CTA --- */}
       <section style={{ 
-  textAlign: 'center', 
-  padding: '40px 20px', 
-  background: 'var(--bg-cta)', 
-  borderRadius: '20px', 
-  color: 'var(--text-main)', 
-  marginTop: '20px'
-}}>
+        textAlign: 'center', 
+        padding: '40px 20px', 
+        background: 'var(--bg-card)',
+        borderRadius: '20px', 
+        color: 'var(--text-main)', 
+        marginTop: '20px'
+      }}>
   <h2 className="text-gradient" style={{ fontSize: '2rem' }}>Ready to Plan Your Future?</h2>
   <p style={{ color: 'var(--text-muted)', marginBottom: '20px' }}>Simple tools for complex financial decisions.</p>
   <Link href="/tools/emi" className="btn-primary">Calculate My EMI Now</Link>

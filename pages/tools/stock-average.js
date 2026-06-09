@@ -17,6 +17,7 @@ export default function StockAverageCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/stock-average');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "stock-average");
+  
   // 1. STATE MANAGEMENT
   const [buy1Qty, setBuy1Qty] = useState(100);
   const [buy1Price, setBuy1Price] = useState(500);
@@ -45,7 +46,6 @@ export default function StockAverageCalculator() {
     const totalCost = (q1 * p1) + (q2 * p2);
     const avgPrice = totalQty > 0 ? (totalCost / totalQty) : 0;
 
-
     setResult({
       "Total Quantity": totalQty,
       "Total Investment": totalCost,
@@ -71,27 +71,26 @@ export default function StockAverageCalculator() {
     <>
       <ToolSEO tool={toolData} guideData={guideData} />
 
-
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>📈 Stock Average Calculator</h1>
-            <p style={{color: '#666'}}>Calculate your weighted average cost after multiple stock purchases.</p>
+        <div className="tool-intro stock-intro">
+            <h1>📈 Stock Average Calculator</h1>
+            <p>Calculate your weighted average cost after multiple stock purchases.</p>
         </div>
 
         <div className="calculator-grid">
           <div className="form-box">
             <CalculatorForm onReset={handleReset} onSubmit={(e) => e.preventDefault()} error={error}>
               
-              <div style={{marginBottom: '20px', paddingBottom: '15px', borderBottom: '1px dashed #e2e8f0'}}>
-                <h4 style={{marginBottom: '10px', color: '#475569'}}>First Purchase</h4>
+              <div className="purchase-section">
+                <h4>First Purchase</h4>
                 <div className="input-row">
                     <CalculatorInput label="Quantity" value={buy1Qty} onChange={setBuy1Qty} placeholder="Ex: 100" />
                     <CalculatorInput label="Purchase Price" value={buy1Price} onChange={setBuy1Price} icon={currency.symbol} />
                 </div>
               </div>
 
-              <div>
-                <h4 style={{marginBottom: '10px', color: '#475569'}}>Second Purchase (Optional)</h4>
+              <div className="purchase-section">
+                <h4>Second Purchase (Optional)</h4>
                 <div className="input-row">
                     <CalculatorInput label="Quantity" value={buy2Qty} onChange={setBuy2Qty} placeholder="Ex: 50" />
                     <CalculatorInput label="Purchase Price" value={buy2Price} onChange={setBuy2Price} icon={currency.symbol} />
@@ -99,8 +98,8 @@ export default function StockAverageCalculator() {
               </div>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/stock-average-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/stock-average-guide" className="read-guide-card">
                     📖 Strategy: When to 'Average Down' a falling stock?
                 </Link>
             </div>
@@ -113,7 +112,7 @@ export default function StockAverageCalculator() {
                 results={result}
               />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter at least the first purchase details to calculate the average.
               </div>
             )}
@@ -121,21 +120,23 @@ export default function StockAverageCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-            <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>What is Averaging Down?</h3>
-            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6'}}>
+        <div className="info-card stock-info-card">
+            <h3>What is Averaging Down?</h3>
+            <p>
                 Averaging down is a stock market strategy that involves buying more shares of a stock after it has dropped in price. This reduces the <strong>weighted average cost</strong> of your total holdings.
             </p>
             
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '1.1rem', color: 'var(--primary)', fontWeight: 'bold', margin: '20px 0' }}>
+            <div className="stock-formula-box">
               <span>Avg Price = </span>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ borderBottom: '2px solid var(--primary)', padding: '0 10px' }}>(Q1 × P1) + (Q2 × P2)</div>
-                <div>Total Quantity (Q1 + Q2)</div>
+              <div className="fraction">
+                <div className="numerator">(Q1 × P1) + (Q2 × P2)</div>
+                <div className="denominator">Total Quantity (Q1 + Q2)</div>
               </div>
             </div>
 
-            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
+            
+
+            <p className="stock-info-text">
                 While this can help you reach a break-even point faster if the stock recovers, it also increases your total exposure and risk to that specific company. Always ensure your portfolio remains diversified.
             </p>
         </div>

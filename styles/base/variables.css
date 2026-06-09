@@ -22,6 +22,7 @@
   --soft-bg: #f4f6fb;
   --card-bg: #ffffff;
   --border-soft: #e6e6e6;
+  --border-visible: #cbd5e1;
   --text-main: #1a1a1a; 
   --text-muted: #4b5563; 
   --text-light: #9aa3b2;
@@ -37,6 +38,10 @@
   --note-bg: #fff7ed;
   --note-text: #9a3412;
   --note-border: #ffedd5;
+
+  --error-bg: #fff1f2;
+  --error-border: #fda4af;
+  --error-text: #be123c;
 }
 
 /* 3. Dark Mode Overrides - FIXED FOR READABILITY */
@@ -45,6 +50,7 @@
   --soft-bg: #020617;     /* Pure Dark Navy */
   --card-bg: #1e293b;     /* Slate Navy */
   --border-soft: #334155; 
+  --border-visible: #475569;
   
   /* TEXT: Pushing contrast so it's not "Gray" */
   --text-main: #ffffff;   /* Pure White (Titles) */
@@ -76,6 +82,10 @@
   --note-bg: rgba(254, 215, 170, 0.1); 
   --note-text: #fdba74;
   --note-border: rgba(254, 215, 170, 0.2);
+
+  --error-bg: #4c0519;
+  --error-border: #9f1239;
+  --error-text: #fda4af;
 }
 
 /* =============================================================
@@ -120,7 +130,7 @@ html.dark .read-analysis-btn {
 html.dark p a:hover, 
 html.dark li a:hover {
     color: #3b82f6 !important;
-    text-decoration: underline; /* Keep it only for text links for accessibility */
+    /*text-decoration: underline;  Keep it only for text links for accessibility */
 }
 
 /* CRITICAL: Remove underlines from Images and Icons */

@@ -17,6 +17,7 @@ export default function MarginMarkupCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/margin-markup');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "margin-markup");
+  
   // 1. STATE MANAGEMENT
   const [cost, setCost] = useState(100);
   const [sellingPrice, setSellingPrice] = useState(125);
@@ -44,8 +45,8 @@ export default function MarginMarkupCalculator() {
     const margin = (profit / S) * 100;
     const markup = (profit / C) * 100;
 
-   setResult({
-      "Gross Profit": profit, // Raw number
+    setResult({
+      "Gross Profit": profit,
       "Profit Margin": `${((profit / S) * 100).toFixed(2)}%`,
       "Markup Percentage": `${((profit / C) * 100).toFixed(2)}%`,
       "Cost-to-Price Ratio": `${((C / S) * 100).toFixed(1)}%`
@@ -67,11 +68,10 @@ export default function MarginMarkupCalculator() {
     <>
       <ToolSEO tool={toolData} guideData={guideData} />
       
-
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>⚖️ Margin vs. Markup</h1>
-            <p style={{color: '#666'}}>Compare your profit metrics to ensure your business pricing is sustainable.</p>
+        <div className="tool-intro margin-markup-intro">
+            <h1>⚖️ Margin vs. Markup</h1>
+            <p>Compare your profit metrics to ensure your business pricing is sustainable.</p>
         </div>
 
         <div className="calculator-grid">
@@ -91,13 +91,13 @@ export default function MarginMarkupCalculator() {
                 icon={currency.symbol} 
               />
               
-              <p style={{fontSize: '0.8rem', color: '#64748b', marginTop: '10px', fontStyle: 'italic'}}>
+              <p className="helper-text">
                 *Selling price must be higher than cost to calculate profit.
               </p>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/margin-markup-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/margin-markup-guide" className="read-guide-card">
                     📖 Business 101: Why a 25% Markup is NOT a 25% Margin
                 </Link>
             </div>
@@ -110,7 +110,7 @@ export default function MarginMarkupCalculator() {
                 results={result}
               />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter cost and selling price to see the comparison.
               </div>
             )}
@@ -118,28 +118,28 @@ export default function MarginMarkupCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f0fdf4', borderRadius: '12px', border: '1px solid #bbf7d0'}}>
-            <h3 style={{color: '#166534', marginBottom: '10px'}}>The Vital Difference</h3>
-            <p style={{fontSize: '0.95rem', color: '#166534', lineHeight: '1.6', marginBottom: '15px'}}>
+        <div className="info-card margin-info-card">
+            <h3>The Vital Difference</h3>
+            <p>
                 Understanding the formulas helps you avoid pricing errors:
             </p>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', textAlign: 'center', margin: '20px 0' }}>
-              <div style={{ background: '#fff', padding: '15px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
-                <span style={{ fontWeight: 'bold', display: 'block', marginBottom: '10px' }}>Markup</span>
-                <div style={{ fontSize: '1rem', color: 'var(--primary)' }}>
+            <div className="formula-grid">
+              <div className="formula-box">
+                <span className="formula-title">Markup</span>
+                <div className="formula-eq">
                     (Profit / <strong>Cost</strong>) × 100
                 </div>
               </div>
-              <div style={{ background: '#fff', padding: '15px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
-                <span style={{ fontWeight: 'bold', display: 'block', marginBottom: '10px' }}>Margin</span>
-                <div style={{ fontSize: '1rem', color: 'var(--primary)' }}>
+              <div className="formula-box">
+                <span className="formula-title">Margin</span>
+                <div className="formula-eq">
                     (Profit / <strong>Revenue</strong>) × 100
                 </div>
               </div>
             </div>
 
-            <p style={{fontSize: '0.95rem', color: '#166534', lineHeight: '1.6'}}>
+            <p>
               If you buy an item for {formatCurrency(100)} and sell it for {formatCurrency(125)}, 
               your <strong>markup is 25%</strong> but your <strong>margin is only 20%</strong>. 
             </p>
@@ -148,3 +148,4 @@ export default function MarginMarkupCalculator() {
     </>
   );
 }
+

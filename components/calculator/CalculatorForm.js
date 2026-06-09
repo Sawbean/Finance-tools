@@ -10,38 +10,29 @@ export default function CalculatorForm({
   hideDefaultReset = false,
   customButtons = null,
   className = "",
+  showCurrencyToggle = true
 }) {
   const { currency, updateCurrency } = useCurrency();
 
   return (
     <>
       <form onSubmit={onSubmit} className={`form-box ${className}`}>
-        {/* Currency Toggle inside the form */}
+        {showCurrencyToggle && (
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '15px' }}>
           <select 
-            value={currency.code} 
-            onChange={(e) => updateCurrency(e.target.value)}
-            style={{ padding: '5px', borderRadius: '5px', border: '1px solid #ddd', fontSize: '12px' }}
-          >
+              className="currency-select"
+              value={currency.code} 
+              onChange={(e) => updateCurrency(e.target.value)}
+            >
             <option value="USD">USD ($)</option>
             <option value="INR">INR (₹)</option>
             <option value="NPR">NPR (Rs.)</option>
             <option value="GBP">GBP (£)</option>
           </select>
         </div>
+       )}
         {error && (
-          <div style={{ 
-            padding: '12px', 
-            marginBottom: '20px', 
-            background: '#fff1f2', 
-            border: '1px solid #fda4af', 
-            borderRadius: '10px', 
-            color: '#be123c', 
-            fontSize: '0.85rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}>
+          <div className="error-box">
             <span>⚠️</span> {error}
           </div>
         )}
@@ -62,6 +53,7 @@ export default function CalculatorForm({
             </div>
           )
         )}
+        
       </form>
       {adComponent && (
         <div 

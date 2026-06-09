@@ -1,0 +1,318 @@
+/* --- Inflation Tool Overrides --- */
+
+.reality-check-box {
+    margin-top: 20px; padding: 20px; background: var(--warning-bg); 
+    border-radius: 12px; border: 1px solid var(--warning); text-align: center;
+}
+.reality-check-box h4 { color: var(--warning-dark); }
+.reality-check-box p { font-size: 0.85rem; color: var(--text-muted); margin-top: 5px; line-height: 1.4; }
+
+.inflation-info { margin-top: 40px; padding: 25px; background: var(--white); border-radius: 12px; border: 1px solid var(--border-visible); }
+.inflation-info h3 { color: var(--primary); margin-bottom: 10px; }
+.inflation-info p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+/* --- Loan Eligibility Tool Overrides --- */
+
+.advanced-toggle-btn {
+    margin-top: 10px; width: 100%; padding: 10px; 
+    background: transparent; border: 1px dashed var(--border-visible); 
+    border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.85rem;
+}
+
+.advanced-fields-box {
+    margin-top: 15px; padding: 20px; background: var(--soft-bg); 
+    border-radius: 12px; border: 1px solid var(--border-visible);
+}
+
+.range-input {
+    width: 100%; accent-color: var(--primary); cursor: pointer;
+}
+
+.helper-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; }
+
+.foir-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--info-bg); 
+    border-radius: 12px; border: 1px solid var(--info-border); 
+}
+.foir-info-card h3 { color: var(--info-dark); margin-bottom: 10px; }
+.foir-info-card p { font-size: 0.95rem; color: var(--info-dark); line-height: 1.6; }
+
+/* --- Loan Calculator Overrides --- */
+
+.method-toggle { display: flex; justify-content: center; margin-bottom: 35px; }
+.toggle-group { 
+    background: var(--bg-secondary); padding: 6px; border-radius: 50px; 
+    display: inline-flex; border: 1px solid var(--border-visible); 
+}
+.toggle-btn { 
+    padding: 10px 25px; border-radius: 50px; border: none; cursor: pointer; 
+    transition: 0.3s; background: transparent; color: var(--text-muted); font-weight: bold; 
+}
+.toggle-btn.active { background: var(--primary); color: var(--white); }
+
+.duration-row { display: flex; gap: 5px; }
+.duration-row input { width: 60%; }
+.duration-row select { width: 40%; }
+
+.loan-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--info-bg); 
+    border-radius: 12px; border: 1px solid var(--info-border); 
+}
+.loan-info-card h3 { color: var(--info-dark); margin-bottom: 10px; }
+.loan-info-card p { font-size: 0.9rem; color: var(--info-dark); line-height: 1.6; }
+
+/* --- Lumpsum Tool Overrides --- */
+
+.lumpsum-intro { text-align: center; margin-bottom: 30px; }
+.lumpsum-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.lumpsum-intro p { color: var(--text-muted); }
+
+.error-message { color: var(--error); text-align: center; margin-top: 10px; }
+
+.lumpsum-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--bg-secondary); 
+    border-radius: 12px; border: 1px solid var(--border-visible); 
+}
+.lumpsum-info-card h3 { color: var(--primary); margin-bottom: 10px; }
+.lumpsum-info-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 15px; }
+
+.formula-display { 
+    display: flex; align-items: center; justify-content: center; 
+    gap: 10px; font-size: 1.3rem; color: var(--primary); 
+    font-weight: bold; margin: 20px 0; 
+}
+
+/* --- Margin vs Markup Tool Overrides --- */
+
+.margin-markup-intro { text-align: center; margin-bottom: 30px; }
+.margin-markup-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.margin-markup-intro p { color: var(--text-muted); }
+
+.helper-text { font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; font-style: italic; }
+
+.margin-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--success-bg); 
+    border-radius: 12px; border: 1px solid var(--success-border); 
+}
+.margin-info-card h3 { color: var(--success-dark); margin-bottom: 10px; }
+.margin-info-card p { font-size: 0.95rem; color: var(--success-dark); line-height: 1.6; margin-bottom: 15px; }
+
+.formula-grid { 
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; 
+    text-align: center; margin: 20px 0; 
+}
+.formula-box { background: var(--white); padding: 15px; border-radius: 8px; border: 1px solid var(--success-border); }
+.formula-title { font-weight: bold; display: block; margin-bottom: 10px; }
+.formula-eq { font-size: 1rem; color: var(--primary); }
+
+/* --- Mortgage Calculator Overrides --- */
+
+.mortgage-intro { text-align: center; margin-bottom: 30px; }
+.mortgage-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.mortgage-intro p { color: var(--text-muted); }
+
+.down-payment-percentage { 
+    flex: 1; padding: 35px 10px 0; font-size: 0.9rem; color: var(--text-muted); 
+}
+
+.advanced-toggle { 
+    margin-top: 10px; width: 100%; padding: 10px; 
+    background: transparent; border: 1px dashed var(--border-visible); 
+    border-radius: 8px; cursor: pointer; color: var(--text-secondary); font-size: 0.85rem; 
+}
+
+.advanced-options { 
+    margin-top: 15px; padding: 15px; background: var(--bg-secondary); 
+    border-radius: 10px; border: 1px solid var(--border-visible); 
+}
+
+.mortgage-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--warning-bg); 
+    border-radius: 12px; border: 1px solid var(--warning-border); 
+}
+.mortgage-info-card h3 { color: var(--warning-dark); margin-bottom: 10px; }
+.mortgage-info-card p { font-size: 0.9rem; color: var(--warning-dark); line-height: 1.6; }
+
+/* --- Net Worth Tool Overrides --- */
+
+.net-worth-intro { text-align: center; margin-bottom: 30px; }
+.net-worth-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.net-worth-intro p { color: var(--text-muted); }
+
+.section-title { 
+    font-size: 1rem; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; 
+}
+.assets-color { color: var(--success-dark); }
+.liabilities-color { color: var(--error); }
+
+.divider { margin: 25px 0; border: 0; border-top: 1px solid var(--border-visible); }
+
+.strategic-note {
+    margin-top: 15px; padding: 15px; background: var(--error-bg); 
+    border-radius: 12px; border: 1px solid var(--error-border); color: var(--error); 
+    font-size: 0.8rem; line-height: 1.4;
+}
+
+.net-worth-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--bg-secondary); 
+    border-radius: 12px; border: 1px solid var(--border-visible); 
+}
+.net-worth-info-card h3 { color: var(--primary); margin-bottom: 10px; }
+.net-worth-info-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* --- Wealth & Tax Planner Overrides --- */
+
+.ppf-nps-intro { text-align: center; margin-bottom: 30px; }
+.ppf-nps-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.ppf-nps-intro p { color: var(--text-muted); }
+
+.tax-toggle { 
+    margin-top: 10px; width: 100%; padding: 10px; 
+    background: transparent; border: 1px dashed var(--border-visible); 
+    border-radius: 8px; cursor: pointer; color: var(--text-secondary); font-size: 0.85rem; 
+}
+
+.tax-analysis-box { 
+    margin-top: 15px; padding: 20px; background: var(--bg-secondary); 
+    border-radius: 12px; border: 1px solid var(--border-visible); 
+}
+.tax-analysis-box label { display: block; margin-bottom: 8px; }
+.tax-analysis-box select { 
+    width: 100%; border-radius: 10px; border: 1px solid var(--border-visible); 
+    padding: 12px; background: var(--white); 
+}
+
+.tax-helper-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; }
+
+.wealth-planner-info { 
+    margin-top: 40px; padding: 25px; background: var(--success-bg); 
+    border-radius: 12px; border: 1px solid var(--success-border); 
+}
+.wealth-planner-info h3 { color: var(--success-dark); margin-bottom: 10px; }
+.wealth-planner-info p { font-size: 0.9rem; color: var(--success-dark); line-height: 1.6; }
+
+/* --- Retirement Planner Overrides --- */
+
+.retirement-intro { text-align: center; margin-bottom: 30px; }
+.retirement-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.retirement-intro p { color: var(--text-muted); }
+
+.advanced-toggle { 
+    margin-top: 10px; width: 100%; padding: 10px; 
+    background: transparent; border: 1px dashed var(--border-visible); 
+    border-radius: 8px; cursor: pointer; color: var(--text-secondary); font-size: 0.85rem; 
+}
+
+.advanced-options { 
+    margin-top: 15px; padding: 20px; background: var(--bg-secondary); 
+    border-radius: 12px; border: 1px solid var(--border-visible); 
+}
+
+.retirement-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--error-bg); 
+    border-radius: 12px; border: 1px solid var(--error-border); 
+}
+.retirement-info-card h3 { color: var(--error-dark); margin-bottom: 10px; }
+.retirement-info-card p { font-size: 0.9rem; color: var(--error-dark); line-height: 1.6; }
+
+/* --- Savings Goal Calculator Overrides --- */
+
+.savings-intro { text-align: center; margin-bottom: 30px; }
+.savings-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.savings-intro p { color: var(--text-muted); }
+
+.advanced-toggle { 
+    margin-top: 10px; width: 100%; padding: 10px; 
+    background: transparent; border: 1px dashed var(--border-visible); 
+    border-radius: 8px; cursor: pointer; color: var(--text-secondary); font-size: 0.85rem; 
+}
+
+.inflation-box { 
+    margin-top: 15px; padding: 15px; background: var(--warning-bg); 
+    border-radius: 10px; border: 1px solid var(--warning-border); 
+}
+.inflation-helper-text { font-size: 0.75rem; color: var(--warning-dark); margin-top: 8px; }
+
+.inflation-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--bg-secondary); 
+    border-radius: 12px; border: 1px solid var(--border-visible); 
+}
+.inflation-info-card h3 { margin-bottom: 15px; }
+.inflation-info-card p { font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); }
+
+/* --- Simple Interest Tool Overrides --- */
+
+.si-intro { text-align: center; margin-bottom: 30px; }
+.si-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.si-intro p { color: var(--text-muted); }
+
+.si-time-row { align-items: flex-end; }
+.si-time-input { flex: 2; }
+.si-unit-input { flex: 1; margin-bottom: 15px; }
+
+.si-select { 
+    width: 100%; padding: 12px; border-radius: 10px; 
+    border: 1px solid var(--border-visible); background: var(--white); cursor: pointer; 
+}
+
+.si-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--bg-secondary); 
+    border-radius: 12px; border: 1px solid var(--border-visible); 
+}
+.si-info-card h3 { color: var(--primary); margin-bottom: 10px; }
+.si-info-card p { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; }
+
+.si-formula-box { 
+    display: flex; align-items: center; justify-content: center; gap: 10px; 
+    font-size: 1.2rem; color: var(--primary); font-weight: bold; margin: 20px 0; 
+}
+.fraction { text-align: center; }
+.numerator { border-bottom: 2px solid var(--primary); padding: 0 10px; }
+
+/* --- SIP Calculator Overrides --- */
+
+.sip-intro { text-align: center; margin-bottom: 30px; }
+.sip-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.sip-intro p { color: var(--text-muted); }
+
+.sip-toggle { 
+    margin-top: 10px; width: 100%; padding: 10px; 
+    background: transparent; border: 1px dashed var(--border-visible); 
+    border-radius: 8px; cursor: pointer; color: var(--text-secondary); font-size: 0.85rem; 
+}
+
+.step-up-box { 
+    margin-top: 15px; padding: 15px; background: var(--success-bg); 
+    border-radius: 10px; border: 1px solid var(--success-border); 
+}
+.step-up-helper { font-size: 0.75rem; color: var(--success-dark); margin-top: 8px; }
+
+.sip-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--bg-secondary); 
+    border-radius: 12px; border: 1px solid var(--border-visible); 
+}
+.sip-info-card h3 { margin-bottom: 15px; }
+.sip-info-card p { font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); }
+
+/* --- Stock Average Calculator Overrides --- */
+
+.stock-intro { text-align: center; margin-bottom: 30px; }
+.stock-intro h1 { font-size: 2.5rem; color: var(--primary); }
+.stock-intro p { color: var(--text-muted); }
+
+.purchase-section { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-visible); }
+.purchase-section h4 { margin-bottom: 10px; color: var(--text-secondary); }
+
+.stock-info-card { 
+    margin-top: 40px; padding: 25px; background: var(--bg-secondary); 
+    border-radius: 12px; border: 1px solid var(--border-visible); 
+}
+.stock-info-card h3 { color: var(--primary); margin-bottom: 10px; }
+.stock-info-text { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-top: 15px; }
+
+.stock-formula-box { 
+    display: flex; align-items: center; justify-content: center; gap: 10px; 
+    font-size: 1.1rem; color: var(--primary); font-weight: bold; margin: 20px 0; 
+}
+.fraction { text-align: center; }
+.numerator { border-bottom: 2px solid var(--primary); padding: 0 10px; }

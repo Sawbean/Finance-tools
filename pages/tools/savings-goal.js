@@ -77,13 +77,12 @@ export default function SavingsGoalCalculator() {
 
   return (
     <>
-      
       <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>🎯 Savings Goal Calculator</h1>
-            <p style={{color: '#666'}}>Plan your future by breaking down big dreams into small steps.</p>
+        <div className="tool-intro savings-intro">
+            <h1>🎯 Savings Goal Calculator</h1>
+            <p>Plan your future by breaking down big dreams into small steps.</p>
         </div>
 
         <div className="calculator-grid">
@@ -100,29 +99,24 @@ export default function SavingsGoalCalculator() {
 
               <button 
                 type="button" 
+                className="advanced-toggle"
                 onClick={() => setShowAdvanced(!showAdvanced)}
-                style={{
-                  marginTop: '10px', width: '100%', padding: '10px', 
-                  background: 'transparent', border: '1px dashed #cbd5e1', 
-                  borderRadius: '8px', cursor: 'pointer', color: '#475569', fontSize: '0.85rem'
-                }}
               >
                 {showAdvanced ? "▲ Hide Inflation Settings" : "▼ Factor in Inflation?"}
               </button>
 
               {showAdvanced && (
-                <div style={{marginTop: '15px', padding: '15px', background: '#fffbeb', borderRadius: '10px', border: '1px solid #fef3c7'}}>
+                <div className="inflation-box">
                   <CalculatorInput label="Estimated Inflation Rate (%)" value={inflation} onChange={setInflation} suffix="%" />
-                  <p style={{fontSize: '0.75rem', color: '#92400e', marginTop: '8px'}}>
+                  <p className="inflation-helper-text">
                     💡 Inflation reduces your purchasing power. We adjust your goal so you can afford your target in the future.
                   </p>
                 </div>
               )}
             </CalculatorForm>
 
-            {/* Standardized Guide Card location */}
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/savings-goal-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/savings-goal-guide" className="read-guide-card">
                     📖 Roadmap: How to reach your financial goals faster
                 </Link>
             </div>
@@ -132,7 +126,7 @@ export default function SavingsGoalCalculator() {
             {result ? (
               <ResultBox title="Your Savings Plan" results={result}/>
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter your target to see your roadmap.
               </div>
             )}
@@ -140,10 +134,10 @@ export default function SavingsGoalCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-            <h3 style={{marginBottom: '15px'}}>Beat the "Silent Thief" (Inflation)</h3>
-            <p style={{fontSize: '0.95rem', lineHeight: '1.6', color: '#475569'}}>
-                Inflation reduces your <strong>purchasing power</strong> over time. For example, if inflation is 5%, 
+        <div className="info-card inflation-info-card">
+            <h3>Beat the "Silent Thief" (Inflation)</h3>
+            <p>
+                Inflation reduces your <strong>purchasing power</strong> over time.  For example, if inflation is 5%, 
                 an item costing {currency.symbol}{formatCurrency(100)} today will cost 
                 roughly {currency.symbol}{formatCurrency(163)} in 10 years. 
                 By investing your savings in assets that outpace inflation, you ensure your 

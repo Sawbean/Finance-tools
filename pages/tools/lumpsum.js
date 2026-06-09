@@ -18,6 +18,7 @@ export default function LumpsumCalculator() {
   // Automatically find the data for THIS tool
   const toolData = tools.find(t => t.link === '/tools/lumpsum');
   const guideData = Object.values(allToolGuides).find(g => g.tool === "lumpsum");
+  
   // 1. STATE MANAGEMENT
   const [investment, setInvestment] = useState(100000);
   const [expectedReturn, setExpectedReturn] = useState(12);
@@ -42,7 +43,7 @@ export default function LumpsumCalculator() {
     const futureValue = P * Math.pow(1 + r / 100, n);
     const wealthGained = futureValue - P;
 
-   setResult({
+    setResult({
       "Total Investment": Math.round(P),
       "Wealth Gained": Math.round(wealthGained),
       "Estimated Future Value": Math.round(futureValue),
@@ -64,12 +65,12 @@ export default function LumpsumCalculator() {
 
   return (
     <>
-        <ToolSEO tool={toolData} guideData={guideData} />
+      <ToolSEO tool={toolData} guideData={guideData} />
 
       <div className="container">
-        <div className="tool-intro" style={{textAlign: 'center', marginBottom: '30px'}}>
-            <h1 style={{fontSize: '2.5rem', color: 'var(--primary)'}}>💰 Lumpsum Investment</h1>
-            <p style={{color: '#666'}}>Project the future value of your one-time investment based on expected annual returns.</p>
+        <div className="tool-intro lumpsum-intro">
+            <h1>💰 Lumpsum Investment</h1>
+            <p>Project the future value of your one-time investment based on expected annual returns.</p>
         </div>
 
         <div className="calculator-grid">
@@ -88,8 +89,8 @@ export default function LumpsumCalculator() {
               </div>
             </CalculatorForm>
 
-            <div style={{marginTop: '25px'}}>
-                <Link href="/blog/lumpsum-calculator-guide" className="read-guide-card" style={{display: 'block', textDecoration: 'none'}}>
+            <div className="guide-card-wrapper">
+                <Link href="/blog/lumpsum-calculator-guide" className="read-guide-card">
                     📖 Comparison: Is Lumpsum better than SIP in a bull market?
                 </Link>
             </div>
@@ -102,12 +103,12 @@ export default function LumpsumCalculator() {
                 results={result}
               />
             ) : (
-              <div className="result-box" style={{background: '#f8fafc', color: '#64748b', textAlign: 'center'}}>
+              <div className="result-box-empty">
                 Enter investment details to see your projected wealth growth.
               </div>
             )}
             {error && (
-              <div className="error-message" style={{color: 'var(--error)', textAlign: 'center', marginTop: '10px'}}>
+              <div className="error-message">
                 {error}
               </div>
             )}
@@ -115,17 +116,17 @@ export default function LumpsumCalculator() {
           </div>
         </div>
 
-        <div className="info-card" style={{marginTop: '40px', padding: '25px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0'}}>
-            <h3 style={{color: 'var(--primary)', marginBottom: '10px'}}>How Lumpsum Growth is Calculated</h3>
-            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginBottom: '15px'}}>
+        <div className="info-card lumpsum-info-card">
+            <h3>How Lumpsum Growth is Calculated</h3>
+            <p>
                 Lumpsum investments grow through <strong>Annual Compounding</strong>. Unlike a simple interest loan, your returns each year are reinvested to earn even more returns the following year. 
             </p>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', fontSize: '1.3rem', color: 'var(--primary)', fontWeight: 'bold', margin: '20px 0' }}>
+            <div className="formula-display">
               <span>FV = P × (1 + r)<sup>n</sup></span>
             </div>
 
-            <p style={{fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', marginTop: '15px'}}>
+            <p>
                 For example, at a 12% return, your {formatCurrency(investment || 0)} would roughly double every 6 years. 
             </p>
         </div>
