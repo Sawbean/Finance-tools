@@ -27,6 +27,7 @@
   --text-muted: #4b5563; 
   --text-light: #9aa3b2;
 
+
  /* 3. Surface & Section Colors (Light Mode) */
   --bg-cta: #1e293b; 
   --bg-footer-main: #f8fafc;    /* Very light slate - looks cleaner than the grey you had */
@@ -129,7 +130,7 @@ html.dark .read-analysis-btn {
 /* Clean Hover: Color change instead of underline */
 html.dark p a:hover, 
 html.dark li a:hover {
-    color: #3b82f6 !important;
+    color: var(--accent-blue) !important;
     /*text-decoration: underline;  Keep it only for text links for accessibility */
 }
 
@@ -140,3 +141,4 @@ html.dark .master-card:hover {
     text-decoration: none !important;
     outline: none !important;
 }
+

@@ -54,7 +54,8 @@ export default function ToolSEO({ tool }) {
   return (
     <Head>
       {/* Standard SEO */}
-      <title>{tool.title} | ToolFinance</title>
+     {/* <title>{tool.title} | ToolFinance</title>*/}
+     <title>{`${tool.title} | ToolFinance`}</title>
       <meta name="description" content={tool.desc} />
       <link rel="canonical" href={fullUrl} />
 

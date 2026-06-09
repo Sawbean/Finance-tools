@@ -316,7 +316,7 @@ html.dark .master-card p,
   border: 1px solid var(--border-soft); 
   border-radius: 8px; 
 }
-.pro-table { width: 100%; border-collapse: collapse; background: white; }
+.pro-table { width: 100%; border-collapse: collapse; background: var(--card-bg); }
 .pro-table th { background: #f8fafc; padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
 .pro-table td { padding: 12px; border-bottom: 1px solid #f1f5f9; }
 
@@ -355,8 +355,8 @@ html.dark .master-card p,
 
 /* AD / TOOL CARDS - FIXING OVERLAP */
 .ad-placeholder-wrapper, .inline-tool-box, .inline-tool-card {
-  background: var(--card-bg) !important; 
-  border: 1px solid var(--border-soft) !important; 
+  background: var(--card-bg); 
+  border: 1px solid var(--border-soft); 
   padding: 30px !important; 
   border-radius: 16px !important;
   margin: 60px 0 !important; 
@@ -495,14 +495,14 @@ html.dark .master-card p,
 }
 
 .related-card-link:hover .related-card {
-    background: #f8fafc;
+    background: var(--hover-bg);
     border-color: var(--border-soft);
     transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .related-card-link:hover .related-title {
-    color: #2563eb;
+    color: var(--accent-blue);
 }
 
 /* Mobile Responsiveness */
@@ -526,11 +526,9 @@ html.dark .master-card p,
   gap: 25px; 
 }
 
-.home-blog-footer { 
-  margin-top: 80px; 
-  padding: 40px 0; 
-  border-top: 1px solid #eef2f6; 
-}
+
+
+
 
 @media (max-width: 900px) {
   .article-layout-container { 
@@ -819,8 +817,8 @@ html.dark .icon-wrapper svg {
 
 html.dark .master-card div[class*="icon"],
 [data-theme='dark'] .master-card div[class*="icon"] {
-  background-color: #ffffff !important; /* Forces the white circle/square back */
-  border: 1px solid #e2e8f0 !important;
+  background: var(--card-bg) !important; 
+  border-color: var(--border-soft) !important;
   border-radius: 12px !important; /* Matches your smooth card styling */
   padding: 8px !important;
   display: inline-flex !important;

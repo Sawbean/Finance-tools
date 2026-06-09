@@ -1,10 +1,15 @@
 // utils/formatters.js
+
 export const formatCurrency = (amount, currency) => {
-  return new Intl.NumberFormat(currency.locale, {
+  // 1. Fallback: If currency object is missing, use defaults
+  const locale = currency?.locale || 'en-US';
+  const currencyCode = currency?.code || 'USD';
+
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
-    currency: currency.code,
-    minimumFractionDigits: 2, // Ensures 9.60
-    maximumFractionDigits: 2  // Ensures 9.60
+    currency: currencyCode,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   }).format(amount);
 };
 

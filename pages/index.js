@@ -143,25 +143,16 @@ const structuredData = {
         </div>  
 
       {/* --- LATEST BLOGS SECTION --- */}
-      <section className="home-blog-footer" style={{ marginTop: '20px', paddingTop: '10px', borderTop: '1px solid var(--border-soft)', paddingBottom: '0px', marginBottom: '0px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-          <h2 style={{ margin: 0, fontSize: '1.5rem' }}>Latest Financial Insights</h2>
-          <Link href="/blog" style={{ color: 'var(--primary)', fontWeight: '600', textDecoration: 'none' }}>View All Articles →</Link>
+      <section className="home-blog-footer latest-insights">
+        <div className="insights-header">
+          <h2 className="section-title">Latest Financial Insights</h2>
+          <Link href="/blog" className="view-all-link">View All Articles →</Link>
         </div>
         
-        <div className="mini-blog-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+        <div className="mini-blog-grid" >
           {latestBlogs.map(([slug, post]) => (
-            <Link href={`/blog/${slug}`} key={slug} className="minimal-blog-link" style={{ textDecoration: 'none' }}>
-              <div style={{ 
-                background: 'var(--card-bg)', 
-                border: '1px solid var(--border-soft)',
-                padding: '20px', 
-                background: 'var(--bg-card)', 
-                borderRadius: '12px', 
-                border: '1px solid var(--border-soft)', 
-                transition: '0.2s', 
-                height: '100%' 
-              }}>
+            <Link href={`/blog/${slug}`} key={slug} className="minimal-blog-link">
+             <div className="minimal-blog-card">
                 <span style={{ color: 'var(--primary)', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>
                   {post.category || "Finance"}
                 </span>

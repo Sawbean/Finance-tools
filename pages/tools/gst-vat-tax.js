@@ -13,7 +13,8 @@ import { tools } from '../../data/tools';
 import ToolSEO from '../../components/layout/ToolSEO';
 
 export default function GSTVATTaxCalculator() {
-  const { currency } = useCurrency();
+  const context = useCurrency();
+  const currency = context?.currency || { locale: 'en-US', symbol: '$' };
   const formatValue = (val) => new Intl.NumberFormat(currency.locale).format(val);
   
   // Automatically find the data for THIS tool
@@ -156,7 +157,7 @@ export default function GSTVATTaxCalculator() {
             </div>
 
             <p className="info-text">
-                For your {formatCurrency(amount)}, the {taxMode} calculation ensures the 
+                For your {formatCurrency(amount, currency)}, the {taxMode} calculation ensures the 
                 {taxRate}% share is accurately separated. 
                 <br /><br />
                 At a {taxRate}% rate, every {currency.symbol}100 of base price equals 
