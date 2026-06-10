@@ -74,17 +74,17 @@ const structuredData = {
 
       {/* --- MAIN TOOLS SECTION --- */}
       <div id="calculators" style={{ paddingTop: '0px' }}>
-         <h2 className="home-section-title">🔥 Most Popular This Week</h2>
-              <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', textAlign: 'center', marginBottom: '20px' }}>
-              Quickly access our most used financial tools.
-            </p>
 
-            {/* NO SECTION BOX HERE */}
-            <div className="tools-grid" style={{ marginBottom: '60px' }}>
-              {featuredTools.map((tool) => (
-                <ToolCard key={tool.id} tool={tool} />
-              ))}
-            </div>
+        {/* 1. Popular Tools */}
+        <div className="tool-section-wrapper">
+         <h2 className="home-section-title">🔥 Most Popular This Week</h2>
+          <div className="tools-grid" style={{ marginBottom: '60px' }}>
+            {featuredTools.map((tool) => <ToolCard key={tool.id} tool={tool} />)}
+          </div>
+          </div>
+          
+          {/* 2. Loan Tools Wrapper */}
+            <div className="tool-section-wrapper">
        <h2 className="home-section-title">Personal Loan & Mortgage EMI Calculators</h2>
          <p style={{ color: 'var(--text-muted)', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center' }}>
            Plan your debt efficiently with our accurate calculators for home, car, and personal loans.
@@ -93,8 +93,11 @@ const structuredData = {
           {loanTools.map((tool) => (
             <ToolCard key={tool.id} tool={tool} />
           ))}
+          </div>
         </div>
 
+        {/* 3. Invest Tools Wrapper */}
+        <div className="tool-section-wrapper">
         <h2 className="home-section-title">Investment Planning & Savings Growth Tools</h2>
         <p style={{ color: 'var(--text-muted)', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
            Calculate future wealth and visualize your long-term financial goals with SIP, FD, and compound interest planners.
@@ -103,8 +106,11 @@ const structuredData = {
           {investTools.map((tool) => (
             <ToolCard key={tool.id} tool={tool} />
           ))}
+          </div>
         </div>
 
+        {/* 4. Business Tools Wrapper */}
+        <div className="tool-section-wrapper">
         <h2 className="home-section-title">Essential Business & Stock Market Calculators</h2>
         <p style={{ color: 'var(--text-muted)', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
             Analyze business profitability, margins, and stock market averages to make data-driven investment decisions.
@@ -113,8 +119,11 @@ const structuredData = {
           {businessTools.map((tool) => (
             <ToolCard key={tool.id} tool={tool} />
           ))}
+          </div>
         </div>
 
+        {/* 5. Tax Tools Wrapper */}
+        <div className="tool-section-wrapper">
         <h2 className="home-section-title">Income Tax, GST & Financial Utility Tools</h2>
         <p style={{ color: 'var(--text-muted)', marginBottom: '10px', fontSize: '0.95rem', textAlign: 'center', maxWidth: '800px', margin: '0 auto 20px' }}>
           Stay compliant and simplify your daily finances with quick tools for tax estimation, GST, and currency conversion.
@@ -123,6 +132,7 @@ const structuredData = {
           {taxMiscTools.map((tool) => (
             <ToolCard key={tool.id} tool={tool} />
           ))}
+        </div>
         </div>
       </div>
 

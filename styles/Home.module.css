@@ -1,19 +1,9 @@
-/* styles/Home.module.css */
-:root {
-  /* Light Mode Defaults */
-  --bg-main: #ffffff;
-  --bg-card: #f0f7ff;         /* That soft blue you like */
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --primary: #2563eb;
-  --border-soft: #e2e8f0;
-}
 
 .heroSection {
     /* Reduced vertical padding from 80px to 45px */
     padding: 15px 10px 15px 10px;
     text-align: center;
-    background: var(--bg-card);
+    background: var(--card-bg);
     border-bottom: 1px solid var(--border-soft);
     margin-top: -20px;
     width: 100%;

@@ -1,26 +1,17 @@
 /* =============================================================
    6. HOMEPAGE & TOOLS GRID
 ============================================================= */
-:root {
-  /* Premium Blue for Light Mode */
-  --title-color: #163ec0; 
-}
-
-[class='dark'] {
-  --title-color: #60a5fa; /* Brighter, readable blue for Dark Mode */
-}
-
 /* Apply it to your headings */
 h1, h2, h3 {
   color: var(--text-main);
 }
 .home-section-title {
-  color: var(--title-color);
+  color: var(--primary);
 }
 
 .home-section-title {
   text-align: center;
-  color: var(--title-color);
+  color: var(--primary);
   font-size: 1.8rem;    /* Kept the larger size for better visibility */
   margin-top: 20px;     /* Increased space above the heading */
   margin-bottom: 10px;
@@ -44,7 +35,8 @@ h1, h2, h3 {
 
 .tool-card {
   padding: 26px;
-  background: var(--bg-card);
+  background: #0f172a;
+  border: 1px solid var(--border-soft);
   border-radius: 14px;
   border: 1px solid var(--border-soft);
   text-align: center;
@@ -59,7 +51,7 @@ h1, h2, h3 {
 .tool-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 10px 20px rgba(37, 99, 235, 0.1);
-  background: var(--bg-card);
+  background: var(--card-bg);
 }
 
 /* ===============================
@@ -109,8 +101,8 @@ h1, h2, h3 {
   width: 100%;
   max-width: 100%;
   margin: 15px 0;
-  background: var(--bg-card, #ffffff);
-  border: 1px solid var(--border-soft, #e2e8f0);
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);
@@ -122,12 +114,13 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fafafa; /* Light gray so you see the area while ad loads */
+  background: var(--soft-bg);
+  color: var(--text-muted); 
 }
 
 .ad-action-bar {
   padding: 12px 20px;
-  background: #f8fafc;
+  background: var(--card-bg);
   border-top: 1px solid var(--border-soft);
   display: flex;
   align-items: center;
@@ -140,4 +133,5 @@ h1, h2, h3 {
   background: var(--card-bg);
   border-radius: 12px;
 }
+
 

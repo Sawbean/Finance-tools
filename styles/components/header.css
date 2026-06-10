@@ -93,7 +93,7 @@ body {
 
   .category-title {
     padding: 12px 20px;
-    color: white;
+    color: var(--nav-text);
     font-size: 14px;
     display: flex;
     justify-content: space-between;
@@ -121,11 +121,11 @@ body {
   .tools-submenu a {
     display: block;
     padding: 10px 20px;
-    color: #ccc;
+    color: var(--nav-text);
     text-decoration: none;
     font-size: 13px;
   }
-  .tools-submenu a:hover { color: white; background: var(--nav-hover); }
+  .tools-submenu a:hover { color: var(--nav-accent); background: var(--nav-hover); }
 
   .mobile-toggle-wrapper span {
     display: none; /* Hide the "Theme Mode" text on desktop */
@@ -169,7 +169,7 @@ body {
     width: 100%;
     height: calc(100dvh - 70px);
     padding-bottom: 70px; /* Space for the bottom toggle */
-    background: #0b1f4a !important; /* Force the deep blue */
+    background: var(--nav-bg);/* Force the deep blue */
     display: flex;
     flex-direction: column;
     transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -196,7 +196,7 @@ body {
     text-align: left;
     padding: 20px 25px;
     font-size: 18px;
-    color: white !important;
+    color: var(--nav-text) !important;
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     background: transparent !important; /* KILL THE WHITE BACKGROUND */
@@ -216,7 +216,7 @@ body {
   .tools-menu { 
     width: 100%; 
     display: none; 
-    background: #081635 !important; /* Darker navy for the block */
+    background: var(--card-bg) !important; /* Darker navy for the block */
   }
   .tools-menu.show { display: block; }
 
@@ -235,7 +235,7 @@ body {
 
   .tools-submenu {
     display: none;
-    background: #040d21 !important; /* Deepest blue for sub-items */
+    background: var(--soft-bg) !important; /* Deepest blue for sub-items */
     padding: 0;
   }
 
@@ -244,7 +244,7 @@ body {
   .tools-submenu a {
     display: block;
     padding: 15px 50px;
-    color: #cbd5e0 !important;
+    color: var(--nav-text) !important;
     text-decoration: none;
     font-size: 15px;
     border-bottom: 1px solid rgba(255,255,255,0.03);
@@ -261,7 +261,8 @@ body {
     height: 70px;
     margin-top: auto; /* Pushes it to the bottom of the screen */
     padding: 0 25px;
-    background: #05122b !important; /* Matches your mobile-sub-bg */
+    background: var(--nav-bg) !important; /* Matches your mobile-sub-bg */
+    border-top: 1px solid var(--border-soft);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -270,7 +271,7 @@ body {
   }
 
   .mobile-toggle-wrapper span {
-    color: white;
+    color: var(--nav-text);
     font-size: 16px;
     font-weight: 500;
   }

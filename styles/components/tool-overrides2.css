@@ -13,12 +13,6 @@
 
 /* --- Loan Eligibility Tool Overrides --- */
 
-.advanced-toggle-btn {
-    margin-top: 10px; width: 100%; padding: 10px; 
-    background: transparent; border: 1px dashed var(--border-visible); 
-    border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.85rem;
-}
-
 .advanced-fields-box {
     margin-top: 15px; padding: 20px; background: var(--soft-bg); 
     border-radius: 12px; border: 1px solid var(--border-visible);

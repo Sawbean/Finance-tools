@@ -11,6 +11,7 @@ body {
 main {
   flex: 1;
 }
+
 .site-footer {
   background: var(--bg-footer-main);
   color: var(--footer-text);
@@ -19,7 +20,7 @@ main {
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
   /* Thin subtle border for light mode, glow for dark */
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid var(--border-soft);
   transition: background 0.3s ease;
 }
 
@@ -28,7 +29,7 @@ html.dark .site-footer {
 }
 
 .footer-brand {
-  color: var(--footer-heading) !important; 
+  color: var(--footer-heading); 
   font-size: 1.6rem;
   font-weight: 900;
   letter-spacing: -0.03em;
@@ -52,7 +53,7 @@ html.dark .site-footer {
 }
 
 .footer-column h4 { 
-  color: var(--footer-heading) !important; 
+  color: var(--footer-heading); 
   margin-bottom: 18px; 
   font-size: 1rem;
   text-transform: uppercase;
@@ -82,7 +83,7 @@ html.dark .site-footer {
   font-size: 13px;
   margin-top: 20px;
   border-radius: 0 0 14px 14px;
-  color: #ffffff !important;
+  color: #ffffff;
 }
 
 .footer-bottom p {

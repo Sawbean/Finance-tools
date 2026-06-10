@@ -43,10 +43,16 @@
   --error-bg: #fff1f2;
   --error-border: #fda4af;
   --error-text: #be123c;
+
+  --nav-bg: #0b1f4a;
+  --nav-text: #ffffff;
+  --nav-accent: #f0e68c;
+  --nav-hover: rgba(255, 255, 255, 0.1);
+  --mobile-sub-bg: #05122b;
 }
 
 /* 3. Dark Mode Overrides - FIXED FOR READABILITY */
-[class='dark'] {
+[class='dark'], [data-theme='dark']{
   /* BACKGROUNDS: Creating depth by making soft-bg darker than cards */
   --soft-bg: #020617;     /* Pure Dark Navy */
   --card-bg: #1e293b;     /* Slate Navy */
@@ -75,8 +81,6 @@
   --footer-text: #94a3b8;       /* Clean slate gray for links */
   --footer-heading: #10b981;    /* Vibrant Emerald Green for "ToolFinance" and Headers */
   
-  --primary: #60a5fa;           /* Bright blue for other headings */
-  
   --accent-green: #4ade80;
   --accent-blue: #93c5fd;
 
@@ -87,6 +91,12 @@
   --error-bg: #4c0519;
   --error-border: #9f1239;
   --error-text: #fda4af;
+
+  --nav-bg: #020617; /* Matches your body background */
+  --nav-text: #f1f5f9;
+  --nav-accent: #60a5fa;
+  --nav-hover: rgba(255, 255, 255, 0.05);
+  --mobile-sub-bg: #05122b;
 }
 
 /* =============================================================
@@ -111,34 +121,13 @@ a {
   transition: 0.25s ease;
 }
 
-/* --- Refined Hover Logic --- */
-
-/* Remove global underlines from all links by default */
-html.dark a, 
-[data-theme='dark'] a {
-    text-decoration: none !important;
+a:hover {
+    color: var(--accent-blue);
 }
 
-/* Only apply underline to text-based links inside paragraphs or lists */
-html.dark p a, 
-html.dark li a,
-html.dark .read-analysis-btn {
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-/* Clean Hover: Color change instead of underline */
-html.dark p a:hover, 
-html.dark li a:hover {
-    color: var(--accent-blue) !important;
-    /*text-decoration: underline;  Keep it only for text links for accessibility */
-}
-
-/* CRITICAL: Remove underlines from Images and Icons */
-html.dark a img, 
-html.dark a .icon-wrapper, 
-html.dark .master-card:hover {
+a img, 
+a .icon-wrapper, 
+.master-card {
     text-decoration: none !important;
     outline: none !important;
 }
-

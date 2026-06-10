@@ -18,7 +18,7 @@
   display: inline-block;
   padding: 12px 24px;
   background-color: var(--nav-bg); /* Or your primary brand color */
-  color: #ffffff !important;        /* Set text to white */
+  color: var(--nav-text) !important;        /* Set text to white */
   text-decoration: none;
   border-radius: 6px;
   font-weight: 600;
@@ -27,5 +27,5 @@
 
 .btn-primary:hover {
   background-color: var(--nav-accent);
-  color: #000000 !important;        /* Change text to dark on hover if needed */
+  color: #000000 !important;   /* Change text to dark on hover if needed */
 }

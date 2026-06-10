@@ -18,19 +18,15 @@
   padding: 0 20px;
   padding-bottom: 0px !important; 
   margin-bottom: 0px !important;
-}
-.blog-hub-container.theme-loading {
+  color: var(--text-main);
   background-color: var(--soft-bg);
-  color: #1e293b !important;
 }
+.blog-hub-container.theme-loading,
 .blog-hub-container.theme-ready {
   background-color: var(--soft-bg);
-  color: #1e293b;
+  color: var(--text-main);
 }
-html.dark .blog-hub-container,
-[data-theme='dark'] .blog-hub-container {
-  color: #f8fafc !important; /* Forces your crisp text color instantly */
-}
+
 .hub-header { 
   text-align: center; 
   margin-bottom: 50px; 
@@ -62,7 +58,7 @@ html.dark .blog-hub-container,
   align-items: center;
   gap: 20px;
   padding: 30px;
-  background: var(--bg-card);
+  background: var(--card-bg);
   border-radius: 20px;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -71,17 +67,7 @@ html.dark .blog-hub-container,
   overflow: hidden; 
   position: relative;
 }
-html.dark .master-card,
-[data-theme='dark'] .master-card {
-  background: #0f172a !important; /* 👈 Replace this with your exact dark card HEX color */
-  border-color: #1e293b !important; /* 👈 Replace this with your exact dark border HEX color */
-}
-html.dark .master-card h3,
-html.dark .master-card p,
-[data-theme='dark'] .master-card h3,
-[data-theme='dark'] .master-card p {
-  color: #ffffff !important;
-}
+
 
 .master-card:hover {
   transform: translateY(-5px);
@@ -90,7 +76,7 @@ html.dark .master-card p,
 
 .card-icon { 
   font-size: 35px; 
-  background: var(--bg-card); 
+  background: var(--card-bg); 
   width: 70px; 
   height: 70px; 
   display: flex; 
@@ -119,7 +105,7 @@ html.dark .master-card p,
   width: 100%;
   padding: 18px 25px;
   border-radius: 50px;
-  border: 2px solid #eef2f6;
+  border: 2px solid var(--border-soft);
   font-size: 1.1rem;
   outline: none;
   transition: all 0.3s ease;
@@ -180,7 +166,7 @@ html.dark .master-card p,
 /* BREADCRUMBS NAVIGATION */
 .article-breadcrumb {
   font-size: 13px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -211,7 +197,7 @@ html.dark .master-card p,
 }
 
 .article-meta { 
-  color: #94a3b8; 
+  color: var(--text-muted);
   font-size: 14px; 
 }
 
@@ -317,8 +303,8 @@ html.dark .master-card p,
   border-radius: 8px; 
 }
 .pro-table { width: 100%; border-collapse: collapse; background: var(--card-bg); }
-.pro-table th { background: #f8fafc; padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
-.pro-table td { padding: 12px; border-bottom: 1px solid #f1f5f9; }
+.pro-table th { background: var(--soft-bg); padding: 12px; text-align: left; border-bottom: 1px solid var(--border-soft); }
+.pro-table td { padding: 12px; border-bottom: 1px solid var(--border-soft); }
 
 /* IMAGES */
 .article-inner-image {
@@ -332,7 +318,7 @@ html.dark .master-card p,
 }
 .image-caption {
   font-size: 13px;
-  color: #94a3b8;
+  color: var(--text-muted);
   margin-top: 10px;
 }
 
@@ -421,11 +407,11 @@ html.dark .master-card p,
 
 /* SPECIAL ALERTS (SCAMS/WARNINGS) */
 .scam-alert-box {
-  background: #fff1f2;
-  border-left: 5px solid var(--accent-red);
+  background: var(--error-bg);
+  border-left: 5px solid var(--error-text);
   padding: 20px;
   margin: 30px 0;
-  color: #991b1b;
+  color: var(--error-text);
   border-radius: 8px;
 }
 
@@ -527,9 +513,6 @@ html.dark .master-card p,
 }
 
 
-
-
-
 @media (max-width: 900px) {
   .article-layout-container { 
     display: flex !important;
@@ -568,7 +551,7 @@ html.dark .master-card p,
   text-decoration: none;
   transition: all 0.2s ease;
   cursor: pointer;
-  border: 1px solid #eef2f6;
+  border: 1px solid var(--border-soft);
 }
 
 .share-btn.twitter {
@@ -582,8 +565,8 @@ html.dark .master-card p,
 }
 
 .share-btn.copy {
-  background: #f8fafc;
-  color: #1e293b;
+  background: var(--soft-bg);
+  color: var(--text-main);
 }
 
 .share-btn:hover {
@@ -623,10 +606,10 @@ html.dark .master-card p,
     text-transform: uppercase; letter-spacing: 1px; 
 }
 
-.read-analysis-btn { margin-top: 15px; font-weight: bold; color: #2563eb; }
-html.dark .read-analysis-btn,
-[data-theme='dark'] .read-analysis-btn {
-  color: #60a5fa !important; /* A bright, beautifully accessible dark-mode blue */
+.read-analysis-btn { 
+    margin-top: 15px; 
+    font-weight: bold; 
+    color: var(--accent-blue); /* Automatically switches! */
 }
 .read-analysis-btn:hover {
     
@@ -654,9 +637,9 @@ html.dark .read-analysis-btn,
   color: var(--primary);
 }
 
-.pulse-date {
-  color: var(--text-muted);
-  font-size: 0.85rem;
+.pulse-date { 
+    color: var(--text-light); 
+    font-size: 0.85rem; 
 }
 
 .standard-post-row p {
@@ -669,10 +652,8 @@ html.dark .read-analysis-btn,
 }
 .pulse-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-.pulse-date { font-size: 11px; color: #94a3b8; }
-
 .view-all-link {
-    text-align: center; margin-top: 10px; color: #2563eb; 
+    text-align: center; margin-top: 10px; color: var(--accent-blue); 
     font-weight: bold; text-decoration: none; font-size: 14px;
 }
 
@@ -750,196 +731,29 @@ html.dark .read-analysis-btn,
   object-fit: cover;
 }
 
-html.dark, [data-theme='dark'] {
-  /* 1. Force critical fallback variables instantly if they are lagging */
-  --text-main: #f8fafc !important;
-  --text-muted: #94a3b8 !important;
-  --border-soft: #1e293b !important;
+/* --- Global Theme Integration --- */
+body { background-color: var(--soft-bg); color: var(--text-main); }
+
+/* Master Cards */
+.master-card { background: var(--card-bg); border: 1px solid var(--border-soft); }
+.master-card h3, .master-card p { color: var(--text-main); }
+
+/* Headers & Paragraphs */
+h1, h2, h3, h4 { color: var(--text-main); }
+p, li, span, strong { color: var(--text-muted); }
+
+/* Links & Buttons */
+a, .read-more-btn, .analysis-link { color: var(--accent-blue); text-decoration: none; }
+a:hover { color: var(--primary); }
+
+/* Sidebar & Containers */
+.sidebar-card, .table-of-contents, .takeaways-box { 
+  background: var(--card-bg); 
+  border: 1px solid var(--border-soft); 
 }
 
-/* 2. Fix the Heading Titles (e.g., Strategic Analysis, Market Pulse, Research Archive) */
-html.dark h1, html.dark h2, html.dark h3, html.dark h4,
-[data-theme='dark'] h1, [data-theme='dark'] h2, [data-theme='dark'] h3 {
-  color: #ffffff !important;
-}
+/* Category Badges */
+.card-category, .category-tag { color: var(--accent-blue); }
 
-/* 3. Fix Underlying Lines & Section Borders */
-html.dark hr, 
-html.dark .section-line,
-[data-theme='dark'] .section-line {
-  border-color: #1e293b !important;
-  background-color: #1e293b !important;
-}
-
-/* 4. Fix Small Category Badges & Metadata (e.g., TAX STRATEGY, GLOBAL SYSTEMS) */
-html.dark .card-category,
-html.dark .post-meta,
-html.dark .category-tag,
-[data-theme='dark'] .card-category {
-  color: #3b82f6 !important; /* Premium bright blue for category visibility */
-}
-
-/* 5. Fix Article Excerpts / Descriptions */
-html.dark .master-card p,
-html.dark .research-archive p,
-html.dark .blog-hub-container p,
-[data-theme='dark'] p {
-  color: #cbd5e1 !important; /* Soft legible white/gray for descriptions */
-}
-
-/* 6. FIX THE HIDDEN LINK BUTTON ("Read Full Analysis →") */
-html.dark .read-more-btn,
-html.dark .analysis-link,
-html.dark a[class*="read-"],
-html.dark a[class*="link"],
-[data-theme='dark'] .blog-hub-container a {
-  color: #60a5fa !important; /* Bright accessible blue-gray link text */
-  text-decoration: none;
-}
-
-html.dark .read-more-btn:hover,
-[data-theme='dark'] a[class*="read-"]:hover {
-  color: #3b82f6 !important;
-  
-}
-
-/* 7. Fix Icon SVG Wrappers (Ensures background icons stay readable) */
-html.dark .icon-wrapper,
-[data-theme='dark'] .icon-container {
-  background-color: #1e293b !important;
-  border-color: #334155 !important;
-}
-
-html.dark .icon-wrapper img,
-html.dark .icon-wrapper svg {
-  filter: brightness(1.2) !important; /* Pop up asset icons inside containers */
-}
-
-html.dark .master-card div[class*="icon"],
-[data-theme='dark'] .master-card div[class*="icon"] {
-  background: var(--card-bg) !important; 
-  border-color: var(--border-soft) !important;
-  border-radius: 12px !important; /* Matches your smooth card styling */
-  padding: 8px !important;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-}
-
-html.dark .blog-hub-container span[class*="category"],
-html.dark .blog-hub-container p[class*="category"],
-[data-theme='dark'] .blog-hub-container [class*="category"] {
-  color: #3b82f6 !important; /* Premium branding blue */
-  text-transform: uppercase;
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-}
-
-html.dark, 
-[data-theme='dark'], 
-body.dark {
-  /* 1. Force the core global styling tokens to switch instantly */
-  --text-main: #f1f5f9 !important;  /* Crisp off-white text */
-  --text-muted: #94a3b8 !important; /* Soft legible gray text */
-  --border-soft: #1e293b !important; /* Dark slate structural borders */
-  --bg-card: #0f172a !important;     /* Deep navy blue container background */
-}
-
-/* 2. Target ALL text headers inside article bodies and main components */
-html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6,
-[data-theme='dark'] h1, [data-theme='dark'] h2, [data-theme='dark'] h3, [data-theme='dark'] h4 {
-  color: #ffffff !important;
-}
-
-/* 3. Target ALL standalone paragraphs, list items, spans, and strong text markers */
-html.dark p, html.dark li, html.dark span, html.dark strong, html.dark b,
-[data-theme='dark'] p, [data-theme='dark'] li, [data-theme='dark'] span, [data-theme='dark'] strong {
-  color: #e2e8f0 !important; /* Ensures readable body and description texts */
-}
-
-/* 4. Target ALL structural layout lines, horizontal breaks, and dividing rules */
-html.dark hr, 
-html.dark div[class*="line"], 
-html.dark div[class*="border"],
-[data-theme='dark'] hr {
-  border-color: #1e293b !important;
-  background-color: #1e293b !important;
-}
-
-/* 5. Target ALL anchor links, read more markers, and action items inside your main body wrapper */
-html.dark main a, 
-html.dark article a, 
-html.dark div[class*="btn"], 
-html.dark div[class*="link"],
-[data-theme='dark'] main a {
-  color: #60a5fa !important; /* Forces your brand links to remain visible and bright */
-}
-
-html.dark main a:hover, 
-html.dark article a:hover,
-[data-theme='dark'] main a:hover {
-  color: #3b82f6 !important;
-  
-}
-
-/* 6. Fix the 6 Master Category Icon boxes to keep their clean backgrounds */
-html.dark div[class*="icon-wrapper"],
-html.dark div[class*="icon-container"],
-html.dark .category-icon,
-[data-theme='dark'] div[class*="icon"] {
-  background-color: #ffffff !important; /* Keeps the neat white badge circle or square */
-  border: 1px solid #e2e8f0 !important;
-}
-
-/* ==========================================================
-   ARTICLE PAGE COMPONENTS (Table of Contents & Takeaways)
-   ========================================================== */
-
-/* 1. The Containers */
-html.dark .table-of-contents,
-html.dark .takeaways-box,
-[data-theme='dark'] .table-of-contents,
-[data-theme='dark'] .takeaways-box {
-    background-color: #1e293b !important; /* Deep slate */
-    border: 1px solid #334155 !important;
-    color: #f1f5f9 !important;
-}
-
-/* 2. The Headings (Jump to Section / Key Takeaways) */
-html.dark .table-of-contents h4,
-html.dark .takeaways-box h4,
-[data-theme='dark'] .table-of-contents h4,
-[data-theme='dark'] .takeaways-box h4 {
-    color: #3b82f6 !important; /* ToolFinance Blue */
-}
-
-/* 3. The List Items / Links */
-html.dark .table-of-contents a,
-html.dark .takeaways-box li,
-[data-theme='dark'] .table-of-contents a {
-    color: #cbd5e1 !important;
-}
-
-/* 4. Sidebar Cards (Recommended Tool) */
-html.dark .sidebar-card, 
-html.dark .sidebar-box {
-    background: #0f172a !important;
-    border: 1px solid #1e293b !important;
-}
-
-html.dark .sidebar-card h4,
-html.dark .sidebar-card p {
-    color: #ffffff !important;
-}
-
-/* Fix Sidebar Link */
-html.dark .sidebar-card a {
-    color: #60a5fa !important;
-    text-decoration: none !important;
-}
-
-
-
-
-
+/* Icons */
+.icon-wrapper, .icon-container { background-color: var(--border-soft); }

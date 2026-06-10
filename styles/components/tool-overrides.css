@@ -223,17 +223,6 @@ custom-code-input {
 
 /* --- Home Loan vs Rent Overrides --- */
 
-.advanced-toggle-btn {
-    margin-top: 10px; width: 100%; padding: 10px; 
-    background: transparent; border: 1px dashed var(--border-visible); 
-    border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.85rem;
-}
-
-.advanced-fields-box {
-    margin-top: 15px; padding: 20px; background: var(--soft-bg); 
-    border-radius: 12px; border: 1px solid var(--border-visible);
-}
-
 .helper-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; }
 
 .verdict-box {
@@ -264,19 +253,6 @@ custom-code-input {
 .status-btn.active { 
     border: 2px solid var(--primary); background: var(--note-bg); color: var(--primary); 
 }
-
-.advanced-toggle-btn {
-    margin-top: 10px; width: 100%; padding: 10px; 
-    background: transparent; border: 1px dashed var(--border-visible); 
-    border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 0.85rem;
-}
-
-.advanced-fields-box {
-    margin-top: 15px; padding: 15px; background: var(--soft-bg); 
-    border-radius: 10px; border: 1px solid var(--border-visible);
-}
-
-.helper-text { font-size: 0.75rem; color: var(--text-muted); margin-top: 8px; }
 
 .tax-info-card { 
     margin-top: 40px; padding: 25px; background: var(--info-bg); 
