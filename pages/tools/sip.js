@@ -145,10 +145,8 @@ export default function SIPCalculator() {
               grow into a significant fund over 20 years. This exponential growth is why the 
               "Time Period" often matters more than the "Amount" you start with.
             </p>
-            
-
-[Image of compound interest vs simple interest graph]
-
+            <div className="info-image-container">
+            <img src="/images/wealthcreation.webp"alt="compound interest vs simple interest graph" loading="lazy" width="600" height="450"/></div>
         </div>
       </div>
     </>

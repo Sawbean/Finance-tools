@@ -1,6 +1,6 @@
 .mini-blog-grid .minimal-blog-card {
     display: block;
-    background-color: var(--border-soft); 
+    background-color: var(--hover-bg); 
     border: 1px solid var(--border-soft);
     padding: 20px;
     border-radius: 12px;
@@ -18,7 +18,7 @@
 
 
 .mini-blog-grid .minimal-blog-card:hover {
-    background-color: var(--hover-bg); 
+    background-color:  var(--border-soft); 
     border-color: var(--border-visible);
     transform: translateY(-3px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);

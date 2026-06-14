@@ -127,11 +127,8 @@ export default function NetWorthCalculator() {
               asset is {currency.symbol}{formatCurrency(100000)}. By tracking this annually, you 
               ensure your wealth is actually growing, not just your income.
             </p>
-            
-            
-
-[Image of assets and liabilities balance sheet diagram]
-
+            <div className="info-image-container">
+            <img src="/images/net-worth-balance-sheet.webp"alt="Net Worth Assets vs Liabilities Balance Sheet Diagram"loading="lazy"width="600"height="450"/></div>
         </div>
       </div>
     </>

@@ -140,10 +140,8 @@ export default function LoanCalculator() {
             <p>
              <strong>Simple Interest</strong> is calculated only on the initial principal. 
              <strong> Compound Interest</strong> is "interest on interest." 
-             
-
-[Image of compound interest growth over time]
-
+             <div className="info-image-container">
+            <img src="/images/compound-interest-growth.webp"alt="Simple vs Compound Interest Growth Over Time" loading="lazy" width="600" height="450"/></div>
              For example, on a <strong>{formatCurrency(100000)}</strong> loan at 10% for 2 years, 
              Simple Interest costs <strong>{formatCurrency(20000)}</strong>, while Compound 
              Interest costs <strong>{formatCurrency(21000)}</strong>. 

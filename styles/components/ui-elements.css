@@ -35,7 +35,7 @@ h1, h2, h3 {
 
 .tool-card {
   padding: 26px;
-  background: #0f172a;
+  background: var(--hover-bg);  /* Use your new visible border variable for a subtle card background */
   border: 1px solid var(--border-soft);
   border-radius: 14px;
   border: 1px solid var(--border-soft);
@@ -51,7 +51,7 @@ h1, h2, h3 {
 .tool-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 10px 20px rgba(37, 99, 235, 0.1);
-  background: var(--card-bg);
+  background: var(--border-soft);
 }
 
 /* ===============================
