@@ -41,16 +41,10 @@ function MyApp({ Component, pageProps }) {
 
         {/* 2. Icons & Manifest - Your PWA Setup */}
 {/* Google Search uses this - Pointing to your new 48x48 file */}
-<link rel="icon" href="/favicon.ico" sizes="48x48" />
 
+<link rel="icon" href="/icon.png" />
+<link rel="apple-touch-icon" href="/icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-
-{/* These stay the same so your browser tab icon doesn't change */}
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-
-{/* Important: Update this one too! Google often uses this for mobile search */}
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 
         {/* 3. Open Graph - How it looks when shared on Social Media */}
         <meta property="og:type" content="website" />
