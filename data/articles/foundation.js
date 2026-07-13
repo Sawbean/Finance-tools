@@ -234,7 +234,7 @@ export const foundationArticles = {
     "content": [
       { 
         "type": "paragraph", 
-        "text": "Most people believe they need a better 'strategy' or more 'income' to be wealthy. However, in the high-speed economy of 2026, the real bottleneck is **Cognitive Load.** When we are stressed by market volatility or <a href='/blog/inflation-101'>inflationary pressures</a>, our brains revert to short-term survival tactics, leading to impulsive spending and high-interest debt." 
+        "text": "Most people believe they need a better 'strategy' or more 'income' to be wealthy. However, in the high-speed economy of 2026, the real bottleneck is **Cognitive Load.** When we are stressed by market volatility or <a href='/blog/hidden-tax-of-inflation'>inflationary pressures</a>, our brains revert to short-term survival tactics, leading to impulsive spending and high-interest debt." 
       },
       { "type": "heading", "text": "The Loss Aversion Trap" },
       { 
@@ -385,5 +385,93 @@ export const foundationArticles = {
         "answer": "Implement a 30-day 'Subscription Audit' and ensure at least 20% of your income is diverted to non-liquid wealth building before any discretionary spending occurs."
       }
     ]
-  }
+  },
+
+"hidden-tax-of-inflation": {
+  "title": "The Hidden Tax of Inflation: Why Purchasing Power Matters More Than Returns",
+  "description": "Inflation doesn't just increase prices—it quietly reduces your purchasing power year after year. Learn why successful investors focus on real returns instead of nominal gains and how to protect your wealth from inflation.",
+  "masterCategory": "foundation",
+  "type": "guide",
+  "category": "Economic Foundations",
+  "publishDate": "2026-05-18",
+  "readTime": "7 min read",
+  "image": "/images/hidden-tax-of-inflation.webp",
+  "imageAlt": "Purchasing power declining over time as inflation increases the cost of everyday goods and reduces the real value of money.",
+  "tool": "inflation",
+  "content": [
+    {
+      "type": "paragraph",
+      "text": "Unlike income tax, inflation is never deducted from your paycheck or shown on a government statement. Instead, it quietly reduces what your money can buy over time. This is why economists often describe inflation as a 'hidden tax.' Even if your bank balance stays the same—or grows slightly—you may actually be losing wealth if your purchasing power declines faster than your returns."
+    },
+    {
+      "type": "heading",
+      "text": "The Difference Between Money and Purchasing Power"
+    },
+    {
+      "type": "paragraph",
+      "text": "Many people measure financial success by the amount of money they have saved. Professional investors measure something different: purchasing power. If your investment earns 6% while inflation averages 4%, your real gain is only about 2% before taxes. The number in your account may be larger, but its ability to buy goods and services has grown much more slowly."
+    },
+    {
+      "type": "keyTakeaways",
+      "items": [
+        "**Inflation reduces purchasing power**, not just the value of cash.",
+        "**Nominal returns can be misleading** if they fail to outpace inflation.",
+        "**Long-term wealth is built by increasing real returns**, not simply growing account balances."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Why Investors Track Real Returns"
+    },
+    {
+      "type": "paragraph",
+      "text": "A portfolio that gains 8% during a year with 5% inflation has not truly grown by 8%. What matters is the return after inflation, taxes, and fees. This is why institutional investors focus on real returns rather than headline performance numbers. Protecting purchasing power is the foundation of long-term wealth preservation."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Cash:** Offers stability but steadily loses purchasing power during inflation.",
+        "**Savings Accounts:** Useful for emergency funds but may struggle to beat inflation over long periods.",
+        "**Productive Assets:** Businesses, equities, and real estate have historically provided better protection against inflation over the long term.",
+        "**Regular Investing:** Consistent investing can reduce the impact of inflation by putting idle money to work."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "ToolFinance Analysis: The Hidden Wealth Test"
+    },
+    {
+      "type": "paragraph",
+      "text": "At ToolFinance, we believe investors ask the wrong question. Instead of asking, 'How much did my portfolio grow?', ask, 'Can my portfolio buy more than it could last year?' This simple shift changes how you evaluate every financial decision. True wealth is measured by increasing purchasing power—not by watching account balances alone."
+    },
+    {
+      "type": "heading",
+      "text": "Information Gain: Your Personal Inflation Rate"
+    },
+    {
+      "type": "paragraph",
+      "text": "Official inflation figures represent the average consumer, but your personal inflation rate may be very different. If you spend heavily on housing, healthcare, education, or fuel, your cost of living could rise faster than the national average. Tracking your own spending provides a clearer picture of how inflation affects your financial goals and investment strategy."
+    },
+    {
+      "type": "image",
+      "src": "/images/hidden-tax-of-inflation.webp",
+      "alt": "Illustration showing purchasing power declining as inflation increases the cost of housing, groceries, fuel, and everyday living."
+    },
+    {
+      "type": "cta",
+      "text": "Measure Your Purchasing Power: Use our Inflation Calculator →",
+      "link": "/tools/inflation"
+    }
+  ],
+  "faq": [
+    {
+      "question": "Why is inflation called a hidden tax?",
+      "answer": "Because inflation reduces the purchasing power of your money without appearing as a direct deduction. As prices rise, the same amount of money buys fewer goods and services."
+    },
+    {
+      "question": "What is more important: investment returns or purchasing power?",
+      "answer": "Purchasing power is the better measure of long-term wealth. An investment that fails to outperform inflation may increase your account balance while still reducing your real standard of living."
+    }
+  ]
+}
 };

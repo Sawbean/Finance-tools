@@ -84,7 +84,7 @@ export default function Header() {
       <div className="header-container">
         <div className="logo">
           <Link href="/" onClick={closeMenu}>
-            <Image src="/images/finlogo.png" alt="ToolFinance" height={200} width={250} priority />
+            <Image src="/images/finlogo.png" alt="ToolFinance" height={70} width={350} priority style={{ height: '60px', width: 'auto', display: 'block' }}/>
           </Link>
         </div>
 

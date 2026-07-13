@@ -170,6 +170,9 @@
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  position: relative;
+  z-index: 10; /* Ensures it sits above any accidental overlaps */
+  pointer-events: auto;
 }
 
 .article-breadcrumb a {
@@ -297,10 +300,13 @@
 
 /* DATA TABLES */
 .table-responsive { 
+  width: 100% !important;
   overflow-x: auto; 
   margin: 30px 0; 
   border: 1px solid var(--border-soft); 
   border-radius: 8px; 
+  box-sizing: border-box !important; 
+  -webkit-overflow-scrolling: touch;
 }
 .pro-table { width: 100%; border-collapse: collapse; background: var(--card-bg); }
 .pro-table th { background: var(--soft-bg); padding: 12px; text-align: left; border-bottom: 1px solid var(--border-soft); }
@@ -517,14 +523,17 @@
   .article-layout-container { 
     display: flex !important;
     flex-direction: column !important;
-    grid-template-columns: 1fr !important; 
     width: 100%;
-    padding: 0 15px; /* Adds a little breathing room on the sides */
+    padding: 0 15px !important;
+    box-sizing: border-box !important; 
+    overflow-x: hidden !important;     
+    margin: 0 auto !important;
   }
   .article-sidebar {
     width: 100% !important;
     margin-top: 40px; /* Space between article and sidebar */
     display: block;
+    box-sizing: border-box !important;
   }
 
   /* 3. Fix the "Calculated Insight" box from your screenshot */
@@ -757,3 +766,16 @@ a:hover { color: var(--primary); }
 
 /* Icons */
 .icon-wrapper, .icon-container { background-color: var(--border-soft); }
+
+* {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Specifically target the container that might be pushing content right */
+.blog-master-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+  padding-left: 15px; /* Add breathing room */
+  padding-right: 15px;
+}

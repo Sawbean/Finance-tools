@@ -113,6 +113,7 @@ function MyApp({ Component, pageProps }) {
       {/* 4. Site Layout */}
       <Header />
       
+      
       <main>
         {/* The Component renders the specific page content once */}
         <Component {...pageProps} />

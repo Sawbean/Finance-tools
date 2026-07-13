@@ -394,7 +394,7 @@ export const wealthArticles = {
     "content": [
       { 
         "type": "paragraph", 
-        "text": "We have been taught that 'Time in the Market' beats 'Timing the Market.' While true, this advice has led to a dangerous side effect in 2026: **Portfolio Stagnation.** If your wealth isn't moving at a higher 'Velocity' than the current rate of <a href='/blog/inflation-101'>inflation</a> and currency debasement, you aren't actually growing; you are merely managing your own decline." 
+        "text": "We have been taught that 'Time in the Market' beats 'Timing the Market.' While true, this advice has led to a dangerous side effect in 2026: **Portfolio Stagnation.** If your wealth isn't growing faster than the ongoing erosion of <a href='/blog/hidden-tax-of-inflation'>your purchasing power</a> and currency debasement, you aren't actually growing—you are merely managing your own decline." 
       },
       { "type": "heading", "text": "The Cost of Inactivity" },
       { 

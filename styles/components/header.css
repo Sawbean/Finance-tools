@@ -8,7 +8,7 @@
 }
 
 body {
-  padding-top: 60px; 
+  padding-top: 70px; 
 }
 
 .site-header {
@@ -289,7 +289,18 @@ body {
 
 }
  
+
 .logo {
-  margin-top: 8px;    
+  display: flex;
+  align-items: center;
+  height: 70px;
+  position: relative;
+  z-index: 10; 
 }
+.logo a {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
 
