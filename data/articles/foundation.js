@@ -387,7 +387,7 @@ export const foundationArticles = {
     ]
   },
 
-"hidden-tax-of-inflation": {
+  "hidden-tax-of-inflation": {
   "title": "The Hidden Tax of Inflation: Why Purchasing Power Matters More Than Returns",
   "description": "Inflation doesn't just increase prices—it quietly reduces your purchasing power year after year. Learn why successful investors focus on real returns instead of nominal gains and how to protect your wealth from inflation.",
   "masterCategory": "foundation",
@@ -454,7 +454,7 @@ export const foundationArticles = {
     },
     {
       "type": "image",
-      "src": "/images/hidden-tax-of-inflation.webp",
+      "src": "/images/hidden-tax-of-inflation1.webp",
       "alt": "Illustration showing purchasing power declining as inflation increases the cost of housing, groceries, fuel, and everyday living."
     },
     {

@@ -182,39 +182,46 @@ export default function BlogPost() {
         </div>
       );
          case "table":
-                  {
-                    const headers = Array.isArray(block.headers)
-                      ? block.headers
-                      : Array.isArray(block.columns)
-                      ? block.columns
-                      : [];
+          {
+            // Ensure we have a fallback for headers
+            const headers = Array.isArray(block.headers)
+              ? block.headers
+              : Array.isArray(block.columns)
+              ? block.columns
+              : [];
 
-                    return (
-                      <div key={index} className="table-responsive">
-                        <table className="pro-table">
+            // Ensure rows is an array
+            const rows = Array.isArray(block.rows) ? block.rows : [];
 
-                          <thead>
-                            <tr>
-                              {headers.map((h, i) => (
-                                <th key={i}>{h}</th>
-                              ))}
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            {(Array.isArray(block.rows) ? block.rows : []).map((row, ri) => (
-                              <tr key={ri}>
-                                {(Array.isArray(row) ? row : []).map((cell, ci) => (
-                                  <td key={ci}>{cell}</td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-
-                        </table>
-                      </div>
-                    );
-                  }
+            return (
+              <div key={index} className="table-responsive" style={{ margin: '20px 0', overflowX: 'auto' }}>
+                <table className="pro-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  {headers.length > 0 && (
+                    <thead>
+                      <tr>
+                        {headers.map((h, i) => (
+                          <th key={i} style={{ textAlign: 'left', padding: '12px', borderBottom: '2px solid #e2e8f0' }}>
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                  )}
+                  <tbody>
+                    {rows.map((row, ri) => (
+                      <tr key={ri} style={{ borderBottom: '1px solid #e2e8f0' }}>
+                        {(Array.isArray(row) ? row : []).map((cell, ci) => (
+                          <td key={ci} style={{ padding: '12px', fontSize: '14px' }}>
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+          }
 
       case "formula": return (
       <div key={index} className="formula-card" style={{ 

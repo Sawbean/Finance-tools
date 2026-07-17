@@ -8,9 +8,9 @@ Allow: /
 
 # Focus Google on content, not internal code
 Disallow: /_next/
-Disallow: /api/
 Disallow: /static/
 Disallow: /404
+Disallow: /api/
 
 # Sitemap location
 Sitemap: https://finance-tools-mu.vercel.app/sitemap.xml
