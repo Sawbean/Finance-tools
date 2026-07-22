@@ -473,5 +473,176 @@ export const foundationArticles = {
       "answer": "Purchasing power is the better measure of long-term wealth. An investment that fails to outperform inflation may increase your account balance while still reducing your real standard of living."
     }
   ]
-}
+},
+
+"malcolm-jamal-warner-trust-lessons": {
+  "title": "The Malcolm-Jamal Warner Trust Dispute: 5 Estate Planning Lessons Every Family Can Learn",
+  "description": "The reported trust dispute involving Malcolm-Jamal Warner's estate offers important lessons about family trusts, estate planning, wealth governance, and protecting assets for future generations.",
+  "masterCategory": "protection",
+  "type": "case-study",
+  "category": "Estate Planning & Wealth Protection",
+  "publishDate": "2026-07-22",
+  "readTime": "10 min read",
+  "image": "/images/malcolm-jamal-warner-trust-lessons.webp",
+  "tool": "retirement",
+  "content": [
+    {
+      "type": "paragraph",
+      "text": "Headlines surrounding the reported Malcolm-Jamal Warner trust dispute have attracted widespread attention because they involve a well-known public figure. Beneath the celebrity news, however, lies a financial lesson that affects millions of ordinary families. According to publicly reported court filings, Warner's widow has filed legal claims involving the administration of the Warner Family Trust and financial obligations allegedly connected to a premarital agreement. Because the litigation is ongoing, these claims remain allegations until resolved by the courts. Regardless of the final legal outcome, the reported dispute highlights why estate planning, trust governance, and clear financial documentation are just as important as building wealth itself."
+    },
+    {
+      "type": "keyTakeaways",
+      "items": [
+        "**Estate planning protects wealth after it has been created.**",
+        "**A trust is only as effective as the governance behind it.**",
+        "**Unclear legal documents can create expensive family disputes.**",
+        "**Choosing the right trustee is a long-term financial decision.**",
+        "**Every family with meaningful assets should have an estate plan.**"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "What Has Been Reported?"
+    },
+    {
+      "type": "paragraph",
+      "text": "Public court filings report that Malcolm-Jamal Warner's estate has become the subject of litigation involving the Warner Family Trust. The reported legal claims concern the administration of trust assets and obligations allegedly arising from a premarital agreement. Since the case remains before the courts, no final legal conclusions have been reached. Rather than speculate on the outcome, this article focuses on the broader financial principles that every family can learn from situations like this."
+    },
+    {
+      "type": "heading",
+      "text": "Why Family Trusts Exist"
+    },
+    {
+      "type": "paragraph",
+      "text": "A family trust is designed to hold and manage assets for beneficiaries according to instructions established by the person creating the trust. Unlike a traditional will, which mainly directs how assets are distributed after death, a trust can continue managing investments, property, businesses, and other assets for years or even decades. This gives families greater flexibility, privacy, and control over how wealth is preserved and transferred."
+    },
+    {
+      "type": "table",
+      "title": "Will vs. Family Trust",
+      "headers": ["Feature", "Will", "Family Trust"],
+      "rows": [
+        ["Probate", "Usually Required", "Often Avoided"],
+        ["Privacy", "Public Record", "Generally Private"],
+        ["Asset Management", "One-Time Distribution", "Ongoing Management"],
+        ["Distribution Rules", "Limited", "Highly Flexible"]
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "The Biggest Risk Isn't Losing Money—It's Losing Control"
+    },
+    {
+      "type": "paragraph",
+      "text": "Most investors spend decades learning how to earn more, save more, and invest more. Far fewer spend time planning what happens after they are gone. Without clear legal documents and effective governance, an estate can face legal disputes, delayed distributions, administrative costs, and investment uncertainty. In many cases, these costs reduce the value of the inheritance itself."
+    },
+    {
+      "type": "paragraph",
+      "text": "This is why estate planning should be viewed as part of wealth management rather than simply a legal exercise. Building wealth creates opportunities, but protecting that wealth requires organization, documentation, and regular review."
+    },
+    {
+      "type": "heading",
+      "text": "ToolFinance Insight™: Wealth Creation Is Only Stage One"
+    },
+    {
+      "type": "paragraph",
+      "text": "Many people think financial planning ends when they retire. At ToolFinance, we view retirement as the point where wealth preservation becomes just as important as wealth creation. Investments help grow assets during your lifetime, but estate planning determines how efficiently those assets reach the next generation. A successful financial plan prepares for both."
+    },
+    {
+      "type": "table",
+      "title": "The ToolFinance Wealth Lifecycle™",
+      "headers": ["Stage", "Primary Objective", "Common Mistake"],
+      "rows": [
+        ["Build Wealth", "Grow Assets", "Ignoring Risk"],
+        ["Protect Wealth", "Reduce Financial Loss", "Weak Insurance & Planning"],
+        ["Transfer Wealth", "Efficient Distribution", "Delaying Estate Planning"],
+        ["Preserve Legacy", "Support Future Generations", "Poor Trust Governance"]
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Estate Planning Is Not Just for Celebrities"
+    },
+    {
+      "type": "paragraph",
+      "text": "Celebrity cases receive media attention because the estates involved are often substantial. The underlying financial principles, however, apply equally to middle-income families. If you own a home, retirement account, investments, farmland, or a small business, your family may eventually face many of the same decisions about asset transfers, beneficiaries, and estate administration. The size of an estate changes the numbers—not the need for a plan."
+    },
+      {
+      "type": "heading",
+      "text": "5 Estate Planning Lessons Every Family Can Learn"
+    },
+    {
+      "type": "paragraph",
+      "text": "While every estate is unique, the reported Warner Family Trust litigation highlights several timeless financial principles. These lessons apply whether your estate consists of a modest home and retirement savings or a diversified investment portfolio built over decades."
+    },
+    {
+      "type": "list",
+      "items": [
+        "**Review your estate plan after major life events.** Marriage, divorce, the birth of children, or acquiring significant assets should all trigger a review of your will or trust.",
+        "**Choose trustees based on competence, not convenience.** A trustee should be financially responsible, organized, and capable of acting in the best interests of all beneficiaries.",
+        "**Keep beneficiary designations current.** Retirement accounts, life insurance policies, and investment accounts should match your current wishes.",
+        "**Maintain clear financial records.** Organized legal and financial documents make estate administration significantly easier.",
+        "**Review your plan regularly.** Laws, family circumstances, and financial goals change over time, so estate plans should evolve as well."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Why People Delay Estate Planning"
+    },
+    {
+      "type": "paragraph",
+      "text": "Behavioral finance helps explain why many people postpone estate planning. Conversations about death, inheritance, and family finances are uncomfortable, causing many individuals to delay decisions for years. Others believe estate planning is only necessary for the wealthy. Unfortunately, unexpected illness or death can leave families facing legal uncertainty precisely because those conversations never happened."
+    },
+    {
+      "type": "paragraph",
+      "text": "The financial cost of waiting can be substantial. Delayed planning may increase legal expenses, prolong probate, complicate asset transfers, and create disagreements among beneficiaries. Spending a few hours reviewing an estate plan today can potentially save families months—or even years—of unnecessary legal complications later."
+    },
+    {
+      "type": "heading",
+      "text": "Looking Beyond the Headlines"
+    },
+    {
+      "type": "paragraph",
+      "text": "The courts will ultimately determine the outcome of the reported Malcolm-Jamal Warner estate litigation. Regardless of that decision, the broader financial lesson is already clear. Estate planning is not simply about deciding who receives assets after death; it is about creating a structured system that protects wealth, minimizes uncertainty, and reduces the likelihood of unnecessary disputes."
+    },
+    {
+      "type": "paragraph",
+      "text": "Families often dedicate decades to earning, investing, and growing their wealth, yet spend very little time planning how that wealth will be managed after they are gone. A carefully prepared estate plan—including a well-managed trust where appropriate—helps ensure that a lifetime of financial discipline continues benefiting future generations instead of being diminished by avoidable conflict and administrative costs."
+    },
+    {
+      "type": "heading",
+      "text": "Conclusion"
+    },
+    {
+      "type": "paragraph",
+      "text": "The reported Malcolm-Jamal Warner trust dispute serves as a reminder that wealth preservation extends beyond investment performance. Building assets is only one part of long-term financial success. Protecting those assets through clear estate planning, responsible trustees, updated legal documents, and thoughtful governance is equally important. Whether an estate is worth thousands or millions of dollars, the objective remains the same: transfer wealth efficiently, minimize unnecessary costs, and preserve financial security for the next generation."
+    },
+    {
+      "type": "cta",
+      "text": "Building wealth is only the first step. See whether your retirement plan is on track with our Retirement Calculator →",
+      "link": "/tools/retirement"
+    }
+  ],
+  "faq": [
+    {
+      "question": "What is a family trust?",
+      "answer": "A family trust is a legal arrangement in which assets are managed by a trustee for the benefit of one or more beneficiaries according to rules established by the person who created the trust."
+    },
+    {
+      "question": "Why do many families use trusts instead of relying only on a will?",
+      "answer": "Trusts can provide greater privacy, avoid or reduce probate, allow ongoing management of assets, and offer more control over when and how beneficiaries receive wealth."
+    },
+    {
+      "question": "Does the reported Malcolm-Jamal Warner case prove trusts are ineffective?",
+      "answer": "No. The reported litigation involves specific legal circumstances that remain before the courts. Trusts remain one of the most widely used estate planning tools, and their effectiveness largely depends on clear drafting, proper administration, and regular reviews."
+    },
+    {
+      "question": "Do middle-income families need estate planning?",
+      "answer": "Yes. Anyone who owns a home, retirement account, investments, a business, or has dependents can benefit from having a clear estate plan that reduces uncertainty for loved ones."
+    },
+    {
+      "question": "What is the biggest financial lesson from this case?",
+      "answer": "Creating wealth is only half of the financial journey. Protecting, managing, and transferring that wealth through effective estate planning is equally important for preserving a family's long-term financial legacy."
+    }
+  ]
+},
 };

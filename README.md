@@ -188,7 +188,14 @@ fintools
 
 # Finance-tools
 
-A modern financial platform built with **Next.js**, providing practical financial calculators, educational resources, and market insights to help users make informed financial decisions.
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
+![Vercel](https://img.shields.io/badge/Vercel-Deployed-black?logo=vercel)
+
+A modern financial platform built with **Next.js**, providing practical financial calculators, educational resources, and market insights.
+
+**✨ 25+ Financial Calculators • 📚 Finance Knowledge Center • ⚡ SEO Optimized • 📱 Fully Responsive**
 
 ---
 
@@ -196,7 +203,7 @@ A modern financial platform built with **Next.js**, providing practical financia
 
 Finance-tools is a fast, responsive web application designed to simplify personal finance and financial planning. It offers a collection of financial calculators, educational articles, and market analysis within a clean, mobile-friendly interface.
 
-The platform requires no registration and allows users to quickly perform financial calculations such as loan repayments, investment growth, retirement planning, tax estimation, and wealth analysis while also exploring educational content covering core financial concepts and global economic developments.
+The platform is available without requiring user registration and allows users to quickly perform financial calculations such as loan repayments, investment growth, retirement planning, tax estimation, and wealth analysis while also exploring educational content covering core financial concepts and global economic developments.
 
 ---
 
@@ -274,7 +281,18 @@ Features include:
 ## 📁 Project Structure
 
 ```text
-(Your simplified project tree here)
+Finance-tools/
+├── components/
+├── context/
+├── data/
+├── pages/
+├── public/
+├── screenshots/
+├── styles/
+├── utils/
+├── README.md
+├── package.json
+└── next.config.js
 ```
 
 ---
@@ -284,7 +302,7 @@ Features include:
 Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Sawbean/Finance-tools.git
 ```
 
 Install dependencies:
@@ -301,34 +319,24 @@ npm run dev
 
 ## 🌐 Live Demo
 
-**Website:** https://finance-tools-mu.vercel.app/
-```
+🔗 **Live Website**
+
+https://finance-tools-mu.vercel.app/
+
 
 ---
 
 ## 📸 Screenshots
 
-### 🏠 Home Page
+| Home | Financial Tools |
+|------|-----------------|
+| ![](screenshots/Home.PNG) | ![](screenshots/Tool.PNG) |
 
-![Home Page](screenshots/Home.png)
-
----
-
-### 🧮 Financial Tools
-
-![Financial Tools](screenshots/Tool.png)
+| Blog | Articles |
+|------|----------|
+| ![](screenshots/Blog.PNG) | ![](screenshots/Articles.PNG) |
 
 ---
-
-### 📰 Blog
-
-![Blog](screenshots/Blog.png)
-
----
-
-### 📚 Articles
-
-![Articles](screenshots/Articles.png)
 
 ## 🎯 Project Goals
 
