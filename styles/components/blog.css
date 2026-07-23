@@ -756,9 +756,41 @@ a, .read-more-btn, .analysis-link { color: var(--accent-blue); text-decoration: 
 a:hover { color: var(--primary); }
 
 /* Sidebar & Containers */
-.sidebar-card, .table-of-contents, .takeaways-box { 
+.sidebar-card, .table-of-contents { 
   background: var(--card-bg); 
   border: 1px solid var(--border-soft); 
+}
+
+.takeaways-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  padding: 24px 28px; /* Adds breathing room so text isn't hitting the borders */
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.takeaways-box h4 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.takeaways-box ul {
+  margin: 0;
+  padding-left: 20px; /* Gives space for custom bullets or standard markers */
+}
+
+.takeaways-box li {
+  margin-bottom: 12px;
+  line-height: 1.6;
+  color: var(--text-main, inherit);
+}
+
+.takeaways-box li:last-child {
+  margin-bottom: 0;
 }
 
 /* Category Badges */

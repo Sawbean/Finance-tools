@@ -166,7 +166,7 @@ export default function BlogPost() {
       );
 
       case "keyTakeaways": return (
-        <div key={index} className="takeaways-box" style={{borderRadius: '12px', marginBottom: '30px'}}>
+        <div key={index} className="takeaways-box">
           <h4 style={{ color: currentTheme.color }}>⚡ Key Takeaways</h4>
          <ul>
           {(block.items || []).map((item, i) => (
