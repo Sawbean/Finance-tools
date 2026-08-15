@@ -795,17 +795,54 @@ a:hover { color: var(--primary); }
 /* Icons */
 .icon-wrapper, .icon-container { background-color: var(--border-soft); }
 
+/* Global box sizing */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* Specifically target the container that might be pushing content right */
+/* Blog wrapper */
 .blog-master-wrapper {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px 15px 80px;
+  box-sizing: border-box;
+}
+
+/* Prevent the overall page from creating horizontal scrolling */
+html,
+body {
   overflow-x: hidden;
+}
+
+/* Blog layout must be able to shrink on smaller screens */
+.article-layout-container,
+.article-body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Images must stay inside the article */
+.article-body img,
+.article-inner-image img,
+.article-featured-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Wide tables scroll inside their own container */
+.table-responsive {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Long URLs / long text shouldn't push the page wider */
+.article-body {
+  overflow-wrap: anywhere;
 }
