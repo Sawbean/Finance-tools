@@ -1,9 +1,5 @@
 /* header.css */
 :root {
-  --nav-bg: #0b1f4a;
-  --nav-accent: #f0e68c;
-  --nav-text: #ffffff;
-  --nav-hover: rgba(255, 255, 255, 0.1);
   --mobile-sub-bg: #05122b;
 }
 
@@ -78,7 +74,7 @@ body {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 240px;
+    width: 260px;
     background: var(--nav-bg);
     border-radius: 8px;
     padding: 10px 0;
@@ -91,6 +87,9 @@ body {
 
   .tools-menu.show { visibility: visible; opacity: 1; transform: translateY(0); }
 
+  .tools-item {
+    position: relative !important;
+  }
   .category-title {
     padding: 12px 20px;
     color: var(--nav-text);
@@ -98,6 +97,7 @@ body {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .category-title:hover { background: var(--nav-hover); }
@@ -106,7 +106,7 @@ body {
     position: absolute;
     top: 0;
     left: 100%;
-    width: 220px;
+    width: 250px;
     background: #0f2a61;
     border-radius: 8px;
     padding: 10px 0;
@@ -115,8 +115,14 @@ body {
     transition: 0.2s;
   }
 
-  .tools-submenu.show { visibility: visible; opacity: 1; }
-  .tools-item.flip .tools-submenu { left: auto; right: 100%; }
+ .tools-submenu.show { 
+    visibility: visible; 
+    opacity: 1; 
+  }
+  .tools-item.flip .tools-submenu { 
+    left: auto; 
+    right: 100%; 
+  }
 
   .tools-submenu a {
     display: block;
@@ -124,6 +130,8 @@ body {
     color: var(--nav-text);
     text-decoration: none;
     font-size: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .tools-submenu a:hover { color: var(--nav-accent); background: var(--nav-hover); }
 
@@ -302,5 +310,7 @@ body {
   align-items: center;
   height: 100%;
 }
+
+
 
 
